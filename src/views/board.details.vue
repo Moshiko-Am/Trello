@@ -1,5 +1,5 @@
 <template>
-	<section>
+	<section class="board-details">
 		<p>{{ board }}</p>
 	</section>
 </template>
