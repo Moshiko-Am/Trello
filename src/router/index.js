@@ -1,24 +1,25 @@
-import Vue from 'vue'
-import VueRouter from 'vue-router'
-import home from '@/views/home.vue'
-import about from '@/views/about.vue'
+import Vue from 'vue';
+import VueRouter from 'vue-router';
+import home from '@/views/home.vue';
+import board from '@/views/board.vue';
 
-Vue.use(VueRouter)
+Vue.use(VueRouter);
 
-const routes = [{
-        path: '/',
-        name: 'Home',
-        component: home
-    },
-    {
-        path: '/about',
-        name: 'About',
-        component: about
-    }
-]
+const routes = [
+	{
+		path: '/',
+		name: 'Home',
+		component: home,
+	},
+	{
+		path: '/board/:boardId',
+		name: 'Board',
+		component: board,
+	},
+];
 
 const router = new VueRouter({
-    routes
-})
+	routes,
+});
 
-export default router
+export default router;
