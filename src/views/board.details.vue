@@ -1,8 +1,8 @@
 <template>
 	<section class="board-details">
-		<p>{{ board }}</p>
-		<!-- <card-details></card-details> -->
 		<board-header :board="board" />
+		<!-- <p>{{ board }}</p> -->
+		<!-- <card-details></card-details> -->
 	</section>
 </template>
 

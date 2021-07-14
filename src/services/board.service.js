@@ -10,7 +10,10 @@ var gBoards = [
 			fullname: 'Abi Abambi',
 			imgUrl: 'http://some-img',
 		},
-		style: {},
+		style: {
+			backgroundImage:
+				'https://trello-backgrounds.s3.amazonaws.com/SharedBackground/480x320/04fb036055ac0ee5d25791708a70cdf7/photo-1625589934405-a180c2e53aa5.jpg',
+		},
 		labels: [
 			{
 				id: 'l101',
@@ -165,24 +168,23 @@ async function getById(boardId) {
 
 function remove(boardId) {
 	// return httpService.delete(`board/${boardId}`)
-	return storageService.delete('board', boardId)
-
+	return storageService.delete('board', boardId);
 }
 async function add(board) {
 	// const addedBoard = await httpService.post(`board`, board)
 
 	// board.byUser = userService.getLoggedinUser()
 	// board.aboutUser = await userService.getById(board.aboutUserId)
-	const addedBoard = storageService.post('board', board)
+	const addedBoard = storageService.post('board', board);
 
-	return addedBoard
+	return addedBoard;
 }
 
-async function save(boardToSave){
+async function save(boardToSave) {
 	try {
-		const savedBoard = await storageService.put(BOARD_KEY, boardToSave)
-		return savedBoard
-	} catch (err){
+		const savedBoard = await storageService.put(BOARD_KEY, boardToSave);
+		return savedBoard;
+	} catch (err) {
 		console.log(`couldn't save board`, err);
 	}
 }
