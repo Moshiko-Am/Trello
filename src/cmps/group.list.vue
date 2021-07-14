@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import groupDetails from '@/cmps/group.details.vue';
+import groupDetails from "@/cmps/group.details.vue";
 export default {
 	props: {
 		groups: Array,
@@ -23,8 +23,5 @@ export default {
 	components: {
 		groupDetails,
 	},
-	created(){
-		console.log('this.labels',this.labels);
-	}
 };
 </script>

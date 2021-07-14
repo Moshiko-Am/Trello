@@ -275,7 +275,7 @@ var gBoards = [
 				createdAt: 154514,
 				byMember: {
 					_id: 'u102',
-					fullname: 'Omri Baram',
+					fullname: 'Moshiko Amsalem',
 					imgUrl: 'http://some-img',
 				},
 				card: {
@@ -289,7 +289,7 @@ var gBoards = [
 				createdAt: 154514,
 				byMember: {
 					_id: 'u103',
-					fullname: 'Tom Bechar',
+					fullname: 'Tom Becharovitch',
 					imgUrl: 'http://some-img',
 				},
 				card: {

@@ -70,9 +70,20 @@
     }
     & .group-header-extras {
         position: absolute;
-        right: 4px;
+        right: 8px;
         top: 4px;
-        z-index: 1;
+        width: 20px;
+        height: 20px;
+        box-sizing: content-box;
+        padding: 6px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 3px;
+        &:hover {
+            background-color: rgba(9, 30, 66, 0.08);
+            cursor: pointer;
+        }
     }
 }
 
@@ -94,6 +105,15 @@
     text-decoration: none;
     -webkit-user-select: none;
     user-select: none;
+    &:hover {
+        background-color: rgba(9, 30, 66, 0.08);
+        margin-right: 8px;
+        margin-bottom: 5px;
+    }
+    .btn-add-card {
+        vertical-align: text-bottom;
+        padding-inline-start: 4px;
+    }
 }
 
 .icon-add {

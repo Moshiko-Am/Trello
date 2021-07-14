@@ -46,8 +46,8 @@
 </template>
 
 <script>
-import cardPreview from './card.preview.vue';
-import cardDetails from './card.details.vue';
+import cardPreview from "./card.preview.vue";
+import cardDetails from "./card.details.vue";
 export default {
 	props: {
 		group: Object,
