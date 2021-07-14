@@ -1,13 +1,10 @@
 <template>
-	<section v-if="group" class="group-wrapper">
+	<section v-if="group">
 		<div class="group-details">
 			<div class="group-header">
-				<div
-					class="group-header-name-assist js-group-name-assist"
-				></div>
 				<div class="group-header-target js-editing-target"></div>
 				<textarea
-					class="group-header-name mod-group-name js-group-name-input"
+					class="group-header-name mod-group-name"
 					v-bind:aria-label="group.title"
 					spellcheck="false"
 					dir="auto"
@@ -16,14 +13,19 @@
 				></textarea>
 				<div class="group-header-extras">
 					<a
-						class="group-header-extras-menu dark-hover js-open-group-menu icon-sm icon-dots-menu"
+						class="group-header-extras-menu dark-hover icon-sm icon-dots-menu"
 						href="#"
 						aria-label="List actions"
 						><div></div
 					></a>
 				</div>
 			</div>
-			<!-- <card-preview v-for="card in group.cards" v-bind:key="card.id"/> -->
+			<card-preview
+				v-for="card in group.cards"
+				:key="card.id"
+				:card="card"
+				@click.native="setCard(card)"
+			/>
 			<div class="card-composer-container js-card-composer-container">
 				<a class="open-card-composer js-open-card-composer" href="#">
 					<span class="icon-sm icon-add"></span>
@@ -31,11 +33,18 @@
 				>
 			</div>
 		</div>
+		<card-details
+			v-if="currCard"
+			:card="currCard"
+			:group="group"
+		></card-details>
 	</section>
 	<!-- <loader v-else /> -->
 </template>
 
 <script>
+import cardPreview from './card.preview.vue';
+import cardDetails from './card.details.vue';
 export default {
 	props: {
 		group: Object,
@@ -43,10 +52,20 @@ export default {
 	data() {
 		return {
 			groupTitle: '',
+			currCard: null,
 		};
+	},
+	methods: {
+		setCard(card) {
+			this.currCard = card;
+		},
 	},
 	created() {
 		this.groupTitle = this.group.title;
+	},
+	components: {
+		cardPreview,
+		cardDetails,
 	},
 };
 </script>
