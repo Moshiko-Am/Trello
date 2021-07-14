@@ -1,12 +1,12 @@
 <template>
 	<section class="board-details">
-		<!-- <p>{{ board }}</p> -->
-		<card-details></card-details>
+		<p>{{ board }}</p>
+		<!-- <card-details></card-details> -->
 	</section>
 </template>
 
 <script>
-import cardDetails from '../cmps/card.details.vue'
+// import cardDetails from '../cmps/card.details.vue'
 
 export default {
 	computed: {
@@ -15,7 +15,7 @@ export default {
 		},
 	},
 	components: {
-		cardDetails
+		// cardDetails
 	},
 	watch: {
 		'this.$route.params.boardId': {
@@ -24,7 +24,8 @@ export default {
 				if (this.$route.params.boardId) {
 					const { boardId } = this.$route.params;
 					try {
-						await this.$store.dispatch('loadBoard', boardId);
+						await this.$store.dispatch({type:'loadBoards'})
+						this.$store.commit('getBoardById', boardId);
 					} catch (err) {
 						console.log('didnt find board', err);
 						// this.$router.push(`/`);

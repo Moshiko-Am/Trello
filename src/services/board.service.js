@@ -134,6 +134,9 @@ const BOARD_KEY = 'boardsDB';
 export const boardService = {
 	query,
 	getById,
+	remove,
+	add,
+	save,
 };
 
 query();
@@ -157,5 +160,29 @@ async function getById(boardId) {
 		return board;
 	} catch (err) {
 		console.log(err);
+	}
+}
+
+function remove(boardId) {
+	// return httpService.delete(`board/${boardId}`)
+	return storageService.delete('board', boardId)
+
+}
+async function add(board) {
+	// const addedBoard = await httpService.post(`board`, board)
+
+	// board.byUser = userService.getLoggedinUser()
+	// board.aboutUser = await userService.getById(board.aboutUserId)
+	const addedBoard = storageService.post('board', board)
+
+	return addedBoard
+}
+
+async function save(boardToSave){
+	try {
+		const savedBoard = await storageService.put(BOARD_KEY, boardToSave)
+		return savedBoard
+	} catch (err){
+		console.log(`couldn't save board`, err);
 	}
 }
