@@ -1,7 +1,6 @@
 <template>
   <section class="board-details">
     <board-header :board="board" />
-    <p>{{ board }}</p>
     <group-list />
     <!-- <card-details></card-details> -->
   </section>
@@ -9,8 +8,8 @@
 
 <script>
 // import cardDetails from '../cmps/card.details.vue'
-import boardHeader from "../cmps/board.header.vue";
-import groupList from "../cmps/group.list.vue";
+import boardHeader from "@/cmps/board.header.vue";
+import groupList from "@/cmps/group.list.vue";
 
 export default {
   computed: {

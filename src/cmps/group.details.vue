@@ -10,15 +10,26 @@
           spellcheck="false"
           dir="auto"
           maxlength="512"
-          style="overflow: hidden; overflow-wrap: break-word; height: 28px;"
           v-model="groupTitle"
         ></textarea>
-        <div class="group-header-extras">...</div>
+        <div class="group-header-extras">
+          <a
+            class="group-header-extras-menu dark-hover js-open-group-menu icon-sm icon-dots-menu"
+            href="#"
+            aria-label="List actions"
+            ><div></div
+          ></a>
+        </div>
       </div>
       <div v-for="card in group.cards" v-bind:key="card.id">
         <!-- <card-list :card="card" /> -->
       </div>
-      <div class="card-composer"></div>
+      <div class="card-composer-container js-card-composer-container">
+        <a class="open-card-composer js-open-card-composer" href="#">
+          <span class="icon-sm icon-add"></span>
+          <span class="js-add-a-card">Add a card</span></a
+        >
+      </div>
     </div>
   </section>
   <loader v-else />
