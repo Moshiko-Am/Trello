@@ -33,6 +33,10 @@ img {
     width: 100%;
 }
 
+button {
+    cursor: pointer
+}
+
 .icon-member {
     @include to-icon("\e912");
 }

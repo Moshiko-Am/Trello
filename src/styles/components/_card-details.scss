@@ -13,19 +13,32 @@
         top: 50%;
         transform: translate(-50%, -50%);
         border-radius: 2px;
+        color: #172b4d;
 
-        .s-icon {
-            width: 14px;
-            height: 14px;
-            margin-right:8px ;
-            opacity: 0.7;
-        }
-        .m-icon {
-            width: 32px;
+        .close-btn {
+            
+            color: #42526e;
+            border-radius: 50%;
+            background: none;
+            border:none;
+            position: absolute;
+            top: 0;
+            right: 0;
             height: 32px;
+            overflow: hidden;
             padding: 4px;
-            // opacity: 0.7;
+            margin: 4px;
+            width: 32px;
+            z-index: 2;
+            transition: background-color 85ms,color 85ms; 
+
+            &:hover {
+                background-color: rgba(9,30,66,.08);
+                color: #42526e;
+            }
         }
+
+
     }
 }
 
@@ -41,15 +54,11 @@
     .inner-container {
         display: flex;
 
-        img {
-            margin-right: 8px;
+        h2 {
+            margin-left: 8px;
+            font-weight: 600;
         }
     }
-
-    h2 {
-        font-weight: 600;
-    }
-
 }
 
 .card-details-main {
@@ -58,6 +67,7 @@
 
     .main-item-header {
         display: flex;
+        align-items: center;
 
         div {
             display: flex;
@@ -67,16 +77,22 @@
             justify-content: space-between;
 
             button {
-                box-sizing: border-box;
-                -webkit-appearance: none;
-                 border-radius: 3px;
-                border: none;
-                display: inline-block;
-                line-height: 20px;
-                margin-bottom: 8px;
+                display: flex;
+                align-items: center;
+                cursor: pointer;
+                border:none;
+                height: 32px;
                 padding: 6px 12px;
-                text-decoration: none;
-                position: relative;
+                background-color: rgba(9,30,66,.04);
+                border-radius: 3px;
+                font-size: 14px;
+                margin-top: 8px;
+                color: #172b4d;
+                transition: background-color 85ms ease;
+            
+                &:hover {
+                    background-color: rgba(9,30,66,.08);
+                }
             }
         }
     }
@@ -95,8 +111,13 @@
         padding: 8px 12px;
         text-decoration: none;
         text-align: left;
-        margin-left: 40px;
+        margin-left: 32px;
         font-size:14px;
+    }
+
+    h3 {
+        font-weight: 600;
+        margin-bottom:.5rem;
     }
 }
 
@@ -123,8 +144,40 @@
             background-color: rgba(9,30,66,.08);
         }
     
-        div {
+        span {
             margin-right: 6px;
         }
     }
+}
+
+
+.icon-card {
+    @include to-icon("\e912")
+}
+.icon-activity {
+    @include to-icon("\e900")
+}
+.icon-desc {
+    @include to-icon("\e922")
+}
+.icon-label {
+    @include to-icon("\e93f")
+}
+.icon-member {
+    @include to-icon("\e946")
+}
+.icon-cover {
+    @include to-icon("\e914")
+}
+.icon-date {
+    @include to-icon("\e910")
+}
+.icon-checklist {
+    @include to-icon("\e91a")
+}
+.icon-attach {
+    @include to-icon("\e908")
+}
+.icon-x {
+    @include to-icon("\e91c")
 }
