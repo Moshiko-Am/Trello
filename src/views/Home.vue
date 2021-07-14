@@ -1,14 +1,10 @@
 <template>
-  <group-list />
+  <div class="home"></div>
 </template>
 
 <script>
-// @ is an alias to /src
-import groupList from "@/cmps/group.list.vue";
 export default {
   name: "Home",
-  components: {
-    groupList,
-  },
+  components: {},
 };
 </script>

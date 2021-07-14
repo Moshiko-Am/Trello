@@ -1,13 +1,15 @@
 <template>
   <section class="board-details">
+    <board-header :board="board" />
     <p>{{ board }}</p>
-    <!-- <card-details></card-details> -->
     <group-list />
+    <!-- <card-details></card-details> -->
   </section>
 </template>
 
 <script>
 // import cardDetails from '../cmps/card.details.vue'
+import boardHeader from "../cmps/board.header.vue";
 import groupList from "../cmps/group.list.vue";
 
 export default {
@@ -17,8 +19,9 @@ export default {
     },
   },
   components: {
-    groupList,
     // cardDetails
+    boardHeader,
+    groupList,
   },
   watch: {
     "this.$route.params.boardId": {
