@@ -7,7 +7,11 @@
 			<span class="board-header-divider">|</span>
 			<div class="board-header-members">
 				<span v-for="member in board.members" :key="member._id">
-					{{ member.fullname }}
+					<avatar
+						:username="member.fullname"
+						size="28"
+						inline="true"
+					></avatar>
 				</span>
 				<button class="btn-invite">Invite</button>
 			</div>
@@ -19,6 +23,7 @@
 			<span class="menu-show-txt">Show menu</span>
 		</button>
 		<side-menu
+			@closeMenu="toggleMenu"
 			class="hideMenu"
 			:class="menuShow"
 			:board="board"
@@ -28,9 +33,11 @@
 
 <script>
 import sideMenu from './side.menu.vue';
+import avatar from 'vue-avatar';
 export default {
 	components: {
 		sideMenu,
+		avatar,
 	},
 	props: {
 		board: Object,

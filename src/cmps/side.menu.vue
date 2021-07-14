@@ -2,7 +2,7 @@
 	<section class="side-menu-container">
 		<div class="side-menu-header">
 			<h3>Menu</h3>
-			<button class="icon-md icon-x"></button>
+			<button class="icon-md icon-x" @click="closeMenu"></button>
 		</div>
 		<hr />
 		<div class="side-menu-content">
@@ -23,8 +23,17 @@
 				</span>
 			</div>
 			<div class="menu-activity-list">
-				<div v-for="activity in board.activities" :key="activity.id">
-					<avatar :username="activity.byMember.fullname"></avatar>
+				<div
+					v-for="activity in board.activities"
+					:key="activity.id"
+					class="activity-list"
+				>
+					<avatar
+						:username="activity.byMember.fullname"
+						size="30"
+						inline="true"
+					></avatar>
+					<span class="activity-txt">{{ activity.txt }}</span>
 				</div>
 			</div>
 		</div>
@@ -39,6 +48,11 @@ export default {
 	},
 	props: {
 		board: Object,
+	},
+	methods: {
+		closeMenu() {
+			this.$emit('closeMenu');
+		},
 	},
 };
 </script>
