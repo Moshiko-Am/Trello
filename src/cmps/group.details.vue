@@ -32,7 +32,7 @@
 			</div>
 		</div>
 	</section>
-	<loader v-else />
+	<!-- <loader v-else /> -->
 </template>
 
 <script>

@@ -7,6 +7,7 @@
 }
 
 .side-menu-container {
+	z-index: 1;
 	opacity: 0.9;
 	display: flex;
 	flex-direction: column;
@@ -14,6 +15,7 @@
 	position: fixed;
 	right: 0;
 	top: 80px;
+	height: 100vh;
 	background-color: #f4f5f7;
 	padding-inline: 12px;
 	width: 340px;
@@ -25,7 +27,6 @@
 		background-color: rgba(9, 30, 66, 0.13);
 		border: 0;
 		height: 1px;
-		// margin: 16px 0;
 		padding: 0;
 		width: 100%;
 	}
@@ -56,9 +57,49 @@
 		}
 	}
 
+	.side-menu-content {
+		display: flex;
+		flex-direction: column;
+		justify-content: flex-start;
+		align-items: flex-start;
+		width: 100%;
+		height: 100%;
+		&::-webkit-scrollbar-track-piece {
+			background: rgba(9, 30, 66, 0.08);
+		}
+	}
+
 	.side-bar-bgc-img {
 		width: 20px;
 		height: 20px;
 		border-radius: 3px;
+		margin-inline-end: 5px;
+	}
+
+	.side-menu-item {
+		display: flex;
+		justify-content: flex-start;
+		align-items: center;
+		margin-block: 10px;
+		padding: 6px 6px 6px 8px;
+		width: 100%;
+
+		&:hover {
+			background-color: rgba(9, 30, 66, 0.08);
+			border-radius: 3px;
+		}
+	}
+
+	.btn-menu-change-background {
+		background: none;
+		border: none;
+		color: #172b4d;
+		font-size: 14px;
+		font-weight: 600;
+	}
+
+	.menu-activity {
+		font-weight: 700;
+		padding-left: 10px;
 	}
 }

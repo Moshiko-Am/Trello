@@ -5,15 +5,38 @@
 			<button class="icon-md icon-x"></button>
 		</div>
 		<hr />
-		<div class="menu-change-background" v-if="board.style">
-			<img :src="board.style.backgroundImage" class="side-bar-bgc-img" />
-			<button>Change background</button>
+		<div class="side-menu-content">
+			<div class="side-menu-item" v-if="board.style">
+				<img
+					class="side-bar-bgc-img"
+					:src="board.style.backgroundImage"
+				/>
+				<button class="btn-menu-change-background">
+					Change background
+				</button>
+			</div>
+			<hr />
+			<div class="side-menu-item" v-if="board.style">
+				<span class="icon-lg icon-activity"></span>
+				<span class="menu-activity">
+					Activity
+				</span>
+			</div>
+			<div class="menu-activity-list">
+				<div v-for="activity in board.activities" :key="activity.id">
+					<avatar :username="activity.byMember.fullname"></avatar>
+				</div>
+			</div>
 		</div>
 	</section>
 </template>
 
 <script>
+import avatar from 'vue-avatar';
 export default {
+	components: {
+		avatar,
+	},
 	props: {
 		board: Object,
 	},
