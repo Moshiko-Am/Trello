@@ -1,8 +1,7 @@
 <template>
-  <section v-if="group" class="group-wrapper">
+  <section v-if="group">
     <div class="group-details">
       <div class="group-header">
-        <div class="group-header-name-assist js-group-name-assist"></div>
         <div class="group-header-target js-editing-target"></div>
         <textarea
           class="group-header-name mod-group-name js-group-name-input"
