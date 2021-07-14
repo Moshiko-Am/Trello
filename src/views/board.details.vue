@@ -1,7 +1,7 @@
 <template>
   <section class="board-details">
     <board-header :board="board" />
-    <group-list />
+    <group-list :groups="board.groups" />
     <!-- <card-details></card-details> -->
   </section>
 </template>
