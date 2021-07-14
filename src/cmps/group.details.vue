@@ -24,6 +24,7 @@
 				v-for="card in group.cards"
 				:key="card.id"
 				:card="card"
+				:labels="labels"
 				@click.native="setCard(card)"
 			/>
 			<div class="card-composer-container js-card-composer-container">
@@ -37,6 +38,8 @@
 			v-if="currCard"
 			:card="currCard"
 			:group="group"
+			:labels="labels"
+			@clearCard="clearCard"
 		></card-details>
 	</section>
 	<!-- <loader v-else /> -->
@@ -48,6 +51,7 @@ import cardDetails from './card.details.vue';
 export default {
 	props: {
 		group: Object,
+		labels: Array
 	},
 	data() {
 		return {
@@ -59,6 +63,9 @@ export default {
 		setCard(card) {
 			this.currCard = card;
 		},
+		clearCard(){
+			this.currCard = null
+		}
 	},
 	created() {
 		this.groupTitle = this.group.title;

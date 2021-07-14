@@ -9,15 +9,18 @@
     text-decoration: none;
     z-index: 0;
     margin: 4px 8px;
-    padding: 0 8px ;
+    padding: 6px 8px ;
     width: 264px;
 
 
     .preview-labels-container {
         display: flex;
          .label {
-             width: 40px;
+             min-height: 10px;
+             border-radius: 1em;
+             min-width: 40px;
              margin-right: 5px;
+             padding: 0 10px;
          }
     }
 

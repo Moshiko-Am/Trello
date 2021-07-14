@@ -1,27 +1,30 @@
 <template>
   <section class="card-details-bg" @click="exitCard">
-    <section class="card-details">
-      <button class="close-btn"><span class="icon-md icon-x"></span></button>
+    <section class="card-details" @click.stop="">
+      <button class="close-btn" @click="exitCard"><span class="icon-md icon-x"></span></button>
       <div class="card-details-header">
         <div class="inner-container">
           <span class="icon-lg icon-card details-header-icon"></span>
           <h2 class="card-details-title">{{ card.title }}</h2>
         </div>
-        <div class="card-details-list">From list {listname}</div>
+        <div class="card-details-list">From list {{group.title}}</div>
       </div>
+
       <div class="card-details-content">
         <div class="card-details-main">
+
           <div class="card-main-item">
             <div class="main-item-header">
               <span class="icon-lg icon-label"></span>
               <h3 class="main-item-title">Labels</h3>
             </div>
             <div v-if="card.labelIds.length" class="labels-container">
-              <div v-for="label in card.labelIds" :key="label" class="labelDisplay">
-                {{label}}
+              <div v-for="label in labelsForDisplay" :key="label.id" class="labelDisplay" :style="{backgroundColor:label.color}">
+                {{label.title}}
               </div>
             </div>
           </div>
+
           <div class="card-main-item">
             <div class="main-item-header">
               <span class="icon-lg icon-member"></span>
@@ -29,10 +32,11 @@
             </div>
             <div v-if="card.members.length" class="members-container">
               <div v-for="member in card.members" :key="member._id" class="memberDisplay">
-                {{member.fullname}}
+                <avatar :username="member.fullname" :size="35" inline color="black"></avatar>
               </div>
             </div>
           </div>
+
           <div class="card-main-item">
             <div class="main-item-header">
               <span class="icon-lg icon-desc"></span>
@@ -42,6 +46,7 @@
               <p>{{ card.description }}</p>
             </div>
           </div>
+
           <div class="checklists" v-if="card.checklists.length">
             <div
               class="card-main-item"
@@ -125,14 +130,27 @@
 </template>
 
 <script>
+import avatar from 'vue-avatar';
+
 export default {
   props:{
     card: Object,
-    group : Object
+    group : Object,
+    labels : Array,
+  },
+  components:{
+    avatar
   },
   methods: {
     exitCard(){
       this.$emit('clearCard')
+    }
+  },
+  computed: {
+    labelsForDisplay(){
+     return this.labels.filter(label => {
+        if(this.card.labelIds.includes(label.id)) return label
+      })
     }
   }
 };

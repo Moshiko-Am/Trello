@@ -10,7 +10,6 @@ export const boardStore = {
             return selectedBoard;
         },
         boardStyle({ selectedBoard }) {
-            console.log(selectedBoard.style)
             return selectedBoard.style
         }
     },

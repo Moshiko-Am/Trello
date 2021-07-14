@@ -1,13 +1,11 @@
 <template>
   <section class="board-details">
     <board-header :board="board" />
-    <group-list :groups="board.groups" />
-    <!-- <card-details></card-details> -->
+    <group-list :groups="board.groups" :labels="labels" />
   </section>
 </template>
 
 <script>
-// import cardDetails from '../cmps/card.details.vue'
 import boardHeader from "@/cmps/board.header.vue";
 import groupList from "@/cmps/group.list.vue";
 
@@ -16,9 +14,12 @@ export default {
     board() {
       return this.$store.getters.board;
     },
+    labels(){
+      const board = this.$store.getters.board
+      return board.labels
+    }
   },
   components: {
-    // cardDetails,
     boardHeader,
     groupList,
   },

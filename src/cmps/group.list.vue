@@ -6,7 +6,7 @@
 			class="group-wrapper"
 		>
 			<div class="group">
-				<group-details :group="group" />
+				<group-details :group="group" :labels="labels" />
 			</div>
 		</div>
 	</section>
@@ -18,9 +18,13 @@ import groupDetails from '@/cmps/group.details.vue';
 export default {
 	props: {
 		groups: Array,
+		labels: Array
 	},
 	components: {
 		groupDetails,
 	},
+	created(){
+		console.log('this.labels',this.labels);
+	}
 };
 </script>
