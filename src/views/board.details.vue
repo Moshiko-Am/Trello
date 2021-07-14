@@ -19,7 +19,7 @@ export default {
     },
   },
   components: {
-    // cardDetails
+    // cardDetails,
     boardHeader,
     groupList,
   },

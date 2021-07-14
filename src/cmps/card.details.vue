@@ -13,6 +13,28 @@
         <div class="card-details-main">
           <div class="card-main-item">
             <div class="main-item-header">
+              <span class="icon-lg icon-label"></span>
+              <h3 class="main-item-title">Labels</h3>
+            </div>
+            <div v-if="card.labelIds.length" class="labels-container">
+              <div v-for="label in card.labelIds" :key="label" class="labelDisplay">
+                {{label}}
+              </div>
+            </div>
+          </div>
+          <div class="card-main-item">
+            <div class="main-item-header">
+              <span class="icon-lg icon-member"></span>
+              <h3 class="main-item-title">Members</h3>
+            </div>
+            <div v-if="card.members.length" class="members-container">
+              <div v-for="member in card.members" :key="member._id" class="memberDisplay">
+                {{member.fullname}}
+              </div>
+            </div>
+          </div>
+          <div class="card-main-item">
+            <div class="main-item-header">
               <span class="icon-lg icon-desc"></span>
               <h3 class="main-item-title">Description</h3>
             </div>
@@ -20,17 +42,44 @@
               <p>{{ card.description }}</p>
             </div>
           </div>
-          <div class="checklists" v-if="card.checklists.length" >
-          <div class="card-main-item" v-for="checklist in card.checklists" :key="checklist.id">
-            <div class="main-item-header">
-              <span class="icon-lg icon-checklist"></span>
-              <h3 class="main-item-title">{{checklist.title}}</h3>
+          <div class="checklists" v-if="card.checklists.length">
+            <div
+              class="card-main-item"
+              v-for="checklist in card.checklists"
+              :key="checklist.id"
+            >
+              <div class="main-item-header checklist">
+                <div class="inner-header">
+                  <span class="icon-lg icon-checklist"></span>
+                  <h3 class="main-item-title">{{ checklist.title }}</h3>
+                </div>
+                <button class="card-sidebar-btn">Delete</button>
+              </div>
+              <div class="progress-bar-container">
+                <span>0%</span>
+                <div class="progress-bar"><div></div></div>
+              </div>
+              <div v-for="todo in checklist.todos" :key="todo.id" class="todo">
+                <div class="inner">
+                  <input type="checkbox" :checked="todo.isDone" />
+                  <div>
+                    <span :class="{ completed: todo.isDone }">{{
+                      todo.title
+                    }}</span>
+                  </div>
+                </div>
+                <div class="todo-btns">
+                  <button><span class="icon-sm icon-date"></span></button>
+                  <button><span class="icon-sm icon-assign"></span></button>
+                  <button><span class="icon-sm icon-delete"></span></button>
+                </div>
+              </div>
+              <button class="add-todo-btn card-sidebar-btn">Add an item</button>
             </div>
-          </div>
           </div>
           <div class="card-main-item">
             <div class="main-item-header activity">
-              <div>
+              <div class="inner-header">
                 <span class="icon-lg icon-activity"></span>
                 <h3 class="main-item-title">Activity</h3>
               </div>
@@ -39,6 +88,12 @@
           </div>
         </div>
         <div class="card-details-sidebar">
+          <h3>Suggested</h3>
+          <div class="card-sidebar-btn">
+            <span class="icon-sm icon-member"></span>
+            <p class="sidebar-btn-title">Join</p>
+          </div>
+          <h3>Add To Card</h3>
           <div class="card-sidebar-btn">
             <span class="icon-sm icon-member"></span>
             <p class="sidebar-btn-title">Members</p>
@@ -100,6 +155,22 @@ export default {
                 id: "212jX",
                 title: "To Do 1",
                 isDone: false,
+              },
+              {
+                id: "242jX",
+                title: "To Do that",
+                isDone: true,
+              },
+            ],
+          },
+          {
+            id: "YEt5F",
+            title: "Checklist 2",
+            todos: [
+              {
+                id: "212yX",
+                title: "To Do this",
+                isDone: true,
               },
             ],
           },

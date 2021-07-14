@@ -16,7 +16,7 @@
         <div class="group-header-extras">...</div>
       </div>
       <div v-for="card in group.cards" v-bind:key="card.id">
-        <card-list :card="card" />
+        <!-- <card-list :card="card" /> -->
       </div>
       <div class="card-composer"></div>
     </div>
