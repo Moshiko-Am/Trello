@@ -1,5 +1,5 @@
 <template>
-  <section class="card-details-bg">
+  <section class="card-details-bg" @click="exitCard">
     <section class="card-details">
       <button class="close-btn"><span class="icon-md icon-x"></span></button>
       <div class="card-details-header">
@@ -126,79 +126,14 @@
 
 <script>
 export default {
-  data() {
-    return {
-      card: {
-        id: "c104",
-        title: "Help me",
-        description:
-          "I need to make a very special super duper app that looks like trello",
-        comments: [
-          {
-            id: "ZdPnm",
-            txt: "also @yaronb please CR this",
-            createdAt: 1590999817436.0,
-            byMember: {
-              _id: "u101",
-              fullname: "Tal Tarablus",
-              imgUrl:
-                "http://res.cloudinary.com/shaishar9/image/upload/v1590850482/j1glw3c9jsoz2py0miol.jpg",
-            },
-          },
-        ],
-        checklists: [
-          {
-            id: "YEhmF",
-            title: "Checklist 1",
-            todos: [
-              {
-                id: "212jX",
-                title: "To Do 1",
-                isDone: false,
-              },
-              {
-                id: "242jX",
-                title: "To Do that",
-                isDone: true,
-              },
-            ],
-          },
-          {
-            id: "YEt5F",
-            title: "Checklist 2",
-            todos: [
-              {
-                id: "212yX",
-                title: "To Do this",
-                isDone: true,
-              },
-            ],
-          },
-        ],
-        members: [
-          {
-            _id: "u101",
-            username: "Tal",
-            fullname: "Tal Tarablus",
-            imgUrl:
-              "http://res.cloudinary.com/shaishar9/image/upload/v1590850482/j1glw3c9jsoz2py0miol.jpg",
-          },
-        ],
-        labelIds: ["l101", "l102"],
-        createdAt: 1590999730348,
-        dueDate: 16156215211,
-        byMember: {
-          _id: "u101",
-          username: "Tal",
-          fullname: "Tal Tarablus",
-          imgUrl:
-            "http://res.cloudinary.com/shaishar9/image/upload/v1590850482/j1glw3c9jsoz2py0miol.jpg",
-        },
-        style: {
-          bgColor: "#26de81",
-        },
-      },
-    };
+  props:{
+    card: Object,
+    group : Object
   },
+  methods: {
+    exitCard(){
+      this.$emit('clearCard')
+    }
+  }
 };
 </script>
