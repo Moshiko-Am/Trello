@@ -4,7 +4,7 @@
       <div class="group-header">
         <div class="group-header-target js-editing-target"></div>
         <textarea
-          class="group-header-name mod-group-name js-group-name-input"
+          class="group-header-name mod-group-name"
           v-bind:aria-label="group.title"
           spellcheck="false"
           dir="auto"
@@ -13,7 +13,7 @@
         ></textarea>
         <div class="group-header-extras">
           <a
-            class="group-header-extras-menu dark-hover js-open-group-menu icon-sm icon-dots-menu"
+            class="group-header-extras-menu dark-hover icon-sm icon-dots-menu"
             href="#"
             aria-label="List actions"
             ><div></div
@@ -21,8 +21,8 @@
         </div>
       </div>
       <!-- <card-preview v-for="card in group.cards" v-bind:key="card.id"/> -->
-      <div class="card-composer-container js-card-composer-container">
-        <a class="open-card-composer js-open-card-composer" href="#">
+      <div class="card-composer-container">
+        <a class="open-card-composer" href="#">
           <span class="icon-sm icon-add"></span>
           <span class="js-add-a-card">Add a card</span></a
         >
