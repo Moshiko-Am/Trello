@@ -5,7 +5,7 @@
 			<button class="icon-md icon-x"></button>
 		</div>
 		<hr />
-		<div class="menu-change-background">
+		<div class="menu-change-background" v-if="board.style">
 			<img :src="board.style.backgroundImage" class="side-bar-bgc-img" />
 			<button>Change background</button>
 		</div>
