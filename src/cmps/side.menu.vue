@@ -7,10 +7,7 @@
 		<hr />
 		<div class="side-menu-content">
 			<div class="side-menu-item" v-if="board.style">
-				<img
-					class="side-bar-bgc-img"
-					:src="board.style.backgroundImage"
-				/>
+				<img class="side-bar-bgc-img" :src="board.style.content" />
 				<button class="btn-menu-change-background">
 					Change background
 				</button>
