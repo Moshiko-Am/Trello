@@ -44,3 +44,9 @@ button {
 .icon-member {
     @include to-icon("\e912");
 }
+
+#app {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}

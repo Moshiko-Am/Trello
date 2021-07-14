@@ -21,9 +21,7 @@
           ></a>
         </div>
       </div>
-      <div v-for="card in group.cards" v-bind:key="card.id">
-        <!-- <card-list :card="card" /> -->
-      </div>
+      <!-- <card-preview v-for="card in group.cards" v-bind:key="card.id"/> -->
       <div class="card-composer-container js-card-composer-container">
         <a class="open-card-composer js-open-card-composer" href="#">
           <span class="icon-sm icon-add"></span>
