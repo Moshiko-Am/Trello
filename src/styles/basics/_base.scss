@@ -15,6 +15,10 @@ body {
     font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 
+a {
+    text-decoration: none;
+}
+
 h1,
 h2,
 h3,
@@ -34,9 +38,15 @@ img {
 }
 
 button {
-    cursor: pointer
+    cursor: pointer;
 }
 
 .icon-member {
     @include to-icon("\e912");
+}
+
+#app {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
 }

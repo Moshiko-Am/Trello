@@ -1,10 +1,12 @@
 .card-details-bg {
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
+    min-height: 100vh;
     height: 100%;
     background-color: rgba(0,0,0,0.64);
+    overflow-y: auto;
 
     .card-details {
         background-color:#f4f5f7 ;
@@ -14,6 +16,7 @@
         transform: translate(-50%, -50%);
         border-radius: 2px;
         color: #172b4d;
+        margin: 50px 0;
 
         .close-btn {
             
@@ -22,14 +25,13 @@
             background: none;
             border:none;
             position: absolute;
-            top: 0;
-            right: 0;
+            top: 4px;
+            right: 2px;
             height: 32px;
-            overflow: hidden;
             padding: 4px;
+            line-height: 25px;
             margin: 4px;
             width: 32px;
-            z-index: 2;
             transition: background-color 85ms,color 85ms; 
 
             &:hover {
@@ -38,10 +40,43 @@
             }
         }
 
-
+        .card-sidebar-btn {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            border:none;
+            height: 32px;
+            padding: 6px 12px 6px 8px;
+            background-color: rgba(9,30,66,.04);
+            border-radius: 3px;
+            font-size: 14px;
+            margin-top: 8px;
+            color: #172b4d;
+            transition: background-color 85ms ease;
+        
+            &:hover {
+                background-color: rgba(9,30,66,.08);
+            }
+        }
     }
 }
 
+.progress-bar-container {
+    padding: 0 0 0 5px;
+    display: flex;
+    align-items: center;
+
+    .progress-bar {
+        background: rgba(9,30,66,.08);
+        border-radius: 4px;
+        clear: both;
+        height: 8px;
+        flex: 1;
+        margin: 0 0 0 20px;
+        overflow: hidden;
+        position: relative;
+    }
+}
 
 .card-details-content {
     display: flex;
@@ -57,7 +92,68 @@
         h2 {
             margin-left: 8px;
             font-weight: 600;
+            margin-top: 3px;
+            margin-bottom: .2rem;
         }
+    }
+
+    .card-details-list {
+        margin-left: 32px;
+    }
+}
+
+.labels-container,.members-container {
+    display: flex;
+    margin-left: 32px;
+
+    .labelDisplay {
+        width: 50px;
+        margin-right: 10px;
+        border-radius: 3px;
+    }
+}
+
+.card-main-item {
+    .todo {
+        cursor: pointer;
+        display: flex;
+        justify-content: space-between;
+        border-radius: 3px;
+        
+        .inner{
+            display: flex;
+            align-items: center;
+            padding: 8px 0;
+        }
+        
+        input {
+            margin-right: 16px;
+        }
+        
+        &:hover{
+            background-color: rgba(9,30,66,.04);
+        }
+
+        .todo-btns {
+            display: flex;
+            align-items: center;
+
+            button {
+                background-color: rgba(9, 30, 66, 0.04);
+                border-radius: 3px;
+                border: none;
+                padding: 3px;
+                margin:0 3px;
+
+                &:hover {
+                    background-color: rgba(9,30,66,.08);
+                }
+            }
+        }
+    }
+
+    .add-todo-btn {
+        margin-left: 32px;
     }
 }
 
@@ -68,32 +164,19 @@
     .main-item-header {
         display: flex;
         align-items: center;
+        padding: 5px 0;
 
         div {
             display: flex;
         }
 
-        &.activity{
+        &.activity , &.checklist{
             justify-content: space-between;
+        }
 
-            button {
-                display: flex;
-                align-items: center;
-                cursor: pointer;
-                border:none;
-                height: 32px;
-                padding: 6px 12px;
-                background-color: rgba(9,30,66,.04);
-                border-radius: 3px;
-                font-size: 14px;
-                margin-top: 8px;
-                color: #172b4d;
-                transition: background-color 85ms ease;
-            
-                &:hover {
-                    background-color: rgba(9,30,66,.08);
-                }
-            }
+        .inner-header {
+            display: flex;
+            align-items: center;
         }
     }
 
@@ -117,7 +200,7 @@
 
     h3 {
         font-weight: 600;
-        margin-bottom:.5rem;
+        margin-bottom:0;
     }
 }
 
@@ -126,30 +209,23 @@
     flex-direction: column;
     padding:0 16px 8px 8px;
     
+    h3 {
+        margin:0;
+        margin-top: 10px;
+        font-weight: 500;
+        color: #5e6c84;
+    }
+
     .card-sidebar-btn {
-        display: flex;
-        align-items: center;
-        cursor: pointer;
-        height: 32px;
-        width: 168px;
-        padding: 6px 12px;
-        background-color: rgba(9,30,66,.04);
-        border-radius: 3px;
-        font-size: 14px;
-        margin-top: 8px;
-        color: #172b4d;
-        transition: background-color 85ms ease;
-    
-        &:hover {
-            background-color: rgba(9,30,66,.08);
-        }
-    
         span {
             margin-right: 6px;
         }
     }
 }
 
+.completed {
+    text-decoration: line-through;
+}
 
 .icon-card {
     @include to-icon("\e912")
@@ -170,7 +246,7 @@
     @include to-icon("\e914")
 }
 .icon-date {
-    @include to-icon("\e910")
+    @include to-icon("\e91b")
 }
 .icon-checklist {
     @include to-icon("\e91a")
@@ -180,4 +256,10 @@
 }
 .icon-x {
     @include to-icon("\e91c")
+}
+.icon-delete {
+    @include to-icon("\e95c")
+}
+.icon-assign {
+    @include to-icon("\e902")
 }
