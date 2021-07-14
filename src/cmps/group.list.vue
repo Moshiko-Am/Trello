@@ -1,7 +1,13 @@
 <template>
-  <section v-if="groups" class="group-list-bg">
-    <div v-for="group in groups" v-bind:key="group.id">
-      <group-details :group="group" />
+  <section v-if="groups">
+    <div
+      v-for="group in groups"
+      v-bind:key="group.id"
+      class="group-list-wrapper"
+    >
+      <div class="group-list">
+        <group-details :group="group" />
+      </div>
     </div>
   </section>
   <loader v-else />
