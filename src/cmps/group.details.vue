@@ -21,19 +21,20 @@
           ></a>
         </div>
       </div>
-      <!-- <card-preview v-for="card in group.cards" v-bind:key="card.id"/> -->
+      <card-preview v-for="card in group.cards" :key="card.id" :card="card"/>
       <div class="card-composer-container js-card-composer-container">
         <a class="open-card-composer js-open-card-composer" href="#">
           <span class="icon-sm icon-add"></span>
-          <span class="js-add-a-card">Add a card</span></a
-        >
+          <span class="js-add-a-card">Add a card</span></a>
       </div>
     </div>
   </section>
-  <loader v-else />
+  <!-- <loader v-else /> -->
 </template>
 
 <script>
+import cardPreview from './card.preview.vue'
+
 export default {
   props: {
     group: Object,
@@ -46,5 +47,8 @@ export default {
   created() {
     this.groupTitle = this.group.title;
   },
+  components: {
+    cardPreview
+  }
 };
 </script>
