@@ -43,6 +43,58 @@ var gBoards = [{
             ],
         },
         {
+            id: 'g202',
+            title: 'Group 2',
+            cards: [{
+                    id: 'c103',
+                    title: 'Do that',
+                },
+                {
+                    id: 'c104',
+                    title: 'Help me',
+                    description: 'description',
+                    comments: [{
+                        id: 'ZdPnm',
+                        txt: 'also @yaronb please CR this',
+                        createdAt: 1590999817436.0,
+                        byMember: {
+                            _id: 'u101',
+                            fullname: 'Tal Tarablus',
+                            imgUrl: 'http://res.cloudinary.com/shaishar9/image/upload/v1590850482/j1glw3c9jsoz2py0miol.jpg',
+                        },
+                    }, ],
+                    checklists: [{
+                        id: 'YEhmF',
+                        title: 'Checklist',
+                        todos: [{
+                            id: '212jX',
+                            title: 'To Do 1',
+                            isDone: false,
+                        }, ],
+                    }, ],
+                    members: [{
+                        _id: 'u101',
+                        username: 'Tal',
+                        fullname: 'Tal Tarablus',
+                        imgUrl: 'http://res.cloudinary.com/shaishar9/image/upload/v1590850482/j1glw3c9jsoz2py0miol.jpg',
+                    }, ],
+                    labelIds: ['l101', 'l102'],
+                    createdAt: 1590999730348,
+                    dueDate: 16156215211,
+                    byMember: {
+                        _id: 'u101',
+                        username: 'Tal',
+                        fullname: 'Tal Tarablus',
+                        imgUrl: 'http://res.cloudinary.com/shaishar9/image/upload/v1590850482/j1glw3c9jsoz2py0miol.jpg',
+                    },
+                    style: {
+                        bgColor: '#26de81',
+                    },
+                },
+            ],
+            style: {},
+        },
+        {
             id: 'g111',
             title: 'Group 1',
             cards: [{
@@ -172,58 +224,7 @@ var gBoards = [{
                 },
             ],
         },
-        {
-            id: 'g202',
-            title: 'Group 2',
-            cards: [{
-                    id: 'c103',
-                    title: 'Do that',
-                },
-                {
-                    id: 'c104',
-                    title: 'Help me',
-                    description: 'description',
-                    comments: [{
-                        id: 'ZdPnm',
-                        txt: 'also @yaronb please CR this',
-                        createdAt: 1590999817436.0,
-                        byMember: {
-                            _id: 'u101',
-                            fullname: 'Tal Tarablus',
-                            imgUrl: 'http://res.cloudinary.com/shaishar9/image/upload/v1590850482/j1glw3c9jsoz2py0miol.jpg',
-                        },
-                    }, ],
-                    checklists: [{
-                        id: 'YEhmF',
-                        title: 'Checklist',
-                        todos: [{
-                            id: '212jX',
-                            title: 'To Do 1',
-                            isDone: false,
-                        }, ],
-                    }, ],
-                    members: [{
-                        _id: 'u101',
-                        username: 'Tal',
-                        fullname: 'Tal Tarablus',
-                        imgUrl: 'http://res.cloudinary.com/shaishar9/image/upload/v1590850482/j1glw3c9jsoz2py0miol.jpg',
-                    }, ],
-                    labelIds: ['l101', 'l102'],
-                    createdAt: 1590999730348,
-                    dueDate: 16156215211,
-                    byMember: {
-                        _id: 'u101',
-                        username: 'Tal',
-                        fullname: 'Tal Tarablus',
-                        imgUrl: 'http://res.cloudinary.com/shaishar9/image/upload/v1590850482/j1glw3c9jsoz2py0miol.jpg',
-                    },
-                    style: {
-                        bgColor: '#26de81',
-                    },
-                },
-            ],
-            style: {},
-        },
+        
     ],
     activities: [{
         id: 'a101',
