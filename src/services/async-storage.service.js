@@ -33,21 +33,12 @@ function get(entityType, entityId) {
 }
 
 function post(entityType, newEntity) {
-<<<<<<< HEAD
 	newEntity._id = _makeId();
 	return query(entityType).then((entities) => {
 		entities.push(newEntity);
 		_save(entityType, entities);
 		return newEntity;
 	});
-=======
-    newEntity._id = _makeId();
-    return query(entityType).then((entities) => {
-        entities.push(newEntity);
-        _save(entityType, entities);
-        return newEntity;
-    });
->>>>>>> 9e8e7769d37070e450d439cd7246b6dc5dd27b8c
 }
 
 function put(entityType, updatedEntity) {
