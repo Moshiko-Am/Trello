@@ -14,11 +14,11 @@
         position: absolute;
         left: 50%;
         top: 50%;
-        transform: translate(-50%, -50%);
+        transform: translate(-50%, -60%);
         border-radius: 2px;
         color: #172b4d;
-        margin: 50px 0;
-
+        padding: 30px 15px;
+        // min-height: 70vh;
         .close-btn {
             
             color: #42526e;
@@ -118,17 +118,33 @@
     }
 }
 
+    .labels-members-container {
+        display: flex;
+        .card-main-item {
+            margin-left: 32px;
+            h3 {
+                opacity: 0.6;
+            }
+        }
+    }
+
 .card-main-item {
+
     .todo {
         cursor: pointer;
         display: flex;
-        justify-content: space-between;
+        // justify-content: space-between;
         border-radius: 3px;
         
         .inner{
+            flex:1;
             display: flex;
             align-items: center;
             padding: 8px 0;
+
+            div {
+                flex-grow: 1;
+            }
         }
         
         input {

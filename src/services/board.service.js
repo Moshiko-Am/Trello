@@ -86,6 +86,27 @@ var gBoards = [
 									},
 								],
 							},
+							{
+								id: 'YEsdahmF',
+								title: 'Checklist2',
+								todos: [
+									{
+										id: '212jX',
+										title: 'To Do 1',
+										isDone: false,
+									},
+									{
+										id: '2112jX',
+										title: 'To 1',
+										isDone: false,
+									},
+									{
+										id: '212yX',
+										title: 'To Do 6',
+										isDone: true,
+									},
+								],
+							},
 						],
 						members: [
 							{
