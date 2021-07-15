@@ -2,7 +2,7 @@ var gUsers = [
 	{
 		_id: 'u101',
 		fullname: 'Abi Abambi',
-		username: 'abi@ababmi.com',
+		username: 'abi1',
 		password: 'aBambi123',
 		imgUrl: 'http://some-img.jpg',
 		mentions: [
@@ -19,13 +19,14 @@ import { storageService } from './async-storage.service.js';
 // import { httpService } from './http.service'
 // import { socketService, SOCKET_EVENT_USER_UPDATED } from './socket.service';
 const USER_KEY = 'loggedinUser';
+const USERS_DB = 'allUsers';
 // var gWatchedUser = null;
 
 export const userService = {
+	query,
 	login,
 	logout,
 	signup,
-	getUsers,
 	getById,
 	remove,
 	update,
@@ -38,9 +39,25 @@ window.userService = userService;
 // userService.signup({fullname: 'Master Adminov', username: 'admin', password:'123', score: 100, isAdmin: true})
 // userService.signup({fullname: 'Muki G', username: 'muki', password:'123', score: 100})
 
-function getUsers() {
-	return storageService.query(USER_KEY);
-	// return httpService.get(`user`)
+// async function getUsers() {
+// 	try{
+//         return storageService.query(USER_KEY);
+
+//     }
+// 	// return httpService.get(`user`)
+// }
+async function query() {
+	try {
+		const users = await storageService.query(USERS_DB);
+		if (!users.length) {
+			console.log('hey');
+			storageService.postMany(USERS_DB, gUsers);
+			return gUsers;
+		}
+		return users;
+	} catch (err) {
+		console.log(err);
+	}
 }
 
 async function getById(userId) {
