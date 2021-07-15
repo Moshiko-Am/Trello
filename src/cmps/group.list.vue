@@ -59,6 +59,7 @@ export default {
         id: this.makeId(),
         title: "",
         createdAt: Date.now(),
+        cards: [],
       },
     };
   },
