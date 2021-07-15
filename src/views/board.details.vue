@@ -62,7 +62,9 @@ export default {
           try {
             await this.$store.dispatch({ type: "loadBoards" });
             this.$store.commit("getBoardById", boardId);
-            this.boardToEdit = this.$store.state.boardStore.selectedBoard;
+            this.boardToEdit = JSON.parse(
+              JSON.stringify(this.$store.state.boardStore.selectedBoard)
+            );
           } catch (err) {
             console.log("didnt find board", err);
             // this.$router.push(`/`);
