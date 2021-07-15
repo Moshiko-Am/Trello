@@ -3,7 +3,7 @@ import { boardService } from '../services/board.service.js';
 export const boardStore = {
     state: {
         selectedBoard: {},
-        boards: {},
+        boards: null,
     },
     getters: {
         board({ selectedBoard }) {

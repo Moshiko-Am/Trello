@@ -1,17 +1,17 @@
 <template>
-	<section class="board-header-container" v-if="boardToEdit">
+	<section class="board-header-container">
 		<div class="board-header-controls">
 			<div class="board-header-title">
 				<textarea
 					class="title-textArea"
-					@input="boardChange"
-					v-model="boardToEdit.title"
+					@input="saveTitle"
+					v-model="boardTitleToEdit"
 				></textarea>
 			</div>
 			<span class="board-header-divider">|</span>
 			<div class="board-header-members">
 				<span
-					v-for="member in boardToEdit.members"
+					v-for="member in boardMemebersToEdit"
 					:key="member._id"
 					class="members-list"
 				>
@@ -60,7 +60,8 @@ export default {
 	data() {
 		return {
 			isShow: false,
-			boardToEdit: null,
+			boardTitleToEdit: null,
+			boardMemebersToEdit: [],
 		};
 	},
 	computed: {
@@ -75,15 +76,24 @@ export default {
 		toggleMenu() {
 			this.isShow = !this.isShow;
 		},
-		boardChange() {
-			this.$emit('boardUpdate', this.boardToEdit);
+		saveTitle() {
+			this.$emit('boardUpdate', {
+				type: 'title',
+				title: this.boardTitleToEdit,
+			});
 		},
-		removeMember(memberId) {
-			console.log(memberId);
+		saveMembers() {
+			this.$emit('boardUpdate', {
+				type: 'members',
+				members: this.boardMemebersToEdit,
+			});
 		},
 	},
 	created() {
-		this.boardToEdit = JSON.parse(JSON.stringify(this.board));
+		this.boardTitleToEdit = this.board.title.slice();
+		this.boardMemebersToEdit = JSON.parse(
+			JSON.stringify(this.board.members)
+		);
 	},
 };
 </script>
