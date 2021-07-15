@@ -12,7 +12,6 @@
 					Change background
 				</button>
 			</div>
-			<hr />
 			<div class="side-menu-item" v-if="board.style">
 				<span class="icon-lg icon-activity"></span>
 				<span class="menu-activity">
@@ -27,8 +26,8 @@
 				>
 					<avatar
 						:username="activity.byMember.fullname"
-						size="30"
-						inline="true"
+						:size="30"
+						:inline="true"
 					></avatar>
 					<span class="activity-txt">{{ activity.txt }}</span>
 				</div>
