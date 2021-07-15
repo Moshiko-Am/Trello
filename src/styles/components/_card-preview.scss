@@ -9,26 +9,30 @@
     text-decoration: none;
     z-index: 0;
     margin: 4px 8px;
-    padding: 6px 8px ;
+    padding: 6px 8px;
     width: 264px;
-
-
     .preview-labels-container {
         display: flex;
-         .label {
-             min-height: 8px;
-             border-radius: 3px;
-             min-width: 40px;
-             margin-right: 5px;
-             padding: 0 10px;
-         }
-
+        .label {
+            min-height: 8px;
+            border-radius: 3px;
+            width: 40px;
+            height: 8px;
+            min-width: 40px;
+            margin-right: 5px;
+            padding: 0 10px;
+            color: white;
+            font-weight: 700;
+            transition: width 0.4s, height 0.4s 0.4s;
+        }
+        .label.shown {
+            width: 60px;
+            height: 20px;
+        }
     }
-
     .preview-checklist-container {
         display: flex;
         align-items: center;
-        
         .icon-sm {
             margin-top: 4px;
         }
