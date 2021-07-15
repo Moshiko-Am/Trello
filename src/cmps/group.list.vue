@@ -1,7 +1,7 @@
 <template>
 	<section v-if="groups" class="group-list">
 		<div
-			v-for="group in groups"
+			v-for="group in groupsToEdit"
 			v-bind:key="group.id"
 			class="group-wrapper"
 		>
@@ -20,8 +20,16 @@ export default {
 		groups: Array,
 		labels: Array
 	},
+	data(){
+		return{
+			groupsToEdit: null,	
+		}
+	},
 	components: {
 		groupDetails,
 	},
+	created(){
+		this.groupsToEdit = JSON.parse(JSON.stringify(this.groups))
+	}
 };
 </script>

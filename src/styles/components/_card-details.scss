@@ -13,8 +13,8 @@
         background-color:#f4f5f7 ;
         position: absolute;
         left: 50%;
-        top: 50%;
-        transform: translate(-50%, -60%);
+        top: 70px;
+        transform: translate(-50%);
         border-radius: 2px;
         color: #172b4d;
         padding: 30px 15px;
@@ -76,7 +76,14 @@
         margin: 0 0 0 20px;
         overflow: hidden;
         position: relative;
+
+        div {
+            background-color: #5ba4cf;
+            height: 100%;
+            transition: width .3s;
+        }
     }
+
 }
 
 .card-details-content {
@@ -105,7 +112,7 @@
 
 .labels-container,.members-container {
     display: flex;
-    margin-left: 32px;
+    margin-left: 28px;
 
     .labelDisplay {
         height: 32px;
@@ -115,6 +122,10 @@
         padding: 0 12px;
         margin-right: 10px;
         border-radius: 3px;
+    }
+
+    .vue-avatar--wrapper{
+        margin-right: 10px;
     }
 }
 
@@ -140,9 +151,9 @@
             flex:1;
             display: flex;
             align-items: center;
-            padding: 8px 0;
-
+            
             div {
+                padding: 8px 0;
                 flex-grow: 1;
             }
         }
@@ -283,4 +294,11 @@
 }
 .icon-assign {
     @include to-icon("\e902")
+}
+.icon-v{
+    @include to-icon("\e916");
+    color:white;
+}
+.icon-edit{
+    @include to-icon("\e928")
 }

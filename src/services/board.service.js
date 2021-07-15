@@ -19,12 +19,22 @@ var gBoards = [
 			{
 				id: 'l101',
 				title: 'Done',
-				color: '#519839',
+				color: '#61bd4f',
 			},
 			{
 				id: 'l102',
 				title: 'almost',
 				color: '#f2d600',
+			},
+			{
+				id: 'l103',
+				title: 'Nice',
+				color: '#ff78cb',
+			},
+			{
+				id: 'l104',
+				title: 'Bad',
+				color: '#eb5a46',
 			},
 		],
 		members: [
@@ -60,7 +70,7 @@ var gBoards = [
 					{
 						id: 'c104',
 						title: 'Help me',
-						description: 'description',
+						description: 'I am going to be better than trello , just give me a chance and i will show you',
 						comments: [
 							{
 								id: 'ZdPnm',
@@ -113,6 +123,13 @@ var gBoards = [
 								_id: 'u101',
 								username: 'Tal',
 								fullname: 'Tal Tarablus',
+								imgUrl:
+									'http://res.cloudinary.com/shaishar9/image/upload/v1590850482/j1glw3c9jsoz2py0miol.jpg',
+							},
+							{
+								_id: 'u123',
+								username: 'Bob',
+								fullname: 'Bobi bottomless',
 								imgUrl:
 									'http://res.cloudinary.com/shaishar9/image/upload/v1590850482/j1glw3c9jsoz2py0miol.jpg',
 							},

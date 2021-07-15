@@ -1,7 +1,7 @@
 <template>
   <section class="board-details">
-    <board-header :board="board" />
-    <group-list :groups="board.groups" :labels="labels" />
+    <board-header :board="board" v-if="board"/>
+    <group-list :groups="board.groups"  v-if="board.groups" :labels="labels" />
   </section>
 </template>
 
