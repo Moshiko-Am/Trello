@@ -21,8 +21,10 @@
              min-width: 40px;
              margin-right: 5px;
              padding: 0 10px;
+             transition: min-height 2s;
+             color: white;
+             font-weight: 700;
          }
-
     }
 
     .preview-checklist-container {
