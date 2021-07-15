@@ -2,12 +2,13 @@
   <div class="checklists">
     <div
       class="card-main-item"
-      v-for="(checklist, cIdx) in checklistsToEdit"
+      v-for="(checklist, cIdx) in checklists"
       :key="checklist.id"
     >
       <checklist-preview
         :checklist="checklist"
         @updateChecklist="updateCl($event, cIdx)"
+        @removeCl="removeCl(cIdx)"
       />
     </div>
   </div>
@@ -32,6 +33,11 @@ export default {
   methods: {
     updateCl(checklist,cIdx){
       this.checklistsToEdit.splice(cIdx , 1 , checklist)
+      this.updateChecklists()
+      console.log('updated');
+    },
+    removeCl(cIdx){
+      this.checklistsToEdit.splice(cIdx , 1)
       this.updateChecklists()
     },
     updateChecklists() {

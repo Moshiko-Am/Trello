@@ -7,7 +7,7 @@
           v-bind:aria-label="group.title"
           spellcheck="false"
           dir="auto"
-          v-model="groupForEdit.title"
+          v-model="groupToEdit.title"
         ></textarea>
         <div class="group-header-extras">
           <a class="group-header-extras-menu icon-sm icon-dots-menu"></a>
@@ -26,7 +26,7 @@
           placeholder="Enter a title for this card..."
           dir="auto"
           ref="content"
-          v-model="cardForEdit.title"
+          v-model="cardToEdit.title"
         ></textarea>
       </div>
       <section ref="addcard">
@@ -70,8 +70,8 @@ export default {
   data() {
     return {
       isAddingCard: false,
-      groupForEdit: {},
-      cardForEdit: {
+      groupToEdit: {},
+      cardToEdit: {
         id: "",
         title: "",
         createdAt: Date.now(),
@@ -89,12 +89,12 @@ export default {
     toggleCardEdit() {
       this.isAddingCard = !this.isAddingCard;
       if (this.isAddingCard) this.$nextTick(() => this.$refs.content.focus());
-      else if (this.cardForEdit.title) {
-        const savedCard = { ...this.cardForEdit };
+      else if (this.cardToEdit.title) {
+        const savedCard = { ...this.cardToEdit };
         savedCard.id = this.makeId();
-        this.groupForEdit.cards.push(savedCard);
+        this.groupToEdit.cards.push(savedCard);
         this.saveGroup();
-        this.cardForEdit.title = "";
+        this.cardToEdit.title = "";
       }
     },
     makeId(length = 5) {
@@ -110,15 +110,16 @@ export default {
       const idx = this.group.cards.findIndex(
         (card) => card.id === updatedCard.id
       );
-      this.group.cards.splice(idx, 1, updatedCard);
+      this.groupToEdit.cards.splice(idx, 1, updatedCard);
+      console.log("from group details", this.groupToEdit);
       this.saveGroup();
     },
     saveGroup() {
-      this.$emit("saveGroup", this.groupForEdit);
+      this.$emit("saveGroup", this.groupToEdit);
     },
   },
   created() {
-    this.groupForEdit = JSON.parse(JSON.stringify(this.group));
+    this.groupToEdit = JSON.parse(JSON.stringify(this.group));
     this.groupTitle = this.group.title;
   },
   mounted() {

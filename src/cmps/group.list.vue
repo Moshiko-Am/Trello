@@ -67,6 +67,7 @@ export default {
   },
   methods: {
     saveGroups(savedGroup) {
+      console.log("savedGroup", savedGroup);
       const groupsToEdit = JSON.parse(JSON.stringify(this.groups));
       const idx = groupsToEdit.findIndex((group) => {
         return group.id === savedGroup.id;

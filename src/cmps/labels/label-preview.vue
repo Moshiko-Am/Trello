@@ -20,11 +20,12 @@ export default {
   },
   data() {
     return {
-      labelsToEdit: this.cardLabels.slice(),
+      labelsToEdit: this.cardLabels || [],
     };
   },
   computed: {
     labeled() {
+      if(!this.cardLabels) return false
       return this.cardLabels.some((labelId) => labelId === this.label.id);
     },
   },

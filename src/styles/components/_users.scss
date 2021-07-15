@@ -1,0 +1,53 @@
+.members-list-container {
+	position: absolute;
+	font-size: 30px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	color: white;
+	background-color: #f4f5f7;
+	z-index: 1;
+	border-radius: 3px;
+	box-shadow: 0 8px 16px -4px rgba(9, 30, 66, 0.25),
+		0 0 0 1px rgba(9, 30, 66, 0.08);
+	width: 300px;
+	height: 250px;
+	overflow: hidden;
+	padding: 6px 12px 12px;
+
+	.members-list-close {
+		display: flex;
+		justify-content: flex-end;
+		align-items: center;
+		width: 100%;
+		.icon-x {
+			@include to-icon('\e91c');
+			color: #6b778c;
+			cursor: pointer;
+		}
+	}
+
+	hr {
+		background-color: rgba(9, 30, 66, 0.13);
+		border: none;
+		height: 1px;
+		width: 100%;
+		margin-block-end: 10px;
+	}
+
+	.users-details {
+		width: 100%;
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+
+		.members-list-header {
+			text-transform: uppercase;
+			color: #5e6c84;
+			font-size: 12px;
+			font-weight: 500;
+			letter-spacing: 0.04em;
+			line-height: 16px;
+		}
+	}
+}

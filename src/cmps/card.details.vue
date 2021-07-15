@@ -43,11 +43,11 @@
             <span class="icon-sm icon-member"></span>
             <p class="sidebar-btn-title">Members</p>
           </div>
-          <div class="card-sidebar-btn">
+          <div class="card-sidebar-btn" @click="toggleLabel">
             <span class="icon-sm icon-label"></span>
             <p class="sidebar-btn-title">Labels</p>
           </div>
-          <div class="card-sidebar-btn">
+          <div class="card-sidebar-btn" @click="toggleCl">
             <span class="icon-sm icon-checklist"></span>
             <p class="sidebar-btn-title">Checklist</p>
           </div>
@@ -70,7 +70,9 @@
       :optionsLabels="labels"
       :cardLabels="card.labelIds"
       @updateLabels="updateLabels"
+      v-if="isAddingLabel"
     />
+    <checklist-add @addCl="addCl" v-if="isAddingChecklist"/>
   </section>
 </template>
 
@@ -80,6 +82,7 @@ import membersCmp from "./card-details-cmps/members.cmp.vue";
 import activityCmp from "./card-details-cmps/activity.cmp.vue";
 import descriptionCmp from "./card-details-cmps/description.cmp.vue";
 import checklistsCmp from "./card-details-cmps/checklists.cmp.vue";
+import checklistAdd from "./checklist.add.vue";
 import labelsList from "./labels/labels.list.vue";
 export default {
   props: {
@@ -91,6 +94,8 @@ export default {
     return {
       cardToEdit: null,
       addingTodo: false,
+      isAddingChecklist: false,
+      isAddingLabel:false,
     };
   },
   components: {
@@ -100,6 +105,7 @@ export default {
     checklistsCmp,
     activityCmp,
     labelsList,
+    checklistAdd,
   },
   methods: {
     exitCard() {
@@ -109,11 +115,25 @@ export default {
       const num = Math.floor(Math.random() * (900 - 1) + 1);
       return "c" + num;
     },
+    toggleCl(){
+      this.isAddingChecklist = !this.isAddingChecklist
+    },
+    toggleLabel(){
+      this.isAddingLabel = !this.isAddingLabel
+    },
     updateDesc(desc) {
       this.cardToEdit.description = desc;
+      this.emitCard()
+    },
+    addCl(checklist){
+      this.cardToEdit.checklists.push(checklist);
+      console.log(this.cardToEdit);
+      // this.cardToEdit
+      this.emitCard()
     },
     updateCL(checklists) {
       this.cardToEdit.checklists = checklists;
+      this.emitCard()
     },
     updateLabels(labels) {
       this.cardToEdit.labelIds = labels;

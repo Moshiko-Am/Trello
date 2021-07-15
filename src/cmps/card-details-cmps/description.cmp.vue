@@ -30,7 +30,7 @@ export default {
   data() {
     return {
       descTextarea: false,
-      descToEdit : this.description.slice()
+      descToEdit : this.description || '',
     }
   },
   methods: {
