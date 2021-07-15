@@ -10,10 +10,7 @@
           v-model="groupForEdit.title"
         ></textarea>
         <div class="group-header-extras">
-          <a
-            class="group-header-extras-menu icon-sm icon-dots-menu"
-            href="#"
-          ></a>
+          <a class="group-header-extras-menu icon-sm icon-dots-menu"></a>
         </div>
       </div>
       <card-preview
@@ -109,10 +106,12 @@ export default {
       }
       return text;
     },
-    updateCard(updatedCard){
-      const idx = this.group.cards.findIndex(card => card.id === updatedCard.id)
-      this.group.cards.splice(idx ,1 ,updatedCard)
-      this.saveGroup()
+    updateCard(updatedCard) {
+      const idx = this.group.cards.findIndex(
+        (card) => card.id === updatedCard.id
+      );
+      this.group.cards.splice(idx, 1, updatedCard);
+      this.saveGroup();
     },
     saveGroup() {
       this.$emit("saveGroup", this.groupForEdit);
