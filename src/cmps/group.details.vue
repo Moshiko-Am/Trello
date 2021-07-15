@@ -7,7 +7,7 @@
           v-bind:aria-label="group.title"
           spellcheck="false"
           dir="auto"
-          v-model="groupTitle"
+          v-model="groupForEdit.title"
         ></textarea>
         <div class="group-header-extras">
           <a
@@ -23,12 +23,29 @@
         :labels="labels"
         @click.native="setCard(card)"
       />
-      <div class="card-composer-container">
-        <a class="open-card-composer" href="#">
-          <span class="icon-sm icon-add"></span>
-          <span class="btn-add-card">Add a card</span></a
-        >
+      <div v-if="isAddingCard" class="add-card card-preview">
+        <textarea
+          v-click-outside="toggleCardEdit"
+          placeholder="Enter a title for this card..."
+          dir="auto"
+          ref="content"
+          v-model="cardForEdit.title"
+        ></textarea>
       </div>
+      <section ref="addcard">
+        <div v-if="isAddingCard" class="card-composer-container">
+          <div class="add-card-controls">
+            <button class="btn-add-card">Add card</button>
+            <a class="icon-lg icon-close" @click="toggleCardEdit"></a>
+          </div>
+        </div>
+        <div v-else class="card-composer-container">
+          <a class="open-card-composer" @click="toggleCardEdit">
+            <span class="icon-sm icon-add"></span>
+            <span class="add-card">Add a card</span></a
+          >
+        </div>
+      </section>
     </div>
     <card-details
       v-if="currCard"
@@ -44,6 +61,7 @@
 <script>
 import cardPreview from "./card.preview.vue";
 import cardDetails from "./card.details.vue";
+import ClickOutside from "vue-click-outside";
 export default {
   props: {
     group: Object,
@@ -51,7 +69,12 @@ export default {
   },
   data() {
     return {
-      groupTitle: "",
+      isAddingCard: false,
+      groupForEdit: {},
+      cardForEdit: {
+        id: "",
+        title: "",
+      },
       currCard: null,
     };
   },
@@ -62,13 +85,32 @@ export default {
     clearCard() {
       this.currCard = null;
     },
+    toggleCardEdit() {
+      this.isAddingCard = !this.isAddingCard;
+      if (this.isAddingCard) this.$nextTick(() => this.$refs.content.focus());
+      if (this.cardForEdit.title) {
+        this.groupForEdit.cards.push(this.cardForEdit);
+        this.saveGroup;
+      }
+    },
+    saveGroup() {
+      this.$emit("boardUpdate", this.groupForEdit);
+    },
   },
   created() {
+    this.groupForEdit = JSON.parse(JSON.stringify(this.group));
+    console.log(this.groupForEdit);
     this.groupTitle = this.group.title;
+  },
+  mounted() {
+    this.popupItem = this.$refs.addcard;
   },
   components: {
     cardPreview,
     cardDetails,
+  },
+  directives: {
+    ClickOutside,
   },
 };
 </script>
