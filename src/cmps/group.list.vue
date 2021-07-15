@@ -23,18 +23,16 @@ export default {
   components: {
     groupDetails,
   },
-  created() {
-    this.groupsForEdit = JSON.parse(JSON.stringify(this.groups));
-  },
   methods: {
     saveGroups(savedGroup) {
-      const idx = this.groupsForEdit.findIndex((group) => {
-        group.id = savedGroup.id;
+      const groupsToEdit = JSON.parse(JSON.stringify(this.groups));
+      const idx = groupsToEdit.findIndex((group) => {
+        return group.id === savedGroup.id;
       });
-      this.groupsForEdit.splice(idx, 1, savedGroup);
+      groupsToEdit.splice(idx, 1, savedGroup);
       this.$emit("boardUpdate", {
         type: "groups",
-        payload: this.groupsForEdit,
+        payload: groupsToEdit,
       });
     },
   },
