@@ -19,16 +19,18 @@ export const boardStore = {
             state.selectedBoard = state.boards.find(
                 (board) => board._id === boardId
             );
+            console.log(state.selectedBoard)
             return state.selectedBoard;
         },
         setBoards(state, { boards }) {
             state.boards = boards;
         },
-        saveBoard(state, savedBoard) {
+        saveBoard(state, { savedBoard }) {
             const idx = state.boards.findIndex(
                 (board) => board._id === savedBoard._id
             );
             state.boards.splice(idx, 1, savedBoard);
+            state.selectedBoard = savedBoard;
         },
     },
     actions: {

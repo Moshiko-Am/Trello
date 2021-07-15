@@ -1,11 +1,16 @@
 <template>
   <section class="board-details">
     <board-header
-      :board="board"
+      :board="boardToEdit"
       @boardUpdate="boardUpdate"
-      v-if="board.title"
+      v-if="boardToEdit"
     />
-    <group-list v-if="board.groups" :groups="board.groups" :labels="labels" />
+    <group-list
+      @boardUpdate="boardUpdate"
+      v-if="boardToEdit"
+      :groups="boardToEdit.groups"
+      :labels="labels"
+    />
   </section>
 </template>
 
@@ -16,7 +21,7 @@ import groupList from "@/cmps/group.list.vue";
 export default {
   data() {
     return {
-      boardToUpdate: null,
+      boardToEdit: null,
     };
   },
   computed: {
@@ -33,8 +38,9 @@ export default {
     groupList,
   },
   methods: {
-    async boardUpdate() {
-      const board = JSON.parse(JSON.stringify(this.board));
+    async boardUpdate(update) {
+      this.boardToEdit[update.type] = update.payload;
+      const board = JSON.parse(JSON.stringify(this.boardToEdit));
       try {
         await this.$store.dispatch({ type: "saveBoard", board });
       } catch (err) {
@@ -52,6 +58,7 @@ export default {
           try {
             await this.$store.dispatch({ type: "loadBoards" });
             this.$store.commit("getBoardById", boardId);
+            this.boardToEdit = this.$store.state.boardStore.selectedBoard;
           } catch (err) {
             console.log("didnt find board", err);
             // this.$router.push(`/`);

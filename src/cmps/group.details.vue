@@ -35,7 +35,9 @@
       <section ref="addcard">
         <div v-if="isAddingCard" class="card-composer-container">
           <div class="add-card-controls">
-            <button class="btn-add-card">Add card</button>
+            <button class="btn-add-card" @click="toggleCardEdit">
+              Add card
+            </button>
             <a class="icon-lg icon-close" @click="toggleCardEdit"></a>
           </div>
         </div>
@@ -89,10 +91,22 @@ export default {
     toggleCardEdit() {
       this.isAddingCard = !this.isAddingCard;
       if (this.isAddingCard) this.$nextTick(() => this.$refs.content.focus());
-      if (this.cardForEdit.title) {
-        this.groupForEdit.cards.push(this.cardForEdit);
-        this.saveGroup;
+      else if (this.cardForEdit.title) {
+        const savedCard = { ...this.cardForEdit };
+        savedCard.id = this.makeId();
+        this.groupForEdit.cards.push(savedCard);
+        this.saveGroup();
+        this.cardForEdit.title = "";
       }
+    },
+    makeId(length = 5) {
+      var text = "";
+      var possible =
+        "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+      for (var i = 0; i < length; i++) {
+        text += possible.charAt(Math.floor(Math.random() * possible.length));
+      }
+      return text;
     },
     saveGroup() {
       this.$emit("saveGroup", this.groupForEdit);
