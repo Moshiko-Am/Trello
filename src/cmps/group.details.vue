@@ -55,6 +55,7 @@
       :group="group"
       :labels="labels"
       @clearCard="clearCard"
+      @updateCard="updateCard"
     ></card-details>
   </section>
   <!-- <loader v-else /> -->
@@ -107,6 +108,11 @@ export default {
         text += possible.charAt(Math.floor(Math.random() * possible.length));
       }
       return text;
+    },
+    updateCard(updatedCard){
+      const idx = this.group.cards.findIndex(card => card.id === updatedCard.id)
+      this.group.cards.splice(idx ,1 ,updatedCard)
+      this.saveGroup()
     },
     saveGroup() {
       this.$emit("saveGroup", this.groupForEdit);

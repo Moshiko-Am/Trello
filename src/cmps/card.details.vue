@@ -66,7 +66,11 @@
         </div>
       </div>
     </section>
-    <labels-list :optionsLabels="labels" :cardLabels="card.labelIds" @updateLabels="updateLabels" />
+    <labels-list
+      :optionsLabels="labels"
+      :cardLabels="card.labelIds"
+      @updateLabels="updateLabels"
+    />
   </section>
 </template>
 
@@ -76,7 +80,7 @@ import membersCmp from "./card-details-cmps/members.cmp.vue";
 import activityCmp from "./card-details-cmps/activity.cmp.vue";
 import descriptionCmp from "./card-details-cmps/description.cmp.vue";
 import checklistsCmp from "./card-details-cmps/checklists.cmp.vue";
-import labelsList from "./labels/labels.list.vue"
+import labelsList from "./labels/labels.list.vue";
 export default {
   props: {
     card: Object,
@@ -95,7 +99,7 @@ export default {
     descriptionCmp,
     checklistsCmp,
     activityCmp,
-    labelsList
+    labelsList,
   },
   methods: {
     exitCard() {
@@ -111,13 +115,13 @@ export default {
     updateCL(checklists) {
       this.cardToEdit.checklists = checklists;
     },
-    updateLabels(labels){
-      this.cardToEdit.labelIds = labels
-      console.log(this.cardToEdit.labelIds);
+    updateLabels(labels) {
+      this.cardToEdit.labelIds = labels;
+      this.emitCard()
     },
-    emitCard(){
-      this.$emit('updateCard', this.cardToEdit)
-    }
+    emitCard() {
+      this.$emit("updateCard", this.cardToEdit);
+    },
   },
   computed: {
     activities() {
