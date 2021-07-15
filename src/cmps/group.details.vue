@@ -2,21 +2,17 @@
 	<section v-if="group">
 		<div class="group-details">
 			<div class="group-header">
-				<div class="group-header-target js-editing-target"></div>
 				<textarea
 					class="group-header-name mod-group-name"
 					v-bind:aria-label="group.title"
 					spellcheck="false"
 					dir="auto"
-					maxlength="512"
-					v-model="groupTitle"
+					v-model="groupForEdit.title"
 				></textarea>
 				<div class="group-header-extras">
 					<a
-						class="group-header-extras-menu dark-hover icon-sm icon-dots-menu"
+						class="group-header-extras-menu icon-sm icon-dots-menu"
 						href="#"
-						aria-label="List actions"
-						><div></div
 					></a>
 				</div>
 			</div>
@@ -27,12 +23,32 @@
 				:labels="labels"
 				@click.native="setCard(card)"
 			/>
-			<div class="card-composer-container js-card-composer-container">
-				<a class="open-card-composer js-open-card-composer" href="#">
-					<span class="icon-sm icon-add"></span>
-					<span class="js-add-a-card">Add a card</span></a
-				>
+			<div v-if="isAddingCard" class="add-card card-preview">
+				<textarea
+					v-click-outside="toggleCardEdit"
+					placeholder="Enter a title for this card..."
+					dir="auto"
+					ref="content"
+					v-model="cardForEdit.title"
+				></textarea>
 			</div>
+			<section ref="addcard">
+				<div v-if="isAddingCard" class="card-composer-container">
+					<div class="add-card-controls">
+						<button class="btn-add-card">Add card</button>
+						<a
+							class="icon-lg icon-close"
+							@click="toggleCardEdit"
+						></a>
+					</div>
+				</div>
+				<div v-else class="card-composer-container">
+					<a class="open-card-composer" @click="toggleCardEdit">
+						<span class="icon-sm icon-add"></span>
+						<span class="add-card">Add a card</span></a
+					>
+				</div>
+			</section>
 		</div>
 		<card-details
 			v-if="currCard"
@@ -46,16 +62,23 @@
 </template>
 
 <script>
-import cardPreview from "./card.preview.vue";
-import cardDetails from "./card.details.vue";
+import cardPreview from './card.preview.vue';
+import cardDetails from './card.details.vue';
+import ClickOutside from 'vue-click-outside';
 export default {
 	props: {
 		group: Object,
-		labels: Array
+		labels: Array,
 	},
 	data() {
 		return {
-			groupTitle: '',
+			isAddingCard: false,
+			groupForEdit: {},
+			cardForEdit: {
+				id: '',
+				title: '',
+				createdAt: Date.now(),
+			},
 			currCard: null,
 		};
 	},
@@ -63,16 +86,35 @@ export default {
 		setCard(card) {
 			this.currCard = card;
 		},
-		clearCard(){
-			this.currCard = null
-		}
+		clearCard() {
+			this.currCard = null;
+		},
+		toggleCardEdit() {
+			this.isAddingCard = !this.isAddingCard;
+			if (this.isAddingCard)
+				this.$nextTick(() => this.$refs.content.focus());
+			if (this.cardForEdit.title) {
+				this.groupForEdit.cards.push(this.cardForEdit);
+				this.saveGroup;
+			}
+		},
+		saveGroup() {
+			this.$emit('saveGroup', this.groupForEdit);
+		},
 	},
 	created() {
+		this.groupForEdit = JSON.parse(JSON.stringify(this.group));
 		this.groupTitle = this.group.title;
+	},
+	mounted() {
+		this.popupItem = this.$refs.addcard;
 	},
 	components: {
 		cardPreview,
 		cardDetails,
+	},
+	directives: {
+		ClickOutside,
 	},
 };
 </script>

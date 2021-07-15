@@ -10,57 +10,63 @@ export const boardStore = {
             return selectedBoard;
         },
         boardStyle({ selectedBoard }) {
-            return selectedBoard.style
-        }
+            if (selectedBoard)
+                return selectedBoard.style;
+        },
     },
     mutations: {
         getBoardById(state, boardId) {
-            state.selectedBoard = state.boards.find(board => board._id === boardId)
+            state.selectedBoard = state.boards.find(
+                (board) => board._id === boardId
+            );
+            return state.selectedBoard;
         },
         setBoards(state, { boards }) {
-            state.boards = boards
+            state.boards = boards;
         },
         saveBoard(state, savedBoard) {
-            const idx = state.boards.findIndex(board => board._id === savedBoard._id)
-            state.boards.splice(idx, 1, savedBoard)
-        }
+            const idx = state.boards.findIndex(
+                (board) => board._id === savedBoard._id
+            );
+            state.boards.splice(idx, 1, savedBoard);
+        },
     },
     actions: {
         async loadBoards({ commit }) {
             try {
-                const boards = await boardService.query()
-                commit({ type: 'setBoards', boards })
+                const boards = await boardService.query();
+                commit({ type: 'setBoards', boards });
             } catch (err) {
-                console.log('Couldn\'t load boards');
+                console.log("Couldn't load boards");
             }
         },
         async addBoard({ commit }, { board }) {
             try {
-                board = await boardService.add(board)
-                commit({ type: 'addBoard', board })
+                board = await boardService.add(board);
+                commit({ type: 'addBoard', board });
 
                 return board;
             } catch (err) {
-                console.log('boardStore: Error in addBoard', err)
-                throw err
+                console.log('boardStore: Error in addBoard', err);
+                throw err;
             }
         },
         async removeBoard({ commit }, { boardId }) {
             try {
                 await boardService.remove(boardId);
-                commit({ type: 'removeBoard', boardId })
+                commit({ type: 'removeBoard', boardId });
             } catch (err) {
-                console.log('boardStore: Error in removeBoard', err)
-                throw err
+                console.log('boardStore: Error in removeBoard', err);
+                throw err;
             }
         },
-        async saveBoard({ commit }, { savedBoard }) {
+        async saveBoard({ commit }, { board }) {
             try {
-                await boardService.save(savedBoard)
-                commit({ type: 'saveBoard', savedBoard })
+                const savedBoard = await boardService.save(board);
+                commit({ type: 'saveBoard', savedBoard });
             } catch (err) {
                 console.log(`couldn't save board`, err);
             }
-        }
+        },
     },
 };
