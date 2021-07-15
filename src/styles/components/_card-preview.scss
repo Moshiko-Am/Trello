@@ -26,7 +26,7 @@
             transition: width 0.4s, height 0.4s 0.4s;
         }
         .label.shown {
-            width: 60px;
+            width: fit-content;
             height: 20px;
         }
     }

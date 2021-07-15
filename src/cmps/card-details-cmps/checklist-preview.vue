@@ -5,7 +5,7 @@
         <span class="icon-lg icon-checklist"></span>
         <h3 class="main-item-title">{{ checklistToEdit.title }}</h3>
       </div>
-      <button class="card-sidebar-btn">Delete</button>
+      <button class="card-sidebar-btn" @click="removeCl">Delete</button>
     </div>
     <div class="progress-bar-container">
       <span>{{ progressBar }}</span>
@@ -53,6 +53,7 @@ export default {
   },
   computed: {
     progressBar() {
+      if(!this.checklistToEdit.todos.length) return '0%'
       const progress = {
         done: 0,
         total: 0,
@@ -61,10 +62,14 @@ export default {
         if (todo.isDone) progress.done++;
         progress.total++;
       });
-      return ((progress.done / progress.total) * 100).toFixed(0) + "%";
+
+      return ((progress.done / progress.total) * 100).toFixed(0) + "%"
     },
   },
   methods: {
+    removeCl(){
+      this.$emit('removeCl', this.checklistToEdit)
+    },
     toggleTodo(tIdx) {
       this.checklistToEdit.todos[tIdx].isDone = !this.checklistToEdit.todos[tIdx].isDone;
       this.updateChecklist();
@@ -86,7 +91,7 @@ export default {
     },
     makeId() {
       const num = Math.floor(Math.random() * (900 - 1) + 1);
-      return "c" + num;
+      return "t" + num;
     },
     updateChecklist() {
       this.$emit("updateChecklist", this.checklistToEdit);

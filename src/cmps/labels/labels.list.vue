@@ -5,7 +5,7 @@
     <h3>LABELS</h3>
     <div class="label-options">
       <div v-for="label in optionsLabels" :key="label.id">
-        <label-preview :label="label" :cardLabels="cardLabels" @updateLabels="updateLabels"/>
+        <label-preview :label="label" :cardLabels="labelsToEdit" @updateLabels="updateLabels"/>
       </div>
     </div>
   </section>

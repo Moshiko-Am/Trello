@@ -1,10 +1,10 @@
 <template>
-  <section class="checklist-add">
-      <span class="sm-icon icon-x" @click="close"></span>
+  <section class="checklist-add" @click.stop="">
+    <span class="sm-icon icon-x" @click="close"></span>
     <h3>Add checklist</h3>
     <hr />
     <label>
-      Title
+      <h4>Title</h4>
       <input type="text" placeholder="checkList" v-model="checklist.title" />
     </label>
     <button class="add-cl-btn" @click="addCl">Add</button>
@@ -15,8 +15,8 @@
 export default {
   data() {
     return {
-      checkList: {
-        id: makeId(),
+      checklist: {
+        id: this.makeId(),
         title: "",
         todos: [],
       },
@@ -24,16 +24,20 @@ export default {
   },
   methods: {
     addCl() {
-      this.$emit("addCl", { ...this.checkList });
-      this.checkList = {
-        id: makeId(),
+      this.$emit("addCl", { ...this.checklist });
+      this.checklist = {
+        id: this.makeId(),
         title: "",
         todos: [],
       };
     },
-    close(){
-        
-    }
+    close() {
+
+    },
+    makeId() {
+      const num = Math.floor(Math.random() * (900 - 1) + 1);
+      return "c" + num;
+    },
   },
 };
 </script>
