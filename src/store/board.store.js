@@ -19,7 +19,6 @@ export const boardStore = {
             state.selectedBoard = state.boards.find(
                 (board) => board._id === boardId
             );
-            console.log(state.selectedBoard)
             return state.selectedBoard;
         },
         setBoards(state, { boards }) {
