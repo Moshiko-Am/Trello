@@ -94,7 +94,7 @@ export default {
       }
     },
     saveGroup() {
-      this.$emit("boardUpdate", this.groupForEdit);
+      this.$emit("boardUpdate", { type: "group", group: this.groupForEdit });
     },
   },
   created() {
