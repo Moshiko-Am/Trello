@@ -74,6 +74,7 @@ export default {
       cardForEdit: {
         id: "",
         title: "",
+        createdAt: Date.now(),
       },
       currCard: null,
     };
@@ -94,12 +95,11 @@ export default {
       }
     },
     saveGroup() {
-      this.$emit("boardUpdate", { type: "group", group: this.groupForEdit });
+      this.$emit("saveGroup", this.groupForEdit);
     },
   },
   created() {
     this.groupForEdit = JSON.parse(JSON.stringify(this.group));
-    console.log(this.groupForEdit);
     this.groupTitle = this.group.title;
   },
   mounted() {
