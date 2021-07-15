@@ -69,13 +69,13 @@
 		font-weight: 700;
 		height: 28px;
 		line-height: 29px;
-		// overflow-wrap: break-word;
-		overflow-y: auto;
+		overflow-wrap: normal;
+		overflow-y: hidden;
 		padding: 0 12px;
 		resize: none;
 		text-align: center;
 		transition: all 0.3s;
-		width: 150px;
+		width: 100%;
 
 		&:hover {
 			background-color: #5c5c5c52;
