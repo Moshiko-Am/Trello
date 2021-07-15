@@ -33,6 +33,16 @@ var gBoards = [
 				fullname: 'Tal Tarablus',
 				imgUrl: 'https://www.google.com',
 			},
+			{
+				_id: 'u102',
+				fullname: 'Tom Becharovitch',
+				imgUrl: 'https://www.google.com',
+			},
+			{
+				_id: 'u103',
+				fullname: 'Omri Baramosio',
+				imgUrl: 'https://www.google.com',
+			},
 		],
 		groups: [
 			{
@@ -373,6 +383,7 @@ async function add(board) {
 async function save(boardToSave) {
 	try {
 		const savedBoard = await storageService.put(BOARD_KEY, boardToSave);
+		console.log(savedBoard);
 		return savedBoard;
 	} catch (err) {
 		console.log(`couldn't save board`, err);
