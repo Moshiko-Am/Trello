@@ -21,7 +21,6 @@
               :members="cardToEdit.members"
             />
           </div>
-
           <description-cmp
             :description="cardToEdit.description"
             @updateDesc="updateDesc"
@@ -31,16 +30,6 @@
             :checklists="cardToEdit.checklists"
             @updateChecklists="updateCL"
           />
-
-          <!-- <div class="card-main-item">
-            <div class="main-item-header activity">
-              <div class="inner-header">
-                <span class="icon-lg icon-activity"></span>
-                <h3 class="main-item-title">Activity</h3>
-              </div>
-              <button class="card-sidebar-btn">Show Details</button>
-            </div>
-          </div> -->
           <activity-cmp :activities="activities" />
         </div>
         <div class="card-details-sidebar">
@@ -77,7 +66,7 @@
         </div>
       </div>
     </section>
-    <!-- <labels-list :optionsLabels="labels" :cardLabels="card.labelIds"/> -->
+    <labels-list :optionsLabels="labels" :cardLabels="card.labelIds" @updateLabels="updateLabels" />
   </section>
 </template>
 
@@ -87,7 +76,7 @@ import membersCmp from "./card-details-cmps/members.cmp.vue";
 import activityCmp from "./card-details-cmps/activity.cmp.vue";
 import descriptionCmp from "./card-details-cmps/description.cmp.vue";
 import checklistsCmp from "./card-details-cmps/checklists.cmp.vue";
-// import labelsList from "./labels/labels.list.vue"
+import labelsList from "./labels/labels.list.vue"
 export default {
   props: {
     card: Object,
@@ -106,7 +95,7 @@ export default {
     descriptionCmp,
     checklistsCmp,
     activityCmp,
-    // labelsList
+    labelsList
   },
   methods: {
     exitCard() {
@@ -122,6 +111,13 @@ export default {
     updateCL(checklists) {
       this.cardToEdit.checklists = checklists;
     },
+    updateLabels(labels){
+      this.cardToEdit.labelIds = labels
+      console.log(this.cardToEdit.labelIds);
+    },
+    emitCard(){
+      this.$emit('updateCard', this.cardToEdit)
+    }
   },
   computed: {
     activities() {
@@ -129,7 +125,7 @@ export default {
     },
     labelsForDisplay() {
       return this.labels.filter((label) => {
-        if (this.card.labelIds.includes(label.id)) return label;
+        if (this.cardToEdit.labelIds.includes(label.id)) return label;
       });
     },
   },
