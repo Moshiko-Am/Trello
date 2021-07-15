@@ -22,6 +22,7 @@ export default {
   data() {
     return {
       boardToEdit: null,
+      currCard:null
     };
   },
   computed: {
@@ -47,6 +48,9 @@ export default {
         console.log(`coldn't save board`);
       }
     },
+	setCurrCard(card){
+		this.currCard = card
+	}
   },
   created() {},
   watch: {

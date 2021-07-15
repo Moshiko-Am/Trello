@@ -1,11 +1,11 @@
 <template>
-  <section class="labels-list">
+  <section class="labels-list" @click.stop="">
     <header>Labels</header>
     <hr>
     <h3>LABELS</h3>
     <div class="label-options">
       <div v-for="label in optionsLabels" :key="label.id">
-        <label-preview :label="label" :cardLabels="cardLabels"/>
+        <label-preview :label="label" :cardLabels="cardLabels" @updateLabels="updateLabels"/>
       </div>
     </div>
   </section>
@@ -28,14 +28,13 @@ export default {
       labelPreview
     },
     methods:{
-      // toggleLabel(labelId){
-      //   // if(this.labelsToEdit.includes(labelId)) {
-      //   //   const idx = this.labelsToEdit.findIndex(label => labelId === label.id)
-      //   // }
-      // },
-      // changeLabelTitle(){
-        // 
-      // }
+      updateLabels(newLabels){
+        this.labelsToEdit = newLabels
+        this.emitLabels()
+      },
+      emitLabels(){
+        this.$emit('updateLabels', this.labelsToEdit)
+      }
     }
 }
 </script>
