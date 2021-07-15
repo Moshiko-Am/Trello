@@ -1,38 +1,56 @@
 <template>
   <section class="card-details-bg" @click="exitCard">
     <section class="card-details" @click.stop="">
-      <button class="close-btn" @click="exitCard"><span class="icon-md icon-x"></span></button>
+      <button class="close-btn" @click="exitCard">
+        <span class="icon-md icon-x"></span>
+      </button>
       <div class="card-details-header">
         <div class="inner-container">
           <span class="icon-lg icon-card details-header-icon"></span>
-          <h2 class="card-details-title">{{ card.title }}</h2>
+          <h2 class="card-details-title">{{ cardToEdit.title }}</h2>
         </div>
-        <div class="card-details-list">From list {{group.title}}</div>
+        <div class="card-details-list">From list {{ group.title }}</div>
       </div>
 
       <div class="card-details-content">
         <div class="card-details-main">
-
-          <div class="card-main-item">
-            <div class="main-item-header">
-              <span class="icon-lg icon-label"></span>
-              <h3 class="main-item-title">Labels</h3>
-            </div>
-            <div v-if="card.labelIds.length" class="labels-container">
-              <div v-for="label in labelsForDisplay" :key="label.id" class="labelDisplay" :style="{backgroundColor:label.color}">
-                {{label.title}}
+          <div class="labels-members-container">
+            <div class="card-main-item">
+              <div class="main-item-header">
+                <span class="icon-md icon-label"></span>
+                <h3 class="main-item-title">Labels</h3>
+              </div>
+              <div v-if="cardToEdit.labelIds" class="labels-container">
+                <div
+                  v-for="label in labelsForDisplay"
+                  :key="label.id"
+                  class="labelDisplay"
+                  :style="{ backgroundColor: label.color }"
+                >
+                  {{ label.title }}
+                </div>
               </div>
             </div>
-          </div>
 
-          <div class="card-main-item">
-            <div class="main-item-header">
-              <span class="icon-lg icon-member"></span>
-              <h3 class="main-item-title">Members</h3>
-            </div>
-            <div v-if="card.members.length" class="members-container">
-              <div v-for="member in card.members" :key="member._id" class="memberDisplay">
-                <avatar :username="member.fullname" :size="35" inline color="black"></avatar>
+            <div class="card-main-item">
+              <div class="main-item-header">
+                <span class="icon-md icon-member"></span>
+                <h3 class="main-item-title">Members</h3>
+              </div>
+              <div v-if="cardToEdit.members" class="members-container">
+                <div
+                  v-for="member in cardToEdit.members"
+                  :key="member._id"
+                  class="memberDisplay"
+                >
+                  <avatar
+                    :username="member.fullname"
+                    :size="32"
+                    inline
+                    color="black"
+                    :title="member.fullname"
+                  ></avatar>
+                </div>
               </div>
             </div>
           </div>
@@ -42,15 +60,26 @@
               <span class="icon-lg icon-desc"></span>
               <h3 class="main-item-title">Description</h3>
             </div>
-            <div class="description-textarea">
-              <p>{{ card.description }}</p>
+            <div class="description-textarea" @click="editDesc(true)">
+              <p v-if="!descTextarea">{{ cardToEdit.description }}</p>
+              <div v-else>
+                <textarea
+                  id=""
+                  cols="30"
+                  rows="5"
+                  v-model="cardToEdit.description"
+                ></textarea>
+                <button class="desc-save-btn" @click.stop="editDesc(false)">
+                  Save
+                </button>
+              </div>
             </div>
           </div>
 
-          <div class="checklists" v-if="card.checklists.length">
+          <div class="checklists" v-if="cardToEdit.checklists">
             <div
               class="card-main-item"
-              v-for="checklist in card.checklists"
+              v-for="(checklist, cIdx) in cardToEdit.checklists"
               :key="checklist.id"
             >
               <div class="main-item-header checklist">
@@ -64,10 +93,10 @@
                 <span>0%</span>
                 <div class="progress-bar"><div></div></div>
               </div>
-              <div v-for="todo in checklist.todos" :key="todo.id" class="todo">
+              <div v-for="(todo,tIdx) in checklist.todos" :key="todo.id" class="todo">
                 <div class="inner">
-                  <input type="checkbox" :checked="todo.isDone" />
-                  <div>
+                  <input type="checkbox" v-model="todo.isDone" />
+                  <div @click="toggleTodo(tIdx , cIdx)">
                     <span :class="{ completed: todo.isDone }">{{
                       todo.title
                     }}</span>
@@ -76,10 +105,11 @@
                 <div class="todo-btns">
                   <button><span class="icon-sm icon-date"></span></button>
                   <button><span class="icon-sm icon-assign"></span></button>
-                  <button><span class="icon-sm icon-delete"></span></button>
+                  <button><span class="icon-sm icon-delete" @click="deleteTodo(tIdx, cIdx)"></span></button>
                 </div>
               </div>
-              <button class="add-todo-btn card-sidebar-btn">Add an item</button>
+              <input v-if="addingTodo" type="text" v-model="checklist.todos[checklist.todos.length-1].title">
+              <button class="add-todo-btn card-sidebar-btn" @click="addTodo(cIdx)">Add an item</button>
             </div>
           </div>
           <div class="card-main-item">
@@ -130,28 +160,63 @@
 </template>
 
 <script>
-import avatar from 'vue-avatar';
+import avatar from "vue-avatar";
 
 export default {
-  props:{
+  props: {
     card: Object,
-    group : Object,
-    labels : Array,
+    group: Object,
+    labels: Array,
   },
-  components:{
-    avatar
+  data() {
+    return {
+      cardToEdit: null,
+      descTextarea: false,
+      addingTodo : false,
+    };
+  },
+  components: {
+    avatar,
   },
   methods: {
-    exitCard(){
-      this.$emit('clearCard')
+    exitCard() {
+      this.$emit("clearCard");
+    },
+    editDesc(boolean) {
+      this.descTextarea = boolean;
+    },
+    toggleTodo(tIdx , cIdx){
+      this.cardToEdit.checklists[cIdx].todos[tIdx].isDone = !this.cardToEdit.checklists[cIdx].todos[tIdx].isDone
+    },
+    deleteTodo(tIdx,cIdx){
+      this.cardToEdit.checklists[cIdx].todos.splice(tIdx , 1);
+    },
+    addTodo(cIdx){
+      this.addingTodo = !this.addingTodo
+      console.log('this.addingTodo',this.addingTodo);
+      if(!this.addingTodo) return
+      const newTodo = {
+        id : this.makeId(),
+        title : '',
+        isDone : false
+      }
+      console.log('newTodo',newTodo);
+      this.cardToEdit.checklists[cIdx].todos.push(newTodo)
+    },
+    makeId(){
+      const num = Math.floor(Math.random()*(900-1) + 1)
+      return 'c'+num
     }
   },
   computed: {
-    labelsForDisplay(){
-     return this.labels.filter(label => {
-        if(this.card.labelIds.includes(label.id)) return label
-      })
-    }
-  }
+    labelsForDisplay() {
+      return this.labels.filter((label) => {
+        if (this.card.labelIds.includes(label.id)) return label;
+      });
+    },
+  },
+  created() {
+    this.cardToEdit = JSON.parse(JSON.stringify(this.card));
+  },
 };
 </script>
