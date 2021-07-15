@@ -1,17 +1,32 @@
 <template>
-	<section class="board-header-container">
+	<section class="board-header-container" v-if="boardToEdit">
 		<div class="board-header-controls">
 			<div class="board-header-title">
-				<h1>{{ board.title }}</h1>
+				<textarea
+					class="title-textArea"
+					@input="boardChange"
+					v-model="boardToEdit.title"
+				></textarea>
 			</div>
 			<span class="board-header-divider">|</span>
 			<div class="board-header-members">
-				<span v-for="member in board.members" :key="member._id">
+				<span
+					v-for="member in boardToEdit.members"
+					:key="member._id"
+					class="members-list"
+				>
 					<avatar
+						class="member-name"
 						:username="member.fullname"
 						:size="28"
 						:inline="true"
+						:style="{ margin: '2px' }"
 					></avatar>
+					<span
+						class="remove-member"
+						@click="removeMember(member._id)"
+						>X</span
+					>
 				</span>
 				<button class="btn-invite">Invite</button>
 			</div>
@@ -45,6 +60,7 @@ export default {
 	data() {
 		return {
 			isShow: false,
+			boardToEdit: null,
 		};
 	},
 	computed: {
@@ -59,6 +75,15 @@ export default {
 		toggleMenu() {
 			this.isShow = !this.isShow;
 		},
+		boardChange() {
+			this.$emit('boardUpdate', this.boardToEdit);
+		},
+		removeMember(memberId) {
+			console.log(memberId);
+		},
+	},
+	created() {
+		this.boardToEdit = JSON.parse(JSON.stringify(this.board));
 	},
 };
 </script>
