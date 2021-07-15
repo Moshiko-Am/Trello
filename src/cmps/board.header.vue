@@ -9,8 +9,8 @@
 				<span v-for="member in board.members" :key="member._id">
 					<avatar
 						:username="member.fullname"
-						size="28"
-						inline="true"
+						:size="28"
+						:inline="true"
 					></avatar>
 				</span>
 				<button class="btn-invite">Invite</button>
