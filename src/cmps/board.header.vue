@@ -29,6 +29,11 @@
 					>
 				</span>
 				<button class="btn-invite">Invite</button>
+				<users
+					:users="allUsers"
+					:board="boardToEdit"
+					@addUser="addUser"
+				></users>
 			</div>
 			<span class="board-header-divider">|</span>
 			<button class="btn-dashboard">Dashboard</button>
@@ -49,13 +54,16 @@
 <script>
 import sideMenu from './side.menu.vue';
 import avatar from 'vue-avatar';
+import users from './users.vue';
 export default {
 	components: {
 		sideMenu,
 		avatar,
+		users,
 	},
 	props: {
 		board: Object,
+		allUsers: Array,
 	},
 	data() {
 		return {
@@ -92,6 +100,15 @@ export default {
 				payload: this.boardToEdit.members,
 			});
 		},
+		addUser(userId) {
+			const user = this.allUsers.find((user) => user._id === userId);
+			this.boardToEdit.members.push(user);
+			this.saveMembers();
+		},
+		// async loadUsers() {
+		// 	const users = await this.$store.dispatch({ type: 'loadUsers' });
+		// 	console.log(users);
+		// },
 	},
 	created() {
 		this.boardToEdit = JSON.parse(JSON.stringify(this.board));

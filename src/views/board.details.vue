@@ -2,6 +2,7 @@
 	<section class="board-details">
 		<board-header
 			:board="boardToEdit"
+			:allUsers="allUsers"
 			@boardUpdate="boardUpdate"
 			v-if="boardToEdit"
 		/>
@@ -23,11 +24,15 @@ export default {
 		return {
 			boardToEdit: null,
 			currCard: null,
+			allUsers: null,
 		};
 	},
 	computed: {
 		board() {
 			return this.$store.getters.board;
+		},
+		users() {
+			return this.$store.getters.users;
 		},
 		labels() {
 			const board = this.$store.getters.board;
@@ -66,6 +71,9 @@ export default {
 							JSON.stringify(
 								this.$store.state.boardStore.selectedBoard
 							)
+						);
+						this.allUsers = JSON.parse(
+							JSON.stringify(this.$store.state.userStore.users)
 						);
 					} catch (err) {
 						console.log('didnt find board', err);
