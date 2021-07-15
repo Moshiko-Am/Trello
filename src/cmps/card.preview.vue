@@ -10,6 +10,7 @@
         :key="label.id"
         class="label"
         :style="{ backgroundColor: label.color }"
+        :class="{ shown: openLabels }"
       >
         <span v-if="showLabels">{{ label.title }}</span>
       </div>
@@ -27,26 +28,32 @@
 
 <script>
 export default {
-    data(){
-        return {
-            showLabels : false,
-        }
+  data() {
+    return {
+      openLabels: false,
+      showLabels: false,
+    };
+  },
+  props: {
+    card: Object,
+    labels: Array,
+  },
+  computed: {
+    labelsForDisplay() {
+      return this.labels.filter((label) => {
+        if (this.card.labelIds.includes(label.id)) return label;
+      });
     },
-    props: {
-        card: Object,
-        labels:Array,
+  },
+  methods: {
+    toggleLabels() {
+      this.openLabels = !this.openLabels;
+      if (this.showLabels) this.showLabels = !this.showLabels;
+      else
+        setTimeout(() => {
+          this.showLabels = !this.showLabels;
+        }, 800);
     },
-    computed: {
-        labelsForDisplay(){
-            return this.labels.filter(label => {
-            if(this.card.labelIds.includes(label.id)) return label
-            })
-        },
-    },
-    methods: {
-        toggleLabels(){
-            this.showLabels = !this.showLabels
-        }
-    }
-}
+  },
+};
 </script>
