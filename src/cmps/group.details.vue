@@ -63,9 +63,7 @@
       <section class="add-card-container" ref="addcard">
         <div v-if="isAddingCard" class="card-composer-container">
           <div class="add-card-controls">
-            <button class="btn-add-card" @click="saveCard">
-              Add card
-            </button>
+            <button class="btn-add-card" @click="saveCard">Add card</button>
             <a class="icon-lg icon-close" @click="closeCardEdit"></a>
           </div>
         </div>
@@ -127,9 +125,8 @@ export default {
       this.groupToEdit.cards.push(savedCard);
       this.updateGroup();
       this.cardToEdit.title = "";
-      this.$refs["card-preview-wrapper"].scrollTop = this.$refs[
-        "card-preview-wrapper"
-      ].scrollHeight;
+      this.$refs["card-preview-wrapper"].scrollTop =
+        this.$refs["card-preview-wrapper"].scrollHeight;
     },
     toggleCardEdit() {
       this.isAddingCard = !this.isAddingCard;
