@@ -6,7 +6,11 @@
 		</div>
 		<hr />
 		<div class="side-menu-content">
-			<div class="side-menu-item" v-if="board.style">
+			<div
+				class="side-menu-item"
+				v-if="board.style"
+				@click="toggleBgMenu"
+			>
 				<img class="side-bar-bgc-img" :src="board.style.content" />
 				<button class="btn-menu-change-background">
 					Change background
@@ -33,21 +37,43 @@
 				</div>
 			</div>
 		</div>
+		<background-menu
+			@closeMenu="closeMenu"
+			@menuBack="toggleBgMenu"
+			class="hideBgMenu"
+			:class="bgShowMenu"
+		></background-menu>
 	</section>
 </template>
 
 <script>
 import avatar from 'vue-avatar';
+import backgroundMenu from './background.menu';
 export default {
 	components: {
 		avatar,
+		backgroundMenu,
 	},
 	props: {
 		board: Object,
 	},
+	data() {
+		return {
+			isBgShow: false,
+		};
+	},
+	computed: {
+		bgShowMenu() {
+			return { showBgMenu: this.isBgShow };
+		},
+	},
 	methods: {
 		closeMenu() {
 			this.$emit('closeMenu');
+			this.isBgShow = false;
+		},
+		toggleBgMenu() {
+			this.isBgShow = !this.isBgShow;
 		},
 	},
 };

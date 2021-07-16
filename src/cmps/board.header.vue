@@ -3,6 +3,8 @@
 		<div class="board-header-controls">
 			<div class="board-header-title">
 				<textarea
+					rows="1"
+					cols="12"
 					class="title-textArea"
 					@input="saveTitle"
 					v-model="boardToEdit.title"
@@ -100,7 +102,6 @@ export default {
 				(member) => member._id === memberId
 			);
 			this.boardToEdit.members.splice(idx, 1);
-			console.log(this.boardToEdit.members);
 			this.saveMembers();
 		},
 		saveMembers() {
