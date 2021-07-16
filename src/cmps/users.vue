@@ -1,5 +1,5 @@
 <template>
-  <section class="members-list-container">
+  <section class="members-list-container" @click.stop="">
     <div class="members-list-close">
       <span class="icon-md icon-x"></span>
     </div>
@@ -36,11 +36,13 @@ export default {
     usersToShow() {
       if (!this.onlyBoard) {
         return this.users.filter((user) => {
-          if (!this.board.members.includes(user._id)) return user;
+			if(!this.board.members.some(member => member._id === user._id)) return user
+        //   if (!this.board.members.includes(user._id)) return user;
         });
       } else {
+        if (!this.card.members) return this.board.members;
         return this.board.members.filter((user) => {
-          if (!this.card.members.includes(user._id)) return user;
+			if(!this.card.members.some(member => member._id === user._id)) return user
         });
       }
     },

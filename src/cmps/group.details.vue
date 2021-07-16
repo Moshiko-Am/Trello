@@ -107,11 +107,13 @@ export default {
       return text;
     },
     updateCard(updatedCard) {
+      console.log('updated card in group details',updatedCard);
       const idx = this.group.cards.findIndex(
         (card) => card.id === updatedCard.id
       );
+      console.log('idx',idx);
       this.groupToEdit.cards.splice(idx, 1, updatedCard);
-      console.log("from group details", this.groupToEdit);
+      console.log('Group after updating',this.groupToEdit);
       this.saveGroup();
     },
     saveGroup() {

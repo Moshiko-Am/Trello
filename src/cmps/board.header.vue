@@ -25,12 +25,12 @@
           <span class="remove-member" @click="removeMember(member._id)">X</span>
         </span>
         <button class="btn-invite">Invite</button>
-        <!-- <users
+        <users
 					:users="allUsers"
 					:board="boardToEdit"
 					@addUser="addUser"
 					:onlyBoard="false"
-				></users> -->
+				></users>
 			</div>
 			<span class="board-header-divider">|</span>
 			<button class="btn-dashboard">Dashboard</button>
@@ -51,12 +51,12 @@
 <script>
 import sideMenu from "./side.menu.vue";
 import avatar from "vue-avatar";
-// import users from "./users.vue";
+import users from "./users.vue";
 export default {
   components: {
     sideMenu,
     avatar,
-    // users,
+    users,
   },
   props: {
     board: Object,
