@@ -1,11 +1,13 @@
 <template>
 	<section class="members-list-container">
-		<div class="members-list-close">
-			<span class="icon-md icon-x" @click="closeInvite"></span>
-		</div>
+		<header>Members</header>
+		<span class="icon-md icon-x" @click="closeInvite"></span>
 		<hr />
 		<div class="users-details">
-			<h4 class="members-list-header">Invite Members</h4>
+			<h4 class="members-list-header" v-if="!onlyBoard">
+				Invite Members
+			</h4>
+			<h4 class="members-list-header" v-else>Board Members</h4>
 			<single-user
 				@addUser="addUser"
 				:user="user"
