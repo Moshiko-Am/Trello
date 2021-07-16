@@ -14,15 +14,17 @@
 					v-model="photoSearch"
 					placeholder="Photos"
 					class="photos-input-search"
+					@input="debounceFunc"
 				/>
 			</div>
 			<div class="background-photos">
 				<div
+					@click="chooseBg(photo.urlBig)"
 					class="photo-example"
 					v-for="photo in photos"
 					:key="photo.id"
 				>
-					<img :src="photo.url" />
+					<img :src="photo.urlSmall" />
 				</div>
 			</div>
 		</div>
@@ -36,6 +38,7 @@ export default {
 		return {
 			photoSearch: '',
 			photos: [],
+			debounceFunc: null,
 		};
 	},
 	methods: {
@@ -45,11 +48,30 @@ export default {
 		photosBack() {
 			this.$emit('photosBack');
 		},
+		debounce(func, wait = 1000) {
+			let timeout;
+			return function executedFunction(...args) {
+				const later = () => {
+					clearTimeout(timeout);
+					func(...args);
+				};
+
+				clearTimeout(timeout);
+				timeout = setTimeout(later, wait);
+			};
+		},
+		async loadPhotos() {
+			this.photos = await unsplashService.loadPhotos(this.photoSearch);
+		},
+		chooseBg(photoUrl) {
+			this.$emit('updateBoard', {
+				type: 'style',
+				payload: { type: 'backgroundImage', content: photoUrl },
+			});
+		},
 	},
 	async created() {
-		this.photos = await unsplashService.loadPhotos('random');
-
-		console.log(this.photos);
+		this.debounceFunc = this.debounce(this.loadPhotos);
 	},
 };
 </script>

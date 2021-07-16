@@ -11,7 +11,16 @@
 				v-if="board.style"
 				@click="toggleBgMenu"
 			>
-				<img class="side-bar-bgc-img" :src="board.style.content" />
+				<img
+					class="side-bar-bgc-img"
+					:src="board.style.content"
+					v-if="board.style.type === 'backgroundImage'"
+				/>
+				<span
+					class="side-bar-bgc-img"
+					:style="{ 'background-color': board.style.content }"
+					v-else
+				></span>
 				<button class="btn-menu-change-background">
 					Change background
 				</button>
@@ -38,6 +47,8 @@
 			</div>
 		</div>
 		<background-menu
+			@bgColor="bgColor"
+			@chooseBg="chooseBg"
 			@closeMenu="closeMenu"
 			@menuBack="toggleBgMenu"
 			class="hideBgMenu"
@@ -68,9 +79,16 @@ export default {
 		},
 	},
 	methods: {
+		bgColor(style) {
+			this.$emit('bgColor', style);
+		},
+		chooseBg(style) {
+			this.$emit('chooseBg', style);
+		},
 		closeMenu() {
 			this.$emit('closeMenu');
 			this.isBgShow = false;
+			this.isColorShow = false;
 		},
 		toggleBgMenu() {
 			this.isBgShow = !this.isBgShow;

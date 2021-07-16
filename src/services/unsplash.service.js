@@ -5,7 +5,7 @@ export const unsplashService = {
 };
 
 async function loadPhotos(query) {
-	const url = `https://api.unsplash.com/search/photos?query=${query}&client_id=3G3H2YrHWdLEk7zLzjy33Ykx0eACFpe497xZ1BWXAQg`;
+	const url = `https://api.unsplash.com/search/photos?query=${query}&per_page=20&client_id=3G3H2YrHWdLEk7zLzjy33Ykx0eACFpe497xZ1BWXAQg`;
 	const res = await axios.get(url);
 	let { results } = res.data;
 
@@ -13,7 +13,8 @@ async function loadPhotos(query) {
 		return {
 			idx,
 			id: result.id,
-			url: result.urls.regular,
+			urlBig: result.urls.full,
+			urlSmall: result.urls.small,
 		};
 	});
 	return results;
