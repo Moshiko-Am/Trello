@@ -2,7 +2,6 @@
   <section class="checklist-add" @click.stop="">
     <span class="sm-icon icon-x" @click="close"></span>
     <h3>Add checklist</h3>
-    <hr />
     <label>
       <h4>Title</h4>
       <input type="text" placeholder="checkList" v-model="checklist.title" />
@@ -24,16 +23,14 @@ export default {
   },
   methods: {
     addCl() {
-      this.$emit("addCl", { ...this.checklist });
+      this.$emit("addCl", {...this.checklist});
       this.checklist = {
         id: this.makeId(),
         title: "",
         todos: [],
       };
     },
-    close() {
-
-    },
+    close() {},
     makeId() {
       const num = Math.floor(Math.random() * (900 - 1) + 1);
       return "c" + num;

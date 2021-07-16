@@ -126,6 +126,7 @@ export default {
       this.emitCard()
     },
     addCl(checklist){
+      if(!this.cardToEdit.checklists) this.cardToEdit.checklists = []
       this.cardToEdit.checklists.push(checklist);
       console.log(this.cardToEdit);
       // this.cardToEdit

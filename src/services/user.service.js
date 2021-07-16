@@ -13,6 +13,34 @@ var gUsers = [
 			},
 		],
 	},
+	{
+		_id: 'u122',
+		fullname: 'Shuki Shakshuka',
+		username: 'Suka',
+		password: 'aBambi123',
+		imgUrl: 'http://some-img.jpg',
+		mentions: [
+			{
+				id: 'm101',
+				boardId: 'm101',
+				cardId: 't101',
+			},
+		],
+	},
+	{
+		_id: 'u135',
+		fullname: 'Muki Amuka',
+		username: 'Mukifliz',
+		password: 'aBambi123',
+		imgUrl: 'http://some-img.jpg',
+		mentions: [
+			{
+				id: 'm101',
+				boardId: 'm101',
+				cardId: 't101',
+			},
+		],
+	},
 ];
 
 import { storageService } from './async-storage.service.js';

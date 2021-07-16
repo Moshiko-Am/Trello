@@ -33,6 +33,7 @@
 					:users="allUsers"
 					:board="boardToEdit"
 					@addUser="addUser"
+					:onlyBoard="false"
 				></users>
 			</div>
 			<span class="board-header-divider">|</span>

@@ -1,4 +1,5 @@
 .card-preview {
+    position: relative;
     background-color: #fff;
     border-radius: 3px;
     box-shadow: 0 1px 0 #b2b9c5;
@@ -33,8 +34,22 @@
     .preview-checklist-container {
         display: flex;
         align-items: center;
+        color:#5e6c84;
         .icon-sm {
+            color:#5e6c84;
             margin-top: 4px;
         }
+
+        .checklist-indicator {
+            margin-top: 3px;
+            font-size: 12px;
+        }
+    }
+
+    .preview-members-container {
+        float: right;
+        position: absolute;
+        right: 2px;
+        bottom: 2px;
     }
 }
