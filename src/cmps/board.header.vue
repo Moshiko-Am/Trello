@@ -89,11 +89,9 @@ export default {
 	methods: {
 		bgColor(style) {
 			this.$emit('bgColor', style);
-			console.log(style);
 		},
 		chooseBg(style) {
 			this.$emit('updateBoard', style);
-			console.log(style);
 		},
 		toggleMenu() {
 			this.isMenuShow = !this.isMenuShow;
