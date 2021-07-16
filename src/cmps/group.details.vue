@@ -125,8 +125,10 @@ export default {
       this.groupToEdit.cards.push(savedCard);
       this.updateGroup();
       this.cardToEdit.title = "";
-      this.$refs["card-preview-wrapper"].scrollTop =
-        this.$refs["card-preview-wrapper"].scrollHeight;
+      this.$refs["card-preview-wrapper"].scrollTop = this.$refs[
+        "card-preview-wrapper"
+      ].scrollHeight;
+      this.$refs.content.focus();
     },
     toggleCardEdit() {
       this.isAddingCard = !this.isAddingCard;

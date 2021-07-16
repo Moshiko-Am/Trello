@@ -95,7 +95,7 @@
 
 .card-composer-container {
     max-height: 38px;
-    margin-bottom: 8px;
+    margin-bottom: 6px;
     display: flex;
     justify-content: space-between;
     .add-card-controls {
@@ -137,6 +137,8 @@
 }
 
 .add-card {
+    margin-top: 0px;
+    width: 93%;
     textarea {
         background: none;
         border: none;
@@ -182,6 +184,7 @@
     box-sizing: content-box;
     &:hover {
         background-color: rgba(9, 30, 66, 0.08);
+        width: 90%;
     }
     .add-card {
         vertical-align: text-bottom;
@@ -293,11 +296,14 @@
     transition: all 1s;
     display: inline-block;
     margin-right: 10px;
-  }
-  .list-complete-enter, .list-complete-leave-to{
+}
+
+.list-complete-enter,
+.list-complete-leave-to {
     opacity: 0;
     transform: translateY(30px);
-  }
-  .list-complete-leave-active {
+}
+
+.list-complete-leave-active {
     position: absolute;
-  }
+}
