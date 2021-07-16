@@ -5,7 +5,6 @@
     </div>
     <div class="date-container" :style="{'background-color':isSoon}">
         <label>
-            <span class="icon-md icon-v"></span>
         <input type="checkbox" v-model="isCompletedCopy" @change="toggleCompleted">
         </label>
         {{ date }}
