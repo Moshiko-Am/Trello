@@ -34,7 +34,6 @@ export default {
     updateCl(checklist,cIdx){
       this.checklistsToEdit.splice(cIdx , 1 , checklist)
       this.updateChecklists()
-      console.log('updated');
     },
     removeCl(cIdx){
       this.checklistsToEdit.splice(cIdx , 1)

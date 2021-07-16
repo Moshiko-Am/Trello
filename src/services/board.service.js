@@ -147,7 +147,7 @@ var gBoards = [
 						],
 						labelIds: ['l101', 'l102'],
 						createdAt: 1590999730348,
-						dueDate: 16156215211,
+						dueDate: "2021-08-12",
 						byMember: {
 							_id: 'u101',
 							username: 'Tal',

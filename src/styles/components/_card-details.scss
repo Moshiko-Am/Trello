@@ -81,6 +81,11 @@
         // line-height: 32px;
         background-color: rgba(9,30,66,.04);
         border: none;
+        cursor: pointer;
+
+        &:hover {
+            background-color: rgba(9,30,66,.08);
+        }
         
         &::placeholder {
             color:#172b4d;
@@ -115,20 +120,24 @@
     display: flex;
     align-items: center;
 
+    span {
+        min-width: 35px;
+    }
+
     .progress-bar {
         background: rgba(9,30,66,.08);
         border-radius: 4px;
         clear: both;
         height: 8px;
         flex: 1;
-        margin: 0 0 0 20px;
+        margin: 0 0 0 10px;
         overflow: hidden;
         position: relative;
 
         div {
             background-color: #5ba4cf;
             height: 100%;
-            transition: width .3s;
+            transition: width .3s , background-color .4s;
         }
     }
 

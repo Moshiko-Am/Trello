@@ -32,38 +32,45 @@
           </div>
         </div>
       </div>
-      <card-preview
-        v-for="card in group.cards"
-        :key="card.id"
-        :card="card"
-        :labels="labels"
-        @click.native="setCard(card)"
-      />
-      <div v-if="isAddingCard" class="add-card card-preview">
-        <textarea
-          v-click-outside="toggleCardEdit"
-          placeholder="Enter a title for this card..."
-          dir="auto"
-          ref="content"
-          v-model="cardToEdit.title"
-        ></textarea>
-      </div>
-      <section ref="addcard">
-        <div v-if="isAddingCard" class="card-composer-container">
-          <div class="add-card-controls">
-            <button class="btn-add-card" @click="toggleCardEdit">
-              Add card
-            </button>
-            <a class="icon-lg icon-close" @click="closeCardEdit"></a>
+      <draggable
+        v-model="groupToEdit.cards"
+        @start="drag = true"
+        @end="drag = false; updateGroup()"
+        ghost-class="ghost"
+      >
+        <card-preview
+          v-for="card in group.cards"
+          :key="card.id"
+          :card="card"
+          :labels="labels"
+          @click.native="setCard(card)"
+        />
+        <div v-if="isAddingCard" class="add-card card-preview">
+          <textarea
+            v-click-outside="toggleCardEdit"
+            placeholder="Enter a title for this card..."
+            dir="auto"
+            ref="content"
+            v-model="cardToEdit.title"
+          ></textarea>
+        </div>
+        <section ref="addcard">
+          <div v-if="isAddingCard" class="card-composer-container">
+            <div class="add-card-controls">
+              <button class="btn-add-card" @click="toggleCardEdit">
+                Add card
+              </button>
+              <a class="icon-lg icon-close" @click="closeCardEdit"></a>
+            </div>
           </div>
-        </div>
-        <div v-else class="card-composer-container">
-          <a class="open-card-composer" @click="toggleCardEdit">
-            <span class="icon-sm icon-add"></span>
-            <span class="add-card">Add a card</span></a
-          >
-        </div>
-      </section>
+          <div v-else class="card-composer-container">
+            <a class="open-card-composer" @click="toggleCardEdit">
+              <span class="icon-sm icon-add"></span>
+              <span class="add-card">Add a card</span></a
+            >
+          </div>
+        </section>
+      </draggable>
     </div>
     <card-details
       v-if="currCard"
@@ -81,6 +88,8 @@
 import cardPreview from "./card.preview.vue";
 import cardDetails from "./card.details.vue";
 import ClickOutside from "vue-click-outside";
+import draggable from "vuedraggable";
+
 export default {
   props: {
     group: Object,
@@ -158,6 +167,7 @@ export default {
   components: {
     cardPreview,
     cardDetails,
+    draggable,
   },
   directives: {
     ClickOutside,

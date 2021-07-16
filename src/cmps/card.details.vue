@@ -43,15 +43,7 @@
           <div class="card-sidebar-btn" @click="toggleMember">
             <span class="icon-sm icon-member"></span>
             <p class="sidebar-btn-title">Members</p>
-            <users
-              @closePopups="closePopups"
-              v-if="isAddingMember"
-              :users="allUsers"
-              :board="board"
-              :card="this.card"
-              @addUser="addUser"
-              :onlyBoard="true"
-            ></users>
+              <members-list v-if="isAddingMember" @close="closePopups" :boardMembers="board.members" :cardMembers="card.members" @updateMembers="updateMembers"/>
           </div>
           <div class="card-sidebar-btn" @click="toggleLabel">
             <span class="icon-sm icon-label"></span>
@@ -73,7 +65,6 @@
               v-if="isAddingChecklist"
             />
           </div>
-          <!-- <label class="card-sidebar-btn"> -->
               <el-date-picker
                 v-model="cardDate"
                 @change="updateDate"
@@ -85,7 +76,6 @@
             <span class="icon-sm icon-date"></span>
             <p class="sidebar-btn-title">Dates</p>
               </el-date-picker>
-          <!-- </label> -->
           <div class="card-sidebar-btn">
             <span class="icon-sm icon-attach"></span>
             <p class="sidebar-btn-title">Attachments</p>
@@ -109,7 +99,7 @@ import descriptionCmp from "./card-details-cmps/description.cmp.vue";
 import checklistsCmp from "./card-details-cmps/checklists.cmp.vue";
 import checklistAdd from "./checklist.add.vue";
 import labelsList from "./labels/labels.list.vue";
-import users from "./users.vue";
+import membersList from "./card-details-cmps/members.list.vue";
 
 export default {
   props: {
@@ -136,7 +126,7 @@ export default {
     activityCmp,
     labelsList,
     checklistAdd,
-    users,
+    membersList,
   },
   methods: {
     exitCard() {
@@ -169,8 +159,11 @@ export default {
       this.emitCard();
     },
     updateDate() {
-      console.log('Changed Date' , this.cardDate);
       this.cardToEdit.dueDate = this.cardDate;
+      this.emitCard();
+    },
+    updateMembers(members) {
+      this.cardToEdit.members = members;
       this.emitCard();
     },
     addUser(userId) {
@@ -184,6 +177,7 @@ export default {
     addCl(checklist) {
       if (!this.cardToEdit.checklists) this.cardToEdit.checklists = [];
       this.cardToEdit.checklists.push(checklist);
+      this.closePopups()
       this.emitCard();
     },
     updateCL(checklists) {

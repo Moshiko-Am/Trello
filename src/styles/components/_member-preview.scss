@@ -1,0 +1,30 @@
+.member-preview {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	width: 100%;
+	cursor: pointer;
+	padding: 5px;
+	transition: 0.3s;
+
+	.member-txt {
+		color: #172b4d;
+		font-size: 14px;
+		padding-inline-start: 5px;
+	}
+
+	&:hover {
+		background-color: #091e4210;
+		border-radius: 3px;
+	}
+
+	.inner-container{
+		display: flex
+	}
+
+	.icon-v {
+        @include to-icon("\e916");
+		color: #6a778d;
+		position: relative;
+    }
+}
