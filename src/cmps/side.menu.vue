@@ -6,8 +6,21 @@
 		</div>
 		<hr />
 		<div class="side-menu-content">
-			<div class="side-menu-item" v-if="board.style">
-				<img class="side-bar-bgc-img" :src="board.style.content" />
+			<div
+				class="side-menu-item"
+				v-if="board.style"
+				@click="toggleBgMenu"
+			>
+				<img
+					class="side-bar-bgc-img"
+					:src="board.style.content"
+					v-if="board.style.type === 'backgroundImage'"
+				/>
+				<span
+					class="side-bar-bgc-img"
+					:style="{ 'background-color': board.style.content }"
+					v-else
+				></span>
 				<button class="btn-menu-change-background">
 					Change background
 				</button>
@@ -33,21 +46,52 @@
 				</div>
 			</div>
 		</div>
+		<background-menu
+			@bgColor="bgColor"
+			@chooseBg="chooseBg"
+			@closeMenu="closeMenu"
+			@menuBack="toggleBgMenu"
+			class="hideBgMenu"
+			:class="bgShowMenu"
+		></background-menu>
 	</section>
 </template>
 
 <script>
 import avatar from 'vue-avatar';
+import backgroundMenu from './background.menu';
 export default {
 	components: {
 		avatar,
+		backgroundMenu,
 	},
 	props: {
 		board: Object,
 	},
+	data() {
+		return {
+			isBgShow: false,
+		};
+	},
+	computed: {
+		bgShowMenu() {
+			return { showBgMenu: this.isBgShow };
+		},
+	},
 	methods: {
+		bgColor(style) {
+			this.$emit('bgColor', style);
+		},
+		chooseBg(style) {
+			this.$emit('chooseBg', style);
+		},
 		closeMenu() {
 			this.$emit('closeMenu');
+			this.isBgShow = false;
+			this.isColorShow = false;
+		},
+		toggleBgMenu() {
+			this.isBgShow = !this.isBgShow;
 		},
 	},
 };

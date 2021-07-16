@@ -78,7 +78,6 @@ async function query() {
 	try {
 		const users = await storageService.query(USERS_DB);
 		if (!users.length) {
-			console.log('hey');
 			storageService.postMany(USERS_DB, gUsers);
 			return gUsers;
 		}

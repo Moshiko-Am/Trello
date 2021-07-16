@@ -8,9 +8,9 @@
       <button class="card-sidebar-btn" @click="removeCl">Delete</button>
     </div>
     <div class="progress-bar-container">
-      <span>{{ progressBar }}</span>
+      <span>{{ progressBar.width }}</span>
       <div class="progress-bar">
-        <div :style="{ width: progressBar }"></div>
+        <div :style="progressBar"></div>
       </div>
     </div>
     <div v-for="(todo, tIdx) in checklist.todos" :key="todo.id" class="todo">
@@ -53,7 +53,7 @@ export default {
   },
   computed: {
     progressBar() {
-      if(!this.checklistToEdit.todos.length) return '0%'
+      if(!this.checklistToEdit.todos.length) return {'width': '0%'}
       const progress = {
         done: 0,
         total: 0,
@@ -62,8 +62,12 @@ export default {
         if (todo.isDone) progress.done++;
         progress.total++;
       });
-
-      return ((progress.done / progress.total) * 100).toFixed(0) + "%"
+      const width = ((progress.done / progress.total) * 100).toFixed(0) + "%"
+      var color;
+      if(width === '100%'){
+        color = '#61bd4f'
+      } 
+      return {'width': width, 'background-color':color }
     },
   },
   methods: {

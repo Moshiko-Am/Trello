@@ -1,6 +1,8 @@
 <template>
   <section class="board-details">
     <board-header
+      @bgColor="boardUpdate"
+      @updateBoard="boardUpdate"
       :board="boardToEdit"
       :allUsers="allUsers"
       @boardUpdate="boardUpdate"

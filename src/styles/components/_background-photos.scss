@@ -1,0 +1,147 @@
+.hideImgMenu {
+	transform: translateX(100%);
+}
+
+.hideImgMenu.showImgMenu {
+	transform: translateX(0);
+}
+
+.background-photos-container {
+	z-index: 1;
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+	align-items: center;
+	position: fixed;
+	right: 0;
+	top: 0;
+	height: 100vh;
+	background-color: #f4f5f7;
+	padding-inline: 10px;
+	width: 340px;
+	box-shadow: 0 12px 24px -6px rgba(9, 30, 66, 0.25),
+		0 0 0 1px rgba(9, 30, 66, 0.08);
+	transition: all 0.3s;
+
+	.icon-back {
+		@include to-icon('\e90a');
+		position: absolute;
+		color: #42526e;
+		padding-inline-end: 5px;
+		left: 5px;
+		background: none;
+		border: none;
+		transition: 0.3s;
+
+		&:hover {
+			color: #272a2e;
+		}
+	}
+
+	.icon-x {
+		@include to-icon('\e91c');
+		position: absolute;
+		padding-inline-end: 5px;
+		color: #42526e;
+		right: 5px;
+		background: none;
+		border: none;
+		transition: 0.3s;
+
+		&:hover {
+			color: #272a2e;
+		}
+	}
+
+	.background-photos-header {
+		width: 100%;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+
+		h3 {
+			margin: 10px 32px;
+			font-weight: 600;
+		}
+	}
+
+	.background-photos-content {
+		width: 100%;
+		height: 100%;
+		display: flex;
+		flex-direction: column;
+		justify-content: flex-start;
+		align-items: center;
+
+		.photos-input-container {
+			width: 100%;
+			display: flex;
+			justify-content: flex-start;
+			align-items: center;
+			color: #172b4d;
+			background-color: white;
+			border-radius: 3px;
+			padding-inline: 8px;
+			height: 38px;
+			border: 2px solid rgba(9, 30, 66, 0.13);
+			margin-bottom: 10px;
+
+			.icon-search {
+				@include to-icon('\e960');
+			}
+
+			.photos-input-search {
+				width: 100%;
+				border: none;
+				outline: none;
+				padding-inline-start: 5px;
+				color: #172b4d;
+
+				&::placeholder {
+					color: rgba(47, 64, 92, 0.74);
+				}
+			}
+		}
+
+		.background-photos {
+			display: grid;
+			grid-template-columns: 148px 148px;
+			grid-auto-rows: 100px;
+			justify-items: center;
+			gap: 4px;
+			width: 100%;
+			height: 100%;
+			overflow-y: scroll;
+			&::-webkit-scrollbar {
+				height: 8px;
+				width: 8px;
+				background-color: #98a2b1;
+				border-radius: 10px;
+			}
+			&::-webkit-scrollbar-thumb {
+				border-radius: 10px;
+				background-color: #8591a3;
+			}
+			&::-webkit-scrollbar-track-piece {
+				border-radius: 10px;
+				background: #a8b0bd;
+			}
+
+			.photo-example {
+				width: 144px;
+				height: 96px;
+				cursor: pointer;
+
+				&:hover {
+					filter: brightness(140%);
+				}
+
+				img {
+					border-radius: 10px;
+					width: 100%;
+					height: 100%;
+				}
+			}
+		}
+	}
+}
