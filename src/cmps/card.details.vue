@@ -20,7 +20,12 @@
               v-if="cardToEdit.members"
               :members="cardToEdit.members"
             />
-            <date-cmp v-if="cardToEdit.dueDate" @toggleCompleted="toggleCompleted" :isCompleted="card.isCompleted" :date="cardToEdit.dueDate"/>
+            <date-cmp
+              v-if="cardToEdit.dueDate"
+              @toggleCompleted="toggleCompleted"
+              :isCompleted="card.isCompleted"
+              :date="cardToEdit.dueDate"
+            />
           </div>
           <description-cmp
             :description="cardToEdit.description"
@@ -74,21 +79,22 @@
             />
           </div>
           <!-- <label class="card-sidebar-btn"> -->
-              <el-date-picker
-                v-model="cardDate"
-                @change="updateDate"
-                placeholder="Dates"
-                type="date"
-                format="yyyy/MM/dd"
-                value-format="yyyy-MM-dd"
-              >
+          <el-date-picker
+            v-model="cardDate"
+            @change="updateDate"
+            placeholder="Dates"
+            type="date"
+            format="yyyy/MM/dd"
+            value-format="yyyy-MM-dd"
+          >
             <span class="icon-sm icon-date"></span>
             <p class="sidebar-btn-title">Dates</p>
-              </el-date-picker>
+          </el-date-picker>
           <!-- </label> -->
-          <div class="card-sidebar-btn">
+          <div class="card-sidebar-btn" @click="toggleAttch">
             <span class="icon-sm icon-attach"></span>
             <p class="sidebar-btn-title">Attachments</p>
+            <file-upload @closePopups="closePopups" v-if="isAddingAttachment" />
           </div>
           <div class="card-sidebar-btn">
             <span class="icon-sm icon-cover"></span>
@@ -104,11 +110,12 @@
 import labelsCmp from "./card-details-cmps/labels.cmp.vue";
 import membersCmp from "./card-details-cmps/members.cmp.vue";
 import activityCmp from "./card-details-cmps/activity.cmp.vue";
-import dateCmp from "./card-details-cmps/date.cmp.vue"
+import dateCmp from "./card-details-cmps/date.cmp.vue";
 import descriptionCmp from "./card-details-cmps/description.cmp.vue";
 import checklistsCmp from "./card-details-cmps/checklists.cmp.vue";
 import checklistAdd from "./checklist.add.vue";
 import labelsList from "./labels/labels.list.vue";
+import fileUpload from "./card-details-cmps/file.upload.vue";
 import users from "./users.vue";
 
 export default {
@@ -124,7 +131,8 @@ export default {
       isAddingChecklist: false,
       isAddingLabel: false,
       isAddingMember: false,
-      cardDate: '',
+      isAddingAttachment: false,
+      cardDate: "",
     };
   },
   components: {
@@ -137,6 +145,7 @@ export default {
     labelsList,
     checklistAdd,
     users,
+    fileUpload,
   },
   methods: {
     exitCard() {
@@ -160,16 +169,19 @@ export default {
     toggleMember() {
       this.isAddingMember = !this.isAddingMember;
     },
-    toggleCompleted(isCompleted){
-      this.cardToEdit.isCompleted = isCompleted
-      this.emitCard()
+    toggleAttch() {
+      this.isAddingAttachment = !this.isAddingAttachment;
+    },
+    toggleCompleted(isCompleted) {
+      this.cardToEdit.isCompleted = isCompleted;
+      this.emitCard();
     },
     updateDesc(desc) {
       this.cardToEdit.description = desc;
       this.emitCard();
     },
     updateDate() {
-      console.log('Changed Date' , this.cardDate);
+      console.log("Changed Date", this.cardDate);
       this.cardToEdit.dueDate = this.cardDate;
       this.emitCard();
     },

@@ -32,13 +32,15 @@
           </div>
         </div>
       </div>
-      <card-preview
-        v-for="card in group.cards"
-        :key="card.id"
-        :card="card"
-        :labels="labels"
-        @click.native="setCard(card)"
-      />
+      <section ref="card-preview-wrapper" class="card-preview-wrapper">
+        <card-preview
+          v-for="card in group.cards"
+          :key="card.id"
+          :card="card"
+          :labels="labels"
+          @click.native="setCard(card)"
+        />
+      </section>
       <div v-if="isAddingCard" class="add-card card-preview">
         <textarea
           v-click-outside="toggleCardEdit"
@@ -48,10 +50,10 @@
           v-model="cardToEdit.title"
         ></textarea>
       </div>
-      <section ref="addcard">
+      <section class="add-card-container" ref="addcard">
         <div v-if="isAddingCard" class="card-composer-container">
           <div class="add-card-controls">
-            <button class="btn-add-card" @click="toggleCardEdit">
+            <button class="btn-add-card" @click="saveCard">
               Add card
             </button>
             <a class="icon-lg icon-close" @click="closeCardEdit"></a>
@@ -106,23 +108,29 @@ export default {
     clearCard() {
       this.currCard = null;
     },
-    savedCard() {
+    saveCard() {
+      if (!this.cardToEdit.title) return;
       const savedCard = { ...this.cardToEdit };
       savedCard.id = this.makeId();
       this.groupToEdit.cards.push(savedCard);
       this.updateGroup();
       this.cardToEdit.title = "";
+      this.$refs["card-preview-wrapper"].scrollTop = this.$refs[
+        "card-preview-wrapper"
+      ].scrollHeight;
     },
     toggleCardEdit() {
       this.isAddingCard = !this.isAddingCard;
+      this.$refs["card-preview-wrapper"].classList.toggle("is-editing");
       if (this.isAddingCard) this.$nextTick(() => this.$refs.content.focus());
-      else if (this.cardToEdit.title) this.savedCard();
+      else if (this.cardToEdit.title) this.saveCard();
     },
     toggleExtras() {
       this.isExtrasShowing = !this.isExtrasShowing;
     },
     closeCardEdit() {
       this.isAddingCard = false;
+      this.$refs["card-preview-wrapper"].classList.remove("is-editing");
       this.cardToEdit.title = "";
     },
     makeId(length = 5) {

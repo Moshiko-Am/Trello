@@ -1,12 +1,12 @@
 .group-wrapper {
     margin: 0 4px;
-    padding-block-end: 15px;
-    height: 100%;
+    height: fit-content;
     box-sizing: border-box;
     display: inline-block;
     vertical-align: top;
     white-space: nowrap;
     min-width: 272px;
+    max-height: 99%;
     &:first-child {
         margin-inline-start: 8px;
     }

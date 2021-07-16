@@ -11,7 +11,6 @@
       "
       ghost-class="ghost"
     >
-      <!-- <transition-group> -->
       <div v-for="group in groupsToEdit" :key="group.id" class="group-wrapper">
         <div class="group">
           <group-details
@@ -22,7 +21,6 @@
           />
         </div>
       </div>
-      <!-- </transition-group> -->
       <div ref="addgroup" class="group-wrapper mod-add">
         <form v-if="isAddingGroup">
           <input
@@ -107,15 +105,14 @@ export default {
       this.groupToEdit.title = "";
     },
     deleteGroup(groupId) {
-      const groupsToEdit = JSON.parse(JSON.stringify(this.groups));
-      const idx = groupsToEdit.findIndex((group) => {
+      const idx = this.groupsToEdit.findIndex((group) => {
         return group.id === groupId;
       });
-      if (idx !== -1) groupsToEdit.splice(idx, 1);
+      if (idx !== -1) this.groupsToEdit.splice(idx, 1);
       else return;
       this.$emit("boardUpdate", {
         type: "groups",
-        payload: groupsToEdit,
+        payload: this.groupsToEdit,
       });
     },
     toggleGroupEdit() {
