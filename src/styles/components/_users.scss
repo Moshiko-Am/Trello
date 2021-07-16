@@ -1,19 +1,21 @@
 .members-list-container {
-	position: absolute;
-	font-size: 30px;
-	display: flex;
-	flex-direction: column;
 	align-items: center;
-	color: white;
-	background-color: #f4f5f7;
-	z-index: 1;
+	background-color: white;
 	border-radius: 3px;
 	box-shadow: 0 8px 16px -4px rgba(9, 30, 66, 0.25),
 		0 0 0 1px rgba(9, 30, 66, 0.08);
-	width: 300px;
+	color: white;
+	display: flex;
+	flex-direction: column;
+	font-size: 30px;
 	height: 250px;
+	margin-left: 17px;
+	margin-top: 12px;
 	overflow: hidden;
 	padding: 6px 12px 12px;
+	position: absolute;
+	width: 300px;
+	z-index: 1;
 
 	.members-list-close {
 		display: flex;
@@ -24,6 +26,11 @@
 			@include to-icon('\e91c');
 			color: #6b778c;
 			cursor: pointer;
+			transition: 0.3s;
+
+			&:hover {
+				color: #4f5358;
+			}
 		}
 	}
 
