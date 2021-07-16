@@ -69,28 +69,3 @@ export default {
   },
 };
 </script>
-
-<style>
-.loader {
-  height: 150px;
-}
-
-label img {
-  height: 100px;
-  cursor: pointer;
-  transition: height 0.6s;
-}
-
-input {
-  width: 0;
-  height: 0;
-}
-.drag {
-  color: grey;
-  display: inline-block;
-  padding: 30px 5px;
-  width: 220px;
-  border: 1px dashed gray;
-  border-radius: 8px;
-}
-</style>
