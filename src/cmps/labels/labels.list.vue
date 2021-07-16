@@ -1,5 +1,6 @@
 <template>
   <section class="labels-list" @click.stop="">
+    <span class="icon-sm icon-x" @click="close"></span>
     <header>Labels</header>
     <h3>LABELS</h3>
     <div class="label-options">
@@ -33,6 +34,9 @@ export default {
       },
       emitLabels(){
         this.$emit('updateLabels', this.labelsToEdit)
+      },
+      close(){
+        this.$emit('closePopups')
       }
     }
 }

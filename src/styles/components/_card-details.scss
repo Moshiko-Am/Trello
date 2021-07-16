@@ -41,7 +41,9 @@
             }
         }
 
-        .card-sidebar-btn {
+        
+        .card-sidebar-btn{
+            position: relative;
             display: flex;
             align-items: center;
             cursor: pointer;
@@ -54,13 +56,59 @@
             margin-top: 8px;
             color: #172b4d;
             transition: background-color 85ms ease;
-        
+            
+            .members-list-container {
+                top:27px;
+                left:-16px;
+
+            }
+
+            
             &:hover {
                 background-color: rgba(9,30,66,.08);
+                
             }
         }
     }
 }
+
+.el-date-editor {
+    width: 100%;
+    margin-top: 8px;
+    
+    .el-input__inner{
+        height: 32px;
+        // line-height: 32px;
+        background-color: rgba(9,30,66,.04);
+        border: none;
+        
+        &::placeholder {
+            color:#172b4d;
+            font-size: 14px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+    }
+    
+    .el-input__icon {
+        line-height: 32px;
+        width: 23px;
+        
+    }
+    
+    .el-icon-date::before{
+        font-family: icomoon;
+        line-height: 33px;
+        font-size: 15px;
+        color:#42526e;
+        content: "\e91b";
+    }
+    
+    
+}
+.el-picker-panel.el-popper {
+    margin-top: 8px;
+}
+
 
 .progress-bar-container {
     padding: 0 0 0 5px;
@@ -112,7 +160,7 @@
 
 .labels-container,.members-container {
     display: flex;
-    margin-left: 28px;
+    // margin-left: 6px;
 
     .labelDisplay {
         height: 32px;
@@ -120,24 +168,24 @@
         font-weight: 600;
         color: white;
         padding: 0 12px;
-        margin-right: 10px;
+        margin-right: 6px;
         border-radius: 3px;
     }
-
     .vue-avatar--wrapper{
-        margin-right: 10px;
+        margin-right: 6px;
     }
 }
 
-    .labels-members-container {
+.labels-members-container {
         display: flex;
         .card-main-item {
             margin-left: 32px;
             h3 {
                 opacity: 0.6;
+                margin-left: 0;
             }
         }
-    }
+}
 
 .card-main-item {
 
@@ -249,9 +297,11 @@
     }
 
     .card-sidebar-btn {
-        span {
+        >span {
             margin-right: 6px;
         }
+
+
     }
 }
 

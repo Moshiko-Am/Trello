@@ -45,9 +45,7 @@ export default {
 	},
 	methods: {
 		async boardUpdate(update) {
-			console.log(update);
 			this.boardToEdit[update.type] = update.payload;
-			// console.log(this.boardToEdit);
 			const board = JSON.parse(JSON.stringify(this.boardToEdit));
 			try {
 				await this.$store.dispatch({ type: 'saveBoard', board });

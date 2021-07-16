@@ -20,6 +20,7 @@
               v-if="cardToEdit.members"
               :members="cardToEdit.members"
             />
+            <date-cmp v-if="cardToEdit.dueDate" @toggleCompleted="toggleCompleted" :isCompleted="card.isCompleted" :date="cardToEdit.dueDate"/>
           </div>
           <description-cmp
             :description="cardToEdit.description"
@@ -42,19 +43,49 @@
           <div class="card-sidebar-btn" @click="toggleMember">
             <span class="icon-sm icon-member"></span>
             <p class="sidebar-btn-title">Members</p>
+            <users
+              @closePopups="closePopups"
+              v-if="isAddingMember"
+              :users="allUsers"
+              :board="board"
+              :card="this.card"
+              @addUser="addUser"
+              :onlyBoard="true"
+            ></users>
           </div>
           <div class="card-sidebar-btn" @click="toggleLabel">
             <span class="icon-sm icon-label"></span>
             <p class="sidebar-btn-title">Labels</p>
+            <labels-list
+              :optionsLabels="labels"
+              :cardLabels="card.labelIds"
+              @updateLabels="updateLabels"
+              @closePopups="closePopups"
+              v-if="isAddingLabel"
+            />
           </div>
           <div class="card-sidebar-btn" @click="toggleCl">
             <span class="icon-sm icon-checklist"></span>
             <p class="sidebar-btn-title">Checklist</p>
+            <checklist-add
+              @addCl="addCl"
+              @closePopups="closePopups"
+              v-if="isAddingChecklist"
+            />
           </div>
-          <div class="card-sidebar-btn">
+          <!-- <label class="card-sidebar-btn"> -->
+              <el-date-picker
+                v-model="cardDate"
+                @change="updateDate"
+                placeholder="Dates"
+                type="date"
+                format="yyyy/MM/dd"
+                value-format="yyyy-MM-dd"
+              >
             <span class="icon-sm icon-date"></span>
             <p class="sidebar-btn-title">Dates</p>
-          </div>
+              </el-date-picker>
+          <!-- </label> -->
           <div class="card-sidebar-btn">
             <span class="icon-sm icon-attach"></span>
             <p class="sidebar-btn-title">Attachments</p>
@@ -66,21 +97,6 @@
         </div>
       </div>
     </section>
-    <labels-list
-      :optionsLabels="labels"
-      :cardLabels="card.labelIds"
-      @updateLabels="updateLabels"
-      v-if="isAddingLabel"
-    />
-    <checklist-add @addCl="addCl" v-if="isAddingChecklist"/>
-    <users
-          v-if="isAddingMember"
-					:users="allUsers"
-					:board="board"
-          :card="this.card"
-					@addUser="addUser"
-					:onlyBoard="true"
-				></users>
   </section>
 </template>
 
@@ -88,11 +104,13 @@
 import labelsCmp from "./card-details-cmps/labels.cmp.vue";
 import membersCmp from "./card-details-cmps/members.cmp.vue";
 import activityCmp from "./card-details-cmps/activity.cmp.vue";
+import dateCmp from "./card-details-cmps/date.cmp.vue"
 import descriptionCmp from "./card-details-cmps/description.cmp.vue";
 import checklistsCmp from "./card-details-cmps/checklists.cmp.vue";
 import checklistAdd from "./checklist.add.vue";
 import labelsList from "./labels/labels.list.vue";
-import users from "./users.vue"
+import users from "./users.vue";
+
 export default {
   props: {
     card: Object,
@@ -104,12 +122,14 @@ export default {
       cardToEdit: null,
       addingTodo: false,
       isAddingChecklist: false,
-      isAddingLabel:false,
+      isAddingLabel: false,
       isAddingMember: false,
+      cardDate: '',
     };
   },
   components: {
     labelsCmp,
+    dateCmp,
     membersCmp,
     descriptionCmp,
     checklistsCmp,
@@ -122,46 +142,57 @@ export default {
     exitCard() {
       this.$emit("clearCard");
     },
+    closePopups() {
+      this.isAddingChecklist = false;
+      this.isAddingLabel = false;
+      this.isAddingMember = false;
+    },
     makeId() {
       const num = Math.floor(Math.random() * (900 - 1) + 1);
       return "c" + num;
     },
-    toggleCl(){
-      this.isAddingChecklist = !this.isAddingChecklist
+    toggleCl() {
+      this.isAddingChecklist = !this.isAddingChecklist;
     },
-    toggleLabel(){
-      this.isAddingLabel = !this.isAddingLabel
+    toggleLabel() {
+      this.isAddingLabel = !this.isAddingLabel;
     },
-    toggleMember(){
-      this.isAddingMember = !this.isAddingMember
+    toggleMember() {
+      this.isAddingMember = !this.isAddingMember;
+    },
+    toggleCompleted(isCompleted){
+      this.cardToEdit.isCompleted = isCompleted
+      this.emitCard()
     },
     updateDesc(desc) {
       this.cardToEdit.description = desc;
-      this.emitCard()
+      this.emitCard();
     },
-    addUser(userId){
-      const member = this.board.members.find(member => member._id === userId)
-      console.log(member);
-      if(!this.card.members) {
-        console.log('hi');
-        this.cardToEdit.members = []
-        }
-      this.cardToEdit.members.push(member)
-      console.log('updated card in card details',this.card);
-      this.emitCard()
+    updateDate() {
+      console.log('Changed Date' , this.cardDate);
+      this.cardToEdit.dueDate = this.cardDate;
+      this.emitCard();
     },
-    addCl(checklist){
-      if(!this.cardToEdit.checklists) this.cardToEdit.checklists = []
+    addUser(userId) {
+      const member = this.board.members.find((member) => member._id === userId);
+      if (!this.card.members) {
+        this.cardToEdit.members = [];
+      }
+      this.cardToEdit.members.push(member);
+      this.emitCard();
+    },
+    addCl(checklist) {
+      if (!this.cardToEdit.checklists) this.cardToEdit.checklists = [];
       this.cardToEdit.checklists.push(checklist);
-      this.emitCard()
+      this.emitCard();
     },
     updateCL(checklists) {
       this.cardToEdit.checklists = checklists;
-      this.emitCard()
+      this.emitCard();
     },
     updateLabels(labels) {
       this.cardToEdit.labelIds = labels;
-      this.emitCard()
+      this.emitCard();
     },
     emitCard() {
       this.$emit("updateCard", this.cardToEdit);
@@ -176,12 +207,12 @@ export default {
         if (this.cardToEdit.labelIds.includes(label.id)) return label;
       });
     },
-    allUsers(){
-      return this.$store.getters.users
+    allUsers() {
+      return this.$store.getters.users;
     },
-    board(){
-      return this.$store.getters.board
-    }
+    board() {
+      return this.$store.getters.board;
+    },
   },
   created() {
     this.cardToEdit = JSON.parse(JSON.stringify(this.card));
