@@ -33,19 +33,22 @@
         </div>
       </div>
       <section ref="card-preview-wrapper" class="card-preview-wrapper">
-      <draggable
-        v-model="groupToEdit.cards"
-        @start="drag = true"
-        @end="drag = false; updateGroup()"
-        ghost-class="ghost"
-      >
-        <card-preview
-          v-for="card in group.cards"
-          :key="card.id"
-          :card="card"
-          :labels="labels"
-          @click.native="setCard(card)"
-        />
+        <draggable
+          v-model="groupToEdit.cards"
+          @start="drag = true"
+          @end="
+            drag = false;
+            updateGroup();
+          "
+          ghost-class="ghost"
+        >
+          <card-preview
+            v-for="card in group.cards"
+            :key="card.id"
+            :card="card"
+            :labels="labels"
+            @click.native="setCard(card)"
+          />
         </draggable>
       </section>
       <div v-if="isAddingCard" class="add-card card-preview">
@@ -82,6 +85,7 @@
             >
           </div>
         </section>
+      </section>
     </div>
     <card-details
       v-if="currCard"
