@@ -56,7 +56,6 @@ export default {
       this.$emit("closeInvite");
     },
     toggleMember(){
-      console.log('hi');
       this.$emit('toggleMember')
     }
   },
