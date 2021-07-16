@@ -33,19 +33,22 @@
         </div>
       </div>
       <section ref="card-preview-wrapper" class="card-preview-wrapper">
-      <draggable
-        v-model="groupToEdit.cards"
-        @start="drag = true"
-        @end="drag = false; updateGroup()"
-        ghost-class="ghost"
-      >
-        <card-preview
-          v-for="card in group.cards"
-          :key="card.id"
-          :card="card"
-          :labels="labels"
-          @click.native="setCard(card)"
-        />
+        <draggable
+          v-model="groupToEdit.cards"
+          @start="drag = true"
+          @end="
+            drag = false;
+            updateGroup();
+          "
+          ghost-class="ghost"
+        >
+          <card-preview
+            v-for="card in group.cards"
+            :key="card.id"
+            :card="card"
+            :labels="labels"
+            @click.native="setCard(card)"
+          />
         </draggable>
       </section>
       <div v-if="isAddingCard" class="add-card card-preview">
@@ -60,9 +63,7 @@
       <section class="add-card-container" ref="addcard">
         <div v-if="isAddingCard" class="card-composer-container">
           <div class="add-card-controls">
-            <button class="btn-add-card" @click="saveCard">
-              Add card
-            </button>
+            <button class="btn-add-card" @click="saveCard">Add card</button>
             <a class="icon-lg icon-close" @click="closeCardEdit"></a>
           </div>
         </div>
@@ -82,6 +83,7 @@
             >
           </div>
         </section>
+      </section>
     </div>
     <card-details
       v-if="currCard"
@@ -133,9 +135,8 @@ export default {
       this.groupToEdit.cards.push(savedCard);
       this.updateGroup();
       this.cardToEdit.title = "";
-      this.$refs["card-preview-wrapper"].scrollTop = this.$refs[
-        "card-preview-wrapper"
-      ].scrollHeight;
+      this.$refs["card-preview-wrapper"].scrollTop =
+        this.$refs["card-preview-wrapper"].scrollHeight;
     },
     toggleCardEdit() {
       this.isAddingCard = !this.isAddingCard;
