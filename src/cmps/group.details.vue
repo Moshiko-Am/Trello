@@ -8,9 +8,28 @@
           spellcheck="false"
           dir="auto"
           v-model="groupToEdit.title"
+          @change="updateGroup"
         ></textarea>
         <div class="group-header-extras">
-          <a class="group-header-extras-menu icon-sm icon-dots-menu"></a>
+          <a
+            class="group-header-extras-menu icon-sm icon-dots-menu"
+            @click="toggleExtras"
+          >
+          </a>
+          <div v-if="isExtrasShowing" class="popup">
+            <div class="header">
+              <div class="header-title">List actions</div>
+              <span
+                class="header-close icon-sm icon-x"
+                @click="toggleExtras"
+              ></span>
+            </div>
+            <div class="popup-content">
+              <div class="item">
+                <a @click="deleteGroup">Delete this list</a>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
       <card-preview
@@ -35,7 +54,7 @@
             <button class="btn-add-card" @click="toggleCardEdit">
               Add card
             </button>
-            <a class="icon-lg icon-close" @click="toggleCardEdit"></a>
+            <a class="icon-lg icon-close" @click="closeCardEdit"></a>
           </div>
         </div>
         <div v-else class="card-composer-container">
@@ -70,6 +89,7 @@ export default {
   data() {
     return {
       isAddingCard: false,
+      isExtrasShowing: false,
       groupToEdit: {},
       cardToEdit: {
         id: "",
@@ -86,16 +106,24 @@ export default {
     clearCard() {
       this.currCard = null;
     },
+    savedCard() {
+      const savedCard = { ...this.cardToEdit };
+      savedCard.id = this.makeId();
+      this.groupToEdit.cards.push(savedCard);
+      this.updateGroup();
+      this.cardToEdit.title = "";
+    },
     toggleCardEdit() {
       this.isAddingCard = !this.isAddingCard;
       if (this.isAddingCard) this.$nextTick(() => this.$refs.content.focus());
-      else if (this.cardToEdit.title) {
-        const savedCard = { ...this.cardToEdit };
-        savedCard.id = this.makeId();
-        this.groupToEdit.cards.push(savedCard);
-        this.saveGroup();
-        this.cardToEdit.title = "";
-      }
+      else if (this.cardToEdit.title) this.savedCard();
+    },
+    toggleExtras() {
+      this.isExtrasShowing = !this.isExtrasShowing;
+    },
+    closeCardEdit() {
+      this.isAddingCard = false;
+      this.cardToEdit.title = "";
     },
     makeId(length = 5) {
       var text = "";
@@ -111,11 +139,13 @@ export default {
         (card) => card.id === updatedCard.id
       );
       this.groupToEdit.cards.splice(idx, 1, updatedCard);
-      console.log("from group details", this.groupToEdit);
-      this.saveGroup();
+      this.updateGroup();
     },
-    saveGroup() {
-      this.$emit("saveGroup", this.groupToEdit);
+    updateGroup() {
+      this.$emit("updateGroup", this.groupToEdit);
+    },
+    deleteGroup() {
+      this.$emit("deleteGroup", this.groupToEdit.id);
     },
   },
   created() {

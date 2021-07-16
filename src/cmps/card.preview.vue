@@ -28,6 +28,9 @@
       <span class="icon-sm icon-checklist"></span>
       <span class="checklist-indicator">{{ checklistToShow }}</span>
 
+    <div class="preview-date-container" :style="isSoon" v-if="card.dueDate">
+      {{card.dueDate.slice(5)}}
+    </div>
     </div>
     <div class="preview-members-container" v-if="card.members">
       <avatar
@@ -80,6 +83,16 @@ export default {
       });
       return `${done}/${total}`;
     },
+    isSoon() {
+            if(this.card.isCompleted) return {backgroundColor:'#61BD4F', color:'white'}
+            const currDate = Date.parse(new Date)
+            const dueDate = Date.parse(this.card.dueDate)
+            const timeLeft = dueDate - currDate
+            console.log(timeLeft);
+            if(timeLeft < 86400000) return {backgroundColor:'#eb5a46', color:'white'}
+            else if(timeLeft < 172800000) return {backgroundColor:'#F2D600', color:'black'}
+            else return {backgroundColor:'rgba(9, 30, 66, 0.04)', color:'white'}
+        }
   },
   methods: {
     toggleLabels() {

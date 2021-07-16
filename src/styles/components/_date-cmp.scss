@@ -1,0 +1,15 @@
+.date-container {
+    line-height: 18px;
+    display: flex;
+    align-items: center;
+    padding: 7px 12px;
+    border-radius: 3px;
+    transition: background-color .5s;
+
+    input {
+        margin: 0;
+        margin-right: 5px;
+        height: 16px;
+        width: 16px;
+    }
+}

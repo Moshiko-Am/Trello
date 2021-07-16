@@ -1,7 +1,6 @@
 <template>
   <div class="card-main-item">
     <div class="main-item-header">
-      <span class="icon-md icon-member"></span>
       <h3 class="main-item-title">Members</h3>
     </div>
     <div class="members-container">
