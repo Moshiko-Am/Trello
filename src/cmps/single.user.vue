@@ -11,7 +11,9 @@
 			}"
 		></avatar>
 		<span class="user-txt">{{ user.fullname }} </span>
-		<span class="user-txt"> ({{ user.username }})</span>
+		<span class="user-txt" v-if="user.username">
+			({{ user.username }})</span
+		>
 	</section>
 </template>
 

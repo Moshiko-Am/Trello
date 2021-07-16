@@ -86,8 +86,6 @@ export default {
   },
   methods: {
     saveGroups() {
-      console.log(this.groupsToEdit);
-      console.log(this.groups);
       this.$emit("boardUpdate", {
         type: "groups",
         payload: this.groupsToEdit,

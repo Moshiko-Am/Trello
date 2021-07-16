@@ -39,7 +39,7 @@
             <p class="sidebar-btn-title">Join</p>
           </div>
           <h3>Add To Card</h3>
-          <div class="card-sidebar-btn">
+          <div class="card-sidebar-btn" @click="toggleMember">
             <span class="icon-sm icon-member"></span>
             <p class="sidebar-btn-title">Members</p>
           </div>
@@ -73,6 +73,14 @@
       v-if="isAddingLabel"
     />
     <checklist-add @addCl="addCl" v-if="isAddingChecklist"/>
+    <users
+          v-if="isAddingMember"
+					:users="allUsers"
+					:board="board"
+          :card="this.card"
+					@addUser="addUser"
+					:onlyBoard="true"
+				></users>
   </section>
 </template>
 
@@ -84,6 +92,7 @@ import descriptionCmp from "./card-details-cmps/description.cmp.vue";
 import checklistsCmp from "./card-details-cmps/checklists.cmp.vue";
 import checklistAdd from "./checklist.add.vue";
 import labelsList from "./labels/labels.list.vue";
+import users from "./users.vue"
 export default {
   props: {
     card: Object,
@@ -96,6 +105,7 @@ export default {
       addingTodo: false,
       isAddingChecklist: false,
       isAddingLabel:false,
+      isAddingMember: false,
     };
   },
   components: {
@@ -106,6 +116,7 @@ export default {
     activityCmp,
     labelsList,
     checklistAdd,
+    users,
   },
   methods: {
     exitCard() {
@@ -121,14 +132,27 @@ export default {
     toggleLabel(){
       this.isAddingLabel = !this.isAddingLabel
     },
+    toggleMember(){
+      this.isAddingMember = !this.isAddingMember
+    },
     updateDesc(desc) {
       this.cardToEdit.description = desc;
       this.emitCard()
     },
+    addUser(userId){
+      const member = this.board.members.find(member => member._id === userId)
+      console.log(member);
+      if(!this.card.members) {
+        console.log('hi');
+        this.cardToEdit.members = []
+        }
+      this.cardToEdit.members.push(member)
+      console.log('updated card in card details',this.card);
+      this.emitCard()
+    },
     addCl(checklist){
+      if(!this.cardToEdit.checklists) this.cardToEdit.checklists = []
       this.cardToEdit.checklists.push(checklist);
-      console.log(this.cardToEdit);
-      // this.cardToEdit
       this.emitCard()
     },
     updateCL(checklists) {
@@ -152,6 +176,12 @@ export default {
         if (this.cardToEdit.labelIds.includes(label.id)) return label;
       });
     },
+    allUsers(){
+      return this.$store.getters.users
+    },
+    board(){
+      return this.$store.getters.board
+    }
   },
   created() {
     this.cardToEdit = JSON.parse(JSON.stringify(this.card));

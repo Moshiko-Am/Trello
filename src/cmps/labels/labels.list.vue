@@ -1,7 +1,6 @@
 <template>
   <section class="labels-list" @click.stop="">
     <header>Labels</header>
-    <hr>
     <h3>LABELS</h3>
     <div class="label-options">
       <div v-for="label in optionsLabels" :key="label.id">
