@@ -210,6 +210,7 @@
             align-items: center;
             
             div {
+                min-height: 38.4px;
                 padding: 8px 0;
                 flex-grow: 1;
             }
@@ -241,8 +242,47 @@
         }
     }
 
-    .add-todo-btn {
+    .add-todo-btn.card-sidebar-btn {
         margin-left: 32px;
+        margin-top: 0px;
+        height: 28px;
+    }
+
+    .checklist-preview {
+
+        .add-todo-container {
+            // display: flex;
+            // align-items: center;
+            // justify-content: space-between;
+            margin-top: 4px;
+            
+            .add-todo-input {
+                // margin-left: 30px;
+                margin-right: 3px;
+                width:calc(100% - 34px);
+                float: right;
+                height: 37px;
+                padding: 6px 10px;
+                border: none;
+                border-radius: 3px;
+                box-shadow: inset 0 0 0 2px #0079bf;
+                &:focus {
+                    outline: none;
+                }
+            }
+            
+            .save-todo-btn {
+                background-color: #0079bf;
+                box-shadow: none;
+                border: none;
+                color: #fff;
+                padding: 6px 12px;
+                border-radius: 3px;
+                margin-left:32px ;
+                margin-top:8px;
+                line-height: 20px;
+            }
+        }
     }
 }
 
@@ -280,11 +320,31 @@
         border-radius: 3px;
         display: block;
         min-height: 56px;
+        width: calc(100% - 32px);
+        resize: none;
         padding: 8px 12px;
         text-decoration: none;
         text-align: left;
         margin-left: 32px;
         font-size:14px;
+        outline: none;
+        transition: min-height .1s;
+
+        &:focus {
+            min-height: 108px;
+            background-color: white;
+            box-shadow: inset 0 0 0 2px #0079bf;
+        }
+
+        ~button {
+            background-color: #0079bf;
+            box-shadow: none;
+            border: none;
+            color: #fff;
+            padding: 6px 12px;
+            border-radius: 3px;
+            margin: 12px 0 0 32px ;
+        }
     }
 
     h3 {

@@ -28,15 +28,25 @@
         </button>
       </div>
     </div>
-    <input
-      v-if="addingTodo"
-      type="text"
-      v-model="checklist.todos[checklist.todos.length - 1].title"
-    />
-    <button class="add-todo-btn card-sidebar-btn" @click="addTodo()">
-      <span v-if="!addingTodo">Add an item</span>
-      <span v-if="addingTodo" class="icon-md icon-v"></span>
+    <button
+      class="add-todo-btn card-sidebar-btn"
+      v-if="!addingTodo"
+      @click="addTodo()"
+    >
+      <span>Add an item</span>
     </button>
+    <div v-else class="add-todo-container">
+      <input
+        class="add-todo-input"
+        type="text"
+        v-model="checklist.todos[checklist.todos.length - 1].title"
+        placeholder="Add an item"
+      />
+      <div>
+        <button class="save-todo-btn" @click="addTodo()">Add</button>
+        <span class="icon-lg icon-x"></span>
+      </div>
+    </div>
   </section>
 </template>
 
@@ -47,13 +57,13 @@ export default {
   },
   data() {
     return {
-      checklistToEdit: {...this.checklist},
+      checklistToEdit: { ...this.checklist },
       addingTodo: false,
     };
   },
   computed: {
     progressBar() {
-      if(!this.checklistToEdit.todos.length) return {'width': '0%'}
+      if (!this.checklistToEdit.todos.length) return { width: "0%" };
       const progress = {
         done: 0,
         total: 0,
@@ -62,20 +72,21 @@ export default {
         if (todo.isDone) progress.done++;
         progress.total++;
       });
-      const width = ((progress.done / progress.total) * 100).toFixed(0) + "%"
+      const width = ((progress.done / progress.total) * 100).toFixed(0) + "%";
       var color;
-      if(width === '100%'){
-        color = '#61bd4f'
-      } 
-      return {'width': width, 'background-color':color }
+      if (width === "100%") {
+        color = "#61bd4f";
+      }
+      return { width: width, "background-color": color };
     },
   },
   methods: {
-    removeCl(){
-      this.$emit('removeCl', this.checklistToEdit)
+    removeCl() {
+      this.$emit("removeCl", this.checklistToEdit);
     },
     toggleTodo(tIdx) {
-      this.checklistToEdit.todos[tIdx].isDone = !this.checklistToEdit.todos[tIdx].isDone;
+      this.checklistToEdit.todos[tIdx].isDone =
+        !this.checklistToEdit.todos[tIdx].isDone;
       this.updateChecklist();
     },
     deleteTodo(tIdx) {

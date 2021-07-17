@@ -33,6 +33,7 @@
         </div>
       </div>
       <section ref="card-preview-wrapper" class="card-preview-wrapper">
+        <div class="card-list">
         <draggable
           v-model="groupToEdit.cards"
           @start="drag = true"
@@ -50,6 +51,7 @@
             @click.native="setCard(card)"
           />
         </draggable>
+        </div>
       </section>
       <div v-if="isAddingCard" class="add-card card-preview">
         <textarea
