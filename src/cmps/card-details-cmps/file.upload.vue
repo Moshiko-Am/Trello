@@ -1,42 +1,26 @@
 <template>
-  <div class="img-upload-container">
-    <h1>Let's Upload Some Images!</h1>
-
-    <template v-if="!isLoading">
-      <!-- UPLOAD IMG -->
-      <label
-        for="imgUploader"
-        @drop.prevent="handleFile"
-        @dragover.prevent="isDragOver = true"
-        @dragleave="isDragOver = false"
-        :class="{ drag: isDragOver }"
-      >
-        <img
-          v-if="!isDragOver"
-          src="https://www.lifewire.com/thmb/P856-0hi4lmA2xinYWyaEpRIckw=/1920x1326/filters:no_upscale():max_bytes(150000):strip_icc()/cloud-upload-a30f385a928e44e199a62210d578375a.jpg"
-          alt=""
-        />
-
-        <h3 v-else>Drop image here</h3>
-      </label>
-
-      <!-- HIDDEN INPUT -->
-      <input
-        type="file"
-        name="img-uploader"
-        id="imgUploader"
-        @change="handleFile"
-      />
-    </template>
-
-    <!-- LOADER -->
-    <img
-      class="loader"
-      v-else
-      src="https://i.pinimg.com/originals/65/ba/48/65ba488626025cff82f091336fbf94bb.gif"
-      alt=""
-    />
-  </div>
+  <section class="file-upload-cmp" @click.stop>
+    <span class="icon-sm icon-x" @click="close"></span>
+    <header>Attach an image...</header>
+    <el-upload
+      action=""
+      ref="upload"
+      submit.prevent="handleFile()"
+      :auto-upload="false"
+      :on-preview="handlePictureCardPreview"
+      :on-remove="handleRemove"
+      :on-change="handleChange"
+      list-type="picture-card"
+    >
+      <el-button type="primary" @click.stop="handleFile" v-if="isUploaded">
+        Upload
+      </el-button>
+      <i v-else class="el-icon-plus"></i>
+    </el-upload>
+    <el-dialog :visible.sync="dialogVisible">
+      <img width="100%" :src="dialogImageUrl" alt="" />
+    </el-dialog>
+  </section>
 </template>
 
 <script>
@@ -44,53 +28,39 @@ import { uploadImg } from "@/services/img-upload.service.js";
 export default {
   data() {
     return {
-      isLoading: false,
-      isDragOver: false,
+      isUploaded: false,
+      dialogImageUrl: "",
+      dialogVisible: false,
+      uploadedFile: null,
     };
   },
   methods: {
-    // dragOver(ev) {
-    //   this.isDragOver = true;
-    // },
-    handleFile(ev) {
-      let file;
-      if (ev.type === "change") file = ev.target.files[0];
-      else if (ev.type === "drop") file = ev.dataTransfer.files[0];
-      this.onUploadImg(file);
+    handleFile() {
+      this.onUploadImg();
     },
-
-    async onUploadImg(file) {
-      this.isLoading = true;
-      this.isDragOver = false;
-      const res = await uploadImg(file);
-      this.$emit("save", res.url);
-      this.isLoading = false;
+    handleChange(file) {
+      this.uploadedFile = file;
+      this.isUploaded = true;
+      document.querySelector(".el-upload__input").disabled = true;
+    },
+    async onUploadImg() {
+      const res = await uploadImg(this.uploadedFile);
+      this.isUploaded = false;
+      document.querySelector(".el-upload__input").disabled = false;
+      this.close();
+      this.$emit("updateAttachments", res.url);
+    },
+    close() {
+      this.$emit("close");
+    },
+    handleRemove() {
+      this.isUploaded = false;
+      document.querySelector(".el-upload__input").disabled = false;
+    },
+    handlePictureCardPreview(file) {
+      this.dialogImageUrl = file.url;
+      this.dialogVisible = true;
     },
   },
 };
 </script>
-
-<style>
-.loader {
-  height: 150px;
-}
-
-label img {
-  height: 100px;
-  cursor: pointer;
-  transition: height 0.6s;
-}
-
-input {
-  width: 0;
-  height: 0;
-}
-.drag {
-  color: grey;
-  display: inline-block;
-  padding: 30px 5px;
-  width: 220px;
-  border: 1px dashed gray;
-  border-radius: 8px;
-}
-</style>

@@ -72,28 +72,12 @@
 						></a>
 					</div>
 				</div>
-				<section ref="addcard">
-					<div v-if="isAddingCard" class="card-composer-container">
-						<div class="add-card-controls">
-							<button
-								class="btn-add-card"
-								@click="toggleCardEdit"
-							>
-								Add card
-							</button>
-							<a
-								class="icon-lg icon-close"
-								@click="closeCardEdit"
-							></a>
-						</div>
-					</div>
-					<div v-else class="card-composer-container">
-						<a class="open-card-composer" @click="toggleCardEdit">
-							<span class="icon-sm icon-add"></span>
-							<span class="add-card">Add a card</span></a
-						>
-					</div>
-				</section>
+				<div v-else class="card-composer-container">
+					<a class="open-card-composer" @click="toggleCardEdit">
+						<span class="icon-sm icon-add"></span>
+						<span class="add-card">Add a card</span></a
+					>
+				</div>
 			</section>
 		</div>
 		<card-details
@@ -149,6 +133,7 @@ export default {
 			this.$refs['card-preview-wrapper'].scrollTop = this.$refs[
 				'card-preview-wrapper'
 			].scrollHeight;
+			this.$refs.content.focus();
 		},
 		toggleCardEdit() {
 			this.isAddingCard = !this.isAddingCard;

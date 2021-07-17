@@ -2,7 +2,8 @@
 	<section v-if="groupsToEdit" class="group-list-wrapper">
 		<draggable
 			class="group-list"
-			:options="{ handle: '.group-wrapper', filter: '.mod-add' }"
+			handle=".group-wrapper"
+			filter=".mod-add"
 			v-model="groupsToEdit"
 			@start="drag = true"
 			@end="
