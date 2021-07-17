@@ -1,5 +1,13 @@
 <template>
   <section class="card-preview" v-if="card.id">
+    <div v-if="card.attachments">
+      <div
+        v-for="attachment in card.attachments"
+        :key="attachment.id"
+        class="card-cover"
+        :style="{ 'background-image': `url('${attachment.str}')` }"
+      ></div>
+    </div>
     <div
       @click.stop="toggleLabels"
       class="preview-labels-container"
@@ -28,7 +36,11 @@
           <span class="checklist-indicator">{{ checklistToShow }}</span>
         </div>
 
-        <div class="preview-date-container" :style="isSoon" v-if="card.dueDate && card.dueDate.length">
+        <div
+          class="preview-date-container"
+          :style="isSoon"
+          v-if="card.dueDate && card.dueDate.length"
+        >
           {{ card.dueDate.slice(5) }}
         </div>
       </div>
@@ -93,7 +105,8 @@ export default {
         return { backgroundColor: "#eb5a46", color: "white" };
       else if (timeLeft < 172800000)
         return { backgroundColor: "#F2D600", color: "black" };
-      else return { backgroundColor: "rgba(9, 30, 66, 0.08)", color: "#5e6c84" };
+      else
+        return { backgroundColor: "rgba(9, 30, 66, 0.08)", color: "#5e6c84" };
     },
   },
   methods: {

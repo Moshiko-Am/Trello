@@ -1,61 +1,26 @@
 import axios from 'axios';
 
-export const uploadImg = async (ev) => {
-    // Defining our variables
-    const CLOUD_NAME = '' // Insert yours
-    const UPLOAD_PRESET = '' // Insert yours
+export const uploadImg = async(file) => {
+    const CLOUD_NAME = 'dsnxbqbvl' // Insert yours
+    const UPLOAD_PRESET = 'jcxq5ftd' // Insert yours
     const UPLOAD_URL = `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`
-
-    const FORM_DATA = new FormData();
-    // Building the request body
-    FORM_DATA.append('file', ev.target.files[0])
-    FORM_DATA.append('upload_preset', UPLOAD_PRESET)
- 
-    // Sending a post method request to Cloudniarys' API
     try {
-         const res = await axios.post(UPLOAD_URL, FORM_DATA)
-         return res.data;
+        let res = await axios({ method: 'get', url: file.url, responseType: 'blob' })
+        var reader = new FileReader();
+        reader.readAsDataURL(res.data);
+        return new Promise(resolve => {
+            reader.onloadend = () => {
+                var base64data = reader.result;
+                const FORM_DATA = new FormData();
+                FORM_DATA.append('file', base64data)
+                FORM_DATA.append('upload_preset', UPLOAD_PRESET)
+                axios.post(UPLOAD_URL, FORM_DATA)
+                    .then(res => {
+                        resolve(res.data)
+                    })
+            }
+        })
     } catch (err) {
         console.error('ERROR!', err)
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// FETCH
-// export const uploadImg = async (ev) =>{
-//     // Defining our variables
-//     const UPLOAD_PRESET = '' // Insert yours
-//     const CLOUD_NAME = '' // Insert yours
-//     const UPLOAD_URL = `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`
-//     const FORM_DATA = new FormData();
-//     // Building the request body
-//     FORM_DATA.append('file', ev.target.files[0])
-//     FORM_DATA.append('upload_preset',UPLOAD_PRESET)
-//     // Sending a post method request to Cloudniarys' API
-//     try {
-//         const res = await fetch(UPLOAD_URL, {
-//             method: 'POST',
-//             body: FORM_DATA
-//         })
-//         return res.json();
-//     } catch(err) {
-//         console.error('ERROR!', err)
-//     }
-// }

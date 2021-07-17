@@ -31,6 +31,11 @@
             :description="cardToEdit.description"
             @updateDesc="updateDesc"
           />
+          <attachment-cmp
+            v-if="cardToEdit.attachments"
+            :attachments="cardToEdit.attachments"
+            @updateAttachments="updateAttachments"
+          />
           <checklists-cmp
             v-if="cardToEdit.checklists"
             :checklists="cardToEdit.checklists"
@@ -90,7 +95,11 @@
           <div class="card-sidebar-btn" @click="toggleAttch">
             <span class="icon-sm icon-attach"></span>
             <p class="sidebar-btn-title">Attachments</p>
-            <file-upload @closePopups="closePopups" v-if="isAddingAttachment" />
+            <file-upload
+              @close="closePopups"
+              @updateAttachments="updateAttachments"
+              v-if="isAddingAttachment"
+            />
           </div>
           <div class="card-sidebar-btn">
             <span class="icon-sm icon-cover"></span>
@@ -112,6 +121,7 @@ import checklistsCmp from "./card-details-cmps/checklists.cmp.vue";
 import checklistAdd from "./checklist.add.vue";
 import labelsList from "./labels/labels.list.vue";
 import fileUpload from "./card-details-cmps/file.upload.vue";
+import attachmentCmp from "./card-details-cmps/attachment.cmp.vue";
 import membersList from "./card-details-cmps/members.list.vue";
 
 export default {
@@ -142,6 +152,7 @@ export default {
     checklistAdd,
     membersList,
     fileUpload,
+    attachmentCmp,
   },
   methods: {
     exitCard() {
@@ -151,6 +162,7 @@ export default {
       this.isAddingChecklist = false;
       this.isAddingLabel = false;
       this.isAddingMember = false;
+      this.isAddingAttachment = false;
     },
     makeId() {
       const num = Math.floor(Math.random() * (900 - 1) + 1);
@@ -208,6 +220,15 @@ export default {
     },
     emitCard() {
       this.$emit("updateCard", this.cardToEdit);
+    },
+    updateAttachments(str) {
+      if (!this.cardToEdit.attachments) this.cardToEdit.attachments = [];
+      const attachment = {
+        id: this.makeId(),
+        str,
+      };
+      this.cardToEdit.attachments.push(attachment);
+      this.emitCard();
     },
   },
   computed: {

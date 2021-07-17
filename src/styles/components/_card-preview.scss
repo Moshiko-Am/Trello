@@ -12,6 +12,18 @@
     margin: 8px 8px;
     padding: 6px 8px;
     word-break: break-word;
+    .card-cover {
+        height: 245px;
+        background-color: #2d455a;
+        background-size: cover;
+        border-radius: 3px 3px 0 0;
+        background-position: 50%;
+        background-repeat: no-repeat;
+        user-select: none;
+        margin-inline: -8px;
+        margin-block-start: -6px;
+        margin-block-end: 6px;
+    }
     .preview-labels-container {
         display: flex;
         .label {
@@ -31,37 +43,31 @@
             height: 20px;
         }
     }
-
     .preview-indicators-container {
         display: flex;
         align-items: flex-end;
         justify-content: space-between;
-
-        .preview-inner-container{
+        .preview-inner-container {
             display: flex;
             align-items: center;
-
-            >*:not(:last-child){
+            >*:not(:last-child) {
                 margin-right: 5px;
             }
         }
     }
-
     .preview-checklist-container {
         display: flex;
         align-items: center;
-        color:#5e6c84;
+        color: #5e6c84;
         .icon-sm {
-            color:#5e6c84;
+            color: #5e6c84;
             margin-top: 4px;
         }
-
         .checklist-indicator {
             margin-top: 3px;
             font-size: 12px;
         }
     }
-
     .preview-members-container {
         display: flex;
         justify-content: flex-end;
@@ -69,10 +75,9 @@
         bottom: 2px;
         max-width: 140px;
     }
-
     .preview-date-container {
         font-size: 12px;
-        color:#5e6c84 ;
+        color: #5e6c84;
         margin-top: 3px;
         border-radius: 3px;
         padding: 1px 3px;
