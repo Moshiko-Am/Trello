@@ -33,6 +33,7 @@
         </div>
       </div>
       <section ref="card-preview-wrapper" class="card-preview-wrapper">
+        <div class="card-list">
         <draggable
           v-model="groupToEdit.cards"
           @start="drag = true"
@@ -50,6 +51,7 @@
             @click.native="setCard(card)"
           />
         </draggable>
+        </div>
       </section>
       <div v-if="isAddingCard" class="add-card card-preview">
         <textarea
@@ -67,22 +69,22 @@
             <a class="icon-lg icon-close" @click="closeCardEdit"></a>
           </div>
         </div>
-        <section ref="addcard">
-          <div v-if="isAddingCard" class="card-composer-container">
+        <!-- <section ref="addcard"> -->
+          <!-- <div v-if="isAddingCard" class="card-composer-container">
             <div class="add-card-controls">
               <button class="btn-add-card" @click="toggleCardEdit">
                 Add card
               </button>
               <a class="icon-lg icon-close" @click="closeCardEdit"></a>
             </div>
-          </div>
+          </div> -->
           <div v-else class="card-composer-container">
             <a class="open-card-composer" @click="toggleCardEdit">
               <span class="icon-sm icon-add"></span>
               <span class="add-card">Add a card</span></a
             >
           </div>
-        </section>
+        <!-- </section> -->
       </section>
     </div>
     <card-details
