@@ -21,10 +21,32 @@
     }
 }
 
+.el-upload--picture-card {
+    height: 148px;
+}
+
+.el-upload-list--picture-card {
+    object-fit: cover;
+}
+
 .el-upload-list--picture-card,
 .el-upload--picture-card {
     display: flex;
     justify-content: center;
     align-items: center;
     width: unset;
+}
+
+.file-upload-cmp div.uploaded .el-upload--picture-card {
+    border: 0px;
+    height: unset;
+}
+
+.el-dialog__wrapper {
+    overflow: hidden;
+}
+
+.el-dialog__body img {
+    max-height: 80vh;
+    object-fit: contain;
 }

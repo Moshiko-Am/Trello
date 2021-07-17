@@ -65,7 +65,7 @@
             <span class="icon-sm icon-label"></span>
             <p class="sidebar-btn-title">Labels</p>
             <labels-list
-              :optionsLabels="labels"
+              :optionsLabels="board.labels"
               :cardLabels="card.labelIds"
               @updateLabels="updateLabels"
               @closePopups="closePopups"
@@ -128,7 +128,6 @@ export default {
   props: {
     card: Object,
     group: Object,
-    labels: Array,
   },
   data() {
     return {
@@ -219,7 +218,8 @@ export default {
       this.emitCard();
     },
     emitCard() {
-      this.$emit("updateCard", this.cardToEdit);
+      const cardCopy = JSON.parse(JSON.stringify(this.cardToEdit));
+      this.$emit("updateCard", cardCopy);
     },
     updateAttachments(str) {
       if (!this.cardToEdit.attachments) this.cardToEdit.attachments = [];
@@ -236,7 +236,8 @@ export default {
       return this.$store.getters.board.activities;
     },
     labelsForDisplay() {
-      return this.labels.filter((label) => {
+      const labels = this.$store.getters.board.labels;
+      return labels.filter((label) => {
         if (this.cardToEdit.labelIds.includes(label.id)) return label;
       });
     },

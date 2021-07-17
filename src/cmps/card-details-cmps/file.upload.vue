@@ -10,16 +10,17 @@
       :on-preview="handlePictureCardPreview"
       :on-remove="handleRemove"
       :on-change="handleChange"
+      :class="{ uploaded: isUploaded }"
       list-type="picture-card"
     >
       <el-button type="primary" @click.stop="handleFile" v-if="isUploaded">
-        Upload
+        Save image
       </el-button>
       <i v-else class="el-icon-plus"></i>
     </el-upload>
     <el-dialog
       :visible.sync="dialogVisible"
-      top="0"
+      top="7vh"
       :center="true"
       :lock-scroll="true"
       :append-to-body="true"

@@ -76,11 +76,11 @@ export default {
   },
   props: {
     card: Object,
-    labels: Array,
   },
   computed: {
     labelsForDisplay() {
-      return this.labels.filter((label) => {
+      const labels = this.$store.getters.board.labels;
+      return labels.filter((label) => {
         if (this.card.labelIds.includes(label.id)) return label;
       });
     },
