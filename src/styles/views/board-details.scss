@@ -1,40 +1,41 @@
 .board-details {
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1;
-    margin-right: 0;
-    position: relative;
-    transition: margin 0.1s ease-in;
+	display: flex;
+	flex-direction: column;
+	flex-grow: 1;
+	margin-right: 0;
+	position: relative;
+	transition: margin 0.1s ease-in;
 }
 
 .group-list-wrapper {
-    display: flex;
-    flex-grow: 1;
+	display: flex;
+	flex-grow: 1;
 }
 
 .group-list {
-    display: flex;
-    flex-wrap: nowrap;
-    position: relative;
-    flex-grow: 1;
-    overflow-x: auto;
-    overflow-y: hidden;
-    margin-block-end: 8px;
-    height: 90vh;
-    &::-webkit-scrollbar {
-        height: 12px;
-        width: 12px;
-    }
-    &::-webkit-scrollbar-button {
-        display: block;
-        height: 4px;
-        width: 4px;
-    }
-    &::-webkit-scrollbar-track-piece {
-        background: rgba(0, 0, 0, 0.15);
-    }
-    &::-webkit-scrollbar-thumb {
-        background: rgba(255, 255, 255, 0.4);
-        border-radius: 10px;
-    }
+	display: flex;
+	flex-wrap: nowrap;
+	position: relative;
+	flex-grow: 1;
+	overflow-x: auto;
+	overflow-y: hidden;
+	margin-block-end: 8px;
+	height: calc(100vh - 100px);
+	&::-webkit-scrollbar {
+		height: 12px;
+		width: 12px;
+	}
+	&::-webkit-scrollbar-button {
+		display: block;
+		height: 4px;
+		width: 4px;
+	}
+	&::-webkit-scrollbar-track {
+		border-radius: 10px;
+		background: rgba(0, 0, 0, 0.15);
+	}
+	&::-webkit-scrollbar-thumb {
+		background: rgba(255, 255, 255, 0.4);
+		border-radius: 10px;
+	}
 }

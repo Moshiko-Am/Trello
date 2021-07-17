@@ -12,6 +12,9 @@ export const boardStore = {
 		boardStyle({ selectedBoard }) {
 			if (selectedBoard) return selectedBoard.style;
 		},
+		boards({ boards }) {
+			return boards;
+		},
 	},
 	mutations: {
 		changeBg(state, photoUrl) {

@@ -17,7 +17,7 @@
 						fill="currentColor"
 					></path></svg
 			></router-link>
-			<button class="btn-boards">
+			<button class="btn-boards" @click="toggleBoardsMenu">
 				<svg
 					width="24"
 					height="24"
@@ -34,6 +34,12 @@
 					></path></svg
 				><span class="btn-boards-txt">Boards</span>
 			</button>
+			<boards-menu
+				:boards="boards"
+				class="hideBoardsMenu"
+				:class="boardsShowMenu"
+				@closeBoardsMenu="toggleBoardsMenu"
+			></boards-menu>
 			<div class="header-search">
 				<input
 					type="text"
@@ -86,5 +92,28 @@
 </template>
 
 <script>
-export default {};
+import boardsMenu from './boards.menu';
+export default {
+	components: {
+		boardsMenu,
+	},
+	props: {
+		boards: Array,
+	},
+	data() {
+		return {
+			isBoardsShow: false,
+		};
+	},
+	computed: {
+		boardsShowMenu() {
+			return { showBoardsMenu: this.isBoardsShow };
+		},
+	},
+	methods: {
+		toggleBoardsMenu() {
+			this.isBoardsShow = !this.isBoardsShow;
+		},
+	},
+};
 </script>

@@ -1,6 +1,6 @@
 <template>
 	<div id="app" :style="boardStyle">
-		<app-header></app-header>
+		<app-header :boards="boards" v-if="boards"></app-header>
 		<!-- <router-link to="/">Home</router-link> |
       <router-link to="/about">About</router-link> -->
 		<router-view />
@@ -13,9 +13,9 @@ export default {
 	components: {
 		appHeader,
 	},
-	created() {
-		this.$store.dispatch({ type: 'loadBoards' });
-		this.$store.dispatch({ type: 'loadUsers' });
+	async created() {
+		await this.$store.dispatch({ type: 'loadBoards' });
+		await this.$store.dispatch({ type: 'loadUsers' });
 	},
 	computed: {
 		boardStyle() {
@@ -24,6 +24,9 @@ export default {
 			return background.type === 'backgroundImage'
 				? `${background.type}: url(${background.content})`
 				: `${background.type}: ${background.content}`;
+		},
+		boards() {
+			return this.$store.getters.boards;
 		},
 	},
 };

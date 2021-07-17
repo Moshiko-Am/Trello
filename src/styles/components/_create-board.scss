@@ -1,0 +1,7 @@
+.hideCreateMenu {
+	transform: translateX(-100%);
+}
+
+.hideCreateMenu.showCreateMenu {
+	transform: translateX(0);
+}
