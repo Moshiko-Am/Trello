@@ -1,16 +1,16 @@
 <template>
   <div>
     <div style="margin-top: 10px">
-      <!-- <button type="primary" size="mini" @click="addShape">Add shape</button>
-      <button type="primary" size="mini" @click="addLine">Add line</button>
-      <button type="primary" size="mini" @click="addArrow">Add arrow</button>
-      <button type="primary" size="mini" @click="addNote">Add note</button> -->
-      <!-- <button type="primary" size="mini">Erase</button>
-      <button type="primary" size="mini">Delete</button> -->
+      <button type="primary" size="mini" @click="addShape">Thêm shape</button>
+      <button type="primary" size="mini" @click="addLine">Thêm line</button>
+      <button type="primary" size="mini" @click="addArrow">Thêm mũi tên</button>
+      <button type="primary" size="mini" @click="addNote">Thêm note</button>
+      <button type="primary" size="mini">Tẩy</button>
+      <button type="primary" size="mini">Xoá</button>
       <button type="primary" size="mini" @click="exportToImage()">
         EXPORT
       </button>
-      <!-- <button @click="addLabel">Add Label</button> -->
+      <button @click="addLabel">Add Label</button>
     </div>
     <div class="page-center">
       <v-stage
@@ -26,7 +26,7 @@
         @click="touchEndLine"
       >
         <!-- image -->
-        <!-- <v-layer ref="layer">
+        <v-layer ref="layer">
           <v-image
             ref="image"
             :config="{
@@ -42,7 +42,7 @@
             }"
           >
           </v-image>
-        </v-layer> -->
+        </v-layer>
 
         <v-layer ref="layerDraw"></v-layer>
 
@@ -598,7 +598,7 @@ export default {
 
     var img = new Image();
 
-    img.src = "/src/test.jpg";
+    img.src = "~@/assets/img/background-choose-photos.jpg";
 
     img.onload = () => {
       canvas = document.querySelectorAll("canvas");
