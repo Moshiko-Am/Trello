@@ -105,6 +105,11 @@
             <span class="icon-sm icon-cover"></span>
             <p class="sidebar-btn-title">Cover</p>
           </div>
+          <h3>Delete Card</h3>
+          <div class="card-sidebar-btn delete" @click="removeCard">
+            <span class="icon-sm icon-minus"></span>
+            <p class="sidebar-btn-title">Delete</p>
+          </div>
         </div>
       </div>
     </section>
@@ -168,15 +173,19 @@ export default {
       return "c" + num;
     },
     toggleCl() {
+      this.closePopups()
       this.isAddingChecklist = !this.isAddingChecklist;
     },
     toggleLabel() {
+      this.closePopups()
       this.isAddingLabel = !this.isAddingLabel;
     },
     toggleMember() {
+      this.closePopups()
       this.isAddingMember = !this.isAddingMember;
     },
     toggleAttch() {
+      this.closePopups()
       this.isAddingAttachment = !this.isAddingAttachment;
     },
     toggleCompleted(isCompleted) {
@@ -205,7 +214,9 @@ export default {
     },
     addCl(checklist) {
       if (!this.cardToEdit.checklists) this.cardToEdit.checklists = [];
-      this.cardToEdit.checklists.push(checklist);
+      const clsCopy = JSON.parse(JSON.stringify(this.cardToEdit.checklists))
+      clsCopy.push(checklist);
+      this.cardToEdit.checklists = JSON.parse(JSON.stringify(clsCopy))
       this.closePopups();
       this.emitCard();
     },
@@ -216,6 +227,9 @@ export default {
     updateLabels(labels) {
       this.cardToEdit.labelIds = labels;
       this.emitCard();
+    },
+    removeCard(){
+      this.$emit('removeCard', this.cardToEdit.id)
     },
     emitCard() {
       const cardCopy = JSON.parse(JSON.stringify(this.cardToEdit));

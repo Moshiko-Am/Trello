@@ -5,7 +5,11 @@
     <h4>MEMBERS</h4>
     <div class="member-options">
       <div v-for="member in boardMembers" :key="member._id">
-        <member-preview :member="member" :cardMembers="membersToEdit" @updateMembers="updateMembers" />
+        <member-preview
+          :member="member"
+          :cardMembers="membersToEdit"
+          @updateMembers="updateMembers"
+        />
       </div>
     </div>
   </section>
@@ -13,30 +17,31 @@
 
 <script>
 import memberPreview from "./member-preview.vue";
+
 export default {
   components: {
-    memberPreview
+    memberPreview,
   },
-  props:{
-      boardMembers:Array,
-      cardMembers: Array,
+  props: {
+    boardMembers: Array,
+    cardMembers: Array,
   },
-  data(){
-      return {
-          membersToEdit: this.cardMembers || []
-      }
+  data() {
+    return {
+      membersToEdit: this.cardMembers || [],
+    };
   },
-  methods:{
-      updateMembers(newMembers){
-          this.membersToEdit = newMembers
-          this.emitMembers()
-      },
-      emitMembers(){
-        this.$emit('updateMembers', this.membersToEdit)
-      },
-      close(){
-        this.$emit('close')
-      }
-    }
+  methods: {
+    updateMembers(newMembers) {
+      this.membersToEdit = newMembers;
+      this.emitMembers();
+    },
+    emitMembers() {
+      this.$emit("updateMembers", this.membersToEdit);
+    },
+    close() {
+      this.$emit("close");
+    },
+  },
 };
 </script>

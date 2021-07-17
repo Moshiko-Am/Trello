@@ -1,0 +1,23 @@
+.activity-preview {
+    width: 100%;
+    height: 56px;
+    padding: 8px 0;
+    position: relative;
+    right: 5px;
+    .inner-container {
+        display: flex;
+        align-items: center;
+
+        .vue-avatar--wrapper{
+            margin-bottom: 5px;
+        }
+        
+        .activity-info {
+            margin-left: 7px;
+        }
+
+        span{
+            font-weight: 700;
+        }
+    }
+}

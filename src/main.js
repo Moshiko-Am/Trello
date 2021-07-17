@@ -7,8 +7,11 @@ import router from './router';
 import store from './store';
 import '@/styles/styles.scss';
 import locale from 'element-ui/lib/locale/lang/en';
+import VueKonva from 'vue-konva';
 Vue.use(ElementUI, { locale });
+Vue.use(VueKonva);
 Vue.config.productionTip = false;
+Vue.use(require('vue-moment'));
 
 new Vue({
 	router,
