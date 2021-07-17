@@ -33,6 +33,10 @@ export const boardStore = {
 			state.boards.splice(idx, 1, savedBoard);
 			state.selectedBoard = savedBoard;
 		},
+		addBoard(state, { board }) {
+			state.boards.push(board);
+			state.selectedBoard = board;
+		},
 	},
 	actions: {
 		async loadBoards({ commit }) {
@@ -47,7 +51,6 @@ export const boardStore = {
 			try {
 				board = await boardService.add(board);
 				commit({ type: 'addBoard', board });
-
 				return board;
 			} catch (err) {
 				console.log('boardStore: Error in addBoard', err);

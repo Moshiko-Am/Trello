@@ -35,6 +35,7 @@
 				><span class="btn-boards-txt">Boards</span>
 			</button>
 			<boards-menu
+				@createBoard="createBoard"
 				:boards="boards"
 				class="hideBoardsMenu"
 				:class="boardsShowMenu"
@@ -86,19 +87,29 @@
 					></path>
 				</svg>
 			</button>
-			<span>user</span>
+			<avatar
+				class="member-name"
+				:username="user.fullname"
+				:size="28"
+				:inline="true"
+				:style="{ margin: '5px' }"
+			></avatar>
 		</div>
 	</nav>
 </template>
 
 <script>
 import boardsMenu from './boards.menu';
+import avatar from 'vue-avatar';
 export default {
 	components: {
 		boardsMenu,
+		avatar,
 	},
 	props: {
 		boards: Array,
+		users: Array,
+		user: Object,
 	},
 	data() {
 		return {
@@ -113,6 +124,9 @@ export default {
 	methods: {
 		toggleBoardsMenu() {
 			this.isBoardsShow = !this.isBoardsShow;
+		},
+		createBoard(board) {
+			this.$emit('createBoard', board);
 		},
 	},
 };

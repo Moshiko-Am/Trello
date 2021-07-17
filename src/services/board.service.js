@@ -147,7 +147,7 @@ var gBoards = [
 						],
 						labelIds: ['l101', 'l102'],
 						createdAt: 1590999730348,
-						dueDate: "2021-08-12",
+						dueDate: '2021-08-12',
 						byMember: {
 							_id: 'u101',
 							username: 'Tal',
@@ -393,7 +393,7 @@ async function add(board) {
 
 	// board.byUser = userService.getLoggedinUser()
 	// board.aboutUser = await userService.getById(board.aboutUserId)
-	const addedBoard = storageService.post('board', board);
+	const addedBoard = storageService.post(BOARD_KEY, board);
 
 	return addedBoard;
 }
