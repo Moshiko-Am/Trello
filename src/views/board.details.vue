@@ -34,17 +34,32 @@ export default {
 				console.log(`coldn't save board`);
 			}
 		},
+		async loadPage() {
+			const { boardId } = this.$route.params;
+			if (this.$route.params.boardId) {
+				try {
+					await this.$store.dispatch({ type: 'loadBoards' });
+					this.$store.commit('getBoardById', boardId);
+					console.log('got here');
+				} catch (err) {
+					console.log('didnt find board', err);
+					// this.$router.push(`/`);
+				}
+			}
+		},
 	},
 	created() {},
 	watch: {
 		'this.$route.params.boardId': {
 			immediate: true,
+			deep: true,
 			async handler() {
 				if (this.$route.params.boardId) {
 					const { boardId } = this.$route.params;
 					try {
 						await this.$store.dispatch({ type: 'loadBoards' });
 						this.$store.commit('getBoardById', boardId);
+						console.log('got here');
 					} catch (err) {
 						console.log('didnt find board', err);
 						// this.$router.push(`/`);
