@@ -13,35 +13,69 @@
 			/>
 		</div>
 		<div class="boards-menu-content">
-			<div class="boards-list">
-				<div
-					class="board-item"
+			<div class="boards-list-sm">
+				<board-preview
 					v-for="board in boards"
+					display="small"
+					:board="board"
 					:key="board._id"
-					:style="{ backgroundImage: `url(${board.style.content}` }"
-				>
-					<img class="board-item-img" :src="board.style.content" />
-					<div class="board-item-title-container">
-						<h4 class="board-item-title">{{ board.title }}</h4>
-					</div>
-				</div>
+				/>
 			</div>
 			<div class="board-btns-container">
-				<button class="btn-create-board">Create new board</button>
-				<button class="btn-boards-page">Boards page</button>
+				<button class="btn-create-board" @click="toggleCreateBoard">
+					Create new board
+				</button>
+				<button class="btn-boards-page" @click="showBoards">
+					Boards page
+				</button>
 			</div>
 		</div>
+		<create-board
+			@createBoard="createBoard"
+			class="hideCreateMenu"
+			:class="createShowMenu"
+			@closeMenu="boardsMenuClose"
+			@menuBack="toggleCreateBoard"
+		></create-board>
 	</section>
 </template>
 
 <script>
+import boardPreview from '@/cmps/board.preview.vue';
+import createBoard from './create.board';
 export default {
 	props: {
 		boards: Array,
 	},
+	components: {
+		boardPreview,
+		createBoard,
+	},
+	data() {
+		return {
+			isCreateOpen: false,
+		};
+	},
+	computed: {
+		createShowMenu() {
+			return { showCreateMenu: this.isCreateOpen };
+		},
+	},
 	methods: {
 		boardsMenuClose() {
 			this.$emit('closeBoardsMenu');
+			this.isCreateOpen = false;
+		},
+		toggleCreateBoard() {
+			this.isCreateOpen = !this.isCreateOpen;
+			console.log(this.isCreateOpen);
+		},
+		createBoard(board) {
+			this.$emit('createBoard', board);
+		},
+		showBoards() {
+			this.$router.push(`/boards`);
+			this.boardsMenuClose();
 		},
 	},
 };

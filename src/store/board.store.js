@@ -21,6 +21,7 @@ export const boardStore = {
 			state.selectedBoard = state.boards.find(
 				(board) => board._id === boardId
 			);
+			console.log(state.selectedBoard);
 			return state.selectedBoard;
 		},
 		setBoards(state, { boards }) {
@@ -32,6 +33,13 @@ export const boardStore = {
 			);
 			state.boards.splice(idx, 1, savedBoard);
 			state.selectedBoard = savedBoard;
+		},
+		addBoard(state, { board }) {
+			state.boards.push(board);
+			state.selectedBoard = board;
+		},
+		clearStyle(state) {
+			state.selectedBoard = null;
 		},
 	},
 	actions: {
@@ -47,7 +55,6 @@ export const boardStore = {
 			try {
 				board = await boardService.add(board);
 				commit({ type: 'addBoard', board });
-
 				return board;
 			} catch (err) {
 				console.log('boardStore: Error in addBoard', err);
