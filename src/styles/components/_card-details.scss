@@ -40,7 +40,6 @@
                 color: #42526e;
             }
         }
-
         
         .card-sidebar-btn{
             position: relative;
@@ -63,6 +62,19 @@
 
             }
 
+            &.delete {
+                background-color: #b04632;
+                color:white;
+                
+                .icon-minus {
+                    color: white;
+                }
+
+                &:hover {
+                    background-color: #933b27;  
+                }
+            }
+
             
             &:hover {
                 background-color: rgba(9,30,66,.08);
@@ -75,10 +87,12 @@
 .el-date-editor {
     width: 100%;
     margin-top: 8px;
+    &.el-input{
+        width: 168px;
+    }
     
     .el-input__inner{
         height: 32px;
-        // line-height: 32px;
         background-color: rgba(9,30,66,.04);
         border: none;
         cursor: pointer;
@@ -187,6 +201,7 @@
 
 .labels-members-container {
         display: flex;
+        flex-wrap: wrap;
         .card-main-item {
             margin-left: 32px;
             h3 {
@@ -243,8 +258,9 @@
     }
 
     .add-todo-btn.card-sidebar-btn {
+        margin: 0;
         margin-left: 32px;
-        margin-top: 0px;
+        margin-top:8px;
         height: 28px;
     }
 
@@ -314,7 +330,8 @@
     }
 
     .description-textarea {
-        background-color: rgba(9,30,66,.04);
+        background:none;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         box-shadow: none;
         border: none;
         border-radius: 3px;
@@ -420,4 +437,7 @@
 }
 .icon-edit{
     @include to-icon("\e928")
+}
+.icon-minus {
+    @include to-icon("\e95c")
 }
