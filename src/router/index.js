@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import board from '@/views/board.details.vue';
+import boards from '@/cmps/board.list.vue';
 import canvasCmp from '@/cmps/card-details-cmps/canvas.cmp'
 import VueKonva from "vue-konva";
 
@@ -11,6 +12,11 @@ const routes = [{
         path: '/',
         name: 'Home',
         component: board,
+    },
+    {
+        path: '/boards',
+        name: 'Boards',
+        component: boards,
     },
     {
         path: '/canvas',
