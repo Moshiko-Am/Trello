@@ -9,7 +9,7 @@
           <span class="icon-lg icon-organization"></span>
         </div>
         <h3 class="boards-page-board-section-header-name">
-          Public boards
+          Tom Bechar's Workspaces
         </h3>
       </div>
     </div>

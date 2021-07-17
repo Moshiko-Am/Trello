@@ -5,13 +5,13 @@
       'board-item-lg': display === 'large',
       'board-item': display === 'small',
     }"
-    :style="{ backgroundImage: `url(${board.style.content}` }"
+    :style="{ backgroundImage: `url(${board.style.preview}` }"
     @click="showBoard(board._id)"
   >
     <img
       v-if="display === 'small'"
       class="board-item-img"
-      :src="board.style.content"
+      :src="board.style.preview"
     />
     <div class="board-item-title-container">
       <h4 class="board-item-title">{{ board.title }}</h4>
