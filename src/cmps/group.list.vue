@@ -86,9 +86,9 @@ export default {
   },
   methods: {
     saveGroups(newGroups) {
-      const savedGroups =
-        JSON.parse(JSON.stringify(newGroups)) ||
-        JSON.parse(JSON.stringify(this.groupsToEdit));
+      var savedGroups;
+      if(newGroups) {savedGroups = JSON.parse(JSON.stringify(newGroups))}
+      else {savedGroups = JSON.parse(JSON.stringify(this.groupsToEdit));}
       this.$emit("boardUpdate", {
         type: "groups",
         payload: savedGroups,
