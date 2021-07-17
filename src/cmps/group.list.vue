@@ -20,13 +20,16 @@
 				<div class="group">
 					<group-details
 						:group="group"
-						:labels="labels"
 						@updateGroup="updateGroup"
 						@deleteGroup="deleteGroup"
 					/>
 				</div>
 			</div>
-			<div ref="addgroup" class="group-wrapper mod-add">
+			<div
+				ref="addgroup"
+				class="group-wrapper mod-add"
+				:class="{ 'is-edit': isAddingGroup }"
+			>
 				<form v-if="isAddingGroup">
 					<input
 						class="group-name-input"
@@ -71,10 +74,6 @@ import groupDetails from '@/cmps/group.details.vue';
 import ClickOutside from 'vue-click-outside';
 import draggable from 'vuedraggable';
 export default {
-	props: {
-		groups: Array,
-		labels: Array,
-	},
 	data() {
 		return {
 			isAddingGroup: false,
@@ -93,9 +92,10 @@ export default {
 	},
 	methods: {
 		saveGroups() {
+			const savedGroups = JSON.parse(JSON.stringify(this.groupsToEdit));
 			this.$emit('boardUpdate', {
 				type: 'groups',
-				payload: this.groupsToEdit,
+				payload: savedGroups,
 			});
 		},
 		updateGroup(savedGroup) {
@@ -119,14 +119,10 @@ export default {
 			});
 			if (idx !== -1) this.groupsToEdit.splice(idx, 1);
 			else return;
-			this.$emit('boardUpdate', {
-				type: 'groups',
-				payload: this.groupsToEdit,
-			});
+			this.saveGroups();
 		},
 		toggleGroupEdit() {
 			this.isAddingGroup = !this.isAddingGroup;
-			this.$refs.addgroup.classList.toggle('is-edit');
 			if (this.isAddingGroup) {
 				this.$nextTick(() => {
 					this.$refs.content.focus();
@@ -135,7 +131,6 @@ export default {
 		},
 		closeGroupEdit() {
 			this.isAddingGroup = false;
-			this.$refs.addgroup.classList.remove('is-edit');
 			this.groupToEdit.title = '';
 		},
 		makeId(length = 5) {
@@ -151,7 +146,9 @@ export default {
 		},
 	},
 	created() {
-		this.groupsToEdit = this.groups;
+		this.groupsToEdit = JSON.parse(
+			JSON.stringify(this.$store.getters.board.groups)
+		);
 	},
 	mounted() {
 		this.popupItem = this.$refs.addgroup;

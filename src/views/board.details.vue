@@ -3,17 +3,10 @@
     <board-header
       @bgColor="boardUpdate"
       @updateBoard="boardUpdate"
-      :board="boardToEdit"
-      :allUsers="allUsers"
       @boardUpdate="boardUpdate"
-      v-if="boardToEdit"
+      v-if="board.title"
     />
-    <group-list
-      @boardUpdate="boardUpdate"
-      v-if="boardToEdit"
-      :groups="boardToEdit.groups"
-      :labels="labels"
-    />
+    <group-list @boardUpdate="boardUpdate" v-if="board.groups" />
   </section>
 </template>
 
@@ -22,23 +15,9 @@ import boardHeader from "@/cmps/board.header.vue";
 import groupList from "@/cmps/group.list.vue";
 
 export default {
-  data() {
-    return {
-      boardToEdit: null,
-      currCard: null,
-      allUsers: null,
-    };
-  },
   computed: {
     board() {
       return this.$store.getters.board;
-    },
-    users() {
-      return this.$store.getters.users;
-    },
-    labels() {
-      const board = this.$store.getters.board;
-      return board.labels;
     },
   },
   components: {
@@ -47,17 +26,13 @@ export default {
   },
   methods: {
     async boardUpdate(update) {
-      this.boardToEdit[update.type] = update.payload;
-      const board = JSON.parse(JSON.stringify(this.boardToEdit));
-      console.log(board);
+      const board = JSON.parse(JSON.stringify(this.board));
+      board[update.type] = update.payload;
       try {
         await this.$store.dispatch({ type: "saveBoard", board });
       } catch (err) {
         console.log(`coldn't save board`);
       }
-    },
-    setCurrCard(card) {
-      this.currCard = card;
     },
   },
   created() {},
@@ -70,12 +45,6 @@ export default {
           try {
             await this.$store.dispatch({ type: "loadBoards" });
             this.$store.commit("getBoardById", boardId);
-            this.boardToEdit = JSON.parse(
-              JSON.stringify(this.$store.state.boardStore.selectedBoard)
-            );
-            this.allUsers = JSON.parse(
-              JSON.stringify(this.$store.state.userStore.users)
-            );
           } catch (err) {
             console.log("didnt find board", err);
             // this.$router.push(`/`);

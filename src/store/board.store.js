@@ -17,9 +17,6 @@ export const boardStore = {
 		},
 	},
 	mutations: {
-		changeBg(state, photoUrl) {
-			state.selectedBoard.style.content = photoUrl;
-		},
 		getBoardById(state, boardId) {
 			state.selectedBoard = state.boards.find(
 				(board) => board._id === boardId

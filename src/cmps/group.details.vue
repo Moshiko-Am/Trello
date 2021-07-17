@@ -33,23 +33,24 @@
 				</div>
 			</div>
 			<section ref="card-preview-wrapper" class="card-preview-wrapper">
-				<draggable
-					v-model="groupToEdit.cards"
-					@start="drag = true"
-					@end="
-						drag = false;
-						updateGroup();
-					"
-					ghost-class="ghost"
-				>
-					<card-preview
-						v-for="card in group.cards"
-						:key="card.id"
-						:card="card"
-						:labels="labels"
-						@click.native="setCard(card)"
-					/>
-				</draggable>
+				<div class="card-list">
+					<draggable
+						v-model="groupToEdit.cards"
+						@start="drag = true"
+						@end="
+							drag = false;
+							updateGroup();
+						"
+						ghost-class="ghost"
+					>
+						<card-preview
+							v-for="card in groupToEdit.cards"
+							:key="card.id"
+							:card="card"
+							@click.native="setCard(card)"
+						/>
+					</draggable>
+				</div>
 			</section>
 			<div v-if="isAddingCard" class="add-card card-preview">
 				<textarea
@@ -83,8 +84,7 @@
 		<card-details
 			v-if="currCard"
 			:card="currCard"
-			:group="group"
-			:labels="labels"
+			:group="groupToEdit"
 			@clearCard="clearCard"
 			@updateCard="updateCard"
 		></card-details>
@@ -101,7 +101,6 @@ import draggable from 'vuedraggable';
 export default {
 	props: {
 		group: Object,
-		labels: Array,
 	},
 	data() {
 		return {
@@ -109,7 +108,7 @@ export default {
 			isExtrasShowing: false,
 			groupToEdit: {},
 			cardToEdit: {
-				id: '',
+				id: this.makeId(),
 				title: '',
 				createdAt: Date.now(),
 			},
@@ -162,7 +161,7 @@ export default {
 			return text;
 		},
 		updateCard(updatedCard) {
-			const idx = this.group.cards.findIndex(
+			const idx = this.groupToEdit.cards.findIndex(
 				(card) => card.id === updatedCard.id
 			);
 			this.groupToEdit.cards.splice(idx, 1, updatedCard);
@@ -177,7 +176,6 @@ export default {
 	},
 	created() {
 		this.groupToEdit = JSON.parse(JSON.stringify(this.group));
-		this.groupTitle = this.group.title;
 	},
 	mounted() {
 		this.popupItem = this.$refs.addcard;

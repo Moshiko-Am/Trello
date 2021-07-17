@@ -10,21 +10,28 @@
       :on-preview="handlePictureCardPreview"
       :on-remove="handleRemove"
       :on-change="handleChange"
+      :class="{ uploaded: isUploaded }"
       list-type="picture-card"
     >
       <el-button type="primary" @click.stop="handleFile" v-if="isUploaded">
-        Upload
+        Save image
       </el-button>
       <i v-else class="el-icon-plus"></i>
     </el-upload>
-    <el-dialog :visible.sync="dialogVisible">
+    <el-dialog
+      :visible.sync="dialogVisible"
+      top="7vh"
+      :center="true"
+      :lock-scroll="true"
+      :append-to-body="true"
+    >
       <img width="100%" :src="dialogImageUrl" alt="" />
     </el-dialog>
   </section>
 </template>
 
 <script>
-import { uploadImg } from "@/services/img-upload.service.js";
+import { uploadImg } from "@/services/img.upload.service.js";
 export default {
   data() {
     return {
@@ -39,6 +46,11 @@ export default {
       this.onUploadImg();
     },
     handleChange(file) {
+      if (!file.raw.type.includes("image")) {
+        this.$message.error("Only images can be uploaded.");
+        this.$refs.upload.clearFiles();
+        return;
+      }
       this.uploadedFile = file;
       this.isUploaded = true;
       document.querySelector(".el-upload__input").disabled = true;
