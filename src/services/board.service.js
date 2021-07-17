@@ -130,7 +130,7 @@ var gBoards = [{
                         ],
                         labelIds: ['l101', 'l102'],
                         createdAt: 1590999730348,
-                        dueDate: "2021-08-12",
+                        dueDate: '2021-08-12',
                         byMember: {
                             _id: 'u101',
                             username: 'Tal',
@@ -449,7 +449,7 @@ var gBoards = [{
                         ],
                         labelIds: ['l101', 'l102'],
                         createdAt: 1590999730348,
-                        dueDate: "2021-08-12",
+                        dueDate: '2021-08-12',
                         byMember: {
                             _id: 'u101',
                             username: 'Tal',
@@ -650,7 +650,7 @@ var gBoards = [{
         style: {
             type: 'backgroundImage',
             content: 'https://images.unsplash.com/photo-1606857521015-7f9fcf423740?crop=entropy&cs=srgb&fm=jpg&ixid=MnwyNDcwNjh8MHwxfHNlYXJjaHw4fHxvZmZpY2V8ZW58MHx8fHwxNjI2NTQ5MzY0&ixlib=rb-1.2.1&q=85',
-            preview: 'https://images.unsplash.com/photo-1606857521015-7f9fcf423740?crop=entropy&cs=srgb&fm=jpg&ixid=MnwyNDcwNjh8MHwxfHNlYXJjaHw4fHxvZmZpY2V8ZW58MHx8fHwxNjI2NTQ5MzY0&ixlib=rb-1.2.1&q=80&w=400'
+            preview: 'https://images.unsplash.com/photo-1606857521015-7f9fcf423740?crop=entropy&cs=srgb&fm=jpg&ixid=MnwyNDcwNjh8MHwxfHNlYXJjaHw4fHxvZmZpY2V8ZW58MHx8fHwxNjI2NTQ5MzY0&ixlib=rb-1.2.1&q=80&w=400',
         },
         labels: [{
                 id: 'l101',
@@ -768,7 +768,7 @@ var gBoards = [{
                         ],
                         labelIds: ['l101', 'l102'],
                         createdAt: 1590999730348,
-                        dueDate: "2021-08-12",
+                        dueDate: '2021-08-12',
                         byMember: {
                             _id: 'u101',
                             username: 'Tal',
@@ -1087,7 +1087,7 @@ var gBoards = [{
                         ],
                         labelIds: ['l101', 'l102'],
                         createdAt: 1590999730348,
-                        dueDate: "2021-08-12",
+                        dueDate: '2021-08-12',
                         byMember: {
                             _id: 'u101',
                             username: 'Tal',
@@ -1406,7 +1406,7 @@ var gBoards = [{
                         ],
                         labelIds: ['l101', 'l102'],
                         createdAt: 1590999730348,
-                        dueDate: "2021-08-12",
+                        dueDate: '2021-08-12',
                         byMember: {
                             _id: 'u101',
                             username: 'Tal',
@@ -1597,7 +1597,7 @@ var gBoards = [{
     },
     {
         _id: 'b105',
-        title: 'Life\'s great!',
+        title: "Life's great!",
         createdAt: 1589983468418,
         createdBy: {
             _id: 'u101',
@@ -1725,7 +1725,7 @@ var gBoards = [{
                         ],
                         labelIds: ['l101', 'l102'],
                         createdAt: 1590999730348,
-                        dueDate: "2021-08-12",
+                        dueDate: '2021-08-12',
                         byMember: {
                             _id: 'u101',
                             username: 'Tal',
@@ -2044,7 +2044,7 @@ var gBoards = [{
                         ],
                         labelIds: ['l101', 'l102'],
                         createdAt: 1590999730348,
-                        dueDate: "2021-08-12",
+                        dueDate: '2021-08-12',
                         byMember: {
                             _id: 'u101',
                             username: 'Tal',
@@ -2235,7 +2235,7 @@ var gBoards = [{
     },
     {
         _id: 'b108',
-        title: 'Chillin\'',
+        title: "Chillin'",
         createdAt: 1589983468418,
         createdBy: {
             _id: 'u101',
@@ -2245,7 +2245,7 @@ var gBoards = [{
         style: {
             type: 'backgroundImage',
             content: 'https://images.unsplash.com/photo-1592609931095-54a2168ae893?crop=entropy&cs=srgb&fm=jpg&ixid=MnwyNDcwNjh8MHwxfHNlYXJjaHwxfHxqYXZhc2NyaXB0fGVufDB8fHx8MTYyNjU0OTYzMA&ixlib=rb-1.2.1&q=85',
-            preview: 'https://images.unsplash.com/photo-1592609931095-54a2168ae893?crop=entropy&cs=srgb&fm=jpg&ixid=MnwyNDcwNjh8MHwxfHNlYXJjaHwxfHxqYXZhc2NyaXB0fGVufDB8fHx8MTYyNjU0OTYzMA&ixlib=rb-1.2.1&q=80&w=400'
+            preview: 'https://images.unsplash.com/photo-1592609931095-54a2168ae893?crop=entropy&cs=srgb&fm=jpg&ixid=MnwyNDcwNjh8MHwxfHNlYXJjaHwxfHxqYXZhc2NyaXB0fGVufDB8fHx8MTYyNjU0OTYzMA&ixlib=rb-1.2.1&q=80&w=400',
         },
         labels: [{
                 id: 'l101',
@@ -2363,7 +2363,7 @@ var gBoards = [{
                         ],
                         labelIds: ['l101', 'l102'],
                         createdAt: 1590999730348,
-                        dueDate: "2021-08-12",
+                        dueDate: '2021-08-12',
                         byMember: {
                             _id: 'u101',
                             username: 'Tal',
