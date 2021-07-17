@@ -1,8 +1,11 @@
 <template>
   <div id="app" :style="boardStyle">
     <app-header
+      :users="users"
+      :user="user"
       :boards="boards"
       v-if="boards"
+      @createBoard="createBoard"
       :style="defaultBackground"
     ></app-header>
     <!-- <router-link to="/">Home</router-link> |
@@ -29,12 +32,31 @@ export default {
         ? `${background.type}: url(${background.content})`
         : `${background.type}: ${background.content}`;
     },
+    boards() {
+      return this.$store.getters.boards;
+    },
+    users() {
+      return this.$store.getters.users;
+    },
+    user() {
+      return this.$store.getters.user;
+    },
     defaultBackground() {
       if (!this.boardStyle) return "background-color: #026AA7";
       else return "";
     },
-    boards() {
-      return this.$store.getters.boards;
+  },
+  methods: {
+    async createBoard(board) {
+      try {
+        const savedBoard = await this.$store.dispatch({
+          type: "addBoard",
+          board,
+        });
+        this.$router.push(`/board/${savedBoard._id}`);
+      } catch (err) {
+        console.log("cant create board", err);
+      }
     },
   },
 };

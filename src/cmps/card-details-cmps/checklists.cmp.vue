@@ -15,32 +15,42 @@
 </template>
 
 <script>
-  import checklistPreview from './checklist-preview.vue'
+import checklistPreview from "./checklist-preview.vue";
 export default {
   props: {
     checklists: Array,
   },
-  components:{
+  components: {
     checklistPreview,
   },
   data() {
     return {
-      checklistsToEdit: [...this.checklists],
+      checklistsToEdit: JSON.parse(JSON.stringify(this.checklists)),
       addingTodo: false,
     };
   },
   computed: {},
   methods: {
-    updateCl(checklist,cIdx){
-      this.checklistsToEdit.splice(cIdx , 1 , checklist)
-      this.updateChecklists()
+    updateCl(checklist, cIdx) {
+      this.checklistsToEdit.splice(cIdx, 1, checklist);
+      this.updateChecklists();
     },
-    removeCl(cIdx){
-      this.checklistsToEdit.splice(cIdx , 1)
-      this.updateChecklists()
+    removeCl(cIdx) {
+      this.checklistsToEdit.splice(cIdx, 1);
+      this.updateChecklists();
     },
     updateChecklists() {
-      this.$emit("updateChecklists", this.checklistsToEdit);
+      const clsCopy = JSON.parse(JSON.stringify(this.checklistsToEdit));
+      this.$emit("updateChecklists", clsCopy);
+    },
+  },
+  watch: {
+    checklists: {
+      handler(newVal) {
+        console.log("newVal", newVal);
+        this.checklistsToEdit = newVal;
+      },
+      deep: true,
     },
   },
 };

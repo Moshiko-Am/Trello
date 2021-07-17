@@ -22,25 +22,54 @@
         />
       </div>
       <div class="board-btns-container">
-        <button class="btn-create-board">Create new board</button>
+        <button class="btn-create-board" @click="toggleCreateBoard">
+          Create new board
+        </button>
         <button class="btn-boards-page" @click="showBoards">Boards page</button>
       </div>
     </div>
+    <create-board
+      @createBoard="createBoard"
+      class="hideCreateMenu"
+      :class="createShowMenu"
+      @closeMenu="boardsMenuClose"
+      @menuBack="toggleCreateBoard"
+    ></create-board>
   </section>
 </template>
 
 <script>
 import boardPreview from "@/cmps/board.preview.vue";
+import createBoard from "./create.board";
 export default {
   props: {
     boards: Array,
   },
   components: {
     boardPreview,
+    createBoard,
+  },
+  data() {
+    return {
+      isCreateOpen: false,
+    };
+  },
+  computed: {
+    createShowMenu() {
+      return { showCreateMenu: this.isCreateOpen };
+    },
   },
   methods: {
     boardsMenuClose() {
       this.$emit("closeBoardsMenu");
+      this.isCreateOpen = false;
+    },
+    toggleCreateBoard() {
+      this.isCreateOpen = !this.isCreateOpen;
+      console.log(this.isCreateOpen);
+    },
+    createBoard(board) {
+      this.$emit("createBoard", board);
     },
     showBoards() {
       this.$router.push(`/boards`);

@@ -39,7 +39,7 @@
       <input
         class="add-todo-input"
         type="text"
-        v-model="checklist.todos[checklist.todos.length - 1].title"
+        v-model="todoToAdd.title"
         placeholder="Add an item"
       />
       <div>
@@ -59,6 +59,11 @@ export default {
     return {
       checklistToEdit: { ...this.checklist },
       addingTodo: false,
+      todoToAdd: {
+        title: "",
+        isDone: false,
+        id: this.makeId(),
+      },
     };
   },
   computed: {
@@ -95,14 +100,16 @@ export default {
     },
     addTodo() {
       this.addingTodo = !this.addingTodo;
-      if (!this.addingTodo) return;
-      const newTodo = {
-        id: this.makeId(),
-        title: "",
-        isDone: false,
-      };
-      this.checklistToEdit.todos.push(newTodo);
-      this.updateChecklist();
+      if (!this.addingTodo) {
+        this.checklistToEdit.todos.push({ ...this.todoToAdd });
+        this.todoToAdd = {
+          title: "",
+          isDone: false,
+          id: this.makeId(),
+        };
+        this.updateChecklist();
+        return;
+      }
     },
     makeId() {
       const num = Math.floor(Math.random() * (900 - 1) + 1);

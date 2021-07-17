@@ -2595,9 +2595,22 @@ function remove(boardId) {
 async function add(board) {
     // const addedBoard = await httpService.post(`board`, board)
 
+    <<
+    <<
+    <<
+    <
+    HEAD
     // board.byUser = userService.getLoggedinUser()
     // board.aboutUser = await userService.getById(board.aboutUserId)
-    const addedBoard = storageService.post('board', board);
+    const addedBoard = storageService.post('board', board); ===
+    ===
+    =
+    // board.byUser = userService.getLoggedinUser()
+    // board.aboutUser = await userService.getById(board.aboutUserId)
+    const addedBoard = storageService.post(BOARD_KEY, board); >>>
+    >>>
+    >
+    625 cf70928a70ffbf87b40aa7638a03f603f5d06
 
     return addedBoard;
 }
