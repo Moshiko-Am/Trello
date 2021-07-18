@@ -1,3 +1,12 @@
+
+import { storageService } from './async-storage.service.js';
+import { httpService } from './http.service'
+// import { socketService, SOCKET_EVENT_USER_UPDATED } from './socket.service';
+const USER_KEY = 'loggedinUser';
+const USERS_DB = 'allUsers';
+// const URL = 'user/'
+// var gWatchedUser = null;
+
 var gUsers = [
 	{
 		_id: 'u101',
@@ -42,14 +51,6 @@ var gUsers = [
 		],
 	},
 ];
-
-import { storageService } from './async-storage.service.js';
-// import { httpService } from './http.service'
-// import { socketService, SOCKET_EVENT_USER_UPDATED } from './socket.service';
-const USER_KEY = 'loggedinUser';
-const USERS_DB = 'allUsers';
-// var gWatchedUser = null;
-
 export const userService = {
 	query,
 	login,
@@ -77,6 +78,7 @@ window.userService = userService;
 async function query() {
 	try {
 		const users = await storageService.query(USERS_DB);
+		// const users = await httpService.get(URL)
 		if (!users.length) {
 			storageService.postMany(USERS_DB, gUsers);
 			return gUsers;
@@ -88,21 +90,38 @@ async function query() {
 }
 
 async function getById(userId) {
-	const user = await storageService.get(USER_KEY, userId);
-	// const user = await httpService.get(`user/${userId}`)
+	// const user = await storageService.get(USER_KEY, userId);
+	try {
+		const user = await httpService.get(`user/${userId}`)
+		return user
+	} catch (err) {
+		console.log('Failed to get user', err);
+	}
 	// gWatchedUser = user;
-	return user;
+	// return user;
 }
-function remove(userId) {
+async function remove(userId) {
 	return storageService.remove(USER_KEY, userId);
-	// return httpService.delete(`user/${userId}`)
+	// try {
+	// 	return httpService.delete(`user/${userId}`)
+	// } catch (err) {
+	// 	console.log('Failed to delete user', err);
+	// }
 }
 
 async function update(user) {
 	await storageService.put(USER_KEY, user);
-	// user = await httpService.put(`user/${user._id}`, user)
+
+	// try {
+	// 	user = await httpService.put(`user/${user._id}`, user)
+	// 	if (getLoggedinUser()._id === user._id || getLoggedinUser.isAdmin) _saveLocalUser(user);
+	// 	return user
+	// } catch(err) {
+	// 	console.log('Failed to update user',err);
+	// }
+
 	// Handle case in which admin updates other user's details
-	if (getLoggedinUser()._id === user._id) _saveLocalUser(user);
+	if (getLoggedinUser()._id === user._id || getLoggedinUser.isAdmin) _saveLocalUser(user);
 	return user;
 }
 
@@ -112,20 +131,33 @@ async function login(userCred) {
 	return user;
 	// return _saveLocalUser(user)
 
-	// const user = await httpService.post('auth/login', userCred)
-	// socketService.emit('login', user._id);
-	// if (user) return _saveLocalUser(user)
+	// try {
+	// 	const user = await httpService.post('auth/login', userCred)
+	// 	// socketService.emit('login', user._id);
+	// 	if (user) return _saveLocalUser(user)
+	// } catch(err) {
+	// 	console.log('username or password are incorrect', err);
+	// }
 }
 async function signup(userCred) {
 	const user = await storageService.post(USER_KEY, userCred);
-	// const user = await httpService.post('auth/signup', userCred)
-	// socketService.emit('set-user-socket', user._id);
 	return _saveLocalUser(user);
+	// try {
+	// 	const user = await httpService.post('auth/signup', userCred)
+	// 	// socketService.emit('set-user-socket', user._id);
+	// 	return _saveLocalUser(user);
+	// } catch(err){
+	// 	console.log('Failed to create user',err);
+	// }
 }
 async function logout() {
-	sessionStorage.removeItem(USER_KEY);
-	// socketService.emit('unset-user-socket');
-	// return await httpService.post('auth/logout')
+	try {
+		sessionStorage.removeItem(USER_KEY);
+		// socketService.emit('unset-user-socket');
+		// return await httpService.post('auth/logout')
+	} catch(err) {
+		console.log('failed to logout', err);
+	}
 }
 
 function _saveLocalUser(user) {
@@ -136,6 +168,12 @@ function _saveLocalUser(user) {
 function getLoggedinUser() {
 	return JSON.parse(sessionStorage.getItem(USER_KEY) || 'null');
 }
+
+// This is relevant when backend is connected
+// (async () => {
+//     var user = getLoggedinUser()
+//     if (user) socketService.emit('set-user-socket', user._id)
+// })();
 
 // This IIFE functions for Dev purposes
 // It allows testing of real time updates (such as sockets) by listening to storage events
@@ -159,8 +197,3 @@ function getLoggedinUser() {
 // 	});
 // })();
 
-// This is relevant when backend is connected
-// (async () => {
-//     var user = getLoggedinUser()
-//     if (user) socketService.emit('set-user-socket', user._id)
-// })();

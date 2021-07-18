@@ -1,5 +1,6 @@
 <template>
   <div class="checklists">
+    <transition-group name="fade">
     <div
       class="card-main-item"
       v-for="(checklist, cIdx) in checklists"
@@ -11,6 +12,7 @@
         @removeCl="removeCl(cIdx)"
       />
     </div>
+    </transition-group>
   </div>
 </template>
 
@@ -47,7 +49,6 @@ export default {
   watch: {
     checklists: {
       handler(newVal) {
-        console.log("newVal", newVal);
         this.checklistsToEdit = newVal;
       },
       deep: true,

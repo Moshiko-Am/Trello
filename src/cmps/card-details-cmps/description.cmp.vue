@@ -13,7 +13,13 @@
       @blur="editDesc(false)"
       placeholder="Add a more detailed description"
     ></textarea>
-    <button class="desc-save-btn" v-if="descTextarea" @click.stop="editDesc(false)">Save</button>
+    <button
+      class="desc-save-btn"
+      v-if="descTextarea"
+      @click.stop="editDesc(false)"
+    >
+      Save
+    </button>
   </div>
 </template>
 
@@ -30,7 +36,6 @@ export default {
   },
   methods: {
     editDesc(boolean) {
-      console.log(boolean);
       this.descTextarea = boolean;
     },
     updateDesc() {

@@ -6,7 +6,6 @@
     vertical-align: top;
     white-space: nowrap;
     min-width: 272px;
-    max-height: 99%;
     &:first-child {
         margin-inline-start: 8px;
     }
@@ -43,7 +42,6 @@
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
-    max-height: 100%;
     position: relative;
     white-space: normal;
 }
@@ -113,3 +111,16 @@
         }
     }
 }
+
+.ghost {
+    >*{
+        opacity: 1;
+        transform:rotate(5deg);
+    }
+}
+
+// .tilted {
+//     *{
+//         transform: rotateX(5deg);
+//     }
+// }

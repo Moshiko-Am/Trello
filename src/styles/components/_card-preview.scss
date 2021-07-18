@@ -1,3 +1,40 @@
+.card-preview-container {
+	display: flex;
+	flex-direction: column;
+
+	&.quick-edit-card {
+		> * {
+			z-index: 2;
+		}
+	}
+
+	.card-preview-inner-container {
+		display: flex;
+	}
+
+	.quick-edit-btn {
+		margin-left: 8px;
+		margin-top: 10px;
+		font-size: 14px;
+		line-height: 20px;
+		font-weight: 400;
+		border-radius: 3px;
+		cursor: pointer;
+		padding: 6px 24px;
+		color: white;
+		background-color: #0079bf;
+		border: none;
+		transition-property: background-color, border-color, box-shadow;
+		transition-duration: 85ms;
+		transition-timing-function: ease;
+		align-self: flex-start;
+
+		&:hover {
+			background-color: #026aa7;
+		}
+	}
+}
+
 .card-preview {
 	position: relative;
 	background-color: #fff;
@@ -5,11 +42,10 @@
 	box-shadow: 0 1px 0 #b2b9c5;
 	cursor: pointer;
 	max-width: 300px;
+	width: 94%;
 	min-height: 20px;
-	// position: relative;
 	text-decoration: none;
-	z-index: 0;
-	margin: 8px 8px;
+	margin: 4px 8px;
 	padding: 6px 8px;
 	word-break: break-word;
 	.card-cover {
@@ -37,7 +73,7 @@
 			padding: 0 10px;
 			color: white;
 			font-weight: 700;
-			margin-bottom: 3px;
+			margin-bottom: 5px;
 			transition: width 0.4s, height 0.4s 0.4s;
 		}
 		.label.shown {
@@ -78,7 +114,6 @@
 		display: flex;
 		align-items: center;
 		color: #5e6c84;
-
 		.attach-indicator {
 			margin-top: 3px;
 			font-size: 12px;
@@ -102,5 +137,19 @@
 		padding: 1px 3px;
 		background-color: rgba(9, 30, 66, 0.04);
 		font-weight: 500;
+	}
+
+	.icon-sm.icon-edit {
+		position: absolute;
+		padding: 1px 4px;
+		right: 2px;
+		top: 2px;
+		color: #7b8494;
+		border-radius: 3px;
+		background-color: rgba(231, 232, 233, 0.3);
+
+		&:hover {
+			background-color: rgb(197, 198, 199);
+		}
 	}
 }

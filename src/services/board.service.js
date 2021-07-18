@@ -1,4 +1,5 @@
 import { storageService } from './async-storage.service.js';
+import { httpService } from './http.service.js';
 
 var gBoards = [{
         _id: 'b101',
@@ -2553,7 +2554,7 @@ var gBoards = [{
         ],
     },
 ];
-
+const URL = 'board/'
 const BOARD_KEY = 'boardsDB';
 
 export const boardService = {
@@ -2569,6 +2570,7 @@ query();
 async function query() {
     try {
         const boards = await storageService.query(BOARD_KEY);
+        // const boards = await httpService.get(URL)
         if (!boards.length) {
             storageService.postMany(BOARD_KEY, gBoards);
             return gBoards;
@@ -2582,21 +2584,30 @@ async function query() {
 async function getById(boardId) {
     try {
         const board = await storageService.get(BOARD_KEY, boardId);
+        // const board = httpService.get(URL + boardId)
         return board;
     } catch (err) {
         console.log(err);
     }
 }
 
-function remove(boardId) {
-    // return httpService.delete(`board/${boardId}`)
+async function remove(boardId) {
     return storageService.delete('board', boardId);
+    // try {
+    //     const res = await httpService.delete(`board/${boardId}`)
+    //     return res
+    // } catch(err) {
+    //     console.log('Failed to delete board' , err)
+    // }   
 }
 async function add(board) {
-    // const addedBoard = await httpService.post(`board`, board)
-    // board.byUser = userService.getLoggedinUser()
-    // board.aboutUser = await userService.getById(board.aboutUserId)
     const addedBoard = storageService.post(BOARD_KEY, board);
+    // try {
+    //     const addedBoard = httpService.post(URL , {board : board})
+    //     return addedBoard
+    // } catch(err) {
+    //     console.log(`couldn't create board` , err)
+    // }
 
     return addedBoard;
 }

@@ -39,7 +39,7 @@
 				:boards="boards"
 				class="hideBoardsMenu"
 				:class="boardsShowMenu"
-				@closeBoardsMenu="toggleBoardsMenu"
+				@closeBoardsMenu="closeBoardsMenu"
 			></boards-menu>
 			<div class="header-search">
 				<input
@@ -93,7 +93,7 @@
 				:username="user.fullname"
 				:size="32"
 				:inline="true"
-				:style="{ 'font-weight': 800, 'font-size': '17px' }"
+				:style="{ 'font-size': '17px' }"
 				backgroundColor="#dfe1e6"
 				color="#172b4d"
 			></avatar>
@@ -125,6 +125,9 @@ export default {
 		},
 	},
 	methods: {
+		closeBoardsMenu() {
+			this.isBoardsShow = false;
+		},
 		toggleBoardsMenu() {
 			this.isBoardsShow = !this.isBoardsShow;
 		},

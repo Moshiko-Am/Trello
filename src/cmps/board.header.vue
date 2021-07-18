@@ -71,6 +71,9 @@ export default {
 		avatar,
 		users,
 	},
+	props: {
+		board: Object,
+	},
 	data() {
 		return {
 			isMenuShow: false,
@@ -86,9 +89,6 @@ export default {
 		},
 		menuShow() {
 			return { showMenu: this.isMenuShow };
-		},
-		board() {
-			return this.$store.getters.board;
 		},
 		users() {
 			return this.$store.getters.users;
@@ -156,13 +156,20 @@ export default {
 			this.saveMembers();
 		},
 	},
+	watch: {
+		board: {
+			immediate: true,
+			handler() {
+				this.boardTitle = JSON.parse(JSON.stringify(this.board.title));
+				this.boardMembers = JSON.parse(
+					JSON.stringify(this.board.members)
+				);
+			},
+		},
+	},
 	created() {
-		this.boardTitle = JSON.parse(
-			JSON.stringify(this.$store.getters.board.title)
-		);
-		this.boardMembers = JSON.parse(
-			JSON.stringify(this.$store.getters.board.members)
-		);
+		this.boardTitle = JSON.parse(JSON.stringify(this.board.title));
+		this.boardMembers = JSON.parse(JSON.stringify(this.board.members));
 		this.getTextWidth();
 	},
 };

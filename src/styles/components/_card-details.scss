@@ -473,3 +473,16 @@
 .icon-minus {
 	@include to-icon('\e95c');
 }
+
+.list-complete-item {
+	transition: all .3s;
+	display: inline-block;
+  }
+  .list-complete-enter, .list-complete-leave-to
+ {
+	opacity: 0;
+	transform: translateY(30px);
+  }
+  .list-complete-leave-active {
+	position: absolute;
+  }

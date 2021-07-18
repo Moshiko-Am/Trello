@@ -1,12 +1,19 @@
 <template>
   <section class="board-details">
+    <section v-if="bgOpen" class="bg" @click="toggleBg"></section>
     <board-header
       @bgColor="boardUpdate"
       @updateBoard="boardUpdate"
       @boardUpdate="boardUpdate"
       v-if="board && board.title"
+      :board="board"
     />
-    <group-list @boardUpdate="boardUpdate" v-if="board.groups" />
+    <group-list
+      :groups="board.groups"
+      @boardUpdate="boardUpdate"
+      v-if="board && board.groups"
+      @openBg="toggleBg"
+    />
   </section>
 </template>
 
@@ -15,6 +22,11 @@ import boardHeader from "@/cmps/board.header.vue";
 import groupList from "@/cmps/group.list.vue";
 
 export default {
+  data() {
+    return {
+      bgOpen: false,
+    };
+  },
   computed: {
     board() {
       return this.$store.getters.board;
@@ -34,18 +46,9 @@ export default {
         console.log(`coldn't save board`);
       }
     },
-    async loadPage() {
-      const { boardId } = this.$route.params;
-      if (this.$route.params.boardId) {
-        try {
-          await this.$store.dispatch({ type: "loadBoards" });
-          this.$store.commit("getBoardById", boardId);
-          console.log("got here");
-        } catch (err) {
-          console.log("didnt find board", err);
-          // this.$router.push(`/`);
-        }
-      }
+    toggleBg() {
+      this.bgOpen = !this.bgOpen;
+      console.log("this.bgOpen", this.bgOpen);
     },
   },
   created() {},
@@ -58,7 +61,6 @@ export default {
           try {
             await this.$store.dispatch({ type: "loadBoards" });
             this.$store.commit("getBoardById", boardId);
-            console.log("got here");
           } catch (err) {
             console.log("didnt find board", err);
             // this.$router.push(`/`);
