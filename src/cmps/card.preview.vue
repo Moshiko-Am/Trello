@@ -1,11 +1,11 @@
 <template>
-  <section class="card-preview" v-if="card.id">
-    <div v-if="card.attachments">
+  <section class="card-preview" v-if="card.id" :style="!isCover">
+    <div v-if="card.attachments && card.attachments.length">
       <div
-        v-for="attachment in card.attachments"
-        :key="attachment.id"
+        :key="attachment[0].id"
         class="card-cover"
-        :style="{ 'background-image': `url('${attachment.str}')` }"
+        v-if="isCover"
+        :style="isCover"
       ></div>
     </div>
     <div
@@ -43,9 +43,12 @@
         >
           {{ card.dueDate.slice(5) }}
         </div>
-        <div class="preview-attach-container" v-if="card.attachments">
+        <div
+          class="preview-attach-container"
+          v-if="card.attachments && card.attachments.length"
+        >
           <span class="icon-sm icon-attach"></span>
-          <span class="attach-indicator">{{card.attachments.length}}</span>
+          <span class="attach-indicator">{{ card.attachments.length }}</span>
         </div>
       </div>
       <div class="preview-members-container" v-if="card.members">
@@ -58,7 +61,12 @@
           :inline="true"
           backgroundColor="#dfe1e6"
           color="#172b4d"
-          :style="{ margin: '2px', 'font-weight': '700', 'font-size':'12px' , 'font-family':'segoe UI' }"
+          :style="{
+            margin: '2px',
+            'font-weight': '700',
+            'font-size': '12px',
+            'font-family': 'segoe UI',
+          }"
         ></avatar>
       </div>
     </div>
@@ -111,6 +119,23 @@ export default {
         return { backgroundColor: "#F2D600", color: "black" };
       else
         return { backgroundColor: "rgba(9, 30, 66, 0.08)", color: "#5e6c84" };
+    },
+    attachment() {
+      if (this.card.attachments && this.card.attachments.length) {
+        return this.card.attachments.filter((attachment) => {
+          if (attachment.isCover) {
+            return attachment;
+          }
+        });
+      } else return false;
+    },
+    isCover() {
+      if (this.attachment.length) {
+        console.log("got here");
+        return this.attachment[0].isCover
+          ? `background-image: url('${this.attachment[0].url}')`
+          : "";
+      } else return false;
     },
   },
   methods: {

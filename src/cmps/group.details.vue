@@ -133,8 +133,9 @@ export default {
       this.groupToEdit.cards.push(savedCard);
       this.updateGroup();
       this.cardToEdit.title = "";
-      this.$refs["card-preview-wrapper"].scrollTop =
-        this.$refs["card-preview-wrapper"].scrollHeight;
+      this.$refs["card-preview-wrapper"].scrollTop = this.$refs[
+        "card-preview-wrapper"
+      ].scrollHeight;
       this.$refs.content.focus();
     },
     removeCard(cardId) {
@@ -177,7 +178,6 @@ export default {
     },
     updateGroups() {
       const groupsCopy = JSON.parse(JSON.stringify(this.groups));
-      console.log(groupsCopy);
       const idx = groupsCopy.findIndex((group) => {
         return group.id === this.groupToEdit.id;
       });
@@ -189,6 +189,14 @@ export default {
     },
     deleteGroup() {
       this.$emit("deleteGroup", this.groupToEdit.id);
+    },
+  },
+  watch: {
+    group: {
+      immediate: true,
+      handler() {
+        this.groupToEdit = JSON.parse(JSON.stringify(this.group));
+      },
     },
   },
   created() {

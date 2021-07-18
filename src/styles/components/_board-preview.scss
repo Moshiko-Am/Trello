@@ -74,10 +74,13 @@
                 filter: brightness(80%);
             }
         }
+        .board-item-color-img,
         img {
-            width: 41px;
+            width: 36px;
             height: 36px;
             border-radius: 3px;
+            aspect-ratio: 1;
+            object-fit: cover;
         }
         .board-item-title-container {
             width: 100%;

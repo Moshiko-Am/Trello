@@ -61,6 +61,9 @@ import sideMenu from "./side.menu.vue";
 import avatar from "vue-avatar";
 import users from "./users.vue";
 export default {
+  props: {
+    board: Object,
+  },
   components: {
     sideMenu,
     avatar,
@@ -77,9 +80,6 @@ export default {
   computed: {
     menuShow() {
       return { showMenu: this.isMenuShow };
-    },
-    board() {
-      return this.$store.getters.board;
     },
     users() {
       return this.$store.getters.users;
@@ -125,13 +125,18 @@ export default {
       this.saveMembers();
     },
   },
+  watch: {
+    board: {
+      immediate: true,
+      handler() {
+        this.boardTitle = JSON.parse(JSON.stringify(this.board.title));
+        this.boardMembers = JSON.parse(JSON.stringify(this.board.members));
+      },
+    },
+  },
   created() {
-    this.boardTitle = JSON.parse(
-      JSON.stringify(this.$store.getters.board.title)
-    );
-    this.boardMembers = JSON.parse(
-      JSON.stringify(this.$store.getters.board.members)
-    );
+    this.boardTitle = JSON.parse(JSON.stringify(this.board.title));
+    this.boardMembers = JSON.parse(JSON.stringify(this.board.members));
   },
 };
 </script>

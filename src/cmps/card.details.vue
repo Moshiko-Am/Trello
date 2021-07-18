@@ -7,7 +7,12 @@
       <div class="card-details-header">
         <div class="inner-container">
           <span class="icon-lg icon-card details-header-icon"></span>
-          <input type="text" class="card-details-title" @input="updateTitle" v-model="cardToEdit.title"  />
+          <input
+            type="text"
+            class="card-details-title"
+            @input="updateTitle"
+            v-model="cardToEdit.title"
+          />
         </div>
         <div class="card-details-list">From list {{ group.title }}</div>
       </div>
@@ -32,7 +37,7 @@
             @updateDesc="updateDesc"
           />
           <attachment-cmp
-            v-if="cardToEdit.attachments"
+            v-if="cardToEdit.attachments && cardToEdit.attachments.length"
             :attachments="cardToEdit.attachments"
             @updateAttachments="updateAttachments"
           />
@@ -94,10 +99,13 @@
           </el-date-picker>
           <div class="card-sidebar-btn" @click="toggleAttch">
             <span class="icon-sm icon-attach"></span>
-            <p class="sidebar-btn-title">Attachments</p>
+            <p class="sidebar-btn-title">
+              Attachments
+            </p>
             <file-upload
               @close="closePopups"
               @updateAttachments="updateAttachments"
+              :attachments="cardToEdit.attachments"
               v-if="isAddingAttachment"
             />
           </div>
@@ -136,7 +144,7 @@ export default {
   },
   data() {
     return {
-      cardToEdit: null,
+      cardToEdit: this.card,
       addingTodo: false,
       isAddingChecklist: false,
       isAddingLabel: false,
@@ -173,26 +181,26 @@ export default {
       return "c" + num;
     },
     toggleCl() {
-      if(!this.isAddingChecklist){
-        this.closePopups()
+      if (!this.isAddingChecklist) {
+        this.closePopups();
       }
       this.isAddingChecklist = !this.isAddingChecklist;
     },
     toggleLabel() {
-      if(!this.isAddingLabel){
-        this.closePopups()
+      if (!this.isAddingLabel) {
+        this.closePopups();
       }
       this.isAddingLabel = !this.isAddingLabel;
     },
     toggleMember() {
-      if(!this.isAddingMember){
-        this.closePopups()
+      if (!this.isAddingMember) {
+        this.closePopups();
       }
       this.isAddingMember = !this.isAddingMember;
     },
     toggleAttch() {
-      if(!this.isAddingAttachment){
-        this.closePopups()
+      if (!this.isAddingAttachment) {
+        this.closePopups();
       }
       this.isAddingAttachment = !this.isAddingAttachment;
     },
@@ -208,8 +216,8 @@ export default {
       this.cardToEdit.dueDate = this.cardDate;
       this.emitCard();
     },
-    updateTitle(){
-      this.emitCard()
+    updateTitle() {
+      this.emitCard();
     },
     updateMembers(members) {
       this.cardToEdit.members = members;
@@ -225,9 +233,9 @@ export default {
     },
     addCl(checklist) {
       if (!this.cardToEdit.checklists) this.cardToEdit.checklists = [];
-      const clsCopy = JSON.parse(JSON.stringify(this.cardToEdit.checklists))
+      const clsCopy = JSON.parse(JSON.stringify(this.cardToEdit.checklists));
       clsCopy.push(checklist);
-      this.cardToEdit.checklists = JSON.parse(JSON.stringify(clsCopy))
+      this.cardToEdit.checklists = JSON.parse(JSON.stringify(clsCopy));
       this.closePopups();
       this.emitCard();
     },
@@ -239,20 +247,16 @@ export default {
       this.cardToEdit.labelIds = labels;
       this.emitCard();
     },
-    removeCard(){
-      this.$emit('removeCard', this.cardToEdit.id)
+    removeCard() {
+      this.$emit("removeCard", this.cardToEdit.id);
     },
     emitCard() {
       const cardCopy = JSON.parse(JSON.stringify(this.cardToEdit));
       this.$emit("updateCard", cardCopy);
     },
-    updateAttachments(str) {
-      if (!this.cardToEdit.attachments) this.cardToEdit.attachments = [];
-      const attachment = {
-        id: this.makeId(),
-        str,
-      };
-      this.cardToEdit.attachments.push(attachment);
+    updateAttachments(attachments) {
+      this.cardToEdit.attachments = attachments;
+      console.log(this.cardToEdit.attachments);
       this.emitCard();
     },
   },
@@ -273,8 +277,8 @@ export default {
       return this.$store.getters.board;
     },
   },
-  created() {
-    this.cardToEdit = JSON.parse(JSON.stringify(this.card));
-  },
+  // created() {
+  //   this.cardToEdit = JSON.parse(JSON.stringify(this.card));
+  // },
 };
 </script>

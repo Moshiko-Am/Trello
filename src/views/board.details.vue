@@ -5,8 +5,13 @@
       @updateBoard="boardUpdate"
       @boardUpdate="boardUpdate"
       v-if="board && board.title"
+      :board="board"
     />
-    <group-list @boardUpdate="boardUpdate" v-if="board.groups" />
+    <group-list
+      :groups="board.groups"
+      @boardUpdate="boardUpdate"
+      v-if="board && board.groups"
+    />
   </section>
 </template>
 
@@ -34,19 +39,6 @@ export default {
         console.log(`coldn't save board`);
       }
     },
-    async loadPage() {
-      const { boardId } = this.$route.params;
-      if (this.$route.params.boardId) {
-        try {
-          await this.$store.dispatch({ type: "loadBoards" });
-          this.$store.commit("getBoardById", boardId);
-          console.log("got here");
-        } catch (err) {
-          console.log("didnt find board", err);
-          // this.$router.push(`/`);
-        }
-      }
-    },
   },
   created() {},
   watch: {
@@ -58,7 +50,6 @@ export default {
           try {
             await this.$store.dispatch({ type: "loadBoards" });
             this.$store.commit("getBoardById", boardId);
-            console.log("got here");
           } catch (err) {
             console.log("didnt find board", err);
             // this.$router.push(`/`);

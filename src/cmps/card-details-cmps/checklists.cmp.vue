@@ -47,7 +47,6 @@ export default {
   watch: {
     checklists: {
       handler(newVal) {
-        console.log("newVal", newVal);
         this.checklistsToEdit = newVal;
       },
       deep: true,
