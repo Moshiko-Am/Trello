@@ -5,23 +5,13 @@
     :class="{ 'quick-edit-card': isQuickEdit }"
   >
     <section class="card-preview-inner-container">
-      <section
-        class="card-preview"
-        v-if="card.id"
-        @mouseenter="toggleHover"
-        @mouseleave="toggleHover"
-      >
-        <span
-          v-if="cardHover"
-          class="icon-sm icon-edit"
-          @click.stop="toggleQuickEdit"
-        ></span>
-        <div v-if="card.attachments">
+      <section class="card-preview" v-if="card.id" :style="!isCover" @mouseenter="toggleHover" @mouseleave="toggleHover">
+        <div v-if="card.attachments && card.attachments.length">
           <div
-            v-for="attachment in card.attachments"
-            :key="attachment.id"
+            :key="attachment[0].id"
             class="card-cover"
-            :style="{ 'background-image': `url('${attachment.str}')` }"
+            v-if="isCover"
+            :style="isCover"
           ></div>
         </div>
         <div
@@ -35,10 +25,14 @@
             class="label"
             :style="{ backgroundColor: label.color }"
             :class="{ shown: openLabels }"
-          >
-            <span v-if="showLabels">{{ label.title }}</span>
-          </div>
+          ></div>
         </div>
+        <span
+          v-if="cardHover"
+          class="icon-sm icon-edit"
+          @click.stop="toggleQuickEdit"
+        ></span>
+        
 
         <span>{{ card.title }}</span>
 
@@ -59,7 +53,10 @@
             >
               {{ card.dueDate.slice(5) }}
             </div>
-            <div class="preview-attach-container" v-if="card.attachments">
+            <div
+              class="preview-attach-container"
+              v-if="card.attachments && card.attachments.length"
+            >
               <span class="icon-sm icon-attach"></span>
               <span class="attach-indicator">{{
                 card.attachments.length
@@ -150,10 +147,27 @@ export default {
       else
         return { backgroundColor: "rgba(9, 30, 66, 0.08)", color: "#5e6c84" };
     },
+    attachment() {
+      if (this.card.attachments && this.card.attachments.length) {
+        return this.card.attachments.filter((attachment) => {
+          if (attachment.isCover) {
+            return attachment;
+          }
+        });
+      } else return false;
+    },
+    isCover() {
+      if (this.attachment.length) {
+        console.log("got here");
+        return this.attachment[0].isCover
+          ? `background-image: url('${this.attachment[0].url}')`
+          : "";
+      } else return false;
+    },
   },
   methods: {
     removeCard(cardId) {
-      this.toggleQuickEdit()
+      this.toggleQuickEdit();
       this.$emit("removeCard", cardId);
     },
     openCard() {

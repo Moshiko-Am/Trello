@@ -183,10 +183,9 @@
 						text-align: center;
 						&.icon-v {
 							@include to-icon('\e916');
-							color:rgb(70, 68, 68);
+							color: rgb(70, 68, 68);
 							font-size: 72px;
 							line-height: 96px;
-
 						}
 					}
 
@@ -233,10 +232,9 @@
 						text-align: center;
 						&.icon-v {
 							@include to-icon('\e916');
-							color:rgb(70, 68, 68);
+							color: rgb(70, 68, 68);
 							font-size: 72px;
 							line-height: 96px;
-
 						}
 					}
 
@@ -260,9 +258,13 @@
 				background-color: #e0e0e0;
 				transition: 0.3s;
 
+				&.disabled {
+					cursor: not-allowed;
+				}
+
 				&.ready {
 					background-color: #409eff;
-					color:white;
+					color: white;
 
 					&:hover {
 						background-color: #378add;

@@ -39,7 +39,7 @@
         :boards="boards"
         class="hideBoardsMenu"
         :class="boardsShowMenu"
-        @closeBoardsMenu="toggleBoardsMenu"
+        @closeBoardsMenu="closeBoardsMenu"
       ></boards-menu>
       <div class="header-search">
         <input
@@ -125,6 +125,9 @@ export default {
   methods: {
     toggleBoardsMenu() {
       this.isBoardsShow = !this.isBoardsShow;
+    },
+    closeBoardsMenu() {
+      this.isBoardsShow = false;
     },
     createBoard(board) {
       this.$emit("createBoard", board);
