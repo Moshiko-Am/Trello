@@ -252,6 +252,7 @@
 .card-preview-wrapper {
     max-height: 80vh;
     overflow-y: auto;
+    overflow-x: hidden;
     margin-right: 4px;
     &::-webkit-scrollbar {
         height: 8px;
@@ -273,6 +274,9 @@
     }
     &.is-editing {
         max-height: 71vh;
+        ~.add-card {
+            margin-bottom: 4px;
+        }
     }
 }
 

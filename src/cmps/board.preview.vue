@@ -27,6 +27,7 @@ export default {
   },
   methods: {
     showBoard(boardId) {
+      this.$store.commit("getBoardById", boardId);
       this.$router.push(`/board/${boardId}`);
     },
   },
