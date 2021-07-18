@@ -3,12 +3,8 @@
     <div class="main-item-header">
       <h3 class="main-item-title">Members</h3>
     </div>
-    <div class="members-container">
-      <div
-        v-for="member in members"
-        :key="member._id"
-        class="memberDisplay"
-      >
+    <transition-group class="members-container" name="list-complete">
+      <div v-for="member in members" :key="member._id" class="memberDisplay list-complete-item" :style="{'margin-right':'0'}">
         <avatar
           :username="member.fullname"
           :size="32"
@@ -17,7 +13,7 @@
           :title="member.fullname"
         ></avatar>
       </div>
-    </div>
+    </transition-group>
   </div>
 </template>
 
@@ -25,11 +21,11 @@
 import avatar from "vue-avatar";
 
 export default {
-    props: {
-        members:Array,
-    },
-    components: {
-        avatar,
-    }
+  props: {
+    members: Array,
+  },
+  components: {
+    avatar,
+  },
 };
 </script>

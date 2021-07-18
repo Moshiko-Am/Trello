@@ -8,8 +8,12 @@
     background-color: white;
     position: absolute;
     left: 50%;
-    top: 50%;
-    transform:translate(-50%, -50%);
+    top: 30%;
+    transform:translateX(-50%);
+
+    h3 {
+        text-align: center;
+    }
 
     .el-input__inner{
         margin-bottom:17px;

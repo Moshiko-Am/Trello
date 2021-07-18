@@ -113,3 +113,16 @@
         }
     }
 }
+
+.ghost {
+    >*{
+        opacity: 1;
+        transform:rotate(5deg);
+    }
+}
+
+// .tilted {
+//     *{
+//         transform: rotateX(5deg);
+//     }
+// }

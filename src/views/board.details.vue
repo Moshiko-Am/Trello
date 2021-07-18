@@ -1,12 +1,13 @@
 <template>
   <section class="board-details">
+  <section v-if="bgOpen" class="bg" @click="toggleBg"></section>
     <board-header
       @bgColor="boardUpdate"
       @updateBoard="boardUpdate"
       @boardUpdate="boardUpdate"
       v-if="board && board.title"
     />
-    <group-list @boardUpdate="boardUpdate" v-if="board.groups" />
+    <group-list @boardUpdate="boardUpdate" v-if="board.groups" @openBg="toggleBg" />
   </section>
 </template>
 
@@ -15,6 +16,11 @@ import boardHeader from "@/cmps/board.header.vue";
 import groupList from "@/cmps/group.list.vue";
 
 export default {
+  data(){
+    return {
+      bgOpen:false
+    }
+  },
   computed: {
     board() {
       return this.$store.getters.board;
@@ -47,6 +53,10 @@ export default {
         }
       }
     },
+    toggleBg() {
+      this.bgOpen =!this.bgOpen
+      console.log('this.bgOpen',this.bgOpen);
+    }
   },
   created() {},
   watch: {

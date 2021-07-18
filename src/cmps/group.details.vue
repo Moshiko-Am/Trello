@@ -51,6 +51,10 @@
               :key="card.id"
               :card="card"
               @click.native="setCard(card)"
+              @openCard="openCard"
+              @openBg="openBg"
+              @updateCard="updateCard"
+              @removeCard="removeCard"
             />
           </draggable>
         </div>
@@ -120,6 +124,12 @@ export default {
     },
   },
   methods: {
+    openBg() {
+      this.$emit("openBg");
+    },
+    openCard(card) {
+      this.setCard(card);
+    },
     setCard(card) {
       this.currCard = card;
     },

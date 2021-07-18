@@ -90,7 +90,6 @@
             value-format="yyyy-MM-dd"
           >
             <span class="icon-sm icon-date"></span>
-            <p class="sidebar-btn-title">Dates</p>
           </el-date-picker>
           <div class="card-sidebar-btn" @click="toggleAttch">
             <span class="icon-sm icon-attach"></span>

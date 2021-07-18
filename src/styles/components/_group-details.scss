@@ -5,7 +5,7 @@
     display: flex;
     flex-direction: column;
     max-height: 100%;
-    position: relative;
+    // position: relative;
     white-space: normal;
 }
 
@@ -253,7 +253,6 @@
     max-height: calc(90vh - 50px);
     overflow-y: auto;
     overflow-x: hidden;
-    margin-right: 4px;
     &::-webkit-scrollbar {
         height: 8px;
         width: 8px;

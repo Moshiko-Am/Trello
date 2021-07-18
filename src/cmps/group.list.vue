@@ -11,7 +11,7 @@
 				saveGroups();
 			"
 			dragClass="ghost"
-			ghostClass="ghost"
+			ghostClass="tilted"
 		>
 			<div
 				v-for="group in groupsToEdit"
@@ -24,6 +24,7 @@
 						@updateGroup="updateGroup"
 						@deleteGroup="deleteGroup"
 						@saveGroups="saveGroups"
+						@openBg="openBg"
 					/>
 				</div>
 			</div>
@@ -93,6 +94,9 @@ export default {
 		draggable,
 	},
 	methods: {
+		openBg(){
+			this.$emit('openBg')
+		},
 		saveGroups(newGroups) {
 			var savedGroups;
 			if (newGroups) {

@@ -1,8 +1,10 @@
 <template>
   <section class="login-page">
+    <h3 v-if="!isSignup">Log in</h3>
+    <h3 v-else>Sign Up</h3>
     <form>
       <el-input
-        v-if="isSignup"
+        v-if="!isSignup"
         placeholder="Username"
         v-model="loginCr.username"
       ></el-input>
@@ -12,23 +14,21 @@
         v-model="signupCr.username"
       ></el-input>
       <el-input
-        v-if="isSignup"
+        v-if="!isSignup"
         placeholder="Password"
         v-model="loginCr.password"
-        show-password
       ></el-input>
       <el-input
         v-else
         placeholder="Password"
         v-model="signupCr.password"
-        show-password
       ></el-input>
       <el-input
         v-if="!isSignup"
         placeholder="Full Name"
         v-model="signupCr.fullname"
       ></el-input>
-      <button v-if="isSignup" class="btn login" @click="login">Log in</button>
+      <button v-if="!isSignup" class="btn login" @click="login">Log in</button>
       <button v-else @click="signup" class="btn signup">Sign up</button>
     </form>
     <span v-if="isSignup" @click="toggleSignup">Already have an account</span>
