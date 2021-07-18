@@ -6,6 +6,11 @@
 	transform: translateX(0);
 }
 
+.create-select {
+	@include to-icon('\e916');
+	color: white;
+}
+
 .create-board-container {
 	z-index: 1;
 	display: flex;

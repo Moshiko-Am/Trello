@@ -50,9 +50,8 @@ export default {
 	},
 	created() {},
 	watch: {
-		'this.$route.params.boardId': {
+		'$route.params.boardId': {
 			immediate: true,
-			deep: true,
 			async handler() {
 				if (this.$route.params.boardId) {
 					const { boardId } = this.$route.params;
