@@ -4,7 +4,7 @@
       @bgColor="boardUpdate"
       @updateBoard="boardUpdate"
       @boardUpdate="boardUpdate"
-      v-if="board.title"
+      v-if="board && board.title"
     />
     <group-list @boardUpdate="boardUpdate" v-if="board.groups" />
   </section>
@@ -50,9 +50,8 @@ export default {
   },
   created() {},
   watch: {
-    "this.$route.params.boardId": {
+    "$route.params.boardId": {
       immediate: true,
-      deep: true,
       async handler() {
         if (this.$route.params.boardId) {
           const { boardId } = this.$route.params;

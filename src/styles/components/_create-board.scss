@@ -6,6 +6,11 @@
 	transform: translateX(0);
 }
 
+.create-select {
+	@include to-icon('\e916');
+	color: white;
+}
+
 .create-board-container {
 	z-index: 1;
 	display: flex;
@@ -167,6 +172,24 @@
 					height: 96px;
 					cursor: pointer;
 
+					.selected-bg {
+						z-index: 3;
+						display: inline-block;
+						height: 96px;
+						width: 154px;
+						border-radius: 10px;
+						background-color: rgba(255, 255, 255, 0.3);
+						position: absolute;
+						text-align: center;
+						&.icon-v {
+							@include to-icon('\e916');
+							color:rgb(70, 68, 68);
+							font-size: 72px;
+							line-height: 96px;
+
+						}
+					}
+
 					img {
 						border-radius: 10px;
 						width: 100%;
@@ -199,6 +222,24 @@
 					cursor: pointer;
 					transition: 0.3s;
 
+					.selected-bg {
+						z-index: 3;
+						display: inline-block;
+						height: 96px;
+						width: 154px;
+						border-radius: 10px;
+						background-color: rgba(255, 255, 255, 0.3);
+						position: absolute;
+						text-align: center;
+						&.icon-v {
+							@include to-icon('\e916');
+							color:rgb(70, 68, 68);
+							font-size: 72px;
+							line-height: 96px;
+
+						}
+					}
+
 					&:hover {
 						filter: brightness(120%);
 					}
@@ -218,6 +259,15 @@
 				margin-inline-start: 9px;
 				background-color: #e0e0e0;
 				transition: 0.3s;
+
+				&.ready {
+					background-color: #409eff;
+					color:white;
+
+					&:hover {
+						background-color: #378add;
+					}
+				}
 
 				&:hover {
 					background-color: #cacaca;

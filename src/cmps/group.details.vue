@@ -176,7 +176,7 @@ export default {
       this.updateGroup();
     },
     updateGroups() {
-      const groupsCopy = this.groups;
+      const groupsCopy = JSON.parse(JSON.stringify(this.groups));
       console.log(groupsCopy);
       const idx = groupsCopy.findIndex((group) => {
         return group.id === this.groupToEdit.id;

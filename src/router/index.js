@@ -2,6 +2,7 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 import board from '@/views/board.details.vue';
 import boards from '@/cmps/board.list.vue';
+import loginPage from '@/views/login.page.vue'
 import canvasCmp from '@/cmps/card-details-cmps/canvas.cmp'
 import VueKonva from "vue-konva";
 
@@ -27,6 +28,11 @@ const routes = [{
         path: '/board/:boardId',
         name: 'Board',
         component: board,
+    },
+    {
+        path: '/login',
+        name: 'Login',
+        component: loginPage,
     },
 ];
 
