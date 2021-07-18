@@ -1,313 +1,322 @@
 .group-details {
-    background-color: #ebecf0;
-    border-radius: 3px;
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-    max-height: 100%;
-    position: relative;
-    white-space: normal;
+	background-color: #ebecf0;
+	border-radius: 3px;
+	box-sizing: border-box;
+	display: flex;
+	flex-direction: column;
+	max-height: 100%;
+	position: relative;
+	white-space: normal;
 }
 
 .group-header {
-    flex: 0 0 auto;
-    padding: 10px 8px;
-    position: relative;
-    min-height: 20px;
-    &.is-menu-shown,
-    &.is-subscribe-shown {
-        padding-right: 36px;
-    }
-    &-target {
-        cursor: pointer;
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-    }
-    textarea {
-        cursor: pointer;
-        resize: none;
-        outline: none;
-        border: none;
-        box-shadow: inset 0 0 0 2px #dfe1e6;
-        background-color: #fafbfc;
-        box-sizing: border-box;
-        -webkit-appearance: none;
-        border-radius: 3px;
-        display: block;
-        line-height: 20px;
-        margin-bottom: 12px;
-        padding: 8px 12px;
-        font-family: Segoe UI;
-        color: #172b4d;
-        font-size: 14px;
-        line-height: 20px;
-        font-weight: 400;
-        transition-property: background-color, border-color, box-shadow;
-        transition-duration: 85ms;
-        transition-timing-function: ease;
-        overflow: hidden;
-        overflow-wrap: break-word;
-        height: 28px;
-        &.mod-group-name {
-            background: transparent;
-            border-radius: 3px;
-            box-shadow: none;
-            font-weight: 600;
-            margin: -4px 0;
-            height: 24px;
-            min-height: 20px;
-            padding: 4px 8px;
-            resize: none;
-            max-height: 256px;
-        }
-        &.mod-group-name.is-editing,
-        &.mod-group-name:focus {
-            background-color: #fff;
-            box-shadow: inset 0 0 0 2px #0079bf;
-            cursor: text;
-            height: 28px;
-            width: 89%;
-        }
-    }
-    .group-header-extras {
-        position: absolute;
-        right: 4px;
-        top: 4px;
-        width: 20px;
-        height: 20px;
-        box-sizing: content-box;
-        padding: 6px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        border-radius: 3px;
-        color: #6b778c;
-        &:hover {
-            background-color: rgba(9, 30, 66, 0.08);
-            cursor: pointer;
-            color: #172b4d;
-        }
-    }
+	flex: 0 0 auto;
+	padding: 10px 8px;
+	position: relative;
+	min-height: 20px;
+	&.is-menu-shown,
+	&.is-subscribe-shown {
+		padding-right: 36px;
+	}
+	&-target {
+		cursor: pointer;
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+	}
+	textarea {
+		cursor: pointer;
+		resize: none;
+		outline: none;
+		border: none;
+		box-shadow: inset 0 0 0 2px #dfe1e6;
+		background-color: #fafbfc;
+		box-sizing: border-box;
+		-webkit-appearance: none;
+		border-radius: 3px;
+		display: block;
+		line-height: 20px;
+		margin-bottom: 12px;
+		padding: 8px 12px;
+		font-family: Segoe UI;
+		color: #172b4d;
+		font-size: 14px;
+		line-height: 20px;
+		font-weight: 400;
+		transition-property: background-color, border-color, box-shadow;
+		transition-duration: 85ms;
+		transition-timing-function: ease;
+		overflow: hidden;
+		overflow-wrap: break-word;
+		height: 28px;
+		&.mod-group-name {
+			background: transparent;
+			border-radius: 3px;
+			box-shadow: none;
+			font-weight: 600;
+			margin: -4px 0;
+			height: 24px;
+			min-height: 20px;
+			padding: 4px 8px;
+			resize: none;
+			max-height: 256px;
+			color: #172b4d;
+		}
+		&.mod-group-name.is-editing,
+		&.mod-group-name:focus {
+			background-color: #fff;
+			box-shadow: inset 0 0 0 2px #0079bf;
+			cursor: text;
+			height: 28px;
+			width: 89%;
+		}
+	}
+	.group-header-extras {
+		position: absolute;
+		right: 4px;
+		top: 4px;
+		width: 20px;
+		height: 20px;
+		box-sizing: content-box;
+		padding: 6px;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		border-radius: 3px;
+		color: #6b778c;
+		&:hover {
+			background-color: rgba(9, 30, 66, 0.08);
+			cursor: pointer;
+			color: #172b4d;
+		}
+	}
 }
 
 .card-composer-container {
-    max-height: 38px;
-    margin-bottom: 6px;
-    display: flex;
-    justify-content: space-between;
-    .add-card-controls {
-        display: flex;
-        justify-content: left;
-        align-items: center;
-        padding: 4px 8px;
-        margin-block: 8px;
-        gap: 4px;
-    }
-    .btn-add-card {
-        background-color: #0079bf;
-        box-shadow: none;
-        border: none;
-        color: #fff;
-        margin: 8px 4px 0 0;
-        box-sizing: border-box;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        border-radius: 3px;
-        cursor: pointer;
-        padding: 6px 12px;
-        text-decoration: none;
-        box-shadow: none;
-        border: none;
-        transition-property: background-color, border-color, box-shadow;
-        transition-duration: 85ms;
-        transition-timing-function: ease;
-        font-family: Segoe UI;
-        font-size: 14px;
-        margin-bottom: 0;
-        margin-top: 0;
-        vertical-align: top;
-        &:hover {
-            background-color: #026aa7;
-        }
-    }
+	max-height: 38px;
+	margin-bottom: 6px;
+	display: flex;
+	justify-content: space-between;
+	.add-card-controls {
+		display: flex;
+		justify-content: left;
+		align-items: center;
+		padding: 4px 8px;
+		margin-block: 8px;
+		gap: 4px;
+	}
+	.btn-add-card {
+		background-color: #0079bf;
+		box-shadow: none;
+		border: none;
+		color: #fff;
+		margin: 8px 4px 0 0;
+		box-sizing: border-box;
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		border-radius: 3px;
+		cursor: pointer;
+		padding: 6px 12px;
+		text-decoration: none;
+		box-shadow: none;
+		border: none;
+		transition-property: background-color, border-color, box-shadow;
+		transition-duration: 85ms;
+		transition-timing-function: ease;
+		font-family: Segoe UI;
+		font-size: 14px;
+		margin-bottom: 0;
+		margin-top: 0;
+		vertical-align: top;
+		&:hover {
+			background-color: #026aa7;
+		}
+	}
 }
 
 .add-card {
-    margin-top: 0px;
-    width: 93%;
-    textarea {
-        background: none;
-        border: none;
-        box-shadow: none;
-        outline: none;
-        resize: none;
-        height: auto;
-        margin-bottom: 4px;
-        max-height: 162px;
-        min-height: 54px;
-        overflow-y: auto;
-        width: 100%;
-        padding: 0;
-        overflow: hidden;
-        overflow-wrap: break-word;
-        resize: none;
-        height: 54px;
-        &,
-        &::placeholder {
-            font-family: Segoe UI;
-            color: #172b4daf;
-            font-size: 14px;
-            line-height: 20px;
-            font-weight: 400;
-        }
-    }
+	margin-top: 0px;
+	width: 93%;
+	textarea {
+		background: none;
+		border: none;
+		box-shadow: none;
+		outline: none;
+		resize: none;
+		height: auto;
+		margin-bottom: 4px;
+		max-height: 162px;
+		min-height: 54px;
+		overflow-y: auto;
+		width: 100%;
+		padding: 0;
+		overflow: hidden;
+		overflow-wrap: break-word;
+		resize: none;
+		height: 54px;
+		color: #172b4d;
+		&,
+		&::placeholder {
+			font-family: Segoe UI;
+			color: #172b4daf;
+			font-size: 14px;
+			line-height: 20px;
+			font-weight: 400;
+		}
+	}
 }
 
 .open-card-composer {
-    border-radius: 3px;
-    color: #5e6c84;
-    display: block;
-    margin: 2px 8px 0 8px;
-    padding-inline-start: 8px;
-    position: relative;
-    text-decoration: none;
-    display: flex;
-    justify-content: left;
-    align-items: center;
-    width: 100%;
-    padding-block: 4px;
-    height: 20px;
-    box-sizing: content-box;
-    &:hover {
-        background-color: rgba(9, 30, 66, 0.08);
-        width: 90%;
-    }
-    .add-card {
-        vertical-align: text-bottom;
-        padding-inline-start: 4px;
-    }
+	border-radius: 3px;
+	color: #5e6c84;
+	display: block;
+	margin: 2px 8px 0 8px;
+	padding-inline-start: 8px;
+	position: relative;
+	text-decoration: none;
+	display: flex;
+	justify-content: left;
+	align-items: center;
+	width: 100%;
+	padding-block: 4px;
+	height: 20px;
+	box-sizing: content-box;
+	&:hover {
+		background-color: rgba(9, 30, 66, 0.08);
+		width: 90%;
+		color: #172b4d;
+
+		.icon-add {
+			color: #172b4d;
+		}
+	}
+	.add-card {
+		vertical-align: text-bottom;
+		padding-inline-start: 4px;
+	}
 }
 
 .popup {
-    background: #fff;
-    top: 38px;
-    left: 0;
-    border-radius: 3px;
-    box-shadow: 0 8px 16px -4px rgba(9, 30, 66, 0.25), 0 0 0 1px rgba(9, 30, 66, 0.08);
-    overflow: hidden;
-    position: absolute;
-    width: 304px;
-    z-index: 1;
-    .header {
-        height: 40px;
-        position: relative;
-        margin-bottom: 8px;
-        text-align: center;
-        .header-title {
-            box-sizing: border-box;
-            color: #5e6c84;
-            display: block;
-            line-height: 40px;
-            border-bottom: 1px solid rgba(9, 30, 66, 0.13);
-            margin: 0 12px;
-            overflow: hidden;
-            padding: 0 32px;
-            position: relative;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-            z-index: 1;
-            font-size: 14px;
-            font-weight: 400;
-            font-family: "Segoe UI";
-        }
-        .header-close {
-            color: #6b778c;
-            padding: 10px 12px 10px 8px;
-            position: absolute;
-            top: 0;
-            right: 0;
-            z-index: 2;
-        }
-    }
-    .popup-content {
-        overflow-x: hidden;
-        overflow-y: auto;
-        padding: 0 12px 12px;
-    }
-    .item {
-        cursor: pointer;
-        display: block;
-        font-weight: 400;
-        padding: 6px 12px;
-        position: relative;
-        margin: 0 -12px;
-        text-decoration: none;
-    }
+	background: #fff;
+	top: 38px;
+	left: 0;
+	border-radius: 3px;
+	box-shadow: 0 8px 16px -4px rgba(9, 30, 66, 0.25),
+		0 0 0 1px rgba(9, 30, 66, 0.08);
+	overflow: hidden;
+	position: absolute;
+	width: 304px;
+	z-index: 1;
+	.header {
+		height: 40px;
+		position: relative;
+		margin-bottom: 8px;
+		text-align: center;
+		.header-title {
+			box-sizing: border-box;
+			color: #5e6c84;
+			display: block;
+			line-height: 40px;
+			border-bottom: 1px solid rgba(9, 30, 66, 0.13);
+			margin: 0 12px;
+			overflow: hidden;
+			padding: 0 32px;
+			position: relative;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+			z-index: 1;
+			font-size: 14px;
+			font-weight: 400;
+			font-family: 'Segoe UI';
+		}
+		.header-close {
+			color: #6b778c;
+			padding: 10px 12px 10px 8px;
+			position: absolute;
+			top: 0;
+			right: 0;
+			z-index: 2;
+		}
+	}
+	.popup-content {
+		overflow-x: hidden;
+		overflow-y: auto;
+		padding: 0 12px 12px;
+	}
+	.item {
+		cursor: pointer;
+		display: block;
+		font-weight: 400;
+		padding: 6px 12px;
+		position: relative;
+		margin: 0 -12px;
+		text-decoration: none;
+	}
 }
 
 .card-preview-wrapper {
-    max-height: calc(90vh - 50px);
-    overflow-y: auto;
-    overflow-x: hidden;
-    margin-right: 4px;
-    &::-webkit-scrollbar {
-        height: 8px;
-        width: 8px;
-        border: solid 3px transparent;
-    }
-    &::-webkit-scrollbar-track-piece {
-        background: rgba(9, 30, 66, 0.08);
-        border-radius: 10px;
-    }
-    &::-webkit-scrollbar-button {
-        display: block;
-        height: 4px;
-        width: 4px;
-    }
-    &::-webkit-scrollbar-thumb {
-        background: rgba(0, 0, 0, 0.1);
-        border-radius: 10px;
-    }
-    &.is-editing {
-        max-height: 71vh;
-        ~.add-card {
-            margin-bottom: 4px;
-        }
-    }
+	max-height: calc(90vh - 50px);
+	overflow-y: auto;
+	overflow-x: hidden;
+	margin-right: 4px;
+	&::-webkit-scrollbar {
+		height: 8px;
+		width: 8px;
+		border: solid 3px transparent;
+	}
+	&::-webkit-scrollbar-track-piece {
+		background: rgba(9, 30, 66, 0.08);
+		border-radius: 10px;
+	}
+	&::-webkit-scrollbar-button {
+		display: block;
+		height: 4px;
+		width: 4px;
+	}
+	&::-webkit-scrollbar-thumb {
+		background: rgba(0, 0, 0, 0.1);
+		border-radius: 10px;
+	}
+	&.is-editing {
+		max-height: 71vh;
+		~ .add-card {
+			margin-bottom: 4px;
+		}
+	}
 }
 
 .icon-add {
-    @include to-icon("\e901");
+	@include to-icon('\e901');
+	color: #5e6c84;
 }
 
 .icon-close {
-    @include to-icon("\e91c");
-    color: #6b778c;
-    &:hover {
-        color: #42526e;
-    }
+	@include to-icon('\e91c');
+	color: #6b778c;
+	&:hover {
+		color: #42526e;
+	}
 }
 
 .icon-dots-menu {
-    @include to-icon("\e952");
+	@include to-icon('\e952');
 }
 
 .list-complete-item {
-    transition: all 1s;
-    display: inline-block;
-    margin-right: 10px;
+	transition: all 1s;
+	display: inline-block;
+	margin-right: 10px;
 }
 
 .list-complete-enter,
 .list-complete-leave-to {
-    opacity: 0;
-    transform: translateY(30px);
+	opacity: 0;
+	transform: translateY(30px);
 }
 
 .list-complete-leave-active {
-    position: absolute;
+	position: absolute;
 }

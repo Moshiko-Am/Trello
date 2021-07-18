@@ -4,7 +4,7 @@
 	background-color: rgba(0, 0, 0, 0.32);
 	min-height: 40px;
 	overflow: hidden;
-	padding: 4px;
+	padding: 4px 8px;
 
 	.header-controls-left {
 		@include flex();
