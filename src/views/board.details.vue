@@ -4,7 +4,7 @@
 			@bgColor="boardUpdate"
 			@updateBoard="boardUpdate"
 			@boardUpdate="boardUpdate"
-			v-if="board.title"
+			v-if="board && board.title"
 		/>
 		<group-list @boardUpdate="boardUpdate" v-if="board.groups" />
 	</section>

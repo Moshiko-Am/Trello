@@ -7,7 +7,7 @@
       <div class="card-details-header">
         <div class="inner-container">
           <span class="icon-lg icon-card details-header-icon"></span>
-          <h2 class="card-details-title">{{ cardToEdit.title }}</h2>
+          <input type="text" class="card-details-title" @input="updateTitle" v-model="cardToEdit.title"  />
         </div>
         <div class="card-details-list">From list {{ group.title }}</div>
       </div>
@@ -173,19 +173,27 @@ export default {
       return "c" + num;
     },
     toggleCl() {
-      this.closePopups()
+      if(!this.isAddingChecklist){
+        this.closePopups()
+      }
       this.isAddingChecklist = !this.isAddingChecklist;
     },
     toggleLabel() {
-      this.closePopups()
+      if(!this.isAddingLabel){
+        this.closePopups()
+      }
       this.isAddingLabel = !this.isAddingLabel;
     },
     toggleMember() {
-      this.closePopups()
+      if(!this.isAddingMember){
+        this.closePopups()
+      }
       this.isAddingMember = !this.isAddingMember;
     },
     toggleAttch() {
-      this.closePopups()
+      if(!this.isAddingAttachment){
+        this.closePopups()
+      }
       this.isAddingAttachment = !this.isAddingAttachment;
     },
     toggleCompleted(isCompleted) {
@@ -199,6 +207,9 @@ export default {
     updateDate() {
       this.cardToEdit.dueDate = this.cardDate;
       this.emitCard();
+    },
+    updateTitle(){
+      this.emitCard()
     },
     updateMembers(members) {
       this.cardToEdit.members = members;

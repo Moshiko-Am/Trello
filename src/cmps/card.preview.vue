@@ -43,6 +43,10 @@
         >
           {{ card.dueDate.slice(5) }}
         </div>
+        <div class="preview-attach-container" v-if="card.attachments">
+          <span class="icon-sm icon-attach"></span>
+          <span class="attach-indicator">{{card.attachments.length}}</span>
+        </div>
       </div>
       <div class="preview-members-container" v-if="card.members">
         <avatar
@@ -54,7 +58,7 @@
           :inline="true"
           backgroundColor="#dfe1e6"
           color="#172b4d"
-          :style="{ margin: '2px', 'font-size': '12px' }"
+          :style="{ margin: '2px', 'font-weight': '700', 'font-size':'12px' , 'font-family':'segoe UI' }"
         ></avatar>
       </div>
     </div>

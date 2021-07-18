@@ -4,6 +4,10 @@
     padding: 8px 0;
     position: relative;
     right: 5px;
+    color:#172b4d;
+    * {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
     .inner-container {
         display: flex;
         align-items: center;
@@ -18,6 +22,9 @@
 
         span{
             font-weight: 700;
+        }
+        p {
+            font-size: 12px;
         }
     }
 }

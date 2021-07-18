@@ -26,6 +26,7 @@
     }
     .preview-labels-container {
         display: flex;
+        flex-wrap: wrap;
         .label {
             min-height: 8px;
             border-radius: 3px;
@@ -36,17 +37,20 @@
             padding: 0 10px;
             color: white;
             font-weight: 700;
+            margin-bottom: 5px;
             transition: width 0.4s, height 0.4s 0.4s;
         }
         .label.shown {
-            width: fit-content;
+            text-align: center;
+            width: 70px;
             height: 20px;
         }
     }
     .preview-indicators-container {
         display: flex;
-        align-items: flex-end;
+        align-items: center;
         justify-content: space-between;
+        flex-wrap: wrap;
         .preview-inner-container {
             display: flex;
             align-items: center;
@@ -68,12 +72,25 @@
             font-size: 12px;
         }
     }
+    .preview-attach-container {
+        display: flex;
+        align-items: center;
+        color: #5e6c84;
+        
+        .attach-indicator {
+            margin-top: 3px;
+            font-size: 12px;
+        }
+        .icon-sm {
+            color: #5e6c84;
+            margin-top: 4px;
+        }
+    }
     .preview-members-container {
         display: flex;
         justify-content: flex-end;
-        flex-wrap: wrap;
         bottom: 2px;
-        max-width: 140px;
+        flex: 1;
     }
     .preview-date-container {
         font-size: 12px;
