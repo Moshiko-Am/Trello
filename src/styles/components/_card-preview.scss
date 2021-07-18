@@ -1,17 +1,14 @@
 .card-preview-container {
     display: flex;
     flex-direction: column;
-
     &.quick-edit-card {
-        >*{
+        >* {
             z-index: 2;
         }
     }
-
-    .card-preview-inner-container{
+    .card-preview-inner-container {
         display: flex;
     }
-
     .quick-edit-btn {
         margin-left: 8px;
         margin-top: 10px;
@@ -21,20 +18,18 @@
         border-radius: 3px;
         cursor: pointer;
         padding: 6px 24px;
-        color:white;
+        color: white;
         background-color: #0079bf;
         border: none;
-        transition-property: background-color,border-color,box-shadow;
+        transition-property: background-color, border-color, box-shadow;
         transition-duration: 85ms;
         transition-timing-function: ease;
         align-self: flex-start;
-    
         &:hover {
             background-color: #026aa7;
         }
-        }
+    }
 }
-
 
 .card-preview {
     position: relative;
@@ -49,6 +44,32 @@
     margin: 4px 8px;
     padding: 6px 8px;
     word-break: break-word;
+    &:hover {
+        background-color: #f4f5f7;
+        border-bottom-color: rgba(9, 30, 66, 0.25);
+    }
+    textarea {
+        overflow: hidden;
+        overflow-wrap: break-word;
+        color: #504658;
+        resize: none;
+        height: 90px;
+        padding: 0;
+        width: 100%;
+        outline: none;
+        border: none;
+        background-color: transparent;
+        box-sizing: border-box;
+        border-radius: 3px;
+        font-family: "Segoe UI";
+        display: block;
+        margin-bottom: 12px;
+        font-size: 14px;
+        &:focus {
+            border: none;
+            outline: none;
+        }
+    }
     .card-cover {
         height: 245px;
         background-color: #2d455a;
@@ -138,22 +159,24 @@
         background-color: rgba(9, 30, 66, 0.04);
         font-weight: 500;
     }
-
     .icon-sm.icon-edit {
-        position:absolute;
+        position: absolute;
         padding: 1px 4px;
         right: 2px;
         top: 2px;
         color: #7b8494;
         border-radius: 3px;
-        background-color: rgba(231, 232, 233,0.3);
-
+        // background-color: rgba(231, 232, 233,0.3);
+        color: #172b4d;
+        text-decoration: none;
         &:hover {
-            background-color: rgb(197, 198, 199);
+            background-color: #ebecf0;
+            opacity: 1;
         }
     }
 }
+
 .ghost {
-    opacity: .4;
+    opacity: 0.4;
     // transform:rotateX(20%);
 }

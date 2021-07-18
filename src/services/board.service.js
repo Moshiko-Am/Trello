@@ -1,5 +1,5 @@
 import { storageService } from './async-storage.service.js';
-import { httpService } from './http.service.js';
+// import { httpService } from './http.service.js';
 
 var gBoards = [{
         _id: 'b101',
@@ -2554,7 +2554,7 @@ var gBoards = [{
         ],
     },
 ];
-const URL = 'board/'
+// const URL = 'board/'
 const BOARD_KEY = 'boardsDB';
 
 export const boardService = {

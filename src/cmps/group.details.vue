@@ -38,13 +38,13 @@
             @start="drag = true"
             @end="
               drag = false;
-              updateGroups();
+              onEndDrag();
             "
             animation="500"
             dragClass="ghost"
             ghost-class="ghost"
             group="cards"
-            v-model="groupToEdit.cards"
+            v-model="groupsToEdit"
           >
             <card-preview
               v-for="card in groupToEdit.cards"
@@ -104,12 +104,14 @@ import draggable from "vuedraggable";
 export default {
   props: {
     group: Object,
+    groups: Array,
   },
   data() {
     return {
       isAddingCard: false,
       isExtrasShowing: false,
       groupToEdit: {},
+      groupsToEdit: this.groups,
       cardToEdit: {
         id: this.makeId(),
         title: "",
@@ -118,11 +120,11 @@ export default {
       currCard: null,
     };
   },
-  computed: {
-    groups() {
-      return this.$store.getters.board.groups;
-    },
-  },
+  // computed: {
+  //   groups() {
+  //     return this.$store.getters.board.groups;
+  //   },
+  // },
   methods: {
     openBg() {
       this.$emit("openBg");
@@ -199,6 +201,10 @@ export default {
     },
     deleteGroup() {
       this.$emit("deleteGroup", this.groupToEdit.id);
+    },
+    onEndDrag() {
+      console.log(this.groupsToEdit);
+      this.$emit("saveGroups", this.groupsToEdit);
     },
   },
   watch: {

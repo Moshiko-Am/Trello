@@ -180,12 +180,15 @@
     justify-content: left;
     align-items: center;
     width: 100%;
-    padding-block: 3px;
+    padding-block: 4px;
     height: 20px;
     box-sizing: content-box;
     &:hover {
         background-color: rgba(9, 30, 66, 0.08);
         width: 90%;
+        .icon-add {
+            color: #42526e;
+        }
     }
     .add-card {
         vertical-align: text-bottom;
@@ -280,12 +283,17 @@
         max-height: calc(100vh - 280px);
         ~.add-card {
             margin-bottom: 4px;
+            margin-top: 4px;
         }
     }
 }
 
 .icon-add {
     @include to-icon("\e901");
+    color: #6b778c;
+    &:hover {
+        color: #42526e;
+    }
 }
 
 .icon-close {
@@ -298,6 +306,10 @@
 
 .icon-dots-menu {
     @include to-icon("\e952");
+    color: #6b778c;
+    &:hover {
+        color: #42526e;
+    }
 }
 
 .list-complete-item {

@@ -3,6 +3,7 @@
     <draggable
       class="group-list"
       handle=".group-wrapper"
+      group="groups"
       animation="500"
       v-model="groupsToEdit"
       @start="drag = true"
@@ -17,6 +18,7 @@
         <div class="group">
           <group-details
             :group="group"
+            :groups="groups"
             @updateGroup="updateGroup"
             @deleteGroup="deleteGroup"
             @saveGroups="saveGroups"

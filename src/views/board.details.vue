@@ -48,7 +48,6 @@ export default {
     },
     toggleBg() {
       this.bgOpen = !this.bgOpen;
-      console.log("this.bgOpen", this.bgOpen);
     },
   },
   created() {},
