@@ -38,13 +38,14 @@
             @start="drag = true"
             @end="
               drag = false;
-              onEndDrag();
+              log();
             "
+            @change="log"
             animation="500"
             dragClass="ghost"
             ghost-class="ghost"
             group="cards"
-            v-model="groupsToEdit"
+            v-model="groupToEdit.cards"
           >
             <card-preview
               v-for="card in groupToEdit.cards"
@@ -55,6 +56,7 @@
               @openBg="openBg"
               @updateCard="updateCard"
               @removeCard="removeCard"
+              :index="card.id"
             />
           </draggable>
         </div>
@@ -111,7 +113,7 @@ export default {
       isAddingCard: false,
       isExtrasShowing: false,
       groupToEdit: {},
-      groupsToEdit: this.groups,
+      groupsToEdit: this.groupss,
       cardToEdit: {
         id: this.makeId(),
         title: "",
@@ -120,11 +122,11 @@ export default {
       currCard: null,
     };
   },
-  // computed: {
-  //   groups() {
-  //     return this.$store.getters.board.groups;
-  //   },
-  // },
+  computed: {
+    groupss() {
+      return this.$store.getters.board.groups;
+    },
+  },
   methods: {
     openBg() {
       this.$emit("openBg");
@@ -139,15 +141,15 @@ export default {
       this.currCard = null;
     },
     saveCard() {
-      if (!this.cardToEdit.title) return;
+      if (!this.cardToEdit.title) {
+        this.$refs.content.focus();
+        return;
+      }
       const savedCard = { ...this.cardToEdit };
       savedCard.id = this.makeId();
       this.groupToEdit.cards.push(savedCard);
       this.updateGroup();
       this.cardToEdit.title = "";
-      this.$refs["card-preview-wrapper"].scrollTop = this.$refs[
-        "card-preview-wrapper"
-      ].scrollHeight;
       this.$refs.content.focus();
     },
     removeCard(cardId) {
@@ -189,6 +191,7 @@ export default {
       this.updateGroup();
     },
     updateGroups() {
+      console.log(this.groups);
       const groupsCopy = JSON.parse(JSON.stringify(this.groups));
       const idx = groupsCopy.findIndex((group) => {
         return group.id === this.groupToEdit.id;
@@ -202,9 +205,8 @@ export default {
     deleteGroup() {
       this.$emit("deleteGroup", this.groupToEdit.id);
     },
-    onEndDrag() {
-      console.log(this.groupsToEdit);
-      this.$emit("saveGroups", this.groupsToEdit);
+    log: function(evt) {
+      window.console.log(evt);
     },
   },
   watch: {
