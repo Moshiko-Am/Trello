@@ -32,10 +32,13 @@
               <div class="group-header-extras">
                 <a
                   class="group-header-extras-menu icon-sm icon-dots-menu"
-                  @click="toggleExtras"
+                  @click="toggleExtras(gIdx)"
                 >
                 </a>
-                <div v-if="isExtrasShowing" class="popup">
+                <div
+                  v-if="isExtrasShowing && currGroupIdx === gIdx"
+                  class="popup"
+                >
                   <div class="header">
                     <div class="header-title">List actions</div>
                     <span
@@ -51,7 +54,10 @@
                 </div>
               </div>
             </div>
-            <section :ref="'card-preview-wrapper-'+gIdx" class="card-preview-wrapper">
+            <section
+              :ref="'card-preview-wrapper-' + gIdx"
+              class="card-preview-wrapper"
+            >
               <draggable
                 group="cards"
                 animation="500"
@@ -71,20 +77,27 @@
               </draggable>
             </section>
           </div>
-          <div v-if="isAddingCard" class="add-card card-preview">
+          <div
+            v-if="isAddingCard && currGroupIdx === gIdx"
+            class="add-card card-preview"
+          >
             <textarea
-              v-click-outside="toggleCardEdit"
               placeholder="Enter a title for this card..."
               dir="auto"
-              ref="content"
+              :ref="'content-' + gIdx"
               v-model="cardToEdit.title"
             ></textarea>
           </div>
           <section class="add-card-container" ref="addcard">
-            <div v-if="isAddingCard" class="card-composer-container">
+            <div
+              v-if="isAddingCard && currGroupIdx === gIdx"
+              class="card-composer-container"
+            >
               <div class="add-card-controls">
-                <button class="btn-add-card" @click="saveCard(gIdx)">Add card</button>
-                <a class="icon-lg icon-close" @click="closeCardEdit"></a>
+                <button class="btn-add-card" @click="saveCard(gIdx)">
+                  Add card
+                </button>
+                <a class="icon-lg icon-close" @click="closeCardEdit(gIdx)"></a>
               </div>
             </div>
             <div v-else class="card-composer-container">
@@ -101,17 +114,16 @@
         class="group-wrapper mod-add"
         :class="{ 'is-edit': isAddingGroup }"
       >
-        <form v-if="isAddingGroup">
+        <form v-if="isAddingGroup" v-click-outside="toggleCardEdit">
           <input
             class="group-name-input"
             type="text"
             name="name"
-            ref="content"
+            ref="newgroupcontent"
             v-model="groupToEdit.title"
             placeholder="Enter list title…"
             autocomplete="off"
             dir="auto"
-            v-click-outside="toggleGroupEdit"
           />
           <div class="group-add-controls">
             <input
@@ -156,6 +168,7 @@ export default {
   data() {
     return {
       isAddingGroup: false,
+      isAddingCard: false,
       groupsToEdit: null,
       groupToEdit: {
         id: this.makeId(),
@@ -166,7 +179,6 @@ export default {
       currCard: null,
       currGroupIdx: null,
       isExtrasShowing: false,
-      // isAddingCard: false,
       cardToEdit: {
         id: this.makeId(),
         title: "",
@@ -175,26 +187,27 @@ export default {
     };
   },
   components: {
-    // groupDetails,
     cardPreview,
     cardDetails,
     draggable,
   },
-  computed: {
-    isAddingCard(){
-      if(!this.currGroupIdx) return false
-      return this.$refs[`card-preview-wrapper-${this.currGroupIdx}`][0].className.contains("is-editing");
-    }
-  },
   methods: {
-    closeCardEdit() {
+    closeAll() {
+      this.isAddingGroup = false;
       this.isAddingCard = false;
-      this.$refs["card-preview-wrapper"].classList.remove("is-editing");
+      this.isExtrasShowing = false;
+      console.log("fdfd");
+    },
+    closeCardEdit(gIdx) {
+      this.isAddingCard = false;
+      this.$refs[`card-preview-wrapper-${gIdx}`][0].classList.remove(
+        "is-editing"
+      );
       this.cardToEdit.title = "";
     },
     saveCard(gIdx) {
       if (!this.cardToEdit.title) {
-        this.$refs.content.focus();
+        this.$refs[`content-${gIdx}`][0].focus();
         return;
       }
       const savedCard = { ...this.cardToEdit };
@@ -202,18 +215,29 @@ export default {
       this.groupsToEdit[gIdx].cards.push(savedCard);
       this.saveGroups();
       this.cardToEdit.title = "";
-      this.$refs.content.focus();
+      this.$refs[`content-${gIdx}`][0].focus();
     },
     toggleCardEdit(gIdx) {
-      // this.currGroup = this.$refs[`card-preview-wrapper-${gIdx}`][0]
-      console.log('this.$refs',this.$refs[`card-preview-wrapper-${gIdx}`][0]);
-      // this.isAddingCard = !this.isAddingCard;
-      this.$refs[`card-preview-wrapper-${gIdx}`][0].classList.toggle("is-editing");
-      if (this.isAddingCard) this.$nextTick(() => this.$refs.content.focus());
+      this.$refs[`card-preview-wrapper-${gIdx}`][0].classList.toggle(
+        "is-editing"
+      );
+      if (this.isAddingCard && gIdx !== this.currGroupIdx) {
+        this.currGroupIdx = gIdx;
+      } else {
+        this.currGroupIdx = gIdx;
+        this.isAddingCard = !this.isAddingCard;
+      }
+      if (this.isAddingCard)
+        this.$nextTick(() => this.$refs[`content-${gIdx}`][0].focus());
       else if (this.cardToEdit.title) this.saveCard();
     },
-    toggleExtras() {
-      this.isExtrasShowing = !this.isExtrasShowing;
+    toggleExtras(gIdx) {
+      if (this.isExtrasShowing && gIdx !== this.currGroupIdx) {
+        this.currGroupIdx = gIdx;
+      } else {
+        this.currGroupIdx = gIdx;
+        this.isExtrasShowing = !this.isExtrasShowing;
+      }
     },
     openBg() {
       this.$emit("openBg");
@@ -246,12 +270,6 @@ export default {
       this.saveGroups();
     },
     saveGroups() {
-      // var savedGroups;
-      // if (newGroups) {
-      //   savedGroups = JSON.parse(JSON.stringify(newGroups));
-      // } else {
-      //   savedGroups = JSON.parse(JSON.stringify(this.groupsToEdit));
-      // }
       this.$emit("boardUpdate", {
         type: "groups",
         payload: this.groupsToEdit,
@@ -260,19 +278,21 @@ export default {
     saveGroup() {
       const savedGroup = { ...this.groupToEdit };
       savedGroup.id = this.makeId();
-      this.groupsToEdit.push(savedGroup)
+      this.groupsToEdit.push(savedGroup);
       this.saveGroups();
       this.groupToEdit.title = "";
     },
     deleteGroup(gIdx) {
       this.groupsToEdit.splice(gIdx, 1);
+      this.currGroupIdx = null;
+      this.isExtrasShowing = false;
       this.saveGroups();
     },
     toggleGroupEdit() {
       this.isAddingGroup = !this.isAddingGroup;
       if (this.isAddingGroup) {
         this.$nextTick(() => {
-          this.$refs.content.focus();
+          this.$refs.newgroupcontent.focus();
         });
       } else if (this.groupToEdit.title) this.saveGroup();
     },
@@ -293,11 +313,11 @@ export default {
   created() {
     this.groupsToEdit = JSON.parse(JSON.stringify(this.groups));
   },
-  mounted() {
-    this.popupItem = this.$refs.addgroup;
-  },
   directives: {
     ClickOutside,
+  },
+  mounted() {
+    this.popupItem = this.$el;
   },
   watch: {
     groups: {
