@@ -3,42 +3,49 @@ import { httpService } from './http.service';
 // import { socketService, SOCKET_EVENT_USER_UPDATED } from './socket.service';
 const USER_KEY = 'loggedinUser';
 const USERS_DB = 'allUsers';
-const URL = 'user/'
-    // var gWatchedUser = null;
+const URL = 'user/';
+// var gWatchedUser = null;
 
-// var gUsers = [{
-//         fullname: 'Abi Abambi',
-//         username: 'abi1',
-//         password: 'aBambi123',
-//         imgUrl: 'http://some-img.jpg',
-//         mentions: [{
-//             id: 'm101',
-//             boardId: 'm101',
-//             cardId: 't101',
-//         }, ],
-//     },
-//     {
-//         fullname: 'Shuki Shakshuka',
-//         username: 'Suka',
-//         password: 'aBambi123',
-//         imgUrl: 'http://some-img.jpg',
-//         mentions: [{
-//             id: 'm101',
-//             boardId: 'm101',
-//             cardId: 't101',
-//         }, ],
-//     },
-//     {
-//         fullname: 'Muki Amuka',
-//         username: 'Mukifliz',
-//         password: 'aBambi123',
-//         imgUrl: 'http://some-img.jpg',
-//         mentions: [{
-//             id: 'm101',
-//             boardId: 'm101',
-//             cardId: 't101',
-//         }, ],
-//     },
+// var gUsers = [
+// 	{
+// 		fullname: 'Abi Abambi',
+// 		username: 'abi1',
+// 		password: 'aBambi123',
+// 		imgUrl: 'http://some-img.jpg',
+// 		mentions: [
+// 			{
+// 				id: 'm101',
+// 				boardId: 'm101',
+// 				cardId: 't101',
+// 			},
+// 		],
+// 	},
+// 	{
+// 		fullname: 'Shuki Shakshuka',
+// 		username: 'Suka',
+// 		password: 'aBambi123',
+// 		imgUrl: 'http://some-img.jpg',
+// 		mentions: [
+// 			{
+// 				id: 'm101',
+// 				boardId: 'm101',
+// 				cardId: 't101',
+// 			},
+// 		],
+// 	},
+// 	{
+// 		fullname: 'Muki Amuka',
+// 		username: 'Mukifliz',
+// 		password: 'aBambi123',
+// 		imgUrl: 'http://some-img.jpg',
+// 		mentions: [
+// 			{
+// 				id: 'm101',
+// 				boardId: 'm101',
+// 				cardId: 't101',
+// 			},
+// 		],
+// 	},
 // ];
 export const userService = {
     query,
