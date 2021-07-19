@@ -40,6 +40,22 @@ export const boardStore = {
         clearStyle(state) {
             state.selectedBoard = null;
         },
+        cardChanged(state, {card}){
+            state.selectedBoard.groups[card.gIdx].cards.splice(card.cIdx, 1 , card.payload)
+        },
+        groupsChanged(state, {groups}){
+            console.log(groups);
+            state.selectedBoard.groups = groups
+        },
+        titleChanged(state, {title}){
+            state.selectedBoard.title = title
+        },
+        styleChanged(state, {style}){
+            state.selectedBoard.style = style
+        },
+        membersChanged(state, {members}){
+            state.selectedBoard.members = members
+        }
     },
     actions: {
         async loadBoards({ commit }) {

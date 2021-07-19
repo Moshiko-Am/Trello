@@ -65,17 +65,17 @@ window.userService = userService;
 // userService.signup({fullname: 'Muki G', username: 'muki', password:'123', score: 100})
 
 async function query() {
-    try {
-        // const users = await storageService.query(USERS_DB);
-        const users = await httpService.get(URL);
-        if (!users.length) {
-            storageService.postMany(USERS_DB, users);
-            return users;
-        }
-        return users;
-    } catch (err) {
-        console.log(err);
-    }
+	try {
+		// const users = await storageService.query(USERS_DB);
+		const users = await httpService.get(URL)
+		if (!users.length) {
+			storageService.postMany(USERS_DB, users);
+			return users;
+		}
+		return users;
+	} catch (err) {
+		console.log(err);
+	}
 }
 
 async function getById(userId) {

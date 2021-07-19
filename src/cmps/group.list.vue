@@ -160,6 +160,7 @@
 import cardDetails from "./card.details.vue";
 import cardPreview from "./card.preview.vue";
 import draggable from "vuedraggable";
+import { socketService } from "@/services/socket.service.js";
 export default {
   props: {
     groups: Array,
@@ -211,11 +212,14 @@ export default {
       this.$refs[`content-${gIdx}`][0].focus();
     },
     toggleCardEdit(gIdx) {
+      this.isExtrasShowing = false;
       this.$refs[`card-preview-wrapper-${gIdx}`][0].classList.toggle(
         "is-editing"
       );
       if (this.isAddingCard && gIdx !== this.currGroupIdx) {
         this.currGroupIdx = gIdx;
+      } else if (this.isAddingCard && gIdx === this.currGroupIdx) {
+        this.isAddingCard = !this.isAddingCard;
       } else {
         this.currGroupIdx = gIdx;
         this.isAddingCard = !this.isAddingCard;
@@ -225,6 +229,7 @@ export default {
       else if (this.cardToEdit.title) this.saveCard();
     },
     toggleExtras(gIdx) {
+      this.isAddingCard = false;
       if (this.isExtrasShowing && gIdx !== this.currGroupIdx) {
         this.currGroupIdx = gIdx;
       } else {
@@ -256,10 +261,11 @@ export default {
     },
     updateCard(updatedCard, gIdx) {
       console.log("gIdx", gIdx);
-      const idx = this.groupsToEdit[gIdx].cards.findIndex(
+      const cIdx = this.groupsToEdit[gIdx].cards.findIndex(
         (card) => card.id === updatedCard.id
       );
-      this.groupsToEdit[gIdx].cards.splice(idx, 1, updatedCard);
+      this.groupsToEdit[gIdx].cards.splice(cIdx, 1, updatedCard);
+      socketService.emit('send card', {payload:updatedCard,cIdx,gIdx})
       this.saveGroups();
     },
     saveGroups() {
@@ -267,6 +273,7 @@ export default {
         type: "groups",
         payload: this.groupsToEdit,
       });
+      socketService.emit("send groups", this.groupsToEdit);
     },
     saveGroup() {
       const savedGroup = { ...this.groupToEdit };
