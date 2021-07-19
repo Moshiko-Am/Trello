@@ -276,8 +276,9 @@ export default {
       return this.$store.getters.board;
     },
   },
-  // created() {
-  //   this.cardToEdit = JSON.parse(JSON.stringify(this.card));
-  // },
+  created() {
+    console.log('card',this.card);
+    console.log('group',this.group);
+},
 };
 </script>

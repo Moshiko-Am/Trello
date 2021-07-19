@@ -2848,7 +2848,7 @@ async function add(board) {
 async function save(boardToSave) {
 	try {
 		// const savedBoard = await storageService.put(BOARD_KEY, boardToSave);
-		const savedBoard = await httpService.put(URL, boardToSave);
+		const savedBoard = await httpService.put(URL, { board: boardToSave });
 		return savedBoard;
 	} catch (err) {
 		console.log(`couldn't save board`, err);
