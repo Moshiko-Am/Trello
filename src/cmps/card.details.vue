@@ -255,7 +255,6 @@ export default {
     },
     updateAttachments(attachments) {
       this.cardToEdit.attachments = attachments;
-      console.log(this.cardToEdit.attachments);
       this.emitCard();
     },
   },
@@ -276,9 +275,5 @@ export default {
       return this.$store.getters.board;
     },
   },
-  created() {
-    console.log('card',this.card);
-    console.log('group',this.group);
-},
 };
 </script>

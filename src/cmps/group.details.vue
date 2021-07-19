@@ -191,25 +191,14 @@ export default {
       this.updateGroup();
     },
     updateGroups() {
-      console.log('groups',this.groups);
       const groupsCopy = JSON.parse(JSON.stringify(this.groups));
-      // const idx = groupsCopy.findIndex((group) => {
-      //   return group.id === this.groupToEdit.id;
-      // });
-      // groupsCopy.splice(idx, 1, this.groupToEdit);
       this.$emit("saveGroups", groupsCopy);
     },
     updateGroup() {
-      // console.log('this.groupToEdit',this.groupToEdit);
       this.$emit("updateGroup", this.groupToEdit);
     },
     deleteGroup() {
       this.$emit("deleteGroup", this.groupToEdit.id);
-    },
-    log(evt) {
-      console.log(evt);
-      console.log('this.groupsToEdit',this.groupsToEdit);
-      // this.updateGroups()
     },
   },
   watch: {

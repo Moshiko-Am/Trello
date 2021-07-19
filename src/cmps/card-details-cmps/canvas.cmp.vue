@@ -243,7 +243,6 @@ export default {
       if (this.isAddLine) {
         this.numberToCheckAddLine += 1;
         this.pointerPosition = stage.getPointerPosition();
-        console.log(this.pointerPosition);
         if (this.numberToCheckAddLine % 2 !== 0) {
           this.numberRefs += 1;
           let new_line = {
@@ -265,7 +264,6 @@ export default {
             this.addTransformerImmediate(this.listLine[numberLine].config.name);
           });
         } else {
-          console.log(this.selectedShapeName);
           this.listLine.forEach((item) => {
             if (item.config.name === this.selectedShapeName) {
               let oldValue = item.config.x;
@@ -426,7 +424,6 @@ export default {
     editText(e) {
       vm = this;
       textNode = vm.$refs[e.target.attrs.name][0].getNode();
-      console.log(textNode.VueComponent);
       textNode.hide();
       tr.hide();
       layer2.draw();

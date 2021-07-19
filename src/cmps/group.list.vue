@@ -260,7 +260,6 @@ export default {
       this.saveGroups();
     },
     updateCard(updatedCard, gIdx) {
-      console.log("gIdx", gIdx);
       const cIdx = this.groupsToEdit[gIdx].cards.findIndex(
         (card) => card.id === updatedCard.id
       );
