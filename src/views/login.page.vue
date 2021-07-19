@@ -4,32 +4,32 @@
     <h3 v-else>Sign Up</h3>
     <form>
       <el-input
-        v-if="!isSignup"
-        placeholder="Username"
-        v-model="loginCr.username"
-      ></el-input>
-      <el-input
-        v-else
+        v-if="isSignup"
         placeholder="Username"
         v-model="signupCr.username"
       ></el-input>
       <el-input
-        v-if="!isSignup"
-        placeholder="Password"
-        v-model="loginCr.password"
+        v-else
+        placeholder="Username"
+        v-model="loginCr.username"
       ></el-input>
       <el-input
-        v-else
+        v-if="isSignup"
         placeholder="Password"
         v-model="signupCr.password"
       ></el-input>
       <el-input
-        v-if="!isSignup"
+        v-else
+        placeholder="Password"
+        v-model="loginCr.password"
+      ></el-input>
+      <el-input
+        v-if="isSignup"
         placeholder="Full Name"
         v-model="signupCr.fullname"
       ></el-input>
-      <button v-if="!isSignup" class="btn login" @click="login">Log in</button>
-      <button v-else @click="signup" class="btn signup">Sign up</button>
+      <button v-if="isSignup" @click="signup" class="btn signup">Sign up</button>
+      <button v-else class="btn login" @click="login">Log in</button>
     </form>
     <span v-if="isSignup" @click="toggleSignup">Already have an account</span>
     <span v-else @click="toggleSignup">Create an account</span>
@@ -59,11 +59,11 @@ export default {
     },
     login() {
       console.log("Logged in", this.loginCr);
-      //   this.$store.dispatch({ type: "login", loginCr: this.loginCr });
+        this.$store.dispatch({ type: "login", userCred: this.loginCr });
     },
     signup() {
       console.log("signed up", this.signupCr);
-      //   this.$store.dispatch({ type: "signup", signupCr: this.signupCr });
+        this.$store.dispatch({ type: "signup", userCred: this.signupCr });
     },
   },
 };

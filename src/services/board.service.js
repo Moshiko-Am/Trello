@@ -1,7 +1,8 @@
 import { storageService } from './async-storage.service.js';
 import { httpService } from './http.service.js';
 
-var gBoards = [{
+var gBoards = [
+    {
         _id: 'b101',
         title: 'Front end',
         createdAt: 1589983468418,
