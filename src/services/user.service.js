@@ -101,60 +101,60 @@ async function getById(userId) {
 	// return user;
 }
 async function remove(userId) {
-	return storageService.remove(USER_KEY, userId);
-	// try {
-	// 	return httpService.delete(`user/${userId}`)
-	// } catch (err) {
-	// 	console.log('Failed to delete user', err);
-	// }
+	// return storageService.remove(USER_KEY, userId);
+	try {
+		return httpService.delete(`user/${userId}`)
+	} catch (err) {
+		console.log('Failed to delete user', err);
+	}
 }
 
 async function update(user) {
-	await storageService.put(USER_KEY, user);
+	// await storageService.put(USER_KEY, user);
 
-	// try {
-	// 	user = await httpService.put(`user/${user._id}`, user)
-	// 	if (getLoggedinUser()._id === user._id || getLoggedinUser.isAdmin) _saveLocalUser(user);
-	// 	return user
-	// } catch(err) {
-	// 	console.log('Failed to update user',err);
-	// }
+	try {
+		user = await httpService.put(`user/${user._id}`, user)
+		if (getLoggedinUser()._id === user._id || getLoggedinUser.isAdmin) _saveLocalUser(user);
+		return user
+	} catch(err) {
+		console.log('Failed to update user',err);
+	}
 
 	// Handle case in which admin updates other user's details
-	if (getLoggedinUser()._id === user._id || getLoggedinUser.isAdmin) _saveLocalUser(user);
-	return user;
+	// if (getLoggedinUser()._id === user._id || getLoggedinUser.isAdmin) _saveLocalUser(user);
+	// return user;
 }
 
 async function login(userCred) {
-	const users = await storageService.query(USER_KEY);
-	const user = users.find((user) => user.username === userCred.username);
-	return user;
+	// const users = await storageService.query(USER_KEY);
+	// const user = users.find((user) => user.username === userCred.username);
+	// return user;
 	// return _saveLocalUser(user)
 
-	// try {
-	// 	const user = await httpService.post('auth/login', userCred)
-	// 	// socketService.emit('login', user._id);
-	// 	if (user) return _saveLocalUser(user)
-	// } catch(err) {
-	// 	console.log('username or password are incorrect', err);
-	// }
+	try {
+		const user = await httpService.post('auth/login', userCred)
+		// socketService.emit('login', user._id);
+		if (user) return _saveLocalUser(user)
+	} catch(err) {
+		console.log('username or password are incorrect', err);
+	}
 }
 async function signup(userCred) {
-	const user = await storageService.post(USER_KEY, userCred);
-	return _saveLocalUser(user);
-	// try {
-	// 	const user = await httpService.post('auth/signup', userCred)
-	// 	// socketService.emit('set-user-socket', user._id);
-	// 	return _saveLocalUser(user);
-	// } catch(err){
-	// 	console.log('Failed to create user',err);
-	// }
+	// const user = await storageService.post(USER_KEY, userCred);
+	// return _saveLocalUser(user);
+	try {
+		const user = await httpService.post('auth/signup', userCred)
+		// socketService.emit('set-user-socket', user._id);
+		return _saveLocalUser(user);
+	} catch(err){
+		console.log('Failed to create user',err);
+	}
 }
 async function logout() {
 	try {
 		sessionStorage.removeItem(USER_KEY);
 		// socketService.emit('unset-user-socket');
-		// return await httpService.post('auth/logout')
+		return await httpService.post('auth/logout')
 	} catch(err) {
 		console.log('failed to logout', err);
 	}

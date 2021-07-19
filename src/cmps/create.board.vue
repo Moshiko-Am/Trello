@@ -121,7 +121,6 @@ export default {
 		createBoard() {
 			if (!this.isReady) return;
 			const boardToSave = {
-				_id: this.makeId(),
 				title: this.boardToSaveTitle,
 				createdAt: Date.now(),
 				createdBy: this.loggedUser,
