@@ -40,7 +40,6 @@ export default {
     async boardUpdate(update) {
       const board = JSON.parse(JSON.stringify(this.board));
       board[update.type] = update.payload;
-      // console.log("board", board);
       try {
         await this.$store.dispatch({ type: "saveBoard", board });
       } catch (err) {
@@ -51,23 +50,18 @@ export default {
       this.bgOpen = !this.bgOpen;
     },
     updateCard(card) {
-      console.log('card changed');
       this.$store.commit({ type: "cardChanged", card });
     },
     updateGroups(groups) {
-      console.log('groups changed',groups);
       this.$store.commit({ type: "groupsChanged", groups });
     },
     updateTitle(title) {
-      console.log('title changed');
       this.$store.commit({ type: "titleChanged", title });
     },
     updateStyle(style) {
-      console.log('style changed',style);
       this.$store.commit({ type: "styleChanged", style });
     },
     updateMembers(members) {
-      console.log('members changed');
       this.$store.commit({ type: "membersChanged", members });
     },
   },
