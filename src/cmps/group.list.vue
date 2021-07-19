@@ -63,7 +63,7 @@
                   :card="card"
                   :key="card.id"
                   @click.native="setCard(card, gIdx)"
-                  @openCard="openCard"
+                  @openCard="openCard(card,gIdx)"
                   @openBg="openBg"
                   @updateCard="updateCard($event, gIdx)"
                   @removeCard="removeCard($event, gIdx)"
@@ -218,8 +218,8 @@ export default {
     openBg() {
       this.$emit("openBg");
     },
-    openCard(card) {
-      this.setCard(card);
+    openCard(card,gIdx) {
+      this.setCard(card,gIdx);
     },
     setCard(card, gIdx) {
       this.currCard = card;

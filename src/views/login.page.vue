@@ -58,11 +58,9 @@ export default {
       this.isSignup = !this.isSignup;
     },
     login() {
-      console.log("Logged in", this.loginCr);
         this.$store.dispatch({ type: "login", userCred: this.loginCr });
     },
     signup() {
-      console.log("signed up", this.signupCr);
         this.$store.dispatch({ type: "signup", userCred: this.signupCr });
     },
   },

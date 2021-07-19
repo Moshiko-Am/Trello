@@ -31,7 +31,11 @@
             class="label"
             :style="{ backgroundColor: label.color }"
             :class="{ shown: openLabels }"
-          ></div>
+          >
+          <transition name="fade">
+          <span v-if="showLabels">{{label.title}}</span>
+          </transition>
+          </div>
         </div>
         <span
           v-if="cardHover"
@@ -208,7 +212,7 @@ export default {
       else
         setTimeout(() => {
           this.showLabels = !this.showLabels;
-        }, 800);
+        }, 500);
     },
     onEndQuickEdit() {
       if (!this.cardTitle) {

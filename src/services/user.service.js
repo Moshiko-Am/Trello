@@ -4,53 +4,53 @@ import { httpService } from './http.service'
 // import { socketService, SOCKET_EVENT_USER_UPDATED } from './socket.service';
 const USER_KEY = 'loggedinUser';
 const USERS_DB = 'allUsers';
-// const URL = 'user/'
+const URL = 'user/'
 // var gWatchedUser = null;
 
-var gUsers = [
-	{
-		_id: 'u101',
-		fullname: 'Abi Abambi',
-		username: 'abi1',
-		password: 'aBambi123',
-		imgUrl: 'http://some-img.jpg',
-		mentions: [
-			{
-				id: 'm101',
-				boardId: 'm101',
-				cardId: 't101',
-			},
-		],
-	},
-	{
-		_id: 'u122',
-		fullname: 'Shuki Shakshuka',
-		username: 'Suka',
-		password: 'aBambi123',
-		imgUrl: 'http://some-img.jpg',
-		mentions: [
-			{
-				id: 'm101',
-				boardId: 'm101',
-				cardId: 't101',
-			},
-		],
-	},
-	{
-		_id: 'u135',
-		fullname: 'Muki Amuka',
-		username: 'Mukifliz',
-		password: 'aBambi123',
-		imgUrl: 'http://some-img.jpg',
-		mentions: [
-			{
-				id: 'm101',
-				boardId: 'm101',
-				cardId: 't101',
-			},
-		],
-	},
-];
+// var gUsers = [
+// 	{
+// 		_id: 'u101',
+// 		fullname: 'Abi Abambi',
+// 		username: 'abi1',
+// 		password: 'aBambi123',
+// 		imgUrl: 'http://some-img.jpg',
+// 		mentions: [
+// 			{
+// 				id: 'm101',
+// 				boardId: 'm101',
+// 				cardId: 't101',
+// 			},
+// 		],
+// 	},
+// 	{
+// 		_id: 'u122',
+// 		fullname: 'Shuki Shakshuka',
+// 		username: 'Suka',
+// 		password: 'aBambi123',
+// 		imgUrl: 'http://some-img.jpg',
+// 		mentions: [
+// 			{
+// 				id: 'm101',
+// 				boardId: 'm101',
+// 				cardId: 't101',
+// 			},
+// 		],
+// 	},
+// 	{
+// 		_id: 'u135',
+// 		fullname: 'Muki Amuka',
+// 		username: 'Mukifliz',
+// 		password: 'aBambi123',
+// 		imgUrl: 'http://some-img.jpg',
+// 		mentions: [
+// 			{
+// 				id: 'm101',
+// 				boardId: 'm101',
+// 				cardId: 't101',
+// 			},
+// 		],
+// 	},
+// ];
 export const userService = {
 	query,
 	login,
@@ -68,20 +68,13 @@ window.userService = userService;
 // userService.signup({fullname: 'Master Adminov', username: 'admin', password:'123', score: 100, isAdmin: true})
 // userService.signup({fullname: 'Muki G', username: 'muki', password:'123', score: 100})
 
-// async function getUsers() {
-// 	try{
-//         return storageService.query(USER_KEY);
-
-//     }
-// 	// return httpService.get(`user`)
-// }
 async function query() {
 	try {
-		const users = await storageService.query(USERS_DB);
-		// const users = await httpService.get(URL)
+		// const users = await storageService.query(USERS_DB);
+		const users = await httpService.get(URL)
 		if (!users.length) {
-			storageService.postMany(USERS_DB, gUsers);
-			return gUsers;
+			storageService.postMany(USERS_DB, users);
+			return users;
 		}
 		return users;
 	} catch (err) {
