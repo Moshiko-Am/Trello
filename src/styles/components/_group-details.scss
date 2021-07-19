@@ -62,6 +62,7 @@
             padding: 4px 8px;
             resize: none;
             max-height: 256px;
+            color: #172b4d;
         }
         &.mod-group-name.is-editing,
         &.mod-group-name:focus {
@@ -156,6 +157,7 @@
         overflow-wrap: break-word;
         resize: none;
         height: 54px;
+        color: #172b4d;
         &,
         &::placeholder {
             font-family: Segoe UI;
@@ -180,14 +182,15 @@
     justify-content: left;
     align-items: center;
     width: 100%;
-    padding-block: 4px;
+    padding-block: 3px;
     height: 20px;
     box-sizing: content-box;
     &:hover {
         background-color: rgba(9, 30, 66, 0.08);
         width: 90%;
+        color: #172b4d;
         .icon-add {
-            color: #42526e;
+            color: #172b4d;
         }
     }
     .add-card {
@@ -310,6 +313,7 @@
     &:hover {
         color: #42526e;
     }
+    @include to-icon("\e952");
 }
 
 .list-complete-item {

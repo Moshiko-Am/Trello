@@ -126,7 +126,28 @@ export default {
 				createdAt: Date.now(),
 				createdBy: this.loggedUser,
 				style: this.selectedBg,
-				labels: [],
+				labels: [
+					{
+						id: 'l101',
+						title: 'Done',
+						color: '#61bd4f',
+					},
+					{
+						id: 'l102',
+						title: 'almost',
+						color: '#f2d600',
+					},
+					{
+						id: 'l103',
+						title: 'Nice',
+						color: '#ff78cb',
+					},
+					{
+						id: 'l104',
+						title: 'Bad',
+						color: '#eb5a46',
+					},
+				],
 				members: [this.loggedUser],
 				groups: [],
 				activities: [],

@@ -43,6 +43,7 @@
 <script>
 import boardPreview from "@/cmps/board.preview.vue";
 import createBoard from "./create.board";
+
 export default {
   props: {
     boards: Array,

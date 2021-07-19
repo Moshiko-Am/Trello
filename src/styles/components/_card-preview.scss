@@ -110,6 +110,7 @@
         align-items: center;
         justify-content: space-between;
         flex-wrap: wrap;
+        padding-bottom: 2px;
         .preview-inner-container {
             display: flex;
             align-items: center;
@@ -166,7 +167,6 @@
         top: 2px;
         color: #7b8494;
         border-radius: 3px;
-        // background-color: rgba(231, 232, 233,0.3);
         color: #172b4d;
         text-decoration: none;
         &:hover {
@@ -174,9 +174,4 @@
             opacity: 1;
         }
     }
-}
-
-.ghost {
-    opacity: 0.4;
-    // transform:rotateX(20%);
 }

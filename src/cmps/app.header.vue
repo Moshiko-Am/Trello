@@ -1,7 +1,7 @@
 <template>
   <nav class="header-navbar">
     <div class="header-controls-left">
-      <router-link to="/boards" class="link-home"
+      <router-link to="/" class="link-home"
         ><svg
           width="20"
           height="20"
@@ -35,6 +35,7 @@
         ><span class="btn-boards-txt">Boards</span>
       </button>
       <boards-menu
+        v-click-outside="closeBoardsMenu"
         @createBoard="createBoard"
         :boards="boards"
         class="hideBoardsMenu"
@@ -91,9 +92,11 @@
       <avatar
         class="member-name"
         :username="user.fullname"
-        :size="28"
+        :size="32"
         :inline="true"
-        :style="{ margin: '5px' }"
+        :style="{ 'font-size': '17px' }"
+        backgroundColor="#dfe1e6"
+        color="#172b4d"
       ></avatar>
     </div>
   </nav>
@@ -102,6 +105,7 @@
 <script>
 import boardsMenu from "./boards.menu";
 import avatar from "vue-avatar";
+import ClickOutside from "vue-click-outside";
 export default {
   components: {
     boardsMenu,
@@ -122,16 +126,22 @@ export default {
       return { showBoardsMenu: this.isBoardsShow };
     },
   },
+  directives: {
+    ClickOutside,
+  },
   methods: {
-    toggleBoardsMenu() {
-      this.isBoardsShow = !this.isBoardsShow;
-    },
     closeBoardsMenu() {
       this.isBoardsShow = false;
+    },
+    toggleBoardsMenu() {
+      this.isBoardsShow = !this.isBoardsShow;
     },
     createBoard(board) {
       this.$emit("createBoard", board);
     },
+  },
+  mounted() {
+    this.popupItem = this.$el;
   },
 };
 </script>
