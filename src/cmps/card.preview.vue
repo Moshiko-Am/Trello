@@ -5,7 +5,13 @@
     :class="{ 'quick-edit-card': isQuickEdit }"
   >
     <section class="card-preview-inner-container">
-      <section class="card-preview" v-if="card.id" :style="!isCover" @mouseenter="toggleHover" @mouseleave="toggleHover">
+      <section
+        class="card-preview"
+        v-if="card.id"
+        :style="!isCover"
+        @mouseenter="toggleHover"
+        @mouseleave="toggleHover"
+      >
         <div v-if="card.attachments && card.attachments.length">
           <div
             :key="attachment[0].id"
@@ -32,9 +38,14 @@
           class="icon-sm icon-edit"
           @click.stop="toggleQuickEdit"
         ></span>
-        
 
-        <span>{{ card.title }}</span>
+        <span v-if="!isQuickEdit">{{ card.title }}</span>
+        <textarea
+          @click.stop
+          v-else
+          v-model="cardTitle"
+          ref="cardtitle"
+        ></textarea>
 
         <div class="preview-indicators-container">
           <div class="preview-inner-container">
@@ -91,7 +102,13 @@
         @removeCard="removeCard"
       />
     </section>
-    <button v-if="isQuickEdit" class="quick-edit-btn">Save</button>
+    <button
+      v-if="isQuickEdit"
+      @click.stop="onEndQuickEdit"
+      class="quick-edit-btn"
+    >
+      Save
+    </button>
   </section>
 </template>
 
@@ -111,6 +128,7 @@ export default {
       showLabels: false,
       cardHover: false,
       isQuickEdit: false,
+      cardTitle: this.card.title,
     };
   },
   props: {
@@ -158,7 +176,6 @@ export default {
     },
     isCover() {
       if (this.attachment.length) {
-        console.log("got here");
         return this.attachment[0].isCover
           ? `background-image: url('${this.attachment[0].url}')`
           : "";
@@ -180,6 +197,7 @@ export default {
     toggleQuickEdit() {
       this.$emit("openBg");
       this.isQuickEdit = !this.isQuickEdit;
+      if (this.isQuickEdit) this.$nextTick(() => this.$refs.cardtitle.select());
     },
     closeQuickEdit() {
       this.isQuickEdit = false;
@@ -191,6 +209,16 @@ export default {
         setTimeout(() => {
           this.showLabels = !this.showLabels;
         }, 800);
+    },
+    onEndQuickEdit() {
+      if (!this.cardTitle) {
+        this.$refs.cardtitle.focus();
+        return;
+      }
+      const cardCopy = JSON.parse(JSON.stringify(this.card));
+      cardCopy.title = this.cardTitle;
+      this.emitCard(cardCopy);
+      this.toggleQuickEdit();
     },
     emitCard(cardCopy) {
       this.$emit("updateCard", cardCopy);

@@ -38,8 +38,9 @@
             @start="drag = true"
             @end="
               drag = false;
-              updateGroups();
+              log();
             "
+            @change="log"
             animation="500"
             dragClass="ghost"
             ghost-class="ghost"
@@ -55,6 +56,7 @@
               @openBg="openBg"
               @updateCard="updateCard"
               @removeCard="removeCard"
+              :index="card.id"
             />
           </draggable>
         </div>
@@ -104,12 +106,14 @@ import draggable from "vuedraggable";
 export default {
   props: {
     group: Object,
+    groups: Array,
   },
   data() {
     return {
       isAddingCard: false,
       isExtrasShowing: false,
       groupToEdit: {},
+      groupsToEdit: this.groupss,
       cardToEdit: {
         id: this.makeId(),
         title: "",
@@ -119,7 +123,7 @@ export default {
     };
   },
   computed: {
-    groups() {
+    groupss() {
       return this.$store.getters.board.groups;
     },
   },
@@ -137,15 +141,15 @@ export default {
       this.currCard = null;
     },
     saveCard() {
-      if (!this.cardToEdit.title) return;
+      if (!this.cardToEdit.title) {
+        this.$refs.content.focus();
+        return;
+      }
       const savedCard = { ...this.cardToEdit };
       savedCard.id = this.makeId();
       this.groupToEdit.cards.push(savedCard);
       this.updateGroup();
       this.cardToEdit.title = "";
-      this.$refs["card-preview-wrapper"].scrollTop = this.$refs[
-        "card-preview-wrapper"
-      ].scrollHeight;
       this.$refs.content.focus();
     },
     removeCard(cardId) {
@@ -187,6 +191,7 @@ export default {
       this.updateGroup();
     },
     updateGroups() {
+      console.log(this.groups);
       const groupsCopy = JSON.parse(JSON.stringify(this.groups));
       const idx = groupsCopy.findIndex((group) => {
         return group.id === this.groupToEdit.id;
@@ -199,6 +204,9 @@ export default {
     },
     deleteGroup() {
       this.$emit("deleteGroup", this.groupToEdit.id);
+    },
+    log: function(evt) {
+      window.console.log(evt);
     },
   },
   watch: {
