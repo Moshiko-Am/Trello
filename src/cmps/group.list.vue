@@ -69,7 +69,7 @@
                   :card="card"
                   :key="card.id"
                   @click.native="setCard(card, gIdx)"
-                  @openCard="openCard(card,gIdx)"
+                  @openCard="openCard(card, gIdx)"
                   @openBg="openBg"
                   @updateCard="updateCard($event, gIdx)"
                   @removeCard="removeCard($event, gIdx)"
@@ -114,7 +114,7 @@
         class="group-wrapper mod-add"
         :class="{ 'is-edit': isAddingGroup }"
       >
-        <form v-if="isAddingGroup" v-click-outside="toggleCardEdit">
+        <form v-if="isAddingGroup">
           <input
             class="group-name-input"
             type="text"
@@ -158,7 +158,6 @@
 
 <script>
 import cardDetails from "./card.details.vue";
-import ClickOutside from "vue-click-outside";
 import cardPreview from "./card.preview.vue";
 import draggable from "vuedraggable";
 export default {
@@ -192,12 +191,6 @@ export default {
     draggable,
   },
   methods: {
-    closeAll() {
-      this.isAddingGroup = false;
-      this.isAddingCard = false;
-      this.isExtrasShowing = false;
-      console.log("fdfd");
-    },
     closeCardEdit(gIdx) {
       this.isAddingCard = false;
       this.$refs[`card-preview-wrapper-${gIdx}`][0].classList.remove(
@@ -242,8 +235,8 @@ export default {
     openBg() {
       this.$emit("openBg");
     },
-    openCard(card,gIdx) {
-      this.setCard(card,gIdx);
+    openCard(card, gIdx) {
+      this.setCard(card, gIdx);
     },
     setCard(card, gIdx) {
       this.currCard = card;
@@ -312,12 +305,6 @@ export default {
   },
   created() {
     this.groupsToEdit = JSON.parse(JSON.stringify(this.groups));
-  },
-  directives: {
-    ClickOutside,
-  },
-  mounted() {
-    this.popupItem = this.$el;
   },
   watch: {
     groups: {
