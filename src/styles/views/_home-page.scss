@@ -1,0 +1,284 @@
+.homepage-container {
+	height: 100%;
+	width: 100%;
+	overflow-y: auto;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+
+	&::-webkit-scrollbar {
+		height: 8px;
+		width: 8px;
+		background-color: #98a2b1;
+		border-radius: 10px;
+	}
+	&::-webkit-scrollbar-thumb {
+		border-radius: 10px;
+		background-color: #8591a3;
+	}
+	&::-webkit-scrollbar-track-piece {
+		border-radius: 10px;
+		background: #a8b0bd;
+	}
+
+	.homepage-1 {
+		color: white;
+		height: 100vh;
+		width: 100%;
+		background-image: url('~@/assets/img/homepage-top-img.jpg');
+		background-size: cover;
+		background-position: center;
+		background-blend-mode: darken;
+		background-color: rgba(0, 0, 0, 0.24);
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		margin-bottom: 10px;
+
+		.homepage-logo {
+			font-size: 60px;
+			margin: 0;
+		}
+
+		.logo-quote {
+			color: white;
+			font-size: 35px;
+			padding: 0 0 40px;
+		}
+
+		.boards-link {
+			background-color: rgba(22, 160, 95, 0.877);
+			color: whitesmoke;
+			padding: 10px 15px;
+			border-radius: 10px;
+			font-size: 24px;
+			font-weight: 500;
+			margin-bottom: 200px;
+			transition: 0.2s;
+
+			&:hover {
+				background-color: rgba(23, 138, 84, 0.877);
+				transform: scale(1.02);
+			}
+		}
+
+		.motivational {
+			margin-top: 200px;
+			padding: 5px 10px;
+			font-size: 24px;
+			font-style: italic;
+			border-radius: 5px;
+			background-color: rgba(0, 0, 0, 0.466);
+
+			.motivational-author {
+				font-style: normal;
+			}
+		}
+	}
+
+	.homepage-2 {
+		width: 100%;
+		display: flex;
+		justify-content: space-between;
+
+		.homepage-2-content {
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			flex-basis: 100%;
+			margin-inline-start: 20px;
+		}
+
+		.motivational {
+			margin-top: 150px;
+			text-align: center;
+			font-size: 24px;
+			font-style: italic;
+			border-radius: 5px;
+			color: #504658;
+
+			.motivational-author {
+				font-style: normal;
+			}
+		}
+
+		.homepage-2-header {
+			font-size: 36px;
+			// margin-top: 50px;
+			font-weight: 500;
+		}
+
+		.txt-conatiner {
+			display: flex;
+			justify-content: flex-start;
+			align-items: center;
+
+			.homepage-check {
+				width: 30px;
+			}
+		}
+
+		.homepage-2-txt {
+			font-size: 26px;
+			margin-inline-start: 20px;
+		}
+
+		.homepage-2-img-container {
+			order: 1;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			margin-inline-end: 20px;
+
+			img {
+				width: 100%;
+				border-radius: 5px;
+				margin-top: 10px;
+			}
+		}
+	}
+
+	.homepage-3 {
+		width: 100%;
+		display: flex;
+		justify-content: space-between;
+		margin-top: 10px;
+
+		.homepage-3-content {
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			flex-basis: 100%;
+			margin-inline-start: 20px;
+		}
+
+		.motivational {
+			margin-top: 150px;
+			text-align: center;
+			font-size: 24px;
+			font-style: italic;
+			border-radius: 5px;
+			color: #504658;
+
+			.motivational-author {
+				font-style: normal;
+			}
+		}
+
+		.homepage-3-header {
+			font-size: 36px;
+			// margin-top: 50px;
+			font-weight: 500;
+		}
+
+		.txt-conatiner {
+			display: flex;
+			justify-content: flex-start;
+			align-items: center;
+
+			.homepage-check {
+				width: 30px;
+			}
+		}
+
+		.homepage-3-txt {
+			font-size: 26px;
+			margin-inline-start: 20px;
+		}
+
+		.homepage-3-img-container {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			margin-inline-start: 20px;
+			margin-inline-end: 5px;
+
+			img {
+				width: 100%;
+				border-radius: 5px;
+				margin-top: 10px;
+			}
+		}
+	}
+
+	.homepage-4 {
+		display: flex;
+		flex-direction: column;
+		align-self: center;
+
+		.homepage-4-header {
+			display: flex;
+			justify-content: center;
+			align-self: center;
+			width: 100%;
+
+			h1 {
+				font-size: 36px;
+				// margin-top: 50px;
+				font-weight: 500;
+			}
+		}
+
+		.social-proof-container {
+			display: flex;
+			justify-content: space-around;
+
+			.social-container {
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				width: 170px;
+
+				.stars {
+					width: 100px;
+				}
+
+				.employee-img {
+					width: 100px;
+					height: 100px;
+					border-radius: 50%;
+					object-fit: cover;
+				}
+				.employee-img:nth-of-type(2n) {
+					object-position: bottom;
+				}
+
+				.review-txt {
+					text-align: center;
+					font-size: 16px;
+				}
+			}
+		}
+	}
+
+	.homepage-5 {
+		width: 100%;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+
+		.homepage-5-header {
+			font-size: 36px;
+			// margin-top: 50px;
+			font-weight: 500;
+		}
+
+		.boards-link {
+			background-color: rgba(22, 160, 95, 0.877);
+			color: whitesmoke;
+			padding: 10px 15px;
+			border-radius: 10px;
+			font-size: 24px;
+			font-weight: 500;
+			margin-bottom: 100px;
+			transition: 0.2s;
+
+			&:hover {
+				background-color: rgba(23, 138, 84, 0.877);
+				transform: scale(1.02);
+			}
+		}
+	}
+}
