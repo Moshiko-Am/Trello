@@ -4,7 +4,8 @@
       <div class="board-header-title">
         <input
           class="title-input"
-          @input="getTextWidth"
+          @change="saveTitle()"
+          @input="getTextWidth()"
           v-model="boardTitle"
           :style="{ width: getWidth }"
           @click="selectTxt"
@@ -14,7 +15,7 @@
       <span class="board-header-divider">|</span>
       <div class="board-header-members">
         <span
-          v-for="member in boardMembers"
+          v-for="member in board.members"
           :key="member._id"
           class="members-list"
         >
@@ -82,7 +83,7 @@ export default {
   },
   computed: {
     getWidth() {
-      return this.txtWidth;
+      return this.getTextWidth();
     },
     menuShow() {
       return { showMenu: this.isMenuShow };
@@ -111,16 +112,16 @@ export default {
       const formattedWidth = width + 40 + "px";
 
       document.body.removeChild(text);
-      this.txtWidth = formattedWidth;
+      return formattedWidth ;
     },
 
     bgColor(style) {
       this.$emit("bgColor", style);
-      socketService.on("send style", style);
+      socketService.emit("send style", style);
     },
     chooseBg(style) {
       this.$emit("updateBoard", style);
-      socketService.on("send style", style);
+      socketService.emit("send style", style);
     },
     toggleMenu() {
       this.isMenuShow = !this.isMenuShow;
@@ -129,12 +130,15 @@ export default {
       this.isInviteShow = !this.isInviteShow;
     },
     saveTitle() {
+      if(!this.boardTitle) {
+       this.boardTitle = this.board.title
+      }
       const titleCopy = JSON.parse(JSON.stringify(this.boardTitle));
       this.$emit("boardUpdate", {
         type: "title",
         payload: titleCopy,
       });
-      socketService.on("send title", titleCopy);
+      socketService.emit("send title", titleCopy);
     },
     removeMember(memberId) {
       const idx = this.boardMembers.findIndex(
@@ -149,7 +153,7 @@ export default {
         type: "members",
         payload: membersCopy,
       });
-      socketService.on("send members", membersCopy);
+      socketService.emit("send members", membersCopy);
     },
     addUser(userId) {
       const user = this.users.find((user) => user._id === userId);
@@ -164,6 +168,7 @@ export default {
         this.boardTitle = JSON.parse(JSON.stringify(this.board.title));
         this.boardMembers = JSON.parse(JSON.stringify(this.board.members));
       },
+      deep:true,
     },
   },
   created() {

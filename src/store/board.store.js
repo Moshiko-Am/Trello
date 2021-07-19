@@ -44,14 +44,13 @@ export const boardStore = {
             state.selectedBoard.groups[card.gIdx].cards.splice(card.cIdx, 1 , card.payload)
         },
         groupsChanged(state, {groups}){
-            console.log(groups);
             state.selectedBoard.groups = groups
         },
         titleChanged(state, {title}){
             state.selectedBoard.title = title
         },
         styleChanged(state, {style}){
-            state.selectedBoard.style = style
+            state.selectedBoard.style = style.payload
         },
         membersChanged(state, {members}){
             state.selectedBoard.members = members

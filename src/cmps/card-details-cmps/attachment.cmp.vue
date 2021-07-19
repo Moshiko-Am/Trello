@@ -105,7 +105,6 @@ export default {
         return attachment.id === attachmentId;
       });
       this.attachmentsToEdit.splice(idx, 1);
-      console.log(this.attachmentsToEdit);
       this.updateAttachments();
     },
     editFileName() {},
@@ -126,7 +125,6 @@ export default {
       const attachmentsCopy = JSON.parse(
         JSON.stringify(this.attachmentsToEdit)
       );
-      console.log(attachmentsCopy);
       this.$emit("updateAttachments", attachmentsCopy);
     },
   },
