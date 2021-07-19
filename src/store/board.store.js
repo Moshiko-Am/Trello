@@ -48,12 +48,14 @@ export const boardStore = {
             state.selectedBoard.groups = groups
         },
         titleChanged(state, {title}){
+            console.log(title);
             state.selectedBoard.title = title
         },
         styleChanged(state, {style}){
-            state.selectedBoard.style = style
+            state.selectedBoard.style = style.payload
         },
         membersChanged(state, {members}){
+            console.log(members);
             state.selectedBoard.members = members
         }
     },

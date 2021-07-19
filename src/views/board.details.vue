@@ -40,7 +40,7 @@ export default {
     async boardUpdate(update) {
       const board = JSON.parse(JSON.stringify(this.board));
       board[update.type] = update.payload;
-      console.log("board", board);
+      // console.log("board", board);
       try {
         await this.$store.dispatch({ type: "saveBoard", board });
       } catch (err) {
@@ -63,7 +63,7 @@ export default {
       this.$store.commit({ type: "titleChanged", title });
     },
     updateStyle(style) {
-      console.log('style changed');
+      console.log('style changed',style);
       this.$store.commit({ type: "styleChanged", style });
     },
     updateMembers(members) {
@@ -75,7 +75,7 @@ export default {
     socketService.on("get card", this.updateCard);
     socketService.on("get groups", this.updateGroups);
     socketService.on("get title", this.updateTitle);
-    socketService.on("get style", this.updatestyle);
+    socketService.on("get style", this.updateStyle);
     socketService.on("get members", this.updateMembers);
   },
   watch: {
