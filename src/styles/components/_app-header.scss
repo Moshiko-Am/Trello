@@ -110,6 +110,10 @@
 	.header-controls-right {
 		@include flex();
 
+		.member-name {
+			cursor: pointer;
+		}
+
 		.btn-notifications {
 			display: flex;
 			justify-content: center;

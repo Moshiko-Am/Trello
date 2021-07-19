@@ -1,6 +1,7 @@
 <template>
 	<div id="app" :style="boardStyle">
 		<app-header
+			@logOut="logOut"
 			:users="users"
 			:user="user"
 			:boards="boards"
@@ -61,6 +62,9 @@ export default {
 			} catch (err) {
 				console.log('cant create board', err);
 			}
+		},
+		logOut() {
+			this.$store.dispatch({ type: 'logout' });
 		},
 	},
 };

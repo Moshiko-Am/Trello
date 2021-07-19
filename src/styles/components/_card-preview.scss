@@ -102,7 +102,6 @@
             text-align: center;
             width: 70px;
             height: 20px;
-            width: 60px;
         }
     }
     .preview-indicators-container {
@@ -175,3 +174,10 @@
         }
     }
 }
+
+.fade-enter-active, .fade-leave-active {
+    transition: opacity .4s;
+  }
+  .fade-enter, .fade-leave-to {
+    opacity: 0;
+  }
