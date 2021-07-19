@@ -1,56 +1,52 @@
-
 import { storageService } from './async-storage.service.js';
-import { httpService } from './http.service'
+import { httpService } from './http.service';
 // import { socketService, SOCKET_EVENT_USER_UPDATED } from './socket.service';
 const USER_KEY = 'loggedinUser';
 const USERS_DB = 'allUsers';
 const URL = 'user/'
 // var gWatchedUser = null;
 
-// var gUsers = [
-// 	{
-// 		_id: 'u101',
-// 		fullname: 'Abi Abambi',
-// 		username: 'abi1',
-// 		password: 'aBambi123',
-// 		imgUrl: 'http://some-img.jpg',
-// 		mentions: [
-// 			{
-// 				id: 'm101',
-// 				boardId: 'm101',
-// 				cardId: 't101',
-// 			},
-// 		],
-// 	},
-// 	{
-// 		_id: 'u122',
-// 		fullname: 'Shuki Shakshuka',
-// 		username: 'Suka',
-// 		password: 'aBambi123',
-// 		imgUrl: 'http://some-img.jpg',
-// 		mentions: [
-// 			{
-// 				id: 'm101',
-// 				boardId: 'm101',
-// 				cardId: 't101',
-// 			},
-// 		],
-// 	},
-// 	{
-// 		_id: 'u135',
-// 		fullname: 'Muki Amuka',
-// 		username: 'Mukifliz',
-// 		password: 'aBambi123',
-// 		imgUrl: 'http://some-img.jpg',
-// 		mentions: [
-// 			{
-// 				id: 'm101',
-// 				boardId: 'm101',
-// 				cardId: 't101',
-// 			},
-// 		],
-// 	},
-// ];
+var gUsers = [
+	{
+		fullname: 'Abi Abambi',
+		username: 'abi1',
+		password: 'aBambi123',
+		imgUrl: 'http://some-img.jpg',
+		mentions: [
+			{
+				id: 'm101',
+				boardId: 'm101',
+				cardId: 't101',
+			},
+		],
+	},
+	{
+		fullname: 'Shuki Shakshuka',
+		username: 'Suka',
+		password: 'aBambi123',
+		imgUrl: 'http://some-img.jpg',
+		mentions: [
+			{
+				id: 'm101',
+				boardId: 'm101',
+				cardId: 't101',
+			},
+		],
+	},
+	{
+		fullname: 'Muki Amuka',
+		username: 'Mukifliz',
+		password: 'aBambi123',
+		imgUrl: 'http://some-img.jpg',
+		mentions: [
+			{
+				id: 'm101',
+				boardId: 'm101',
+				cardId: 't101',
+			},
+		],
+	},
+];
 export const userService = {
 	query,
 	login,
@@ -71,7 +67,11 @@ window.userService = userService;
 async function query() {
 	try {
 		// const users = await storageService.query(USERS_DB);
+<<<<<<< HEAD
 		const users = await httpService.get(URL)
+=======
+		const users = await httpService.get(URL);
+>>>>>>> 6112bec1fb6f44aaa7b649cccff680be8add9f77
 		if (!users.length) {
 			storageService.postMany(USERS_DB, users);
 			return users;
@@ -85,8 +85,8 @@ async function query() {
 async function getById(userId) {
 	// const user = await storageService.get(USER_KEY, userId);
 	try {
-		const user = await httpService.get(`user/${userId}`)
-		return user
+		const user = await httpService.get(`user/${userId}`);
+		return user;
 	} catch (err) {
 		console.log('Failed to get user', err);
 	}
@@ -96,7 +96,7 @@ async function getById(userId) {
 async function remove(userId) {
 	// return storageService.remove(USER_KEY, userId);
 	try {
-		return httpService.delete(`user/${userId}`)
+		return httpService.delete(`user/${userId}`);
 	} catch (err) {
 		console.log('Failed to delete user', err);
 	}
@@ -106,11 +106,12 @@ async function update(user) {
 	// await storageService.put(USER_KEY, user);
 
 	try {
-		user = await httpService.put(`user/${user._id}`, user)
-		if (getLoggedinUser()._id === user._id || getLoggedinUser.isAdmin) _saveLocalUser(user);
-		return user
-	} catch(err) {
-		console.log('Failed to update user',err);
+		user = await httpService.put(`user/${user._id}`, user);
+		if (getLoggedinUser()._id === user._id || getLoggedinUser.isAdmin)
+			_saveLocalUser(user);
+		return user;
+	} catch (err) {
+		console.log('Failed to update user', err);
 	}
 
 	// Handle case in which admin updates other user's details
@@ -125,10 +126,10 @@ async function login(userCred) {
 	// return _saveLocalUser(user)
 
 	try {
-		const user = await httpService.post('auth/login', userCred)
+		const user = await httpService.post('auth/login', userCred);
 		// socketService.emit('login', user._id);
-		if (user) return _saveLocalUser(user)
-	} catch(err) {
+		if (user) return _saveLocalUser(user);
+	} catch (err) {
 		console.log('username or password are incorrect', err);
 	}
 }
@@ -136,19 +137,19 @@ async function signup(userCred) {
 	// const user = await storageService.post(USER_KEY, userCred);
 	// return _saveLocalUser(user);
 	try {
-		const user = await httpService.post('auth/signup', userCred)
+		const user = await httpService.post('auth/signup', userCred);
 		// socketService.emit('set-user-socket', user._id);
 		return _saveLocalUser(user);
-	} catch(err){
-		console.log('Failed to create user',err);
+	} catch (err) {
+		console.log('Failed to create user', err);
 	}
 }
 async function logout() {
 	try {
 		sessionStorage.removeItem(USER_KEY);
 		// socketService.emit('unset-user-socket');
-		return await httpService.post('auth/logout')
-	} catch(err) {
+		return await httpService.post('auth/logout');
+	} catch (err) {
 		console.log('failed to logout', err);
 	}
 }
@@ -189,4 +190,3 @@ function getLoggedinUser() {
 // 		gWatchedUser = watchedUser;
 // 	});
 // })();
-
