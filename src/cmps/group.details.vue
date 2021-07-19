@@ -32,15 +32,15 @@
           </div>
         </div>
       </div>
-      <section ref="card-preview-wrapper" class="card-preview-wrapper">
-        <div class="card-list">
-          <draggable
+      <!-- <section ref="card-preview-wrapper" class="card-preview-wrapper"> -->
+        <!-- <div class="card-list"> -->
+          <!-- <draggable
             @start="drag = true"
             @end="
               drag = false;
-              log();
+              updateGroup()
             "
-            @change="log"
+            @change="log($event)"
             animation="500"
             dragClass="ghost"
             ghost-class="ghost"
@@ -58,9 +58,9 @@
               @removeCard="removeCard"
               :index="card.id"
             />
-          </draggable>
-        </div>
-      </section>
+          </draggable> -->
+        <!-- </div> -->
+      <!-- </section> -->
       <div v-if="isAddingCard" class="add-card card-preview">
         <textarea
           v-click-outside="toggleCardEdit"
@@ -191,22 +191,25 @@ export default {
       this.updateGroup();
     },
     updateGroups() {
-      console.log(this.groups);
+      console.log('groups',this.groups);
       const groupsCopy = JSON.parse(JSON.stringify(this.groups));
-      const idx = groupsCopy.findIndex((group) => {
-        return group.id === this.groupToEdit.id;
-      });
-      groupsCopy.splice(idx, 1, this.groupToEdit);
+      // const idx = groupsCopy.findIndex((group) => {
+      //   return group.id === this.groupToEdit.id;
+      // });
+      // groupsCopy.splice(idx, 1, this.groupToEdit);
       this.$emit("saveGroups", groupsCopy);
     },
     updateGroup() {
+      // console.log('this.groupToEdit',this.groupToEdit);
       this.$emit("updateGroup", this.groupToEdit);
     },
     deleteGroup() {
       this.$emit("deleteGroup", this.groupToEdit.id);
     },
-    log: function(evt) {
-      window.console.log(evt);
+    log(evt) {
+      console.log(evt);
+      console.log('this.groupsToEdit',this.groupsToEdit);
+      // this.updateGroups()
     },
   },
   watch: {
