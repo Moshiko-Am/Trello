@@ -41,7 +41,7 @@
         </transition>
       </div>
       <span class="board-header-divider">|</span>
-      <button class="btn-dashboard">Dashboard</button>
+      <button class="btn-dashboard" @click="toggleDashboard">Dashboard</button>
     </div>
     <button class="btn-show-menu" @click="toggleMenu">
       <span class="icon-sm icon-dots-menu"></span>
@@ -95,6 +95,9 @@ export default {
   methods: {
     selectTxt() {
       this.$refs.txt.select();
+    },
+    toggleDashboard(){
+      this.$emit('toggleDashboard')
     },
     getTextWidth() {
       const text = document.createElement("span");

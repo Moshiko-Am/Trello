@@ -1,0 +1,23 @@
+.board-dashboard {
+    position: absolute;
+    top: 10%;
+    left: 50%;
+    width: 80%;
+    height: fit-content;
+    transform: translateX(-50%);
+    background-color: rgba(226, 223, 223, 0.95);
+    padding: 30px 30px;
+    border-radius: 3px;
+    justify-content: space-evenly;
+    align-items: center;
+    z-index: 2;
+    h2{
+        font-size: 2.5rem;
+        text-align: center;
+        margin-bottom: 1rem;
+    }
+    .charts-container {
+        display: flex;
+        padding-bottom:60px;
+    }
+}

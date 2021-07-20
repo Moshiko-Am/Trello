@@ -32,9 +32,9 @@
             :style="{ backgroundColor: label.color }"
             :class="{ shown: openLabels }"
           >
-          <transition name="fade">
-          <span v-if="showLabels">{{label.title}}</span>
-          </transition>
+            <transition name="fade">
+              <span v-if="showLabels">{{ label.title }}</span>
+            </transition>
           </div>
         </div>
         <span
@@ -79,22 +79,21 @@
             </div>
           </div>
           <div class="preview-members-container" v-if="card.members">
-            <avatar
-              v-for="member in card.members"
-              :key="member._id"
-              class="member-name"
-              :username="member.fullname"
-              :size="28"
-              :inline="true"
-              backgroundColor="#dfe1e6"
-              color="#172b4d"
-              :style="{
-                margin: '2px',
-                'font-weight': '700',
-                'font-size': '12px',
-                'font-family': 'segoe UI',
-              }"
-            ></avatar>
+            <transition-group name="list-complete">
+              <avatar
+                v-for="member in card.members"
+                :key="member._id"
+                class="member-name list-complete-item"
+                :username="member.fullname"
+                :size="28"
+                :inline="true"
+                backgroundColor="#dfe1e6"
+                color="#172b4d"
+                :style="{
+                  margin: '2px',
+                }"
+              ></avatar>
+            </transition-group>
           </div>
         </div>
       </section>

@@ -20,32 +20,45 @@
       <div class="card-details-content">
         <div class="card-details-main">
           <div class="labels-members-container">
-            <labels-cmp v-if="cardToEdit.labelIds" :labels="labelsForDisplay" />
-            <members-cmp
-              v-if="cardToEdit.members"
-              :members="cardToEdit.members"
-            />
-            <date-cmp
-              v-if="cardToEdit.dueDate"
-              @toggleCompleted="toggleCompleted"
-              :isCompleted="card.isCompleted"
-              :date="cardToEdit.dueDate"
-            />
+            <transition name="fade">
+              <labels-cmp
+                v-if="cardToEdit.labelIds && cardToEdit.labelIds.length"
+                :labels="labelsForDisplay"
+              />
+            </transition>
+            <transition name="fade">
+              <members-cmp
+                v-if="cardToEdit.members"
+                :members="cardToEdit.members"
+              />
+            </transition>
+            <transition name="fade">
+              <date-cmp
+                v-if="cardToEdit.dueDate"
+                @toggleCompleted="toggleCompleted"
+                :isCompleted="card.isCompleted"
+                :date="cardToEdit.dueDate"
+              />
+            </transition>
           </div>
           <description-cmp
             :description="cardToEdit.description"
             @updateDesc="updateDesc"
           />
-          <attachment-cmp
-            v-if="cardToEdit.attachments && cardToEdit.attachments.length"
-            :attachments="cardToEdit.attachments"
-            @updateAttachments="updateAttachments"
-          />
-          <checklists-cmp
-            v-if="cardToEdit.checklists"
-            :checklists="cardToEdit.checklists"
-            @updateChecklists="updateCL"
-          />
+          <transition name="fade">
+            <attachment-cmp
+              v-if="cardToEdit.attachments && cardToEdit.attachments.length"
+              :attachments="cardToEdit.attachments"
+              @updateAttachments="updateAttachments"
+            />
+          </transition>
+          <transition name="fade">
+            <checklists-cmp
+              v-if="cardToEdit.checklists"
+              :checklists="cardToEdit.checklists"
+              @updateChecklists="updateCL"
+            />
+          </transition>
           <activity-cmp :activities="activities" />
         </div>
         <div class="card-details-sidebar">
@@ -98,9 +111,7 @@
           </el-date-picker>
           <div class="card-sidebar-btn" @click="toggleAttch">
             <span class="icon-sm icon-attach"></span>
-            <p class="sidebar-btn-title">
-              Attachments
-            </p>
+            <p class="sidebar-btn-title">Attachments</p>
             <file-upload
               @close="closePopups"
               @updateAttachments="updateAttachments"

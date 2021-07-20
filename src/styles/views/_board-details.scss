@@ -49,3 +49,24 @@
 		border-radius: 10px;
 	}
 }
+
+.fade-enter-active, .fade-leave-active {
+	transition: opacity .3s;
+  }
+  .fade-enter, .fade-leave-to {
+	opacity: 0;
+  }
+
+  .list-complete-item {
+	transition: all .3s;
+	display: inline-block;
+	margin-right: 10px;
+  }
+  .list-complete-enter, .list-complete-leave-to
+  /* .list-complete-leave-active below version 2.1.8 */ {
+	opacity: 0;
+	transform: translateY(30px);
+  }
+  .list-complete-leave-active {
+	position: absolute;
+  }

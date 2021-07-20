@@ -3,16 +3,16 @@
     <div class="main-item-header">
       <h3 class="main-item-title">Labels</h3>
     </div>
-    <div class="labels-container">
+    <transition-group class="labels-container" name="list-complete">
       <div
         v-for="label in labels"
         :key="label.id"
-        class="labelDisplay"
+        class="labelDisplay list-complete-item"
         :style="{ backgroundColor: label.color }"
       >
         {{ label.title }}
       </div>
-    </div>
+    </transition-group>
   </div>
 </template>
 

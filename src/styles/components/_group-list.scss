@@ -119,8 +119,9 @@
     }
 }
 
-// .tilted {
-//     *{
-//         transform: rotateX(5deg);
-//     }
-// }
+.tilted {
+    *{
+        opacity: 1;
+        transform: rotateX(5deg);
+    }
+}

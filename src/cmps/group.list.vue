@@ -63,6 +63,7 @@
                 animation="500"
                 v-model="group.cards"
                 @change="saveGroups"
+                ghostClass="ghost"
               >
                 <card-preview
                   v-for="card in group.cards"
@@ -144,14 +145,16 @@
         </a>
       </div>
     </draggable>
-    <card-details
-      v-if="currCard"
-      :card="currCard"
-      :group="groupsToEdit[currGroupIdx]"
-      @clearCard="clearCard"
-      @updateCard="updateCard($event, currGroupIdx)"
-      @removeCard="removeCard($event, currGroupIdx)"
-    ></card-details>
+    <transition name="fade">
+      <card-details
+        v-if="currCard"
+        :card="currCard"
+        :group="groupsToEdit[currGroupIdx]"
+        @clearCard="clearCard"
+        @updateCard="updateCard($event, currGroupIdx)"
+        @removeCard="removeCard($event, currGroupIdx)"
+      ></card-details>
+    </transition>
   </section>
   <!-- <loader v-else /> -->
 </template>
@@ -264,7 +267,7 @@ export default {
         (card) => card.id === updatedCard.id
       );
       this.groupsToEdit[gIdx].cards.splice(cIdx, 1, updatedCard);
-      socketService.emit('send card', {payload:updatedCard,cIdx,gIdx})
+      socketService.emit("send card", { payload: updatedCard, cIdx, gIdx });
       this.saveGroups();
     },
     saveGroups() {
