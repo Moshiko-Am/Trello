@@ -17,7 +17,9 @@
         border-radius: 2px;
         color: #5e6c84;
         padding: 30px 15px;
-        // min-height: 70vh;
+        .wrapper {
+            position: relative;
+        }
         .close-btn {
             background-color: hsla(0, 0%, 100%, 0.24);
             color: #fff;
@@ -33,9 +35,22 @@
             margin: 4px;
             width: 32px;
             transition: background-color 85ms, color 85ms;
+            .icon-x {
+                color: white;
+            }
             &:hover {
                 background-color: hsla(0, 0%, 100%, 0.32);
                 color: #fff;
+            }
+            &.dark {
+                .icon-x {
+                    color: #42526e;
+                }
+                color: #42526e;
+                background-color: none;
+                &:hover {
+                    background-color: rgba(9, 30, 66, 0.08);
+                }
             }
         }
         .card-cover {
@@ -101,6 +116,9 @@
             }
             &:hover {
                 background-color: rgba(9, 30, 66, 0.08);
+            }
+            &.cover {
+                position: static;
             }
         }
     }
@@ -467,7 +485,6 @@
 
 .icon-x {
     @include to-icon("\e91c");
-    color: #fff;
 }
 
 .icon-delete {

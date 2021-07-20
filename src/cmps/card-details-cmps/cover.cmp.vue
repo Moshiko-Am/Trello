@@ -2,15 +2,45 @@
   <section class="pop-over">
     <div class="pop-over-header">
       <span class="pop-over-header-title">Cover</span>
-      <a class="icon-sm icon-close"></a>
+      {{ cardToEdit.cover }}
+      <a class="icon-sm icon-close" @click="close"></a>
     </div>
     <div>
       <div class="pop-over-content">
         <div>
-          <h4>Size</h4>
-          <div>
-            <div role="button" class="">
-              <div class=""></div>
+          <h4 class="title">Size</h4>
+          <div class="grid">
+            <div
+              role="button"
+              class="button"
+              :class="{ 'is-selected': cardToEdit.cover.layout === 'top' }"
+              @click.stop="changeLayout('top')"
+            >
+              <div
+                class="image"
+                :style="{
+                  'background-image': `url('${cardToEdit.attachments[1].url}')`,
+                }"
+              ></div>
+              <div class="layover">
+                <div></div>
+                <div></div>
+                <div>
+                  <div></div>
+                  <div></div>
+                </div>
+                <div class=""></div>
+              </div>
+            </div>
+            <div
+              role="button"
+              class="button"
+              :class="{ 'is-selected': cardToEdit.cover.layout === 'full' }"
+              :style="{
+                'background-image': `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),url('${card.attachments[1].url}')`,
+              }"
+              @click.stop="changeLayout('full')"
+            >
               <div class="">
                 <div class=""></div>
                 <div class=""></div>
@@ -22,6 +52,49 @@
               </div>
             </div>
           </div>
+          <button class="btn" @click="removeCover">Remove cover</button>
+          <h4 class="title">Colors</h4>
+          <div class="colors">
+            <button class="color"></button>
+            <button class="color"></button>
+            <button class="color"></button>
+            <button class="color"></button>
+            <button class="color"></button>
+            <button class="color"></button>
+            <button class="color"></button>
+            <button class="color"></button>
+            <button class="color"></button>
+            <button class="color"></button>
+          </div>
+          <h4 class="title">Attachments</h4>
+          <div
+            class="attachments"
+            v-if="card.attachments && card.attachments.length"
+          >
+            <button
+              v-for="attachment in cardToEdit.attachments"
+              :key="attachment.id"
+              class="btn-attach"
+              :class="{ 'is-selected': attachment.isCover }"
+              :style="{
+                'background-color': `rgb(${attachment.props.colorArray[0]}, ${attachment.props.colorArray[1]}, ${attachment.props.colorArray[2]})`,
+                'background-image': `url('${attachment.url}')`,
+                'background-size': 'contain',
+              }"
+            ></button>
+          </div>
+          <button class="btn">Upload a cover image</button>
+          <div class="tip">Tip: Drag an image on to the card to upload it.</div>
+          <h4 class="title">unsplash</h4>
+          <div class="photos">
+            <div v-for="photo in photos" :key="photo" class="photo">
+              <button
+                class="btn-photo"
+                :style="{ 'background-image': `url('${photo}')` }"
+              ></button>
+            </div>
+          </div>
+          <button class="btn">Search for photos</button>
         </div>
       </div>
     </div>
@@ -29,10 +102,13 @@
 </template>
 
 <script>
-import { unsplashService } from "@/services/unsplash.service.js";
 export default {
+  props: {
+    card: Object,
+  },
   data() {
     return {
+      cardToEdit: null,
       photos: [
         "https://trello-backgrounds.s3.amazonaws.com/SharedBackground/256x182/2b80f3ff0258e985f49cbd3f54aedce5/photo-1626203662544-69e778ddc0ee.jpg",
         "https://trello-backgrounds.s3.amazonaws.com/SharedBackground/128x192/aa2d9b78b5c9523010a84ece94e0e3e7/photo-1626515728846-d09aacfee23d.jpg",
@@ -44,31 +120,33 @@ export default {
       debounceFunc: null,
     };
   },
+  computed: {},
   methods: {
-    async loadPhotos() {
-      this.photos = await unsplashService.loadPhotos(this.photoSearch);
+    close() {
+      this.$emit("close");
     },
-    chooseBg(photoUrl) {
-      this.$emit("updateBoard", {
-        type: "style",
-        payload: { type: "backgroundImage", content: photoUrl },
-      });
+    changeLayout(layout) {
+      console.log(layout);
+      this.cardToEdit.cover.layout = layout;
+      // updateCover();
     },
-    debounce(func, wait = 1000) {
-      let timeout;
-      return function executedFunction(...args) {
-        const later = () => {
-          clearTimeout(timeout);
-          func(...args);
-        };
-
-        clearTimeout(timeout);
-        timeout = setTimeout(later, wait);
-      };
+    removeCover() {
+      this.cardToEdit.cover.isCover = false;
     },
   },
-  async created() {
-    this.debounceFunc = this.debounce(this.loadPhotos);
+  created() {
+    this.cardToEdit = { ...this.card };
+    if (!this.cardToEdit.cover) this.cardToEdit.cover = {};
+  },
+  watch: {
+    card: {
+      immediate: true,
+      deep: true,
+      handler() {
+        this.cardToEdit = this.card;
+        if (!this.cardToEdit.cover) this.cardToEdit.cover = {};
+      },
+    },
   },
 };
 </script>
