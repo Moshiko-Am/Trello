@@ -1,12 +1,28 @@
 <template>
 	<section class="homepage-container">
-		<div class="homepage-1">
-			<h1 class="homepage-logo">Trailing</h1>
-			<h1 class="logo-quote">Work smart, work together.</h1>
-			<router-link to="/boards" class="boards-link"
+		<div class="homepage-1" data-aos-mirror="true" data-aos="fade-right">
+			<h1
+				class="homepage-logo"
+				data-aos="slide-down"
+				data-aos-mirror="true"
+			>
+				Trailing
+			</h1>
+			<h1 class="logo-quote" data-aos="slide-down">
+				Work smart, work together.
+			</h1>
+			<router-link
+				to="/boards"
+				class="boards-link"
+				data-aos="slide-up"
+				data-aos-mirror="true"
 				>Get started</router-link
 			>
-			<h1 class="motivational">
+			<h1
+				class="motivational"
+				data-aos="slide-left"
+				data-aos-mirror="true"
+			>
 				“Either you run the day or the day runs you.”
 				<span class="motivational-author">— Jim Rohn</span>
 			</h1>
@@ -142,13 +158,40 @@
 				>Get started</router-link
 			>
 		</div>
+		<button class="icon-lg icon-top" @click="scroll"></button>
 	</section>
 </template>
 
 <script>
 export default {
+	data() {
+		return {
+			isScroll: false,
+		};
+	},
+	computed: {
+		showBackTop() {
+			return { btnTopShow: this.isScroll };
+		},
+	},
 	created() {
 		this.$store.commit('clearStyle');
+	},
+	mounted() {
+		console.log(window);
+		this.$el.addEventListener('scroll', () => {
+			if (this.$el.offsetHeight > 40) {
+				this.handleScroll;
+			}
+		});
+	},
+	methods: {
+		scroll() {
+			document.querySelector('.homepage-1').scrollIntoView();
+		},
+		handleScroll() {
+			this.isScroll = true;
+		},
 	},
 };
 </script>

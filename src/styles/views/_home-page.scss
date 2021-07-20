@@ -1,10 +1,28 @@
 .homepage-container {
-	height: 100%;
 	width: 100%;
 	overflow-y: auto;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
+	scroll-behavior: smooth;
+
+	.icon-top {
+		@include to-icon('\e90a');
+		position: fixed;
+		transform: rotate(90deg);
+		right: 50px;
+		bottom: 50px;
+		background-color: rgba(45, 122, 167, 0.65);
+		border: none;
+		border-radius: 5px;
+		font-size: 30px;
+		padding: 5px;
+		font-weight: 700;
+		color: rgba(255, 255, 255, 0.8);
+		transition: 0.2s;
+
+		&:hover {
+			color: rgb(255, 255, 255);
+			background-color: rgba(46, 148, 207, 0.65);
+		}
+	}
 
 	&::-webkit-scrollbar {
 		height: 8px;
@@ -23,13 +41,13 @@
 
 	.homepage-1 {
 		color: white;
-		height: 100vh;
+		min-height: calc(100vh - 40px);
 		width: 100%;
 		background-image: url('~@/assets/img/homepage-top-img.jpg');
 		background-size: cover;
 		background-position: center;
 		background-blend-mode: darken;
-		background-color: rgba(0, 0, 0, 0.24);
+		background-color: rgba(0, 0, 0, 0.35);
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
@@ -48,23 +66,22 @@
 		}
 
 		.boards-link {
-			background-color: rgba(22, 160, 95, 0.877);
+			background-color: rgba(2, 107, 167, 0.75);
 			color: whitesmoke;
 			padding: 10px 15px;
 			border-radius: 10px;
 			font-size: 24px;
 			font-weight: 500;
-			margin-bottom: 200px;
+			margin-bottom: 400px;
 			transition: 0.2s;
 
 			&:hover {
-				background-color: rgba(23, 138, 84, 0.877);
+				background-color: rgba(1, 90, 141, 0.85);
 				transform: scale(1.02);
 			}
 		}
 
 		.motivational {
-			margin-top: 200px;
 			padding: 5px 10px;
 			font-size: 24px;
 			font-style: italic;
@@ -105,7 +122,6 @@
 
 		.homepage-2-header {
 			font-size: 36px;
-			// margin-top: 50px;
 			font-weight: 500;
 		}
 
@@ -168,7 +184,6 @@
 
 		.homepage-3-header {
 			font-size: 36px;
-			// margin-top: 50px;
 			font-weight: 500;
 		}
 
@@ -212,6 +227,7 @@
 			justify-content: center;
 			align-self: center;
 			width: 100%;
+			margin-block: 20px;
 
 			h1 {
 				font-size: 36px;
@@ -222,13 +238,14 @@
 
 		.social-proof-container {
 			display: flex;
-			justify-content: space-around;
+			justify-content: center;
 
 			.social-container {
 				display: flex;
 				flex-direction: column;
 				align-items: center;
 				width: 170px;
+				margin-inline: 20px;
 
 				.stars {
 					width: 100px;
@@ -263,10 +280,11 @@
 			font-size: 36px;
 			// margin-top: 50px;
 			font-weight: 500;
+			margin-block: 20px;
 		}
 
 		.boards-link {
-			background-color: rgba(22, 160, 95, 0.877);
+			background-color: rgba(2, 107, 167, 0.75);
 			color: whitesmoke;
 			padding: 10px 15px;
 			border-radius: 10px;
@@ -276,7 +294,7 @@
 			transition: 0.2s;
 
 			&:hover {
-				background-color: rgba(23, 138, 84, 0.877);
+				background-color: rgba(1, 90, 141, 0.85);
 				transform: scale(1.02);
 			}
 		}
