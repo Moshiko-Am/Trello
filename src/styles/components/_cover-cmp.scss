@@ -1,0 +1,22 @@
+.pop-over {
+    width: 300px;
+    background-color: white;
+    border-radius: 3px;
+    padding: 0 12px 12px;
+    position: absolute;
+    z-index: 1;
+    top: 40px;
+    left: 0;
+    text-align: center;
+    .pop-over-header {
+        line-height: 40px;
+        text-align: center;
+        color: #5e6c84;
+        border-bottom: 1px solid rgba(9, 30, 66, 0.13);
+        margin-bottom: 10px;
+    }
+    .icon-close {
+        position: absolute;
+        right: 12px;
+    }
+}

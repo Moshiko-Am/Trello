@@ -90,7 +90,7 @@ export default {
       async handler() {
         if (this.$route.params.boardId) {
           const { boardId } = this.$route.params;
-          socketService.emit('board changed', boardId)
+          socketService.emit("board changed", boardId);
           try {
             await this.$store.dispatch({ type: "loadBoards" });
             this.$store.commit("getBoardById", boardId);

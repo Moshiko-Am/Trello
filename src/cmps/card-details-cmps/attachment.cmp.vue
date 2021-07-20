@@ -13,7 +13,11 @@
         class="attachment-thumbnail-preview"
         :href="attachment.url"
         target="_blank"
-        :style="{ 'background-image': `url('${attachment.url}')` }"
+        :style="{
+          'background-image': `url('${attachment.url}')`,
+          'background-color': `rgb(${attachment.props.colorArray[0]},${attachment.props.colorArray[1]},${attachment.props.colorArray[2]})`,
+          'background-size': 'contain',
+        }"
       ></a>
       <p class="attachment-thumbnail-details">
         <span class="attachment-thumbnail-name">{{ attachment.filename }}</span>

@@ -14,10 +14,12 @@
       >
         <div v-if="card.attachments && card.attachments.length">
           <div
-            :key="attachment[0].id"
             class="card-cover"
-            v-if="isCover"
-            :style="isCover"
+            v-if="isCover && isCover.length"
+            :style="{
+              'background-image': coverImg,
+              'background-color': coverBgc,
+            }"
           ></div>
         </div>
         <div
@@ -171,18 +173,29 @@ export default {
     attachment() {
       if (this.card.attachments && this.card.attachments.length) {
         return this.card.attachments.filter((attachment) => {
-          if (attachment.isCover) {
-            return attachment;
-          }
+          return attachment.isCover;
         });
       } else return false;
     },
     isCover() {
-      if (this.attachment.length) {
-        return this.attachment[0].isCover
-          ? `background-image: url('${this.attachment[0].url}')`
-          : "";
-      } else return false;
+      if (this.card.isCover) return true;
+      if (this.card.attachments)
+        return this.card.attachments.filter((attachment) => {
+          return attachment.isCover;
+        });
+      return false;
+    },
+    coverImg() {
+      return this.card.isCover
+        ? ""
+        : this.attachment.length
+        ? `url('${this.attachment[0].url}')`
+        : "";
+    },
+    coverBgc() {
+      return this.attachment && this.attachment.length
+        ? `rgb(${this.attachment[0].props.colorArray[0]},${this.attachment[0].props.colorArray[1]},${this.attachment[0].props.colorArray[2]})`
+        : "";
     },
   },
   methods: {

@@ -38,6 +38,7 @@
 
 <script>
 import { uploadImg } from "@/services/img.upload.service.js";
+import ColorThief from "colorthief";
 export default {
   props: {
     attachments: Array,
@@ -55,7 +56,7 @@ export default {
         isCover: false,
         createdAt: null,
         filename: "",
-        props: null,
+        props: {},
         url: "",
       },
     };
@@ -77,15 +78,22 @@ export default {
     async onUploadImg() {
       this.isUploading = true;
       const res = await uploadImg(this.uploadedFile);
+      this.attachment.props.colorArray = await new Promise((resolve) => {
+        const colorThief = new ColorThief();
+        const img = new Image();
+        img.onload = () => {
+          resolve(colorThief.getColor(img));
+        };
+        img.crossOrigin = "Anonymous";
+        img.src = res.url;
+      });
       this.attachment.id = this.makeId();
       this.attachment.createdAt = Date.now();
       this.attachment.filename = this.uploadedFile.name;
-      this.attachment.props = {
-        width: res.width,
-        height: res.height,
-        type: res.format,
-        size: res.bytes,
-      };
+      this.attachment.props.width = res.width;
+      this.attachment.props.height = res.height;
+      this.attachment.props.type = res.format;
+      this.attachment.props.size = res.bytes;
       this.attachment.url = res.url;
       document.querySelector(".el-upload__input").disabled = false;
       this.close();
