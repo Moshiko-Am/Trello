@@ -1,6 +1,6 @@
 .card-details-bg {
     position: fixed;
-    overflow: hidden;
+    overflow-y:auto;
     top: 0;
     left: 0;
     width: 100%;
@@ -203,6 +203,37 @@
     }
     .vue-avatar--wrapper {
         margin-right: 6px;
+    }
+
+    .add-label-btn {
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: #eaecf0;
+        color: #4c5b76;
+        height: 32px;
+        width: 32px;
+        border-radius: 3px;
+        &:hover{
+            background-color: #e2e4e9;
+        }
+    }
+
+    .add-member-btn {
+        position: relative;
+        cursor: pointer;
+        background-color: #eaecf0;
+        color: #4c5b76;
+        height: 32px;
+        width: 32px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        &:hover {
+            background-color: #e2e4e9;
+        }
     }
 }
 

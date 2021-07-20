@@ -153,6 +153,7 @@
         v-if="currCard"
         :card="currCard"
         :group="groupsToEdit[currGroupIdx]"
+        @createLabel="createLabel"
         @clearCard="clearCard"
         @updateCard="updateCard($event, currGroupIdx)"
         @removeCard="removeCard($event, currGroupIdx)"
@@ -201,6 +202,9 @@ export default {
     draggable,
   },
   methods: {
+    createLabel(label){
+      this.$emit('createLabel',label)
+    },
     closeCardEdit(gIdx) {
       this.isAddingCard = false;
       this.$refs[`card-preview-wrapper-${gIdx}`][0].classList.remove(

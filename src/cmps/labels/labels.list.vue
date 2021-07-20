@@ -5,9 +5,10 @@
     <h3>LABELS</h3>
     <div class="label-options">
       <div v-for="label in optionsLabels" :key="label.id">
-        <label-preview :label="label" :cardLabels="labelsToEdit" @updateLabels="updateLabels"/>
+        <label-preview :label="label" :cardLabels="labelsToEdit" @editLabel="editLabel" @updateLabels="updateLabels"/>
       </div>
     </div>
+    <button class="create-label-btn" @click="toggleCreateLabel">Create a new label</button>
   </section>
 </template>
 
@@ -28,6 +29,9 @@ export default {
       labelPreview
     },
     methods:{
+      editLabel(label){
+        this.$emit('editLabel', label)
+      },
       updateLabels(newLabels){
         this.labelsToEdit = newLabels
         this.emitLabels()
@@ -37,6 +41,9 @@ export default {
       },
       close(){
         this.$emit('closePopups')
+      },
+      toggleCreateLabel(){
+        this.$emit('toggleCreateLabel')
       }
     }
 }

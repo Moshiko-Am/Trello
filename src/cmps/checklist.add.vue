@@ -4,7 +4,7 @@
     <header>Add checklist</header>
     <label>
       <h4>Title</h4>
-      <input type="text" placeholder="checkList" v-model="checklist.title" />
+      <input type="text" ref="input" placeholder="checkList" v-model="checklist.title" />
     </label>
     <button class="add-cl-btn" @click="addCl">Add</button>
   </section>
@@ -23,6 +23,10 @@ export default {
   },
   methods: {
     addCl() {
+      if(!this.checklist.title) {
+        this.$refs.input.focus()
+        return
+      }
       this.$emit("addCl", { ...this.checklist });
       this.checklist = {
         id: this.makeId(),
@@ -38,5 +42,8 @@ export default {
       return "c" + num;
     },
   },
+  mounted(){
+    this.$refs.input.focus()
+  }
 };
 </script>

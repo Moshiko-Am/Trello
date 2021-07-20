@@ -29,6 +29,10 @@
               <labels-cmp
                 v-if="cardToEdit.labelIds && cardToEdit.labelIds.length"
                 :labels="labelsForDisplay"
+                :optionsLabels="board.labels"
+                :cardLabels="card.labelIds"
+                @updateLabels="updateLabels"
+                @closePopups="closePopups"
               />
             </transition>
             <transition name="fade">
@@ -90,10 +94,13 @@
             <labels-list
               :optionsLabels="board.labels"
               :cardLabels="card.labelIds"
+              @toggleCreateLabel="toggleCreateLabel"
               @updateLabels="updateLabels"
+              @editLabel="setLabelToEdit"
               @closePopups="closePopups"
               v-if="isAddingLabel"
             />
+            <create-labels v-if="isCreateLabel" @close="closePopups" :label="labelToEdit" @createLabel="createLabel" @back="toggleCreateLabel"/>
           </div>
           <div class="card-sidebar-btn" @click="toggleCl">
             <span class="icon-sm icon-checklist"></span>
@@ -146,6 +153,7 @@
 
 <script>
 import labelsCmp from "./card-details-cmps/labels.cmp.vue";
+import createLabels from "./create.labels.vue"
 import membersCmp from "./card-details-cmps/members.cmp.vue";
 import activityCmp from "./card-details-cmps/activity.cmp.vue";
 import dateCmp from "./card-details-cmps/date.cmp.vue";
@@ -169,14 +177,17 @@ export default {
       addingTodo: false,
       isAddingChecklist: false,
       isAddingLabel: false,
+      isCreateLabel: false,
       isAddingMember: false,
       isAddingAttachment: false,
       isAddingCover: false,
+      labelToEdit: null,
       cardDate: "",
     };
   },
   components: {
     labelsCmp,
+    createLabels,
     dateCmp,
     membersCmp,
     descriptionCmp,
@@ -196,9 +207,14 @@ export default {
     closePopups() {
       this.isAddingChecklist = false;
       this.isAddingLabel = false;
+      this.isCreateLabel = false;
       this.isAddingMember = false;
       this.isAddingAttachment = false;
       this.isAddingCover = false;
+    },
+    setLabelToEdit(label){
+      this.labelToEdit = label
+      this.isCreateLabel = true;
     },
     makeId() {
       const num = Math.floor(Math.random() * (900 - 1) + 1);
@@ -209,6 +225,11 @@ export default {
         this.closePopups();
       }
       this.isAddingChecklist = !this.isAddingChecklist;
+    },
+    toggleCreateLabel(){
+      
+      // this.isAddingLabel = !this.isAddingLabel
+      this.isCreateLabel = !this.isCreateLabel
     },
     toggleLabel() {
       if (!this.isAddingLabel) {
@@ -278,6 +299,10 @@ export default {
       this.cardToEdit.labelIds = labels;
       this.emitCard();
     },
+    createLabel(label){
+      this.$emit('createLabel',label)
+      this.toggleCreateLabel()
+    },
     removeCard() {
       this.$emit("removeCard", this.cardToEdit.id);
     },
@@ -286,6 +311,7 @@ export default {
       this.$emit("updateCard", cardCopy);
     },
     updateAttachments(attachments, isCover = "") {
+      console.log("attachments", attachments);
       this.cardToEdit.attachments = attachments;
       if (isCover) this.cardToEdit.isCover = true;
       this.emitCard();
