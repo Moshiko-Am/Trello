@@ -67,11 +67,11 @@
                 ghostClass="tilted"
               >
                 <card-preview
-                  ref="cardpreview"
-                  v-for="card in group.cards"
+                  v-for="(card, cIdx) in group.cards"
+                  :ref="'cardpreview-' + gIdx + '-' + cIdx"
                   :card="card"
                   :key="card.id"
-                  @click.native="setCard(card, gIdx)"
+                  @click.native="setCard(card, gIdx, cIdx)"
                   @openCard="openCard(card, gIdx)"
                   @openBg="openBg"
                   @updateCard="updateCard($event, gIdx)"
@@ -252,10 +252,10 @@ export default {
     openCard(card, gIdx) {
       this.setCard(card, gIdx);
     },
-    setCard(card, gIdx) {
+    setCard(card, gIdx, cIdx) {
       this.currCard = card;
       this.currGroupIdx = gIdx;
-      this.$refs.cardpreview[this.currGroupIdx].isQuickEdit = false;
+      this.$refs[`cardpreview-${gIdx}-${cIdx}`][0].isQuickEdit = false;
       this.$parent.bgOpen = false;
     },
     clearCard() {

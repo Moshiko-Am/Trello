@@ -1,93 +1,97 @@
 <template>
-	<section class="background-photos-container">
-		<div class="background-photos-header">
-			<button class="icon-md icon-back" @click="photosBack"></button>
-			<h3>Photos by Unsplash</h3>
-			<button class="icon-md icon-x" @click="closeMenu"></button>
-		</div>
-		<hr />
-		<div class="background-photos-content">
-			<div class="photos-input-container">
-				<span class="icon-sm icon-search"></span>
-				<input
-					type="text"
-					v-model="photoSearch"
-					placeholder="Photos"
-					class="photos-input-search"
-					@input="debounceFunc"
-				/>
-			</div>
-			<div class="background-photos">
-				<div
-					@click="chooseBg(photo.urlBig)"
-					class="photo-example"
-					v-for="photo in photos"
-					:key="photo.id"
-				>
-					<img :src="photo.urlSmall" />
-				</div>
-			</div>
-		</div>
-	</section>
+  <section class="background-photos-container">
+    <div class="background-photos-header">
+      <button class="icon-md icon-back" @click="photosBack"></button>
+      <h3>Photos by Unsplash</h3>
+      <button class="icon-md icon-x" @click="closeMenu"></button>
+    </div>
+    <hr />
+    <div class="background-photos-content">
+      <div class="photos-input-container">
+        <span class="icon-sm icon-search"></span>
+        <input
+          type="text"
+          v-model="photoSearch"
+          placeholder="Photos"
+          class="photos-input-search"
+          @input="debounceFunc"
+        />
+      </div>
+      <div class="background-photos">
+        <div
+          @click="chooseBg(photo.urlBig, photo.urlSmall)"
+          class="photo-example"
+          v-for="photo in photos"
+          :key="photo.id"
+        >
+          <img :src="photo.urlSmall" />
+        </div>
+      </div>
+    </div>
+  </section>
 </template>
 
 <script>
-import { unsplashService } from '../services/unsplash.service.js';
-import axios from 'axios';
+import { unsplashService } from "../services/unsplash.service.js";
+import axios from "axios";
 export default {
-	data() {
-		return {
-			photoSearch: '',
-			photos: [],
-			debounceFunc: null,
-		};
-	},
-	methods: {
-		closeMenu() {
-			this.$emit('closeMenu');
-		},
-		photosBack() {
-			this.$emit('photosBack');
-		},
-		debounce(func, wait = 1000) {
-			let timeout;
-			return function executedFunction(...args) {
-				const later = () => {
-					clearTimeout(timeout);
-					func(...args);
-				};
+  data() {
+    return {
+      photoSearch: "",
+      photos: [],
+      debounceFunc: null,
+    };
+  },
+  methods: {
+    closeMenu() {
+      this.$emit("closeMenu");
+    },
+    photosBack() {
+      this.$emit("photosBack");
+    },
+    debounce(func, wait = 1000) {
+      let timeout;
+      return function executedFunction(...args) {
+        const later = () => {
+          clearTimeout(timeout);
+          func(...args);
+        };
 
-				clearTimeout(timeout);
-				timeout = setTimeout(later, wait);
-			};
-		},
-		async loadPhotos() {
-			this.photos = await unsplashService.loadPhotos(this.photoSearch);
-		},
-		async getRandomPhotos() {
-			const url = `https://api.unsplash.com/photos/random/?client_id=3G3H2YrHWdLEk7zLzjy33Ykx0eACFpe497xZ1BWXAQg&count=20`;
-			const res = await axios.get(url);
-			const data = res.data;
-			let results = data.map((result, idx) => {
-				return {
-					idx,
-					id: result.id,
-					urlBig: result.urls.full,
-					urlSmall: result.urls.small,
-				};
-			});
-			return results;
-		},
-		chooseBg(photoUrl) {
-			this.$emit('updateBoard', {
-				type: 'style',
-				payload: { type: 'backgroundImage', content: photoUrl },
-			});
-		},
-	},
-	async created() {
-		this.debounceFunc = this.debounce(this.loadPhotos);
-		this.photos = await this.getRandomPhotos();
-	},
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+      };
+    },
+    async loadPhotos() {
+      this.photos = await unsplashService.loadPhotos(this.photoSearch);
+    },
+    async getRandomPhotos() {
+      const url = `https://api.unsplash.com/photos/random/?client_id=3G3H2YrHWdLEk7zLzjy33Ykx0eACFpe497xZ1BWXAQg&count=20`;
+      const res = await axios.get(url);
+      const data = res.data;
+      let results = data.map((result, idx) => {
+        return {
+          idx,
+          id: result.id,
+          urlBig: result.urls.full,
+          urlSmall: result.urls.small,
+        };
+      });
+      return results;
+    },
+    chooseBg(photoUrlBig, photoUrlSmall) {
+      this.$emit("updateBoard", {
+        type: "style",
+        payload: {
+          type: "backgroundImage",
+          content: photoUrlBig,
+          preview: photoUrlSmall,
+        },
+      });
+    },
+  },
+  async created() {
+    this.debounceFunc = this.debounce(this.loadPhotos);
+    this.photos = await this.getRandomPhotos();
+  },
 };
 </script>
