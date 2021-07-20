@@ -89,16 +89,22 @@
 					></path>
 				</svg>
 			</button>
-			<button @click="toggleUserMenu" class="member-avatar-wrapper">
+			<button
+				@click="toggleUserMenu"
+				class="member-avatar-wrapper"
+				v-if="user.username"
+			>
 				<avatar
 					class="member-name"
 					:username="user.fullname"
 					:size="30"
 					:inline="true"
-					:style="{ 'font-size': '16px' }"
 					backgroundColor="#dfe1e6"
 					color="#172b4d"
 				></avatar>
+			</button>
+			<button @click="login" class="user-login" v-if="!user.username">
+				Login
 			</button>
 		</div>
 		<user-menu
@@ -145,6 +151,9 @@ export default {
 		ClickOutside,
 	},
 	methods: {
+		login() {
+			this.$router.push('/login');
+		},
 		closeBoardsMenu() {
 			this.isBoardsShow = false;
 		},

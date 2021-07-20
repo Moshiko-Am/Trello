@@ -110,6 +110,21 @@
 	.header-controls-right {
 		@include flex();
 
+		.member-avatar-wrapper {
+			padding: 0;
+		}
+
+		.user-login {
+			background: none;
+			border: none;
+			color: white;
+			transition: 0.3s;
+
+			&:hover {
+				color: rgb(224, 224, 224);
+			}
+		}
+
 		.member-name {
 			cursor: pointer;
 		}

@@ -65,6 +65,7 @@ export default {
 		},
 		logOut() {
 			this.$store.dispatch({ type: 'logout' });
+			this.$router.push('/');
 		},
 	},
 };

@@ -33,6 +33,7 @@
 
 <script>
 import { unsplashService } from '../services/unsplash.service.js';
+import axios from 'axios';
 export default {
 	data() {
 		return {
@@ -63,6 +64,20 @@ export default {
 		async loadPhotos() {
 			this.photos = await unsplashService.loadPhotos(this.photoSearch);
 		},
+		async getRandomPhotos() {
+			const url = `https://api.unsplash.com/photos/random/?client_id=3G3H2YrHWdLEk7zLzjy33Ykx0eACFpe497xZ1BWXAQg&count=20`;
+			const res = await axios.get(url);
+			const data = res.data;
+			let results = data.map((result, idx) => {
+				return {
+					idx,
+					id: result.id,
+					urlBig: result.urls.full,
+					urlSmall: result.urls.small,
+				};
+			});
+			return results;
+		},
 		chooseBg(photoUrl) {
 			this.$emit('updateBoard', {
 				type: 'style',
@@ -72,6 +87,7 @@ export default {
 	},
 	async created() {
 		this.debounceFunc = this.debounce(this.loadPhotos);
+		this.photos = await this.getRandomPhotos();
 	},
 };
 </script>

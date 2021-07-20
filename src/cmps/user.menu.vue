@@ -8,6 +8,7 @@
 		<div class="user-menu-content">
 			<div class="user-menu-name">
 				<avatar
+					v-if="user.username"
 					class="member-name"
 					:username="user.fullname"
 					:size="40"
@@ -15,17 +16,30 @@
 					backgroundColor="#dfe1e6"
 					color="#172b4d"
 				></avatar>
-				<span class="user-menu-username">{{ user.fullname }}</span>
+				<avatar
+					v-else
+					class="member-name"
+					username="Guest"
+					:size="40"
+					:inline="true"
+					backgroundColor="#dfe1e6"
+					color="#172b4d"
+				></avatar>
+				<span class="user-menu-username" v-if="user.username">{{
+					user.fullname
+				}}</span>
+				<span class="user-menu-username" v-else>Guest user</span>
 			</div>
 			<hr />
 			<div class="user-menu-actions">
-				<button>User dashboard</button>
+				<button v-if="user.username">User dashboard</button>
 				<!-- needs changing to router link -->
-				<button @click="logOut" class="user-logout" v-if="user">
+				<button
+					@click="logOut"
+					class="user-logout"
+					v-if="user.username"
+				>
 					Log out
-				</button>
-				<button @click="login" class="user-logout" v-else>
-					Login
 				</button>
 			</div>
 		</div>
@@ -49,9 +63,6 @@ export default {
 		},
 		closeUserMenu() {
 			this.$emit('closeUserMenu');
-		},
-		login() {
-			this.$router.push('/login');
 		},
 	},
 };
