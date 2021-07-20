@@ -12,14 +12,12 @@
         background-color: #f4f5f7;
         position: absolute;
         left: 50%;
-        top: 70px;
+        top: 10px;
         transform: translate(-50%);
         border-radius: 2px;
         color: #5e6c84;
         padding: 30px 15px;
-        .wrapper {
-            position: relative;
-        }
+        // min-height: 70vh;
         .close-btn {
             background-color: hsla(0, 0%, 100%, 0.24);
             color: #fff;
@@ -35,22 +33,9 @@
             margin: 4px;
             width: 32px;
             transition: background-color 85ms, color 85ms;
-            .icon-x {
-                color: white;
-            }
             &:hover {
                 background-color: hsla(0, 0%, 100%, 0.32);
                 color: #fff;
-            }
-            &.dark {
-                .icon-x {
-                    color: #42526e;
-                }
-                color: #42526e;
-                background-color: none;
-                &:hover {
-                    background-color: rgba(9, 30, 66, 0.08);
-                }
             }
         }
         .card-cover {
@@ -116,9 +101,6 @@
             }
             &:hover {
                 background-color: rgba(9, 30, 66, 0.08);
-            }
-            &.cover {
-                position: static;
             }
         }
     }
@@ -209,7 +191,7 @@
 .labels-container,
 .members-container {
     display: flex;
-    // margin-left: 6px;
+
     .labelDisplay {
         height: 32px;
         line-height: 32px;
@@ -260,14 +242,23 @@
     flex-wrap: wrap;
     .card-main-item {
         margin-left: 32px;
-        h3 {
-            opacity: 0.6;
-            margin-left: 0;
+        .main-item-title {
+            color: #5e6c84;
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: .04em;
+            margin-left: 1px;
         }
     }
+
 }
 
 .card-main-item {
+    .main-item-title {
+        color: #172b4d;
+        font-weight: 600;
+    }
+
     .todo {
         cursor: pointer;
         display: flex;
@@ -355,7 +346,7 @@
         width: 8px;
         border: solid 3px transparent;
     }
-    &::-webkit-scrollbar-track-piece {
+    &::-webkit-scrollbar-track {
         background: rgba(9, 30, 66, 0.08);
         border-radius: 10px;
     }
@@ -485,6 +476,7 @@
 
 .icon-x {
     @include to-icon("\e91c");
+    color: #fff;
 }
 
 .icon-delete {

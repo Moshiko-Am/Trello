@@ -31,6 +31,12 @@
           <div class="card-details-main">
             <div class="labels-members-container">
               <transition name="fade">
+                <members-cmp
+                  v-if="cardToEdit.members"
+                  :members="cardToEdit.members"
+                />
+              </transition>
+              <transition name="fade">
                 <labels-cmp
                   v-if="cardToEdit.labelIds && cardToEdit.labelIds.length"
                   :labels="labelsForDisplay"
@@ -38,12 +44,6 @@
                   :cardLabels="card.labelIds"
                   @updateLabels="updateLabels"
                   @closePopups="closePopups"
-                />
-              </transition>
-              <transition name="fade">
-                <members-cmp
-                  v-if="cardToEdit.members"
-                  :members="cardToEdit.members"
                 />
               </transition>
               <transition name="fade">
@@ -111,6 +111,7 @@
                 :label="labelToEdit"
                 @createLabel="createLabel"
                 @back="toggleCreateLabel"
+                @removeLabel="removeLabel"
               />
             </div>
             <div class="card-sidebar-btn" @click="toggleCl">
@@ -161,6 +162,7 @@
         </div>
       </div>
     </section>
+    <section class="padding-bottom"></section>
   </section>
 </template>
 
@@ -240,8 +242,10 @@ export default {
       this.isAddingChecklist = !this.isAddingChecklist;
     },
     toggleCreateLabel() {
-      // this.isAddingLabel = !this.isAddingLabel
+      // if(!this.isCreateLabel) this.isAddingLabel = false;
+      this.isAddingLabel = this.isCreateLabel;
       this.isCreateLabel = !this.isCreateLabel;
+      // console.log('this.isAddingLabel',this.isAddingLabel);
     },
     toggleLabel() {
       if (!this.isAddingLabel) {
@@ -312,8 +316,14 @@ export default {
       this.emitCard();
     },
     createLabel(label) {
+      this.labelToEdit = null;
       this.$emit("createLabel", label);
       this.toggleCreateLabel();
+    },
+    removeLabel(labelId) {
+      this.labelToEdit = null;
+      this.toggleCreateLabel();
+      this.$emit("removeLabel", labelId);
     },
     removeCard() {
       this.$emit("removeCard", this.cardToEdit.id);

@@ -15,6 +15,7 @@
       v-if="board && board.groups"
       @openBg="toggleBg"
       @createLabel="createLabel"
+      @removeLabel="removeLabel"
     />
     <transition name="fade">
     <board-dashboard @toggleDashboard="toggleDashboard" v-if="showDashboard && board && board.groups" :board="board" />
@@ -46,11 +47,17 @@ export default {
   },
   methods: {
     createLabel(newLabel){
-      const boardLabels = this.board.labels
+      const boardLabels = JSON.parse(JSON.stringify(this.board)).labels
       console.log('newLabel',newLabel);
       const idx = boardLabels.findIndex(label => label.id === newLabel.id)
       if(idx === -1) boardLabels.push(newLabel)
       else boardLabels.splice(idx ,1 ,newLabel)
+      this.boardUpdate({type:'labels',payload:boardLabels})
+    },
+    removeLabel(labelId){
+      const boardLabels = JSON.parse(JSON.stringify(this.board)).labels
+      const idx = boardLabels.findIndex(label => label.id === labelId)
+      boardLabels.splice(idx ,1)
       this.boardUpdate({type:'labels',payload:boardLabels})
     },
     async boardUpdate(update) {

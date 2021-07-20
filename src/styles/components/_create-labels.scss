@@ -70,6 +70,25 @@
             background-color: #026aa7;
         }
     }
+    .delete-btn {
+        padding: 6px 24px;
+        border: none;
+        margin-top: 8px;
+        border-radius: 3px;
+        color: white;
+        background-color: #b04632;
+        line-height: 20px;
+        margin-right: 8px;
+
+        &:hover {
+            background-color: #933b27;
+        }
+    }
+
+    .edit-btns {
+        display: flex;
+        justify-content: space-between;
+    }
 
     .color-options {
         display: flex;

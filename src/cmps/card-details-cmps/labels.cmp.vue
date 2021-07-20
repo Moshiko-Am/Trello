@@ -1,7 +1,7 @@
 <template>
   <div class="card-main-item">
     <div class="main-item-header">
-      <h3 class="main-item-title">Labels</h3>
+      <h4 class="main-item-title">LABELS</h4>
     </div>
     <div class="labels-container">
       <!-- <transition-group class="labels-container" name="list-complete"> -->
