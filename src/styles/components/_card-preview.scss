@@ -73,7 +73,7 @@
     .card-cover {
         height: 245px;
         background-color: #2d455a;
-        background-size: cover;
+        background-size: contain;
         border-radius: 3px 3px 0 0;
         background-position: 50%;
         background-repeat: no-repeat;
@@ -173,11 +173,17 @@
             opacity: 1;
         }
     }
+    &.add-card:hover {
+        background-color: #fff;
+    }
 }
 
-.fade-enter-active, .fade-leave-active {
-    transition: opacity .4s;
-  }
-  .fade-enter, .fade-leave-to {
+.fade-enter-active,
+.fade-leave-active {
+    transition: opacity 0.4s;
+}
+
+.fade-enter,
+.fade-leave-to {
     opacity: 0;
-  }
+}

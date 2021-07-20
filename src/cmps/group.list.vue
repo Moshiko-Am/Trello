@@ -1,5 +1,9 @@
 <template>
-  <section v-if="groupsToEdit" class="group-list-wrapper">
+  <section
+    v-if="groupsToEdit"
+    ref="grouplistwrapper"
+    class="group-list-wrapper"
+  >
     <draggable
       class="group-list"
       handle=".group-wrapper"
@@ -29,12 +33,8 @@
                 v-model="group.title"
                 @change="saveGroups"
               ></textarea>
-              <div class="group-header-extras">
-                <a
-                  class="group-header-extras-menu icon-sm icon-dots-menu"
-                  @click="toggleExtras(gIdx)"
-                >
-                </a>
+              <div class="group-header-extras" @click="toggleExtras(gIdx)">
+                <a class="group-header-extras-menu icon-sm icon-dots-menu"> </a>
                 <div
                   v-if="isExtrasShowing && currGroupIdx === gIdx"
                   class="popup"
@@ -43,7 +43,7 @@
                     <div class="header-title">List actions</div>
                     <span
                       class="header-close icon-sm icon-x"
-                      @click="toggleExtras"
+                      @click.stop="toggleExtras(gIdx)"
                     ></span>
                   </div>
                   <div class="popup-content">
@@ -63,8 +63,11 @@
                 animation="500"
                 v-model="group.cards"
                 @change="saveGroups"
+                dragClass="ghost"
+                ghostClass="tilted"
               >
                 <card-preview
+                  ref="cardpreview"
                   v-for="card in group.cards"
                   :card="card"
                   :key="card.id"
@@ -82,6 +85,7 @@
             class="add-card card-preview"
           >
             <textarea
+              @blur="toggleCardEdit(gIdx)"
               placeholder="Enter a title for this card..."
               dir="auto"
               :ref="'content-' + gIdx"
@@ -94,7 +98,7 @@
               class="card-composer-container"
             >
               <div class="add-card-controls">
-                <button class="btn-add-card" @click="saveCard(gIdx)">
+                <button class="btn-add-card" @click.stop="saveCard(gIdx)">
                   Add card
                 </button>
                 <a class="icon-lg icon-close" @click="closeCardEdit(gIdx)"></a>
@@ -114,7 +118,7 @@
         class="group-wrapper mod-add"
         :class="{ 'is-edit': isAddingGroup }"
       >
-        <form v-if="isAddingGroup">
+        <form v-if="isAddingGroup" v-click-outside="toggleGroupEdit">
           <input
             class="group-name-input"
             type="text"
@@ -153,7 +157,6 @@
       @removeCard="removeCard($event, currGroupIdx)"
     ></card-details>
   </section>
-  <!-- <loader v-else /> -->
 </template>
 
 <script>
@@ -161,9 +164,13 @@ import cardDetails from "./card.details.vue";
 import cardPreview from "./card.preview.vue";
 import draggable from "vuedraggable";
 import { socketService } from "@/services/socket.service.js";
+import clickOutside from "vue-click-outside";
 export default {
   props: {
     groups: Array,
+  },
+  directives: {
+    clickOutside,
   },
   data() {
     return {
@@ -200,12 +207,14 @@ export default {
       this.cardToEdit.title = "";
     },
     saveCard(gIdx) {
+      console.log(this.cardToEdit.title);
       if (!this.cardToEdit.title) {
         this.$refs[`content-${gIdx}`][0].focus();
         return;
       }
       const savedCard = { ...this.cardToEdit };
       savedCard.id = this.makeId();
+      console.log(gIdx);
       this.groupsToEdit[gIdx].cards.push(savedCard);
       this.saveGroups();
       this.cardToEdit.title = "";
@@ -216,17 +225,15 @@ export default {
       this.$refs[`card-preview-wrapper-${gIdx}`][0].classList.toggle(
         "is-editing"
       );
-      if (this.isAddingCard && gIdx !== this.currGroupIdx) {
+      if (this.isAddingCard && gIdx !== this.currGroupIdx)
         this.currGroupIdx = gIdx;
-      } else if (this.isAddingCard && gIdx === this.currGroupIdx) {
-        this.isAddingCard = !this.isAddingCard;
-      } else {
+      else {
         this.currGroupIdx = gIdx;
         this.isAddingCard = !this.isAddingCard;
       }
       if (this.isAddingCard)
         this.$nextTick(() => this.$refs[`content-${gIdx}`][0].focus());
-      else if (this.cardToEdit.title) this.saveCard();
+      else if (this.cardToEdit.title) this.saveCard(gIdx);
     },
     toggleExtras(gIdx) {
       this.isAddingCard = false;
@@ -246,6 +253,8 @@ export default {
     setCard(card, gIdx) {
       this.currCard = card;
       this.currGroupIdx = gIdx;
+      this.$refs.cardpreview[this.currGroupIdx].isQuickEdit = false;
+      this.$parent.bgOpen = false;
     },
     clearCard() {
       this.currCard = null;
@@ -264,7 +273,7 @@ export default {
         (card) => card.id === updatedCard.id
       );
       this.groupsToEdit[gIdx].cards.splice(cIdx, 1, updatedCard);
-      socketService.emit('send card', {payload:updatedCard,cIdx,gIdx})
+      socketService.emit("send card", { payload: updatedCard, cIdx, gIdx });
       this.saveGroups();
     },
     saveGroups() {
@@ -311,6 +320,9 @@ export default {
   },
   created() {
     this.groupsToEdit = JSON.parse(JSON.stringify(this.groups));
+  },
+  mounted() {
+    this.popupItem = this.$refs.addgroup;
   },
   watch: {
     groups: {
