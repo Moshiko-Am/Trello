@@ -98,6 +98,8 @@ export default {
       document.querySelector(".el-upload__input").disabled = false;
       this.close();
       this.attachmentsToEdit.push(this.attachment);
+      if (this.attachmentsToEdit.length === 1)
+        this.attachmentsToEdit[0].isCover = true;
       this.$emit("updateAttachments", this.attachmentsToEdit);
     },
     close() {

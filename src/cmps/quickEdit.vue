@@ -37,10 +37,17 @@
       >
         <span class="icon-sm icon-date"></span>
       </el-date-picker>
-      <div class="quick-sidebar-btn">
+      <div class="quick-sidebar-btn" @click="toggleCover">
         <span class="icon-sm icon-cover"></span>
         <p class="sidebar-btn-title">Cover</p>
       </div>
+      <cover-cmp
+        :card="cardToEdit"
+        @close="closePopups"
+        @updateCard="updateCard"
+        @toggleAttch="toggleAttch"
+        v-if="isAddingCover"
+      />
       <div class="quick-sidebar-btn delete" @click="removeCard">
         <span class="icon-sm icon-minus"></span>
         <p class="sidebar-btn-title">Delete</p>
@@ -52,6 +59,7 @@
 <script>
 import membersList from "./card-details-cmps/members.list.vue";
 import labelsList from "./labels/labels.list.vue";
+import coverCmp from "@/cmps/card-details-cmps/cover.cmp";
 export default {
   props: {
     card: Object,
@@ -59,6 +67,7 @@ export default {
   components: {
     membersList,
     labelsList,
+    coverCmp,
   },
   data() {
     return {
@@ -66,6 +75,7 @@ export default {
       isAddingLabel: false,
       isAddingMember: false,
       isAddingAttachment: false,
+      isAddingCover: false,
       cardDate: "",
     };
   },
@@ -79,6 +89,7 @@ export default {
       this.isAddingLabel = false;
       this.isAddingMember = false;
       this.isAddingAttachment = false;
+      this.isAddingCover = false;
     },
     toggleLabel() {
       if (!this.isAddingLabel) {
@@ -93,16 +104,20 @@ export default {
       this.isAddingMember = !this.isAddingMember;
     },
     toggleAttch() {
-      if (!this.isAddingAttachment) {
+      this.$emit("toggleAttach");
+    },
+    toggleCover() {
+      if (!this.isAddingCover) {
         this.closePopups();
       }
-      this.isAddingAttachment = !this.isAddingAttachment;
+      this.isAddingCover = !this.isAddingCover;
     },
     updateDate() {
       this.cardToEdit.dueDate = this.cardDate;
       this.emitCard();
     },
     updateCard() {
+      console.log("re");
       const cardCopy = JSON.parse(JSON.stringify(this.cardToEdit));
       this.$emit("updateCard", cardCopy);
     },

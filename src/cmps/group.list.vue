@@ -34,21 +34,23 @@
                 @change="saveGroups"
               ></textarea>
               <div class="group-header-extras" @click="toggleExtras(gIdx)">
-                <a class="group-header-extras-menu icon-sm icon-dots-menu"> </a>
+                <span class="icon-sm icon-dots-menu"></span>
                 <div
                   v-if="isExtrasShowing && currGroupIdx === gIdx"
                   class="popup"
                 >
-                  <div class="header">
-                    <div class="header-title">List actions</div>
+                  <div @click.stop="" class="header">
+                    <div @click.stop="" class="header-title">List actions</div>
                     <span
                       class="header-close icon-sm icon-x"
-                      @click.stop="toggleExtras(gIdx)"
+                      @click.self.stop="toggleExtras(gIdx)"
                     ></span>
                   </div>
                   <div class="popup-content">
                     <div class="item">
-                      <a @click="deleteGroup(gIdx)">Delete this list</a>
+                      <a @click.self.stop="deleteGroup(gIdx)"
+                        >Delete this list</a
+                      >
                     </div>
                   </div>
                 </div>
@@ -202,8 +204,8 @@ export default {
     draggable,
   },
   methods: {
-    createLabel(label){
-      this.$emit('createLabel',label)
+    createLabel(label) {
+      this.$emit("createLabel", label);
     },
     closeCardEdit(gIdx) {
       this.isAddingCard = false;
@@ -213,14 +215,12 @@ export default {
       this.cardToEdit.title = "";
     },
     saveCard(gIdx) {
-      console.log(this.cardToEdit.title);
       if (!this.cardToEdit.title) {
         this.$refs[`content-${gIdx}`][0].focus();
         return;
       }
       const savedCard = { ...this.cardToEdit };
       savedCard.id = this.makeId();
-      console.log(gIdx);
       this.groupsToEdit[gIdx].cards.push(savedCard);
       this.saveGroups();
       this.cardToEdit.title = "";
