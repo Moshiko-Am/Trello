@@ -1,6 +1,11 @@
 <template>
   <section class="card-details-bg" @click="exitCard">
     <section class="card-details" @click.stop="">
+      <div
+        class="card-cover"
+        v-if="isCover.length"
+        :style="{ 'background-image': coverImg, 'background-color': coverBgc }"
+      ></div>
       <button class="close-btn" @click="exitCard">
         <span class="icon-md icon-x"></span>
       </button>
@@ -20,32 +25,45 @@
       <div class="card-details-content">
         <div class="card-details-main">
           <div class="labels-members-container">
-            <labels-cmp v-if="cardToEdit.labelIds" :labels="labelsForDisplay" />
-            <members-cmp
-              v-if="cardToEdit.members"
-              :members="cardToEdit.members"
-            />
-            <date-cmp
-              v-if="cardToEdit.dueDate"
-              @toggleCompleted="toggleCompleted"
-              :isCompleted="card.isCompleted"
-              :date="cardToEdit.dueDate"
-            />
+            <transition name="fade">
+              <labels-cmp
+                v-if="cardToEdit.labelIds && cardToEdit.labelIds.length"
+                :labels="labelsForDisplay"
+              />
+            </transition>
+            <transition name="fade">
+              <members-cmp
+                v-if="cardToEdit.members"
+                :members="cardToEdit.members"
+              />
+            </transition>
+            <transition name="fade">
+              <date-cmp
+                v-if="cardToEdit.dueDate"
+                @toggleCompleted="toggleCompleted"
+                :isCompleted="card.isCompleted"
+                :date="cardToEdit.dueDate"
+              />
+            </transition>
           </div>
           <description-cmp
             :description="cardToEdit.description"
             @updateDesc="updateDesc"
           />
-          <attachment-cmp
-            v-if="cardToEdit.attachments && cardToEdit.attachments.length"
-            :attachments="cardToEdit.attachments"
-            @updateAttachments="updateAttachments"
-          />
-          <checklists-cmp
-            v-if="cardToEdit.checklists"
-            :checklists="cardToEdit.checklists"
-            @updateChecklists="updateCL"
-          />
+          <transition name="fade">
+            <attachment-cmp
+              v-if="cardToEdit.attachments && cardToEdit.attachments.length"
+              :attachments="cardToEdit.attachments"
+              @updateAttachments="updateAttachments"
+            />
+          </transition>
+          <transition name="fade">
+            <checklists-cmp
+              v-if="cardToEdit.checklists"
+              :checklists="cardToEdit.checklists"
+              @updateChecklists="updateCL"
+            />
+          </transition>
           <activity-cmp :activities="activities" />
         </div>
         <div class="card-details-sidebar">
@@ -98,9 +116,7 @@
           </el-date-picker>
           <div class="card-sidebar-btn" @click="toggleAttch">
             <span class="icon-sm icon-attach"></span>
-            <p class="sidebar-btn-title">
-              Attachments
-            </p>
+            <p class="sidebar-btn-title">Attachments</p>
             <file-upload
               @close="closePopups"
               @updateAttachments="updateAttachments"
@@ -108,9 +124,14 @@
               v-if="isAddingAttachment"
             />
           </div>
-          <div class="card-sidebar-btn">
+          <div class="card-sidebar-btn" @click="toggleCover">
             <span class="icon-sm icon-cover"></span>
             <p class="sidebar-btn-title">Cover</p>
+            <cover-cmp
+              @close="closePopups"
+              @updateCover="updateCover"
+              v-if="isAddingCover"
+            />
           </div>
           <h3>Delete Card</h3>
           <div class="card-sidebar-btn delete" @click="removeCard">
@@ -135,6 +156,7 @@ import labelsList from "./labels/labels.list.vue";
 import fileUpload from "./card-details-cmps/file.upload.vue";
 import attachmentCmp from "./card-details-cmps/attachment.cmp.vue";
 import membersList from "./card-details-cmps/members.list.vue";
+import coverCmp from "./card-details-cmps/cover.cmp.vue";
 
 export default {
   props: {
@@ -149,6 +171,7 @@ export default {
       isAddingLabel: false,
       isAddingMember: false,
       isAddingAttachment: false,
+      isAddingCover: false,
       cardDate: "",
     };
   },
@@ -164,6 +187,7 @@ export default {
     membersList,
     fileUpload,
     attachmentCmp,
+    coverCmp,
   },
   methods: {
     exitCard() {
@@ -174,6 +198,7 @@ export default {
       this.isAddingLabel = false;
       this.isAddingMember = false;
       this.isAddingAttachment = false;
+      this.isAddingCover = false;
     },
     makeId() {
       const num = Math.floor(Math.random() * (900 - 1) + 1);
@@ -203,6 +228,12 @@ export default {
       }
       this.isAddingAttachment = !this.isAddingAttachment;
     },
+    toggleCover() {
+      if (!this.isAddingCover) {
+        this.closePopups();
+      }
+      this.isAddingCover = !this.isAddingCover;
+    },
     toggleCompleted(isCompleted) {
       this.cardToEdit.isCompleted = isCompleted;
       this.emitCard();
@@ -222,6 +253,7 @@ export default {
       this.cardToEdit.members = members;
       this.emitCard();
     },
+    updateCover() {},
     addUser(userId) {
       const member = this.board.members.find((member) => member._id === userId);
       if (!this.card.members) {
@@ -253,8 +285,9 @@ export default {
       const cardCopy = JSON.parse(JSON.stringify(this.cardToEdit));
       this.$emit("updateCard", cardCopy);
     },
-    updateAttachments(attachments) {
+    updateAttachments(attachments, isCover = "") {
       this.cardToEdit.attachments = attachments;
+      if (isCover) this.cardToEdit.isCover = true;
       this.emitCard();
     },
   },
@@ -273,6 +306,33 @@ export default {
     },
     board() {
       return this.$store.getters.board;
+    },
+    isCover() {
+      if (this.cardToEdit.isCover) return true;
+      if (this.cardToEdit.attachments)
+        return this.cardToEdit.attachments.filter((attachment) => {
+          return attachment.isCover;
+        });
+      return false;
+    },
+    attachment() {
+      if (this.cardToEdit.attachments && this.cardToEdit.attachments.length) {
+        return this.cardToEdit.attachments.filter((attachment) => {
+          return attachment.isCover;
+        });
+      } else return false;
+    },
+    coverImg() {
+      return this.cardToEdit.isCover
+        ? ""
+        : this.attachment.length
+        ? `url('${this.attachment[0].url}')`
+        : "";
+    },
+    coverBgc() {
+      return this.attachment && this.attachment.length
+        ? `rgb(${this.attachment[0].props.colorArray[0]},${this.attachment[0].props.colorArray[1]},${this.attachment[0].props.colorArray[2]})`
+        : "";
     },
   },
 };

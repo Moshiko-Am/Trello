@@ -11,20 +11,17 @@
         display: flex;
         flex-direction: column;
     }
-    
     .quick-edit-sidebar {
         display: flex;
         flex-direction: column;
         align-items: flex-start;
-        
         .icon-sm {
             color: white;
         }
-        
         .quick-sidebar-btn {
             cursor: pointer;
             position: relative;
-            background: rgba(0,0,0,.6);
+            background: rgba(0, 0, 0, 0.6);
             border-radius: 3px;
             margin: 0 0 4px 8px;
             padding: 6px 12px 6px 8px;
@@ -32,75 +29,61 @@
             display: flex;
             color: white;
             line-height: 19px;
-            
             .members-list-cmp {
                 top: 31px;
             }
-
             .labels-list {
                 top: 31px;
             }
-            
-            section{
+            section {
                 z-index: 2;
-
                 .icon-sm {
                     color: #6a778d;
-                    
                 }
             }
-            
             &:hover {
-                background: rgba(0,0,0,.8);
+                background: rgba(0, 0, 0, 0.8);
                 color: #fff;
                 margin-left: 13px;
             }
         }
-
         p {
             margin-left: 6px;
         }
-
     }
-
     .el-date-editor {
         margin: 0 0 4px 8px;
         transition: margin-left 85ms ease-in;
-        &:hover{
-            margin-left:13px;
+        &:hover {
+            margin-left: 13px;
         }
         &.el-input {
             width: 130px;
         }
-    
         .el-input__inner {
             height: 31px;
-            background: rgba(0,0,0,.6);
+            background: rgba(0, 0, 0, 0.6);
             border: none;
             cursor: pointer;
-    
             &:hover {
-                background: rgba(0,0,0,.8);
+                background: rgba(0, 0, 0, 0.8);
             }
-    
             &::placeholder {
                 color: white;
                 font-size: 14px;
-                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
             }
         }
-    
         .el-input__icon {
             line-height: 32px;
             width: 23px;
         }
-    
         .el-icon-date::before {
             font-family: icomoon;
             line-height: 33px;
             font-size: 15px;
             color: white;
-            content: '\e91b';
+            content: "\e91b";
         }
     }
 }

@@ -5,6 +5,7 @@
       @bgColor="boardUpdate"
       @updateBoard="boardUpdate"
       @boardUpdate="boardUpdate"
+      @toggleDashboard="toggleDashboard"
       v-if="board && board.title"
       :board="board"
     />
@@ -14,17 +15,22 @@
       v-if="board && board.groups"
       @openBg="toggleBg"
     />
+    <transition name="fade">
+    <board-dashboard @toggleDashboard="toggleDashboard" v-if="showDashboard && board && board.groups" :board="board" />
+    </transition>
   </section>
 </template>
 
 <script>
 import boardHeader from "@/cmps/board.header.vue";
 import groupList from "@/cmps/group.list.vue";
+import boardDashboard from "@/cmps/board.dashboard.vue"
 import { socketService } from "@/services/socket.service.js";
 export default {
   data() {
     return {
       bgOpen: false,
+      showDashboard : false,
     };
   },
   computed: {
@@ -35,6 +41,7 @@ export default {
   components: {
     boardHeader,
     groupList,
+    boardDashboard
   },
   methods: {
     async boardUpdate(update) {
@@ -46,7 +53,12 @@ export default {
         console.log(`coldn't save board`);
       }
     },
+    toggleDashboard(){
+      this.showDashboard = !this.showDashboard
+      this.toggleBg()
+    },
     toggleBg() {
+      if(this.bgOpen) this.showDashboard = false;
       this.bgOpen = !this.bgOpen;
     },
     updateCard(card) {
@@ -78,7 +90,7 @@ export default {
       async handler() {
         if (this.$route.params.boardId) {
           const { boardId } = this.$route.params;
-          socketService.emit('board changed', boardId)
+          socketService.emit("board changed", boardId);
           try {
             await this.$store.dispatch({ type: "loadBoards" });
             this.$store.commit("getBoardById", boardId);
