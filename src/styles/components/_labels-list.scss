@@ -5,7 +5,7 @@
     padding: 0 12px 12px;
     position: absolute;
     top: 40px;
-    left: 0;
+    left: -1px;
     z-index: 1;
 
     header {
@@ -18,8 +18,9 @@
 
     .icon-x {
         position:absolute;
-        top:10px;
+        top:9.5px;
         right: 12px;
+        color: #42526e;
     }
 }
 
@@ -55,4 +56,21 @@
     .icon-v {
         float: right;
     }
+}
+
+.create-label-btn {
+    width: 100%;
+    padding: 6px 12px;
+    background-color: #091e420a;
+    border:none;
+    border-radius: 3px;
+    color: #172b4d;
+    line-height: 20px;
+    margin: 8px 0;
+
+    &:hover {
+        background-color:#091e4214;
+    }
+
+
 }

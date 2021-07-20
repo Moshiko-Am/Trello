@@ -8,7 +8,7 @@
       <span v-if="label.title">{{ label.title }}</span>
       <span v-if="labeled" class="icon-sm icon-v"></span>
     </div>
-    <span class="icon-sm icon-edit"></span>
+    <span class="icon-sm icon-edit" @click="editLabel"></span>
   </section>
 </template>
 
@@ -44,6 +44,9 @@ export default {
     },
     updateLabels(){
       this.$emit('updateLabels' , this.labelsToEdit)
+    },
+    editLabel(){
+      this.$emit('editLabel', {...this.label})
     }
   },
 };

@@ -3,7 +3,9 @@
     <div class="main-item-header">
       <h3 class="main-item-title">Members</h3>
     </div>
-    <transition-group class="members-container" name="list-complete">
+    <div class="members-container">
+
+    <!-- <transition-group class="members-container" name="list-complete"> -->
       <div v-for="member in members" :key="member._id" class="memberDisplay list-complete-item" :style="{'margin-right':'0'}">
         <avatar
           :username="member.fullname"
@@ -13,7 +15,11 @@
           :title="member.fullname"
         ></avatar>
       </div>
-    </transition-group>
+      <div class="add-member-btn list-complete-item">
+        <span class="icon-sm icon-add"></span>
+      </div>
+    <!-- </transition-group> -->
+    </div>
   </div>
 </template>
 
