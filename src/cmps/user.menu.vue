@@ -60,6 +60,7 @@ export default {
 	methods: {
 		logOut() {
 			this.$emit('logOut');
+			this.closeUserMenu();
 		},
 		closeUserMenu() {
 			this.$emit('closeUserMenu');

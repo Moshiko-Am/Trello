@@ -137,8 +137,9 @@ export default {
 		},
 		closeMenu() {
 			this.isMenuShow = false;
-			console.log(this.$refs.sideMenu);
-			this.$refs.sideMenu.bgShowMenu.showBgMenu = false;
+			this.$refs.sideMenu.isBgShow = false;
+			this.$refs.sideMenu.$refs.bgMenu.isColorsShow = false;
+			this.$refs.sideMenu.$refs.bgMenu.isPhotosShow = false;
 		},
 		toggleInvite() {
 			this.isInviteShow = !this.isInviteShow;
