@@ -160,6 +160,7 @@
         </div>
       </div>
     </section>
+    <section class="padding-bottom"></section>
   </section>
 </template>
 
@@ -213,6 +214,13 @@ export default {
     coverCmp,
   },
   methods: {
+    emitActivity(activity) {
+      activity.cId = this.card.id
+      activity.gId = this.group.id
+      activity.cTitle = this.card.title
+      console.log('activity',activity);
+      this.$emit("emitActivity", activity);
+    },
     exitCard() {
       this.$emit("clearCard");
     },
@@ -239,8 +247,10 @@ export default {
       this.isAddingChecklist = !this.isAddingChecklist;
     },
     toggleCreateLabel() {
-      // this.isAddingLabel = !this.isAddingLabel
+      // if(!this.isCreateLabel) this.isAddingLabel = false;
+      this.isAddingLabel = this.isCreateLabel;
       this.isCreateLabel = !this.isCreateLabel;
+      // console.log('this.isAddingLabel',this.isAddingLabel);
     },
     toggleLabel() {
       if (!this.isAddingLabel) {
@@ -286,7 +296,12 @@ export default {
     },
     updateDate() {
       this.cardToEdit.dueDate = this.cardDate;
+        const activity = {
+        byMember : this.$store.getters.user,
+        txt: ' changed the due date ', 
+      }
       this.emitCard();
+      this.emitActivity(activity);
     },
     updateTitle() {
       this.emitCard();
@@ -321,8 +336,14 @@ export default {
       this.emitCard();
     },
     createLabel(label) {
+      this.labelToEdit = null;
       this.$emit("createLabel", label);
       this.toggleCreateLabel();
+    },
+    removeLabel(labelId) {
+      this.labelToEdit = null;
+      this.toggleCreateLabel();
+      this.$emit("removeLabel", labelId);
     },
     removeCard() {
       this.$emit("removeCard", this.cardToEdit.id);

@@ -133,7 +133,7 @@ export default {
 					},
 					{
 						id: 'l102',
-						title: 'almost',
+						title: 'Almost',
 						color: '#f2d600',
 					},
 					{
@@ -148,8 +148,53 @@ export default {
 					},
 				],
 				members: [this.loggedUser],
-				groups: [],
-				activities: [],
+				groups: [
+					{
+						id:this.makeId(),
+						title:'Need to check',
+						cards:[
+							{
+								id:this.makeId(),
+								createdAt:Date.now(),
+								title:'Card details component'
+							},
+							{
+								id:this.makeId(),
+								createdAt:Date.now(),
+								title:'Login auth'
+							}
+						],
+					},
+					{
+						id:this.makeId(),
+						title:'In progress',
+						cards:[
+							{
+								id:this.makeId(),
+								createdAt:Date.now(),
+								title:'Card cover'
+							}
+						],
+					},
+					{
+						id:this.makeId(),
+						title:'Done',
+						cards:[],
+					},
+					{
+						id:this.makeId(),
+						title:'Need to refactor',
+						cards:[],
+					},
+				],
+				activities: [
+					{
+						id:this.makeId(),
+						createdAt:Date.now(),
+						byMember:this.loggedUser,
+						txt:' created this board '
+					}
+				],
 			};
 			this.$emit('createBoard', boardToSave);
 		},

@@ -9,6 +9,7 @@
           :member="member"
           :cardMembers="membersToEdit"
           @updateMembers="updateMembers"
+          @emitActivity="emitActivity"
         />
       </div>
     </div>
@@ -42,6 +43,9 @@ export default {
     close() {
       this.$emit("close");
     },
+    emitActivity(activity){
+      this.$emit('emitActivity',activity)
+    }
   },
 };
 </script>

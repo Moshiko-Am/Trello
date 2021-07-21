@@ -1,17 +1,16 @@
 <template>
   <section class="member-preview" @click="toggleMember(member._id)">
     <div class="inner-container">
-    <avatar
-      :username="member.fullname"
-      :size="32"
-      :inline="true"
-      :style="{
-        backgroundColor: '#dfe1e6',
-        color: '#172b4d',
-        fontSize: '15px',
-      }"
-    >
-    </avatar>
+      <avatar
+        :username="member.fullname"
+        :size="32"
+        :inline="true"
+        :style="{
+          backgroundColor: '#dfe1e6',
+          color: '#172b4d',
+        }"
+      >
+      </avatar>
       <span class="member-txt">{{ member.fullname }} </span>
       <span class="member-txt" v-if="member.username">
         ({{ member.username }})
@@ -50,9 +49,20 @@ export default {
       const idx = this.membersToEdit.findIndex(
         (member) => member._id === memberId
       );
-      if (idx === -1) this.membersToEdit.push(this.member);
-      else this.membersToEdit.splice(idx, 1);
+      var currTxt
+      if (idx === -1) {
+        this.membersToEdit.push(this.member);
+        currTxt = ` added ${this.member.fullname} `
+      } else {
+        this.membersToEdit.splice(idx, 1);
+        currTxt = ` removed ${this.member.fullname} `
+      }
+      const activity = {
+        byMember : this.$store.getters.user,
+        txt: currTxt,
+      }
       this.updateMembers();
+      this.$emit('emitActivity', activity)
     },
     updateMembers() {
       this.$emit("updateMembers", this.membersToEdit);

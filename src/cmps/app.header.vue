@@ -72,6 +72,9 @@
 		</div>
 		<div class="header-controls-right">
 			<!-- <router-link to="/login">Login</router-link> -->
+			<button @click="login" class="user-login" v-if="!user._id">
+				Login
+			</button>
 			<button class="btn-notifications">
 				<svg
 					width="20"
@@ -102,9 +105,6 @@
 					backgroundColor="#dfe1e6"
 					color="#172b4d"
 				></avatar>
-			</button>
-			<button @click="login" class="user-login" v-if="!user.username">
-				Login
 			</button>
 		</div>
 		<user-menu
