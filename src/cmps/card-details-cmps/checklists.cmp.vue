@@ -34,7 +34,6 @@ export default {
   computed: {},
   methods: {
     updateCl({checklist,activityTxt}, cIdx) {
-      console.log(activityTxt, '1');
       this.checklistsToEdit.splice(cIdx, 1, checklist);
       this.updateChecklists(activityTxt);
     },
@@ -43,7 +42,6 @@ export default {
       this.updateChecklists();
     },
     updateChecklists(activityTxt) {
-      console.log(activityTxt, '2');
       const clsCopy = JSON.parse(JSON.stringify(this.checklistsToEdit));
       this.$emit("updateChecklists", {checklists:clsCopy,activityTxt});
     },
