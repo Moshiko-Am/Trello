@@ -3,7 +3,7 @@ import { userService } from '../services/user.service.js';
 export const userStore = {
 	state: {
 		users: [],
-		loggedInUser: {},
+		loggedInUser: userService.getLoggedinUser() || {username:'guest',fullname:'guest'},
 	},
 	getters: {
 		user(state) {

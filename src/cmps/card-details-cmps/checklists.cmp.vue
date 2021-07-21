@@ -1,17 +1,18 @@
 <template>
   <div class="checklists">
     <transition-group name="fade">
-    <div
-      class="card-main-item"
-      v-for="(checklist, cIdx) in checklists"
-      :key="checklist.id"
-    >
-      <checklist-preview
-        :checklist="checklist"
-        @updateChecklist="updateCl($event, cIdx)"
-        @removeCl="removeCl(cIdx)"
-      />
-    </div>
+      <div
+        class="card-main-item"
+        v-for="(checklist, cIdx) in checklists"
+        :key="checklist.id"
+      >
+        <checklist-preview
+          :checklist="checklist"
+          @updateChecklist="updateCl($event, cIdx)"
+          @removeCl="removeCl(cIdx)"
+          @emitActivity="emitActivity"
+        />
+      </div>
     </transition-group>
   </div>
 </template>
@@ -44,6 +45,10 @@ export default {
     updateChecklists() {
       const clsCopy = JSON.parse(JSON.stringify(this.checklistsToEdit));
       this.$emit("updateChecklists", clsCopy);
+    },
+    emitActivity(activity) {
+      console.log('activity',activity);
+      this.$emit("emitActivity", activity);
     },
   },
   watch: {

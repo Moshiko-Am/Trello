@@ -71,6 +71,7 @@
                 v-if="cardToEdit.checklists"
                 :checklists="cardToEdit.checklists"
                 @updateChecklists="updateCL"
+                @emitActivity="emitActivity"
               />
             </transition>
             <activity-cmp :activities="activities" />
@@ -91,6 +92,7 @@
                 :boardMembers="board.members"
                 :cardMembers="card.members"
                 @updateMembers="updateMembers"
+                @emitActivity="emitActivity"
               />
             </div>
             <div class="card-sidebar-btn" @click="toggleLabel">
@@ -216,6 +218,13 @@ export default {
     coverCmp,
   },
   methods: {
+    emitActivity(activity) {
+      activity.cId = this.card.id
+      activity.gId = this.group.id
+      activity.cTitle = this.card.title
+      console.log('activity',activity);
+      this.$emit("emitActivity", activity);
+    },
     exitCard() {
       this.$emit("clearCard");
     },
@@ -281,7 +290,12 @@ export default {
     },
     updateDate() {
       this.cardToEdit.dueDate = this.cardDate;
+        const activity = {
+        byMember : this.$store.getters.user,
+        txt: ' changed the due date ', 
+      }
       this.emitCard();
+      this.emitActivity(activity);
     },
     updateTitle() {
       this.emitCard();
