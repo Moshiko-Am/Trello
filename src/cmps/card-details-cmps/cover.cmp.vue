@@ -1,5 +1,6 @@
 <template>
   <section class="pop-over">
+    {{ cardToEdit.cover }}
     <div class="pop-over-header">
       <span class="pop-over-header-title">Cover</span>
       <a class="icon-sm icon-close" @click="close"></a>
@@ -103,20 +104,34 @@
             ></button>
           </div>
         </div>
-        <button class="btn">Search for photos</button>
+        <button class="btn" @click="togglePhotos">
+          Search for photos
+        </button>
       </div>
     </div>
+    <background-photos
+      @updateBoard="setPhoto({ url: $event.payload.content, colorArray: [] })"
+      @closeMenu="togglePhotos"
+      v-if="isAddingPhotos"
+    />
   </section>
 </template>
 
 <script>
+import backgroundPhotos from "@/cmps/background-photos";
+import ColorThief from "colorthief";
+
 export default {
+  components: {
+    backgroundPhotos,
+  },
   props: {
     card: Object,
   },
   data() {
     return {
       cardToEdit: this.card,
+      isAddingPhotos: false,
       photos: [
         {
           url:
@@ -178,6 +193,9 @@ export default {
     close() {
       this.$emit("close");
     },
+    togglePhotos() {
+      this.isAddingPhotos = !this.isAddingPhotos;
+    },
     changeLayout(layout) {
       this.$set(this.cardToEdit.cover, "layout", layout);
       this.$emit("updateCard", this.cardToEdit);
@@ -209,7 +227,16 @@ export default {
 
       this.$emit("updateCard", this.cardToEdit);
     },
-    setPhoto(photo) {
+    async setPhoto(photo) {
+      photo.colorArray = await new Promise((resolve) => {
+        const colorThief = new ColorThief();
+        const img = new Image();
+        img.onload = () => {
+          resolve(colorThief.getColor(img));
+        };
+        img.crossOrigin = "Anonymous";
+        img.src = photo.url;
+      });
       this.$set(this.cardToEdit.cover, "isCover", true);
       this.$set(this.cardToEdit.cover, "type", "url");
       this.$set(this.cardToEdit.cover, "photo", photo);

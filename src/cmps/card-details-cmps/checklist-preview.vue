@@ -15,7 +15,11 @@
     </div>
     <div v-for="(todo, tIdx) in checklist.todos" :key="todo.id" class="todo">
       <div class="inner">
-        <input type="checkbox" v-model="todo.isDone" @change="toggleTodo(tIdx)" />
+        <input
+          type="checkbox"
+          v-model="todo.isDone"
+          @change="toggleTodo(tIdx)"
+        />
         <div @click="toggleTodo(tIdx)">
           <span :class="{ completed: todo.isDone }">{{ todo.title }}</span>
         </div>
@@ -85,30 +89,20 @@ export default {
       }
       return { width: width, "background-color": color };
     },
-    // loggedinUser(){
-    //   return (this.$store.getters.user) ? this.$store.getters.user : 'Guest'
-    // }
   },
   methods: {
     removeCl() {
       this.$emit("removeCl", this.checklistToEdit);
     },
     toggleTodo(tIdx) {
-      console.log('hi');
-      var currTxt = (this.checklistToEdit.todos[tIdx].isDone) ?
-       ` marked ${this.checklistToEdit.todos[tIdx].title} incomplete `
-      :` completed ${this.checklistToEdit.todos[tIdx].title} ` 
-      console.log('currTxt',currTxt);
-      const activity = {
-        byMember : (this.$store.getters.user.fullname) ? this.$store.getters.user : {fullname:'Guest'},
-        // byMember : this.$store.getters.user,
-        txt: currTxt, 
-      }
-      console.log('activity',activity);
+      console.log("hi");
+      var currTxt = this.checklistToEdit.todos[tIdx].isDone
+        ? ` marked ${this.checklistToEdit.todos[tIdx].title} incomplete `
+        : ` completed ${this.checklistToEdit.todos[tIdx].title} `;
+      const activityTxt = currTxt;
       this.checklistToEdit.todos[tIdx].isDone =
         !this.checklistToEdit.todos[tIdx].isDone;
-      this.updateChecklist();
-      this.emitActivity(activity)
+      this.updateChecklist(activityTxt);
     },
     deleteTodo(tIdx) {
       this.checklistToEdit.todos.splice(tIdx, 1);
@@ -116,7 +110,6 @@ export default {
     },
     addTodo() {
       this.addingTodo = !this.addingTodo;
-      this.$refs.addTodo.focus()
       if (!this.addingTodo) {
         this.checklistToEdit.todos.push({ ...this.todoToAdd });
         this.todoToAdd = {
@@ -126,19 +119,21 @@ export default {
         };
         this.updateChecklist();
         return;
+      } else {
+        this.$nextTick(() => this.$refs.addTodo.focus());
       }
     },
     makeId() {
       const num = Math.floor(Math.random() * (900 - 1) + 1);
       return "t" + num;
     },
-    updateChecklist() {
-      this.$emit("updateChecklist", this.checklistToEdit);
+    updateChecklist(activityTxt) {
+      this.$emit("updateChecklist", {checklist:this.checklistToEdit,activityTxt});
     },
-    emitActivity(activity){
-      console.log('activity',activity);
-      this.$emit('emitActivity', activity)
-    }
+    emitActivity(activity) {
+      console.log("activity", activity);
+      this.$emit("emitActivity", activity);
+    },
   },
 };
 </script>

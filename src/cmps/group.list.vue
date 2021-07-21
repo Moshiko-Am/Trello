@@ -160,7 +160,6 @@
         @clearCard="clearCard"
         @updateCard="updateCard($event, currGroupIdx)"
         @removeCard="removeCard($event, currGroupIdx)"
-        @emitActivity="emitActivity"
       ></card-details>
     </transition>
   </section>
@@ -206,10 +205,6 @@ export default {
     draggable,
   },
   methods: {
-    emitActivity(activity) {
-      console.log('activity',activity);
-      this.$emit("emitActivity", activity);
-    },
     createLabel(label) {
       this.$emit("createLabel", label);
     },
@@ -231,7 +226,15 @@ export default {
       const savedCard = { ...this.cardToEdit };
       savedCard.id = this.makeId();
       this.groupsToEdit[gIdx].cards.push(savedCard);
-      this.saveGroups();
+      const activity = {
+        cId: savedCard.id,
+        gId: this.groupsToEdit[gIdx].id,
+        cTitle: savedCard.title,
+        txt: ` added card "${savedCard.title}" to list "${this.groupsToEdit[gIdx].title}" `,
+        byMember: this.$store.getters.user,
+        isSpecific: false,
+      };
+      this.saveGroups(activity);
       this.cardToEdit.title = "";
       this.$refs[`content-${gIdx}`][0].focus();
     },
@@ -279,22 +282,32 @@ export default {
       const idx = this.groupsToEdit[gIdx].cards.findIndex(
         (card) => card.id === cardId
       );
+      const activity = {
+        cId: cardId,
+        gId: this.groupsToEdit[gIdx].id,
+        cTitle: this.groupsToEdit[gIdx].cards[idx].title,
+        txt: ` removed card "${this.groupsToEdit[gIdx].cards[idx].title}" from list "${this.groupsToEdit[gIdx].title}" `,
+        byMember: this.$store.getters.user,
+        isSpecific: false,
+      };
       this.groupsToEdit[gIdx].cards.splice(idx, 1);
       this.clearCard();
-      this.saveGroups();
+      this.saveGroups(activity);
     },
-    updateCard(updatedCard, gIdx) {
+    updateCard({ updatedCard, activity }, gIdx) {
       const cIdx = this.groupsToEdit[gIdx].cards.findIndex(
         (card) => card.id === updatedCard.id
       );
       this.groupsToEdit[gIdx].cards.splice(cIdx, 1, updatedCard);
       socketService.emit("send card", { payload: updatedCard, cIdx, gIdx });
-      this.saveGroups();
+      console.log(activity, "6");
+      this.saveGroups(activity);
     },
-    saveGroups() {
+    saveGroups(activity) {
       this.$emit("boardUpdate", {
         type: "groups",
         payload: this.groupsToEdit,
+        activities: activity,
       });
       socketService.emit("send groups", this.groupsToEdit);
     },
@@ -302,14 +315,27 @@ export default {
       const savedGroup = { ...this.groupToEdit };
       savedGroup.id = this.makeId();
       this.groupsToEdit.push(savedGroup);
-      this.saveGroups();
+      const activity = {
+        gId: savedGroup.id,
+        gTitle: savedGroup.title,
+        txt: ` added list "${savedGroup.title}" to this board `,
+        byMember: this.$store.getters.user,
+        isSpecific: false,
+      };
+      this.saveGroups(activity);
       this.groupToEdit.title = "";
     },
     deleteGroup(gIdx) {
+      const activity = {
+        gTitle: this.groupsToEdit[gIdx].title,
+        txt: ` removed list "${this.groupsToEdit[gIdx].title}" from this board `,
+        byMember: this.$store.getters.user,
+        isSpecific: false,
+      };
       this.groupsToEdit.splice(gIdx, 1);
       this.currGroupIdx = null;
       this.isExtrasShowing = false;
-      this.saveGroups();
+      this.saveGroups(activity);
     },
     toggleGroupEdit() {
       this.isAddingGroup = !this.isAddingGroup;
