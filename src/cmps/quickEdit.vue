@@ -25,6 +25,7 @@
           @updateLabels="updateLabels"
           @closePopups="closePopups"
           @toggleCreateLabel="toggleCreateLabel"
+          @editLabel="setLabelToEdit"
           v-if="isAddingLabel"
         />
         <create-labels
@@ -32,6 +33,7 @@
           @close="closePopups"
           :label="labelToEdit"
           @createLabel="createLabel"
+          @removeLabel="removeLabel"
           @back="toggleCreateLabel"
         />
       </div>
@@ -99,6 +101,10 @@ export default {
     },
   },
   methods: {
+    setLabelToEdit(label) {
+      this.labelToEdit = label;
+      this.toggleCreateLabel()
+    },
     createLabel(label) {
       this.labelToEdit = null;
       this.$emit("createLabel", label);

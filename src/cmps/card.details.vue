@@ -111,6 +111,7 @@
               @close="closePopups"
               :label="labelToEdit"
               @createLabel="createLabel"
+              @removeLabel="removeLabel"
               @back="toggleCreateLabel"
             />
           </div>
@@ -229,7 +230,7 @@ export default {
     },
     setLabelToEdit(label) {
       this.labelToEdit = label;
-      this.isCreateLabel = true;
+      this.toggleCreateLabel()
     },
     makeId() {
       const num = Math.floor(Math.random() * (900 - 1) + 1);
@@ -330,6 +331,7 @@ export default {
       this.toggleCreateLabel();
     },
     removeLabel(labelId) {
+      console.log('hi');
       this.labelToEdit = null;
       this.toggleCreateLabel();
       this.$emit("removeLabel", labelId);
