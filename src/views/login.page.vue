@@ -95,6 +95,9 @@ export default {
 			
 		},
 	},
+	created() {
+		this.$store.commit('clearStyle');
+	},
 };
 </script>
 
