@@ -70,6 +70,7 @@
               v-if="cardToEdit.checklists"
               :checklists="cardToEdit.checklists"
               @updateChecklists="updateCL"
+              @emitActivity="emitActivity"
             />
           </transition>
           <activity-cmp :activities="activities" />
@@ -90,6 +91,7 @@
               :boardMembers="board.members"
               :cardMembers="card.members"
               @updateMembers="updateMembers"
+              @emitActivity="emitActivity"
             />
           </div>
           <div class="card-sidebar-btn" @click="toggleLabel">
@@ -218,7 +220,6 @@ export default {
       activity.cId = this.card.id
       activity.gId = this.group.id
       activity.cTitle = this.card.title
-      console.log('activity',activity);
       this.$emit("emitActivity", activity);
     },
     exitCard() {
