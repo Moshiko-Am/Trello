@@ -315,12 +315,17 @@
     }
     .checklist-preview {
         .add-todo-container {
-            // display: flex;
-            // align-items: center;
-            // justify-content: space-between;
+            display: flex;
+            flex-direction: column;
+            >div {
+                display: flex;
+                align-items: center;
+                margin-top: 8px;
+            }
+
             margin-top: 4px;
             .add-todo-input {
-                // margin-left: 30px;
+                margin-left: 30px;
                 margin-right: 3px;
                 width: calc(100% - 34px);
                 float: right;
@@ -340,8 +345,7 @@
                 color: #fff;
                 padding: 6px 12px;
                 border-radius: 3px;
-                margin-left: 32px;
-                margin-top: 8px;
+                margin-left: 30px;
                 line-height: 20px;
             }
         }
