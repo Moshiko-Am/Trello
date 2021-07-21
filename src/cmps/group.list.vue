@@ -79,6 +79,8 @@
                   @openBg="openBg"
                   @updateCard="updateCard($event, gIdx)"
                   @removeCard="removeCard($event, gIdx)"
+                  @createLabel="createLabel"
+                  @removeLabel="removeLabel"
                 />
               </draggable>
             </section>
@@ -269,15 +271,15 @@ export default {
       this.setCard(card, gIdx, cIdx);
     },
     setCard(card, gIdx, cIdx) {
-      if(!card.cover) {
+      if (!card.cover) {
         this.$set(card, "cover", {
-        isCover: false,
-        type: "",
-        color: "",
-        attachmentIdx: null,
-        photo: { url: "", colorArray: [] },
-        layout: "",
-      });
+          isCover: false,
+          type: "",
+          color: "",
+          attachmentIdx: null,
+          photo: { url: "", colorArray: [] },
+          layout: "",
+        });
       }
       this.currCard = card;
       this.currGroupIdx = gIdx;

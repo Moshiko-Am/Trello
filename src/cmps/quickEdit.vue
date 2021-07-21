@@ -24,7 +24,15 @@
           :cardLabels="card.labelIds"
           @updateLabels="updateLabels"
           @closePopups="closePopups"
+          @toggleCreateLabel="toggleCreateLabel"
           v-if="isAddingLabel"
+        />
+        <create-labels
+          v-if="isCreateLabel"
+          @close="closePopups"
+          :label="labelToEdit"
+          @createLabel="createLabel"
+          @back="toggleCreateLabel"
         />
       </div>
       <el-date-picker
@@ -60,15 +68,18 @@
 import membersList from "./card-details-cmps/members.list.vue";
 import labelsList from "./labels/labels.list.vue";
 import coverCmp from "@/cmps/card-details-cmps/cover.cmp";
+import createLabels from "./create.labels.vue";
+
 export default {
   props: {
     card: Object,
-    group: Object
+    group: Object,
   },
   components: {
     membersList,
     labelsList,
     coverCmp,
+    createLabels,
   },
   data() {
     return {
@@ -77,6 +88,8 @@ export default {
       isAddingMember: false,
       isAddingAttachment: false,
       isAddingCover: false,
+      isCreateLabel: false,
+      labelToEdit: null,
       cardDate: "",
     };
   },
@@ -86,11 +99,26 @@ export default {
     },
   },
   methods: {
+    createLabel(label) {
+      this.labelToEdit = null;
+      this.$emit("createLabel", label);
+      this.toggleCreateLabel();
+    },
+    removeLabel(labelId) {
+      this.labelToEdit = null;
+      this.toggleCreateLabel();
+      this.$emit("removeLabel", labelId);
+    },
     closePopups() {
       this.isAddingLabel = false;
       this.isAddingMember = false;
       this.isAddingAttachment = false;
       this.isAddingCover = false;
+      this.isCreateLabel = false;
+    },
+    toggleCreateLabel() {
+      this.isAddingLabel = this.isCreateLabel;
+      this.isCreateLabel = !this.isCreateLabel;
     },
     toggleLabel() {
       if (!this.isAddingLabel) {
@@ -138,7 +166,7 @@ export default {
     },
     emitCard(activityTxt) {
       const cardCopy = JSON.parse(JSON.stringify(this.cardToEdit));
-      this.$emit("emitCard", {updatedCard:cardCopy,activityTxt});
+      this.$emit("emitCard", { updatedCard: cardCopy, activityTxt });
     },
     removeCard() {
       this.$emit("removeCard", this.cardToEdit.id);

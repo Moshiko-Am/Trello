@@ -75,7 +75,7 @@ export default {
     async boardUpdate(update) {
       const board = JSON.parse(JSON.stringify(this.board));
       board[update.type] = update.payload;
-      if(update.activities.txt){
+      if(update.activities && update.activities.txt){
         update.activities.id = this.makeId()
         update.activities.createdAt = Date.now()
         board.activities.unshift(update.activities)

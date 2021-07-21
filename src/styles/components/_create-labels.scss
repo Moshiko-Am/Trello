@@ -9,6 +9,11 @@
     z-index: 1;
     cursor:auto;
 
+    h3 {
+        color: #5e6c84;
+        margin: 1px;
+    }
+
     .icon-x {
         cursor: pointer;
         @include to-icon("\e91c");

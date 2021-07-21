@@ -139,6 +139,8 @@
         @openCard="openCard"
         @removeCard="removeCard"
         @toggleAttach="openCard"
+        @createLabel="createLabel"
+        @removeLabel="removeLabel"
       />
     </section>
     <button
@@ -262,8 +264,8 @@ export default {
       }
       const cardCopy = JSON.parse(JSON.stringify(this.card));
       cardCopy.title = this.cardTitle;
-      const activityTxt = ` changed the title to ${cardCopy.title} `
-      this.emitCard({updatedCard:cardCopy,activityTxt});
+      const activityTxt = ` changed the title to ${cardCopy.title} `;
+      this.emitCard({ updatedCard: cardCopy, activityTxt });
       this.toggleQuickEdit();
     },
     emitCard({ updatedCard, activityTxt }) {
@@ -279,6 +281,12 @@ export default {
       }
       console.log(activity, "4");
       this.$emit("updateCard", { updatedCard: cardCopy, activity });
+    },
+    createLabel(label) {
+      this.$emit("createLabel", label);
+    },
+    removeLabel(labelId) {
+      this.$emit("removeLabel", labelId);
     },
   },
   directives: {

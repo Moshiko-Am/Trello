@@ -115,7 +115,7 @@
 </template>
 
 <script>
-import backgroundPhotos from "@/cmps/background-photos";
+import backgroundPhotos from "@/cmps/background.photos";
 import ColorThief from "colorthief";
 
 export default {
