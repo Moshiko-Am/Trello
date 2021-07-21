@@ -1,6 +1,5 @@
 .activity-preview {
     width: 100%;
-    height: 56px;
     padding: 8px 0;
     position: relative;
     right: 5px;
@@ -11,12 +10,11 @@
     .inner-container {
         display: flex;
         align-items: flex-start;
-        padding: 3px;
+        padding-right: 3px;
         line-height: 18px;
 
         .vue-avatar--wrapper{
             min-width: 32px;
-            margin-top: 6px;
         }
         
         .activity-info {
