@@ -35,8 +35,11 @@
               <labels-cmp
                 v-if="cardToEdit.labelIds && cardToEdit.labelIds.length"
                 :labels="labelsForDisplay"
+                :card="card"
                 :optionsLabels="board.labels"
                 :cardLabels="card.labelIds"
+                @createLabel="createLabel($event, false)"
+                @removeLabel="removeLabel($event, false)"
                 @updateLabels="updateLabels"
                 @closePopups="closePopups"
               />
@@ -45,6 +48,7 @@
               <members-cmp
                 v-if="cardToEdit.members"
                 :members="cardToEdit.members"
+                @updateMembers="updateMembers"
               />
             </transition>
             <transition name="fade">
@@ -74,7 +78,7 @@
               @updateChecklists="updateCL"
             />
           </transition>
-          <activity-cmp :activities="activities" />
+          <activity-cmp :activities="filteredActivities" />
         </div>
         <div class="card-details-sidebar">
           <h3>Suggested</h3>
@@ -110,7 +114,8 @@
               v-if="isCreateLabel"
               @close="closePopups"
               :label="labelToEdit"
-              @createLabel="createLabel"
+              @createLabel="createLabel($event, true)"
+              @removeLabel="removeLabel($event, true)"
               @back="toggleCreateLabel"
             />
           </div>
@@ -229,7 +234,7 @@ export default {
     },
     setLabelToEdit(label) {
       this.labelToEdit = label;
-      this.isCreateLabel = true;
+      this.toggleCreateLabel();
     },
     makeId() {
       const num = Math.floor(Math.random() * (900 - 1) + 1);
@@ -318,21 +323,23 @@ export default {
     },
     updateCL({ checklists, activityTxt }) {
       this.cardToEdit.checklists = checklists;
-      console.log(activityTxt, "3");
       this.emitCard(activityTxt);
     },
     updateLabels(labels) {
       this.cardToEdit.labelIds = labels;
       this.emitCard();
     },
-    createLabel(label) {
+    createLabel(label, isAdding) {
       this.labelToEdit = null;
       this.$emit("createLabel", label);
-      this.toggleCreateLabel();
+      // this.toggleCreateLabel();
+      this.isAddingLabel = isAdding;
+      this.isCreateLabel = false;
     },
-    removeLabel(labelId) {
+    removeLabel(labelId, isAdding) {
       this.labelToEdit = null;
-      this.toggleCreateLabel();
+      this.isAddingLabel = isAdding;
+      this.isCreateLabel = false;
       this.$emit("removeLabel", labelId);
     },
     removeCard() {
@@ -353,7 +360,6 @@ export default {
         activity.txt = activityTxt;
         activity.isSpecific = true;
       }
-      console.log(activity, "4");
       this.$emit("updateCard", { updatedCard: cardCopy, activity });
     },
     updateAttachments(attachments) {
@@ -378,8 +384,11 @@ export default {
     },
   },
   computed: {
-    activities() {
-      return this.$store.getters.board.activities;
+    filteredActivities() {
+      const activities = this.$store.getters.board.activities;
+      return activities.filter((activity) => {
+        return activity.cId === this.card.id && activity.gId === this.group.id;
+      });
     },
     labelsForDisplay() {
       const labels = this.$store.getters.board.labels;

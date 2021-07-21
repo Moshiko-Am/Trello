@@ -60,7 +60,6 @@ export default {
     },
     createLabel(newLabel) {
       const boardLabels = JSON.parse(JSON.stringify(this.board)).labels;
-      console.log("newLabel", newLabel);
       const idx = boardLabels.findIndex((label) => label.id === newLabel.id);
       if (idx === -1) boardLabels.push(newLabel);
       else boardLabels.splice(idx, 1, newLabel);
@@ -80,7 +79,6 @@ export default {
         update.activities.createdAt = Date.now();
         board.activities.unshift(update.activities);
       }
-      console.log(board.activities, "7");
       try {
         await this.$store.dispatch({ type: "saveBoard", board });
       } catch (err) {

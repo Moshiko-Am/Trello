@@ -24,7 +24,17 @@
           :cardLabels="card.labelIds"
           @updateLabels="updateLabels"
           @closePopups="closePopups"
+          @toggleCreateLabel="toggleCreateLabel"
+          @editLabel="setLabelToEdit"
           v-if="isAddingLabel"
+        />
+        <create-labels
+          v-if="isCreateLabel"
+          @close="closePopups"
+          :label="labelToEdit"
+          @createLabel="createLabel"
+          @removeLabel="removeLabel"
+          @back="toggleCreateLabel"
         />
       </div>
       <el-date-picker
@@ -60,14 +70,18 @@
 import membersList from "./card-details-cmps/members.list.vue";
 import labelsList from "./labels/labels.list.vue";
 import coverCmp from "@/cmps/card-details-cmps/cover.cmp";
+import createLabels from "./create.labels.vue";
+
 export default {
   props: {
     card: Object,
+    group: Object,
   },
   components: {
     membersList,
     labelsList,
     coverCmp,
+    createLabels,
   },
   data() {
     return {
@@ -76,6 +90,8 @@ export default {
       isAddingMember: false,
       isAddingAttachment: false,
       isAddingCover: false,
+      isCreateLabel: false,
+      labelToEdit: null,
       cardDate: "",
     };
   },
@@ -85,11 +101,30 @@ export default {
     },
   },
   methods: {
+    setLabelToEdit(label) {
+      this.labelToEdit = label;
+      this.toggleCreateLabel()
+    },
+    createLabel(label) {
+      this.labelToEdit = null;
+      this.$emit("createLabel", label);
+      this.toggleCreateLabel();
+    },
+    removeLabel(labelId) {
+      this.labelToEdit = null;
+      this.toggleCreateLabel();
+      this.$emit("removeLabel", labelId);
+    },
     closePopups() {
       this.isAddingLabel = false;
       this.isAddingMember = false;
       this.isAddingAttachment = false;
       this.isAddingCover = false;
+      this.isCreateLabel = false;
+    },
+    toggleCreateLabel() {
+      this.isAddingLabel = this.isCreateLabel;
+      this.isCreateLabel = !this.isCreateLabel;
     },
     toggleLabel() {
       if (!this.isAddingLabel) {
@@ -114,7 +149,8 @@ export default {
     },
     updateDate() {
       this.cardToEdit.dueDate = this.cardDate;
-      this.emitCard();
+      const activityTxt = ` changed the due date to ${this.cardDate} `;
+      this.emitCard(activityTxt);
     },
     updateCard() {
       const cardCopy = JSON.parse(JSON.stringify(this.cardToEdit));
@@ -123,9 +159,9 @@ export default {
     updateTitle() {
       this.emitCard();
     },
-    updateMembers(members) {
+    updateMembers({ members, activityTxt }) {
       this.cardToEdit.members = members;
-      this.emitCard();
+      this.emitCard(activityTxt);
     },
     updateLabels(labels) {
       this.cardToEdit.labelIds = labels;
@@ -134,9 +170,9 @@ export default {
     openCard() {
       this.$emit("openCard");
     },
-    emitCard() {
+    emitCard(activityTxt) {
       const cardCopy = JSON.parse(JSON.stringify(this.cardToEdit));
-      this.$emit("emitCard", cardCopy);
+      this.$emit("emitCard", { updatedCard: cardCopy, activityTxt });
     },
     removeCard() {
       this.$emit("removeCard", this.cardToEdit.id);

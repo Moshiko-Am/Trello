@@ -60,7 +60,6 @@ export default {
     },
     setColor(color) {
         this.labelToEdit.color = color;
-        console.log('color',this.labelToEdit.color);
     },
     createLabel() {
       if(!this.labelToEdit.color) return

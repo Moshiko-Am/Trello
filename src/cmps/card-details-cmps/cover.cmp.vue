@@ -1,6 +1,5 @@
 <template>
   <section class="pop-over">
-    {{ cardToEdit.cover }}
     <div class="pop-over-header">
       <span class="pop-over-header-title">Cover</span>
       <a class="icon-sm icon-close" @click="close"></a>
@@ -132,27 +131,27 @@ export default {
       isAddingPhotos: false,
       photos: [
         {
-          url: "https://trello-backgrounds.s3.amazonaws.com/SharedBackground/256x182/2b80f3ff0258e985f49cbd3f54aedce5/photo-1626203662544-69e778ddc0ee.jpg",
+          url: "https://images.unsplash.com/photo-1495567720989-cebdbdd97913?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80",
           colorArray: [202, 181, 174],
         },
         {
-          url: "https://trello-backgrounds.s3.amazonaws.com/SharedBackground/128x192/aa2d9b78b5c9523010a84ece94e0e3e7/photo-1626515728846-d09aacfee23d.jpg",
+          url: "https://images.unsplash.com/photo-1512641406448-6574e777bec6?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80",
           colorArray: [43, 38, 52],
         },
         {
-          url: "https://trello-backgrounds.s3.amazonaws.com/SharedBackground/256x171/82e0e591c48dd4802db6b7fcdb3fdf5a/photo-1626327524471-b4487aba8a26.jpg",
+          url: "https://images.unsplash.com/photo-1459745930869-b3d0d72c3cbb?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=967&q=80",
           colorArray: [188, 183, 178],
         },
         {
-          url: "https://trello-backgrounds.s3.amazonaws.com/SharedBackground/128x192/c0f5dd5ef29e39b820032b367cb82516/photo-1626621732093-add91dee1749.jpg",
+          url: "https://images.unsplash.com/photo-1626711656195-4db07dd46c8f?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80",
           colorArray: [60, 67, 69],
         },
         {
-          url: "https://trello-backgrounds.s3.amazonaws.com/SharedBackground/256x171/ab95826232857e3b0dba45f81ee8f795/photo-1626534578032-2fa71338dbdc.jpg",
+          url: "https://images.unsplash.com/photo-1422493757035-1e5e03968f95?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80",
           colorArray: [4, 12, 17],
         },
         {
-          url: "https://trello-backgrounds.s3.amazonaws.com/SharedBackground/256x171/698c6f5ebc9b1df6b0cfefeb3b42fbfb/photo-1626617834031-a2ad88e37bea.jpg",
+          url: "https://images.unsplash.com/photo-1626800349607-773f9a7b105c?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80",
           colorArray: [198, 199, 199],
         },
       ],
@@ -227,8 +226,10 @@ export default {
           resolve(colorThief.getColor(img));
         };
         img.crossOrigin = "Anonymous";
+        console.log(photo);
         img.src = photo.url;
       });
+
       this.$set(this.cardToEdit.cover, "isCover", true);
       this.$set(this.cardToEdit.cover, "type", "url");
       this.$set(this.cardToEdit.cover, "photo", photo);
