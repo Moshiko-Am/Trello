@@ -1,0 +1,36 @@
+.search-boards-container {
+	min-width: 301px;
+	max-width: 600px;
+	min-height: fit-content;
+	border-radius: 3px;
+	background-color: #f4f5f7;
+	position: fixed;
+	top: 44px;
+	padding: 12px 12px 4px;
+	transition: 0.3s;
+	box-shadow: 0 12px 24px -6px rgba(9, 30, 66, 0.25),
+		0 0 0 1px rgba(9, 30, 66, 0.08);
+	.board-search-header {
+		color: #5e6c84;
+		font-size: 12px;
+		font-weight: 600;
+		line-height: 16px;
+		margin-top: 16px;
+		font-weight: 500;
+		letter-spacing: 0.04em;
+		margin: 3px 0 9px;
+		text-transform: uppercase;
+	}
+
+	.boards-list-sm {
+		flex-direction: row;
+		flex-wrap: wrap;
+		justify-content: space-between;
+		margin-bottom: 0;
+
+		.board-item {
+			width: 282px;
+			margin-bottom: 12px;
+		}
+	}
+}

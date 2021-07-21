@@ -54,13 +54,12 @@ export default {
     addActivity(newActivity) {
       const boardActivities = JSON.parse(JSON.stringify(this.board)).activities;
       newActivity.id = this.makeId();
-      newActivity.createdAt = Date.now()
+      newActivity.createdAt = Date.now();
       boardActivities.unshift(newActivity);
       this.boardUpdate({ type: "activities", payload: boardActivities });
     },
     createLabel(newLabel) {
       const boardLabels = JSON.parse(JSON.stringify(this.board)).labels;
-      console.log("newLabel", newLabel);
       const idx = boardLabels.findIndex((label) => label.id === newLabel.id);
       if (idx === -1) boardLabels.push(newLabel);
       else boardLabels.splice(idx, 1, newLabel);
@@ -75,10 +74,10 @@ export default {
     async boardUpdate(update) {
       const board = JSON.parse(JSON.stringify(this.board));
       board[update.type] = update.payload;
-      if(update.activities && update.activities.txt){
-        update.activities.id = this.makeId()
-        update.activities.createdAt = Date.now()
-        board.activities.unshift(update.activities)
+      if (update.activities && update.activities.txt) {
+        update.activities.id = this.makeId();
+        update.activities.createdAt = Date.now();
+        board.activities.unshift(update.activities);
       }
       try {
         await this.$store.dispatch({ type: "saveBoard", board });
@@ -126,7 +125,7 @@ export default {
     socketService.on("style updated", this.updateStyle);
     socketService.on("members updated", this.updateMembers);
   },
-  destroyed(){
+  destroyed() {
     socketService.off("card updated", this.updateCard);
     socketService.off("groups updated", this.updateGroups);
     socketService.off("title updated", this.updateTitle);
