@@ -80,6 +80,7 @@
 			height: 96px;
 			width: 152px;
 			transition: 0.15s;
+			object-fit: cover;
 
 			&:hover {
 				filter: brightness(120%);
