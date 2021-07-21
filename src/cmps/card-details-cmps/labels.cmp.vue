@@ -14,13 +14,23 @@
         {{ label.title }}
       </div>
       <div class="add-label-btn" @click="toggleLabels">
-        <span class="icon-sm icon-add"></span>
-        <labelsList
-          :optionsLabels="optionsLabels"
-          :cardLabels="cardLabels"
+        <span class="icon-sm icon-add"> </span>
+        <labels-list
+          :optionsLabels="board.labels"
+          :cardLabels="card.labelIds"
           @updateLabels="updateLabels"
-          @closePopups="closePopups"
+          @closePopups="toggleLabels"
+          @toggleCreateLabel="toggleCreateLabel"
+          @editLabel="setLabelToEdit"
           v-if="isAddingLabel"
+        />
+        <create-labels
+          v-if="isCreateLabel"
+          @close="isCreateLabel = false"
+          :label="labelToEdit"
+          @createLabel="createLabel"
+          @removeLabel="removeLabel"
+          @back="toggleCreateLabel"
         />
       </div>
       <!-- </transition-group> -->
@@ -30,25 +40,57 @@
 
 <script>
 import labelsList from "../labels/labels.list.vue";
+import createLabels from "../create.labels.vue";
+
 export default {
-  data(){
+  data() {
     return {
-      isAddingLabel: false
-    }
+      isAddingLabel: false,
+      isCreateLabel: false,
+      labelToEdit: null,
+    };
   },
   props: {
-    cardLabels:Array,
-    optionsLabels:Array,
+    cardLabels: Array,
+    card: Object,
+    optionsLabels: Array,
     labels: Array,
   },
   components: {
     labelsList,
+    createLabels,
   },
-  methods:{
-    toggleLabels(){
-      this.isAddingLabel = !this.isAddingLabel
-    }
-  }
+  methods: {
+    toggleLabels() {
+      this.isAddingLabel = !this.isAddingLabel;
+    },
+    setLabelToEdit(label) {
+      this.labelToEdit = label;
+      this.toggleCreateLabel();
+    },
+    createLabel(label) {
+      this.labelToEdit = null;
+      this.$emit("createLabel", label);
+      this.toggleCreateLabel();
+    },
+    removeLabel(labelId) {
+      this.labelToEdit = null;
+      this.toggleCreateLabel();
+      this.$emit("removeLabel", labelId);
+    },
+    toggleCreateLabel() {
+      this.isAddingLabel = this.isCreateLabel;
+      this.isCreateLabel = !this.isCreateLabel;
+    },
+    updateLabels(labels) {
+      this.$emit('updateLabels', labels)
+    },
+  },
+  computed: {
+    board() {
+      return this.$store.getters.board;
+    },
+  },
 };
 </script>
 

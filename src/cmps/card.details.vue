@@ -35,8 +35,11 @@
               <labels-cmp
                 v-if="cardToEdit.labelIds && cardToEdit.labelIds.length"
                 :labels="labelsForDisplay"
+                :card="card"
                 :optionsLabels="board.labels"
                 :cardLabels="card.labelIds"
+                @createLabel="createLabel($event, false)"
+                @removeLabel="removeLabel($event, false)"
                 @updateLabels="updateLabels"
                 @closePopups="closePopups"
               />
@@ -45,6 +48,7 @@
               <members-cmp
                 v-if="cardToEdit.members"
                 :members="cardToEdit.members"
+                @updateMembers="updateMembers"
               />
             </transition>
             <transition name="fade">
@@ -110,8 +114,8 @@
               v-if="isCreateLabel"
               @close="closePopups"
               :label="labelToEdit"
-              @createLabel="createLabel"
-              @removeLabel="removeLabel"
+              @createLabel="createLabel($event, true)"
+              @removeLabel="removeLabel($event, true)"
               @back="toggleCreateLabel"
             />
           </div>
@@ -230,7 +234,7 @@ export default {
     },
     setLabelToEdit(label) {
       this.labelToEdit = label;
-      this.toggleCreateLabel()
+      this.toggleCreateLabel();
     },
     makeId() {
       const num = Math.floor(Math.random() * (900 - 1) + 1);
@@ -325,15 +329,17 @@ export default {
       this.cardToEdit.labelIds = labels;
       this.emitCard();
     },
-    createLabel(label) {
+    createLabel(label, isAdding) {
       this.labelToEdit = null;
       this.$emit("createLabel", label);
-      this.toggleCreateLabel();
+      // this.toggleCreateLabel();
+      this.isAddingLabel = isAdding;
+      this.isCreateLabel = false;
     },
-    removeLabel(labelId) {
-      console.log('hi');
+    removeLabel(labelId, isAdding) {
       this.labelToEdit = null;
-      this.toggleCreateLabel();
+      this.isAddingLabel = isAdding;
+      this.isCreateLabel = false;
       this.$emit("removeLabel", labelId);
     },
     removeCard() {
@@ -379,9 +385,9 @@ export default {
   },
   computed: {
     filteredActivities() {
-      const activities = this.$store.getters.board.activities
+      const activities = this.$store.getters.board.activities;
       return activities.filter((activity) => {
-        return (activity.cId === this.card.id && activity.gId === this.group.id)
+        return activity.cId === this.card.id && activity.gId === this.group.id;
       });
     },
     labelsForDisplay() {
