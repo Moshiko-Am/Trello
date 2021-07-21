@@ -10,7 +10,6 @@
           :checklist="checklist"
           @updateChecklist="updateCl($event, cIdx)"
           @removeCl="removeCl(cIdx)"
-          @emitActivity="emitActivity"
         />
       </div>
     </transition-group>
@@ -34,21 +33,19 @@ export default {
   },
   computed: {},
   methods: {
-    updateCl(checklist, cIdx) {
+    updateCl({checklist,activityTxt}, cIdx) {
+      console.log(activityTxt, '1');
       this.checklistsToEdit.splice(cIdx, 1, checklist);
-      this.updateChecklists();
+      this.updateChecklists(activityTxt);
     },
     removeCl(cIdx) {
       this.checklistsToEdit.splice(cIdx, 1);
       this.updateChecklists();
     },
-    updateChecklists() {
+    updateChecklists(activityTxt) {
+      console.log(activityTxt, '2');
       const clsCopy = JSON.parse(JSON.stringify(this.checklistsToEdit));
-      this.$emit("updateChecklists", clsCopy);
-    },
-    emitActivity(activity) {
-      console.log('activity',activity);
-      this.$emit("emitActivity", activity);
+      this.$emit("updateChecklists", {checklists:clsCopy,activityTxt});
     },
   },
   watch: {

@@ -75,6 +75,12 @@ export default {
     async boardUpdate(update) {
       const board = JSON.parse(JSON.stringify(this.board));
       board[update.type] = update.payload;
+      if(update.activities.txt){
+        update.activities.id = this.makeId()
+        update.activities.createdAt = Date.now()
+        board.activities.unshift(update.activities)
+      }
+        console.log(board.activities, '7');
       try {
         await this.$store.dispatch({ type: "saveBoard", board });
       } catch (err) {
@@ -115,11 +121,18 @@ export default {
     },
   },
   created() {
-    socketService.on("get card", this.updateCard);
-    socketService.on("get groups", this.updateGroups);
-    socketService.on("get title", this.updateTitle);
-    socketService.on("get style", this.updateStyle);
-    socketService.on("get members", this.updateMembers);
+    socketService.on("card updated", this.updateCard);
+    socketService.on("groups updated", this.updateGroups);
+    socketService.on("title updated", this.updateTitle);
+    socketService.on("style updated", this.updateStyle);
+    socketService.on("members updated", this.updateMembers);
+  },
+  destroyed(){
+    socketService.off("card updated", this.updateCard);
+    socketService.off("groups updated", this.updateGroups);
+    socketService.off("title updated", this.updateTitle);
+    socketService.off("style updated", this.updateStyle);
+    socketService.off("members updated", this.updateMembers);
   },
   watch: {
     "$route.params.boardId": {

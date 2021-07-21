@@ -7,7 +7,7 @@
           <span>{{ activity.byMember.fullname }}</span>
           {{activity.txt}}
         </div>
-        <p>{{ Date.now() | moment("calendar")}}</p>
+        <p>{{ activity.createdAt | moment("calendar")}}</p>
       </div>
     </div>
   </section>

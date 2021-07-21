@@ -70,7 +70,6 @@
               v-if="cardToEdit.checklists"
               :checklists="cardToEdit.checklists"
               @updateChecklists="updateCL"
-              @emitActivity="emitActivity"
             />
           </transition>
           <activity-cmp :activities="activities" />
@@ -91,7 +90,6 @@
               :boardMembers="board.members"
               :cardMembers="card.members"
               @updateMembers="updateMembers"
-              @emitActivity="emitActivity"
             />
           </div>
           <div class="card-sidebar-btn" @click="toggleLabel">
@@ -216,12 +214,6 @@ export default {
     coverCmp,
   },
   methods: {
-    emitActivity(activity) {
-      // activity.cId = this.card.id
-      // activity.gId = this.group.id
-      // activity.cTitle = this.card.title
-      // this.$emit("emitActivity", activity);
-    },
     exitCard() {
       this.$emit("clearCard");
     },
@@ -248,10 +240,8 @@ export default {
       this.isAddingChecklist = !this.isAddingChecklist;
     },
     toggleCreateLabel() {
-      // if(!this.isCreateLabel) this.isAddingLabel = false;
       this.isAddingLabel = this.isCreateLabel;
       this.isCreateLabel = !this.isCreateLabel;
-      // console.log('this.isAddingLabel',this.isAddingLabel);
     },
     toggleLabel() {
       if (!this.isAddingLabel) {
@@ -297,19 +287,15 @@ export default {
     },
     updateDate() {
       this.cardToEdit.dueDate = this.cardDate;
-        const activity = {
-        byMember : this.$store.getters.user,
-        txt: ' changed the due date ', 
-      }
-      this.emitCard();
-      this.emitActivity(activity);
+      const activityTxt = ` changed the due date to ${this.cardDate} `
+      this.emitCard(activityTxt);
     },
     updateTitle() {
       this.emitCard();
     },
-    updateMembers(members) {
+    updateMembers({members,activityTxt}) {
       this.cardToEdit.members = members;
-      this.emitCard();
+      this.emitCard(activityTxt);
     },
     updateCover() {},
     addUser(userId) {
@@ -328,9 +314,10 @@ export default {
       this.closePopups();
       this.emitCard();
     },
-    updateCL(checklists) {
+    updateCL({ checklists, activityTxt }) {
       this.cardToEdit.checklists = checklists;
-      this.emitCard();
+      console.log(activityTxt, "3");
+      this.emitCard(activityTxt);
     },
     updateLabels(labels) {
       this.cardToEdit.labelIds = labels;
@@ -353,9 +340,18 @@ export default {
       this.$set(this, "cardToEdit", card);
       this.emitCard();
     },
-    emitCard() {
+    emitCard(activityTxt = "") {
       const cardCopy = JSON.parse(JSON.stringify(this.cardToEdit));
-      this.$emit("updateCard", cardCopy);
+      const activity = {};
+      if (activityTxt) {
+        (activity.byMember = this.$store.getters.user),
+          (activity.cardTitle = this.card.title),
+          (activity.cId = this.card.id),
+          (activity.gId = this.group.id),
+          (activity.txt = activityTxt);
+      }
+      console.log(activity, "4");
+      this.$emit("updateCard", { updatedCard: cardCopy, activity });
     },
     updateAttachments(attachments) {
       this.$set(this.cardToEdit, "attachments", attachments);

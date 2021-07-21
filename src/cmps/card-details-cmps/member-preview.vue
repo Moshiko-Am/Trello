@@ -57,15 +57,11 @@ export default {
         this.membersToEdit.splice(idx, 1);
         currTxt = ` removed ${this.member.fullname} `
       }
-      const activity = {
-        byMember : this.$store.getters.user,
-        txt: currTxt,
-      }
-      this.updateMembers();
-      this.$emit('emitActivity', activity)
+      const activityTxt = currTxt
+      this.updateMembers(activityTxt);
     },
-    updateMembers() {
-      this.$emit("updateMembers", this.membersToEdit);
+    updateMembers(activityTxt) {
+      this.$emit("updateMembers", {newMembers:this.membersToEdit,activityTxt});
     },
   },
 };
