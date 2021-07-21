@@ -217,10 +217,10 @@ export default {
   },
   methods: {
     emitActivity(activity) {
-      activity.cId = this.card.id
-      activity.gId = this.group.id
-      activity.cTitle = this.card.title
-      this.$emit("emitActivity", activity);
+      // activity.cId = this.card.id
+      // activity.gId = this.group.id
+      // activity.cTitle = this.card.title
+      // this.$emit("emitActivity", activity);
     },
     exitCard() {
       this.$emit("clearCard");

@@ -41,6 +41,7 @@
         type="text"
         v-model="todoToAdd.title"
         placeholder="Add an item"
+        ref="addTodo"
       />
       <div>
         <button class="save-todo-btn" @click="addTodo()">Add</button>
@@ -115,6 +116,7 @@ export default {
     },
     addTodo() {
       this.addingTodo = !this.addingTodo;
+      this.$refs.addTodo.focus()
       if (!this.addingTodo) {
         this.checklistToEdit.todos.push({ ...this.todoToAdd });
         this.todoToAdd = {

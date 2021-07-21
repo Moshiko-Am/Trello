@@ -83,10 +83,10 @@ export default {
 				console.log(err, 'cant login');
 			}
 		},
-		signup() {
+		async signup() {
 			if(!this.signupCr.username || !this.signupCr.password || !this.signupCr.fullname) return
 			try {
-				const user = this.$store.dispatch({ type: 'signup', userCred: this.signupCr });
+				const user = await this.$store.dispatch({ type: 'signup', userCred: this.signupCr });
 				if(user) this.$router.push('/boards')
 			} catch(err){
 				console.log(err,'cant signup');
