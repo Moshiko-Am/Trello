@@ -44,7 +44,7 @@
       <cover-cmp
         :card="cardToEdit"
         @close="closePopups"
-        @updateCard="updateCard"
+        @updateCard="emitCard"
         @toggleAttch="toggleAttch"
         v-if="isAddingCover"
       />
@@ -117,7 +117,6 @@ export default {
       this.emitCard();
     },
     updateCard() {
-      console.log("re");
       const cardCopy = JSON.parse(JSON.stringify(this.cardToEdit));
       this.$emit("updateCard", cardCopy);
     },
