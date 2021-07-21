@@ -103,9 +103,7 @@
             ></button>
           </div>
         </div>
-        <button class="btn" @click="togglePhotos">
-          Search for photos
-        </button>
+        <button class="btn" @click="togglePhotos">Search for photos</button>
       </div>
     </div>
     <background-photos

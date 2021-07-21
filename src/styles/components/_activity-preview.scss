@@ -10,10 +10,13 @@
     }
     .inner-container {
         display: flex;
-        align-items: center;
+        align-items: flex-start;
+        padding: 3px;
+        line-height: 18px;
 
         .vue-avatar--wrapper{
-            margin-bottom: 5px;
+            min-width: 32px;
+            margin-top: 6px;
         }
         
         .activity-info {

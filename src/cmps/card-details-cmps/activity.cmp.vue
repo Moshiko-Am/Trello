@@ -20,6 +20,6 @@ export default {
     },
     components:{
       activityPreview
-    }
+    },
 };
 </script>

@@ -74,7 +74,7 @@
               @updateChecklists="updateCL"
             />
           </transition>
-          <activity-cmp :activities="activities" />
+          <activity-cmp :activities="filteredActivities" />
         </div>
         <div class="card-details-sidebar">
           <h3>Suggested</h3>
@@ -111,6 +111,7 @@
               @close="closePopups"
               :label="labelToEdit"
               @createLabel="createLabel"
+              @removeLabel="removeLabel"
               @back="toggleCreateLabel"
             />
           </div>
@@ -229,7 +230,7 @@ export default {
     },
     setLabelToEdit(label) {
       this.labelToEdit = label;
-      this.isCreateLabel = true;
+      this.toggleCreateLabel()
     },
     makeId() {
       const num = Math.floor(Math.random() * (900 - 1) + 1);
@@ -318,7 +319,6 @@ export default {
     },
     updateCL({ checklists, activityTxt }) {
       this.cardToEdit.checklists = checklists;
-      console.log(activityTxt, "3");
       this.emitCard(activityTxt);
     },
     updateLabels(labels) {
@@ -331,6 +331,7 @@ export default {
       this.toggleCreateLabel();
     },
     removeLabel(labelId) {
+      console.log('hi');
       this.labelToEdit = null;
       this.toggleCreateLabel();
       this.$emit("removeLabel", labelId);
@@ -353,7 +354,6 @@ export default {
         activity.txt = activityTxt;
         activity.isSpecific = true;
       }
-      console.log(activity, "4");
       this.$emit("updateCard", { updatedCard: cardCopy, activity });
     },
     updateAttachments(attachments) {
@@ -378,8 +378,11 @@ export default {
     },
   },
   computed: {
-    activities() {
-      return this.$store.getters.board.activities;
+    filteredActivities() {
+      const activities = this.$store.getters.board.activities
+      return activities.filter((activity) => {
+        return (activity.cId === this.card.id && activity.gId === this.group.id)
+      });
     },
     labelsForDisplay() {
       const labels = this.$store.getters.board.labels;
