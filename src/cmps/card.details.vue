@@ -390,7 +390,7 @@ export default {
                 .url
             }');`
           : this.cardToEdit.cover.type === "color"
-          ? `background-color: ${this.cardToEdit.cover.color}`
+          ? `background-color: ${this.cardToEdit.cover.color}; height: 116px`
           : `background-color: rgb(${this.cardToEdit.cover.photo.colorArray[0]},${this.cardToEdit.cover.photo.colorArray[1]},${this.cardToEdit.cover.photo.colorArray[2]}); background-image: url('${this.cardToEdit.cover.photo.url}')`;
     },
   },
