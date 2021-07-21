@@ -72,6 +72,7 @@ export default {
 			this.isSignup = !this.isSignup;
 		},
 		async login() {
+			if(!this.loginCr.username || !this.loginCr.password) return
 			try {
 				const logged = await this.$store.dispatch({
 					type: 'login',
@@ -83,7 +84,15 @@ export default {
 			}
 		},
 		signup() {
-			this.$store.dispatch({ type: 'signup', userCred: this.signupCr });
+			if(!this.signupCr.username || !this.signupCr.password || !this.signupCr.fullname) return
+			try {
+				const user = this.$store.dispatch({ type: 'signup', userCred: this.signupCr });
+				if(user) this.$router.push('/boards')
+			} catch(err){
+				console.log(err,'cant signup');
+			}
+			
+			
 		},
 	},
 };
