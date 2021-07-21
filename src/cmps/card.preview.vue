@@ -36,9 +36,9 @@
         <template
           v-if="
             card.cover &&
-              card.cover.isCover &&
-              (card.cover.type === 'attachment' || card.cover.type === 'url') &&
-              card.cover.layout === 'top'
+            card.cover.isCover &&
+            (card.cover.type === 'attachment' || card.cover.type === 'url') &&
+            card.cover.layout === 'top'
           "
         >
           <div class="card-cover" :style="background"></div>
@@ -46,9 +46,9 @@
         <template
           v-else-if="
             card.cover &&
-              card.cover.isCover &&
-              card.cover.type === 'color' &&
-              card.cover.layout === 'top'
+            card.cover.isCover &&
+            card.cover.type === 'color' &&
+            card.cover.layout === 'top'
           "
         >
           <div class="card-cover color" :style="background"></div>
@@ -80,6 +80,7 @@
         <textarea
           @click.stop
           v-else
+          spellcheck="false"
           v-model="cardTitle"
           ref="cardtitle"
         ></textarea>
@@ -133,6 +134,7 @@
       <quick-edit
         v-if="isQuickEdit"
         :card="card"
+        :group="group"
         @emitCard="emitCard"
         @openCard="openCard"
         @removeCard="removeCard"
@@ -170,6 +172,7 @@ export default {
   },
   props: {
     card: Object,
+    group: Object,
   },
   computed: {
     background() {
@@ -217,12 +220,11 @@ export default {
       const currDate = Date.parse(new Date());
       const dueDate = Date.parse(this.card.dueDate);
       const timeLeft = dueDate - currDate;
-      if (timeLeft < 86400000)
-        return { backgroundColor: "#eb5a46", color: "white" };
-      else if (timeLeft < 172800000)
-        return { backgroundColor: "#F2D600", color: "black" };
-      else
-        return { backgroundColor: "rgba(9, 30, 66, 0.08)", color: "#5e6c84" };
+      if (timeLeft < 0) return { backgroundColor: "#eb5a46", color: "white" };
+      else if (timeLeft < 86400000)
+        return { backgroundColor: "#F2D600", color: "#172B4D" };
+      else timeLeft < 172800000;
+      return { backgroundColor: "rgba(9, 30, 66, 0.08)", color: "#5e6c84" };
     },
   },
   methods: {
@@ -260,11 +262,23 @@ export default {
       }
       const cardCopy = JSON.parse(JSON.stringify(this.card));
       cardCopy.title = this.cardTitle;
-      this.emitCard(cardCopy);
+      const activityTxt = ` changed the title to ${cardCopy.title} `
+      this.emitCard({updatedCard:cardCopy,activityTxt});
       this.toggleQuickEdit();
     },
-    emitCard(cardCopy) {
-      this.$emit("updateCard", cardCopy);
+    emitCard({ updatedCard, activityTxt }) {
+      const cardCopy = JSON.parse(JSON.stringify(updatedCard));
+      const activity = {};
+      if (activityTxt) {
+        activity.byMember = this.$store.getters.user;
+        activity.cTitle = this.card.title;
+        activity.cId = this.card.id;
+        activity.gId = this.group.id;
+        activity.txt = activityTxt;
+        activity.isSpecific = true;
+      }
+      console.log(activity, "4");
+      this.$emit("updateCard", { updatedCard: cardCopy, activity });
     },
   },
   directives: {

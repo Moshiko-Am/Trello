@@ -72,7 +72,7 @@
               @updateChecklists="updateCL"
             />
           </transition>
-          <activity-cmp :activities="activities" />
+          <activity-cmp :activities="filteredActivities" />
         </div>
         <div class="card-details-sidebar">
           <h3>Suggested</h3>
@@ -316,7 +316,6 @@ export default {
     },
     updateCL({ checklists, activityTxt }) {
       this.cardToEdit.checklists = checklists;
-      console.log(activityTxt, "3");
       this.emitCard(activityTxt);
     },
     updateLabels(labels) {
@@ -344,14 +343,13 @@ export default {
       const cardCopy = JSON.parse(JSON.stringify(this.cardToEdit));
       const activity = {};
       if (activityTxt) {
-        activity.byMember = this.$store.getters.user
-        activity.cTitle = this.card.title
-        activity.cId = this.card.id
-        activity.gId = this.group.id
-        activity.txt = activityTxt
-        activity.isSpecific = true
+        activity.byMember = this.$store.getters.user;
+        activity.cTitle = this.card.title;
+        activity.cId = this.card.id;
+        activity.gId = this.group.id;
+        activity.txt = activityTxt;
+        activity.isSpecific = true;
       }
-      console.log(activity, "4");
       this.$emit("updateCard", { updatedCard: cardCopy, activity });
     },
     updateAttachments(attachments) {
@@ -376,8 +374,11 @@ export default {
     },
   },
   computed: {
-    activities() {
-      return this.$store.getters.board.activities;
+    filteredActivities() {
+      const activities = this.$store.getters.board.activities
+      return activities.filter((activity) => {
+        return (activity.cId === this.card.id && activity.gId === this.group.id)
+      });
     },
     labelsForDisplay() {
       const labels = this.$store.getters.board.labels;

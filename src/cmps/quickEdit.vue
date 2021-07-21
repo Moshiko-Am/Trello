@@ -63,6 +63,7 @@ import coverCmp from "@/cmps/card-details-cmps/cover.cmp";
 export default {
   props: {
     card: Object,
+    group: Object
   },
   components: {
     membersList,
@@ -114,7 +115,8 @@ export default {
     },
     updateDate() {
       this.cardToEdit.dueDate = this.cardDate;
-      this.emitCard();
+      const activityTxt = ` changed the due date to ${this.cardDate} `;
+      this.emitCard(activityTxt);
     },
     updateCard() {
       const cardCopy = JSON.parse(JSON.stringify(this.cardToEdit));
@@ -123,9 +125,9 @@ export default {
     updateTitle() {
       this.emitCard();
     },
-    updateMembers(members) {
+    updateMembers({ members, activityTxt }) {
       this.cardToEdit.members = members;
-      this.emitCard();
+      this.emitCard(activityTxt);
     },
     updateLabels(labels) {
       this.cardToEdit.labelIds = labels;
@@ -134,9 +136,9 @@ export default {
     openCard() {
       this.$emit("openCard");
     },
-    emitCard() {
+    emitCard(activityTxt) {
       const cardCopy = JSON.parse(JSON.stringify(this.cardToEdit));
-      this.$emit("emitCard", cardCopy);
+      this.$emit("emitCard", {updatedCard:cardCopy,activityTxt});
     },
     removeCard() {
       this.$emit("removeCard", this.cardToEdit.id);

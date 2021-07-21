@@ -72,9 +72,10 @@
                   v-for="(card, cIdx) in group.cards"
                   :ref="'cardpreview-' + gIdx + '-' + cIdx"
                   :card="card"
+                  :group="group"
                   :key="card.id"
                   @click.native="setCard(card, gIdx, cIdx)"
-                  @openCard="openCard(card, gIdx)"
+                  @openCard="openCard(card, gIdx, cIdx)"
                   @openBg="openBg"
                   @updateCard="updateCard($event, gIdx)"
                   @removeCard="removeCard($event, gIdx)"
@@ -227,7 +228,6 @@ export default {
       savedCard.id = this.makeId();
       this.groupsToEdit[gIdx].cards.push(savedCard);
       const activity = {
-        cId: savedCard.id,
         gId: this.groupsToEdit[gIdx].id,
         cTitle: savedCard.title,
         txt: ` added card "${savedCard.title}" to list "${this.groupsToEdit[gIdx].title}" `,
@@ -265,10 +265,20 @@ export default {
     openBg() {
       this.$emit("openBg");
     },
-    openCard(card, gIdx) {
-      this.setCard(card, gIdx);
+    openCard(card, gIdx, cIdx) {
+      this.setCard(card, gIdx, cIdx);
     },
     setCard(card, gIdx, cIdx) {
+      if(!card.cover) {
+        this.$set(card, "cover", {
+        isCover: false,
+        type: "",
+        color: "",
+        attachmentIdx: null,
+        photo: { url: "", colorArray: [] },
+        layout: "",
+      });
+      }
       this.currCard = card;
       this.currGroupIdx = gIdx;
       this.$refs[`cardpreview-${gIdx}-${cIdx}`][0].isQuickEdit = false;
@@ -283,7 +293,6 @@ export default {
         (card) => card.id === cardId
       );
       const activity = {
-        cId: cardId,
         gId: this.groupsToEdit[gIdx].id,
         cTitle: this.groupsToEdit[gIdx].cards[idx].title,
         txt: ` removed card "${this.groupsToEdit[gIdx].cards[idx].title}" from list "${this.groupsToEdit[gIdx].title}" `,
@@ -300,7 +309,6 @@ export default {
       );
       this.groupsToEdit[gIdx].cards.splice(cIdx, 1, updatedCard);
       socketService.emit("send card", { payload: updatedCard, cIdx, gIdx });
-      console.log(activity, "6");
       this.saveGroups(activity);
     },
     saveGroups(activity) {

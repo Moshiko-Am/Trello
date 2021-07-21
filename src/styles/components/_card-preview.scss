@@ -71,12 +71,11 @@
         }
     }
     &-full-image textarea {
-        position: absolute;
         overflow: hidden;
         overflow-wrap: break-word;
         resize: none;
         height: 90px;
-        padding: 0;
+        padding: 5px;
         margin: -1px;
         width: 101%;
         outline: none;
@@ -85,6 +84,7 @@
         -webkit-appearance: none;
         border-radius: 3px;
         display: block;
+        font-family: "Segoe UI";
         line-height: 20px;
         color: #172b4d;
         font-size: 14px;

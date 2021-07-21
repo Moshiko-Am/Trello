@@ -80,7 +80,6 @@ export default {
         update.activities.createdAt = Date.now()
         board.activities.unshift(update.activities)
       }
-        console.log(board.activities, '7');
       try {
         await this.$store.dispatch({ type: "saveBoard", board });
       } catch (err) {
