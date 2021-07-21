@@ -104,9 +104,7 @@
             ></button>
           </div>
         </div>
-        <button class="btn" @click="togglePhotos">
-          Search for photos
-        </button>
+        <button class="btn" @click="togglePhotos">Search for photos</button>
       </div>
     </div>
     <background-photos
@@ -118,7 +116,7 @@
 </template>
 
 <script>
-import backgroundPhotos from "@/cmps/background-photos";
+import backgroundPhotos from "@/cmps/background.photos";
 import ColorThief from "colorthief";
 
 export default {
@@ -134,33 +132,27 @@ export default {
       isAddingPhotos: false,
       photos: [
         {
-          url:
-            "https://trello-backgrounds.s3.amazonaws.com/SharedBackground/256x182/2b80f3ff0258e985f49cbd3f54aedce5/photo-1626203662544-69e778ddc0ee.jpg",
+          url: "https://trello-backgrounds.s3.amazonaws.com/SharedBackground/256x182/2b80f3ff0258e985f49cbd3f54aedce5/photo-1626203662544-69e778ddc0ee.jpg",
           colorArray: [202, 181, 174],
         },
         {
-          url:
-            "https://trello-backgrounds.s3.amazonaws.com/SharedBackground/128x192/aa2d9b78b5c9523010a84ece94e0e3e7/photo-1626515728846-d09aacfee23d.jpg",
+          url: "https://trello-backgrounds.s3.amazonaws.com/SharedBackground/128x192/aa2d9b78b5c9523010a84ece94e0e3e7/photo-1626515728846-d09aacfee23d.jpg",
           colorArray: [43, 38, 52],
         },
         {
-          url:
-            "https://trello-backgrounds.s3.amazonaws.com/SharedBackground/256x171/82e0e591c48dd4802db6b7fcdb3fdf5a/photo-1626327524471-b4487aba8a26.jpg",
+          url: "https://trello-backgrounds.s3.amazonaws.com/SharedBackground/256x171/82e0e591c48dd4802db6b7fcdb3fdf5a/photo-1626327524471-b4487aba8a26.jpg",
           colorArray: [188, 183, 178],
         },
         {
-          url:
-            "https://trello-backgrounds.s3.amazonaws.com/SharedBackground/128x192/c0f5dd5ef29e39b820032b367cb82516/photo-1626621732093-add91dee1749.jpg",
+          url: "https://trello-backgrounds.s3.amazonaws.com/SharedBackground/128x192/c0f5dd5ef29e39b820032b367cb82516/photo-1626621732093-add91dee1749.jpg",
           colorArray: [60, 67, 69],
         },
         {
-          url:
-            "https://trello-backgrounds.s3.amazonaws.com/SharedBackground/256x171/ab95826232857e3b0dba45f81ee8f795/photo-1626534578032-2fa71338dbdc.jpg",
+          url: "https://trello-backgrounds.s3.amazonaws.com/SharedBackground/256x171/ab95826232857e3b0dba45f81ee8f795/photo-1626534578032-2fa71338dbdc.jpg",
           colorArray: [4, 12, 17],
         },
         {
-          url:
-            "https://trello-backgrounds.s3.amazonaws.com/SharedBackground/256x171/698c6f5ebc9b1df6b0cfefeb3b42fbfb/photo-1626617834031-a2ad88e37bea.jpg",
+          url: "https://trello-backgrounds.s3.amazonaws.com/SharedBackground/256x171/698c6f5ebc9b1df6b0cfefeb3b42fbfb/photo-1626617834031-a2ad88e37bea.jpg",
           colorArray: [198, 199, 199],
         },
       ],
