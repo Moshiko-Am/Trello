@@ -187,9 +187,11 @@ export default {
                 .colorArray[2]
             }); background-image: url('${
               this.card.attachments[this.card.cover.attachmentIdx].url
-            }');`
+            }'); height: 245px`
           : this.card.cover.type === "color"
-          ? `background-color: ${this.card.cover.color};height: 56px`
+          ? `background-color: ${this.card.cover.color}; height: ${
+              this.card.cover.layout === "full" ? "56px" : "32px"
+            }`
           : `background-color: rgb(${this.card.cover.photo.colorArray[0]},${this.card.cover.photo.colorArray[1]},${this.card.cover.photo.colorArray[2]});background-image: url('${this.card.cover.photo.url}');min-height: 245px`;
     },
     labelsForDisplay() {

@@ -217,9 +217,9 @@ export default {
   },
   methods: {
     emitActivity(activity) {
-      activity.cId = this.card.id
-      activity.gId = this.group.id
-      activity.cTitle = this.card.title
+      activity.cId = this.card.id;
+      activity.gId = this.group.id;
+      activity.cTitle = this.card.title;
       this.$emit("emitActivity", activity);
     },
     exitCard() {
@@ -297,10 +297,10 @@ export default {
     },
     updateDate() {
       this.cardToEdit.dueDate = this.cardDate;
-        const activity = {
-        byMember : this.$store.getters.user,
-        txt: ' changed the due date ', 
-      }
+      const activity = {
+        byMember: this.$store.getters.user,
+        txt: " changed the due date ",
+      };
       this.emitCard();
       this.emitActivity(activity);
     },
