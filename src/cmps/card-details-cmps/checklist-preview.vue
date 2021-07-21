@@ -15,7 +15,7 @@
     </div>
     <div v-for="(todo, tIdx) in checklist.todos" :key="todo.id" class="todo">
       <div class="inner">
-        <input type="checkbox" v-model="todo.isDone" />
+        <input type="checkbox" v-model="todo.isDone" @change="toggleTodo(tIdx)" />
         <div @click="toggleTodo(tIdx)">
           <span :class="{ completed: todo.isDone }">{{ todo.title }}</span>
         </div>
