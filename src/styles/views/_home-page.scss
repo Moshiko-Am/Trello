@@ -103,7 +103,7 @@
 			display: flex;
 			flex-direction: column;
 			justify-content: center;
-			flex-basis: 100%;
+			width: 50%;
 			margin-inline-start: 20px;
 		}
 
@@ -143,6 +143,7 @@
 		.homepage-2-img-container {
 			order: 1;
 			display: flex;
+			width: 50%;
 			justify-content: center;
 			align-items: center;
 			margin-inline-end: 20px;
@@ -165,8 +166,8 @@
 			display: flex;
 			flex-direction: column;
 			justify-content: center;
-			flex-basis: 100%;
 			margin-inline-start: 20px;
+			width: 50%;
 		}
 
 		.motivational {
@@ -206,6 +207,7 @@
 			display: flex;
 			justify-content: center;
 			align-items: center;
+			width: 50%;
 			margin-inline-start: 20px;
 			margin-inline-end: 5px;
 
