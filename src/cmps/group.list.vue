@@ -232,6 +232,7 @@ export default {
         cTitle: savedCard.title,
         txt: ` added card "${savedCard.title}" to list "${this.groupsToEdit[gIdx].title}" `,
         byMember: this.$store.getters.user,
+        isSpecific: false,
       };
       this.saveGroups(activity);
       this.cardToEdit.title = "";
@@ -287,6 +288,7 @@ export default {
         cTitle: this.groupsToEdit[gIdx].cards[idx].title,
         txt: ` removed card "${this.groupsToEdit[gIdx].cards[idx].title}" from list "${this.groupsToEdit[gIdx].title}" `,
         byMember: this.$store.getters.user,
+        isSpecific: false,
       };
       this.groupsToEdit[gIdx].cards.splice(idx, 1);
       this.clearCard();
@@ -318,6 +320,7 @@ export default {
         gTitle: savedGroup.title,
         txt: ` added list "${savedGroup.title}" to this board `,
         byMember: this.$store.getters.user,
+        isSpecific: false,
       };
       this.saveGroups(activity);
       this.groupToEdit.title = "";
@@ -327,6 +330,7 @@ export default {
         gTitle: this.groupsToEdit[gIdx].title,
         txt: ` removed list "${this.groupsToEdit[gIdx].title}" from this board `,
         byMember: this.$store.getters.user,
+        isSpecific: false,
       };
       this.groupsToEdit.splice(gIdx, 1);
       this.currGroupIdx = null;

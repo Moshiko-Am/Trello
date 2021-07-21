@@ -5,7 +5,9 @@
       <div class="activity-info">
         <div>
           <span>{{ activity.byMember.fullname }}</span>
-          {{activity.txt}}
+          {{activity.txt}} 
+          <span v-if="render === 'menu' && activity.isSpecific">on card "{{activity.cTitle}}"</span>
+          <span v-if="render === 'card'" >on this card</span>
         </div>
         <p>{{ activity.createdAt | moment("calendar")}}</p>
       </div>
@@ -18,7 +20,8 @@ import avatar from 'vue-avatar'
 
 export default {
     props: {
-        activity: Object
+        activity: Object,
+        render:String
     },
     components: {
         avatar,

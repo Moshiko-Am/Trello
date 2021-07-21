@@ -7,7 +7,7 @@
       </div>
       <button class="card-sidebar-btn">Show Details</button>
     </div>
-      <activity-preview v-for="activity in activities" :key="activity.id" :activity="activity" />
+      <activity-preview v-for="activity in activities" render="card" :key="activity.id" :activity="activity" />
   </div>
 </template>
 

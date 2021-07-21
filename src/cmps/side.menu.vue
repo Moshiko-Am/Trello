@@ -32,19 +32,7 @@
 				</span>
 			</div>
 			<div class="menu-activity-list" v-if="board.activities">
-				<activity-preview class="activity-list" v-for="activity in board.activities" :key="activity.id" :activity="activity" />
-				<!-- <div
-					v-for="activity in board.activities"
-					:key="activity.id"
-					class="activity-list"
-				>
-					<avatar
-						:username="activity.byMember.fullname"
-						:size="30"
-						:inline="true"
-					></avatar>
-					<span class="activity-txt">{{ activity.txt }}</span>
-				</div> -->
+				<activity-preview class="activity-list" v-for="activity in board.activities" render="menu" :key="activity.id" :activity="activity" />
 			</div>
 		</div>
 		<background-menu

@@ -287,13 +287,13 @@ export default {
     },
     updateDate() {
       this.cardToEdit.dueDate = this.cardDate;
-      const activityTxt = ` changed the due date to ${this.cardDate} `
+      const activityTxt = ` changed the due date to ${this.cardDate} `;
       this.emitCard(activityTxt);
     },
     updateTitle() {
       this.emitCard();
     },
-    updateMembers({members,activityTxt}) {
+    updateMembers({ members, activityTxt }) {
       this.cardToEdit.members = members;
       this.emitCard(activityTxt);
     },
@@ -344,11 +344,12 @@ export default {
       const cardCopy = JSON.parse(JSON.stringify(this.cardToEdit));
       const activity = {};
       if (activityTxt) {
-        (activity.byMember = this.$store.getters.user),
-          (activity.cardTitle = this.card.title),
-          (activity.cId = this.card.id),
-          (activity.gId = this.group.id),
-          (activity.txt = activityTxt);
+        activity.byMember = this.$store.getters.user
+        activity.cTitle = this.card.title
+        activity.cId = this.card.id
+        activity.gId = this.group.id
+        activity.txt = activityTxt
+        activity.isSpecific = true
       }
       console.log(activity, "4");
       this.$emit("updateCard", { updatedCard: cardCopy, activity });

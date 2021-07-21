@@ -110,7 +110,6 @@ export default {
     },
     addTodo() {
       this.addingTodo = !this.addingTodo;
-      this.$refs.addTodo.focus();
       if (!this.addingTodo) {
         this.checklistToEdit.todos.push({ ...this.todoToAdd });
         this.todoToAdd = {
@@ -120,6 +119,8 @@ export default {
         };
         this.updateChecklist();
         return;
+      } else {
+        this.$nextTick(() => this.$refs.addTodo.focus());
       }
     },
     makeId() {
