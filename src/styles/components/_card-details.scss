@@ -1,6 +1,7 @@
 .card-details-bg {
     position: fixed;
-    overflow-y:auto;
+    overflow-y: auto;
+    overflow-x: hidden;
     top: 0;
     left: 0;
     width: 100%;
@@ -17,9 +18,12 @@
         border-radius: 2px;
         color: #5e6c84;
         padding: 30px 15px;
-        // min-height: 70vh;
+        .wrapper {
+            position: relative;
+            overflow-x: hidden;
+        }
         .close-btn {
-            background-color: hsla(0, 0%, 100%, 0.24);
+            background-color: hsla(0, 0%, 100%, 0.158);
             color: #fff;
             box-sizing: content-box;
             border-radius: 50%;
@@ -37,6 +41,17 @@
                 background-color: hsla(0, 0%, 100%, 0.32);
                 color: #fff;
             }
+            &.dark {
+                .icon-x {
+                    color: #42526e;
+                }
+                color: #42526e;
+                background-color: none;
+                &:hover {
+                    background-color: rgba(9, 30, 66, 0.08);
+                }
+            }
+
         }
         .card-cover {
             background-size: contain;
@@ -204,7 +219,6 @@
     .vue-avatar--wrapper {
         margin-right: 6px;
     }
-
     .add-label-btn {
         cursor: pointer;
         display: flex;
@@ -215,11 +229,10 @@
         height: 32px;
         width: 32px;
         border-radius: 3px;
-        &:hover{
+        &:hover {
             background-color: #e2e4e9;
         }
     }
-
     .add-member-btn {
         position: relative;
         cursor: pointer;
@@ -341,6 +354,7 @@
     padding: 0 8px 8px 16px;
     max-height: calc(100vh - 300px);
     overflow-y: auto;
+    overflow-x: hidden;
     &::-webkit-scrollbar {
         height: 8px;
         width: 8px;
@@ -476,7 +490,6 @@
 
 .icon-x {
     @include to-icon("\e91c");
-    color: #fff;
 }
 
 .icon-delete {

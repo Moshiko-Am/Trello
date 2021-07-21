@@ -5,7 +5,7 @@
       <h3 class="main-item-title">Attachments</h3>
     </div>
     <div
-      v-for="attachment in cardToEdit.attachments"
+      v-for="attachment in attachmentsToEdit"
       :key="attachment.id"
       class="attachment-thumbnail"
     >
@@ -95,39 +95,39 @@
 <script>
 export default {
   props: {
-    card: Object,
+    attachments: Array,
   },
   data() {
     return {
-      cardToEdit: { ...this.card },
+      attachmentsToEdit: this.attachments,
     };
   },
   methods: {
     commetAttachment() {},
     deleteAttachment(attachmentId) {
-      const idx = this.cardToEdit.attachments.findIndex((attachment) => {
+      const idx = this.attachmentsToEdit.findIndex((attachment) => {
         return attachment.id === attachmentId;
       });
-      this.cardToEdit.attachments.splice(idx, 1);
+      this.attachmentsToEdit.splice(idx, 1);
       this.updateAttachments();
     },
     editFileName() {},
     toggleCover(attachmentId) {
-      this.cardToEdit.attachments.forEach((attachment, idx) => {
+      this.attachmentsToEdit.forEach((attachment, idx) => {
         if (
           attachment.id !== attachmentId &&
-          this.cardToEdit.attachments[idx].isCover
+          this.attachmentsToEdit[idx].isCover
         )
-          this.cardToEdit.attachments[idx].isCover = false;
+          this.attachmentsToEdit[idx].isCover = false;
         if (attachment.id === attachmentId)
-          this.cardToEdit.attachments[idx].isCover = !this.cardToEdit
-            .attachments[idx].isCover;
+          this.attachmentsToEdit[idx].isCover = !this.attachmentsToEdit[idx]
+            .isCover;
       });
       this.updateAttachments();
     },
     updateAttachments() {
       const attachmentsCopy = JSON.parse(
-        JSON.stringify(this.cardToEdit.attachments)
+        JSON.stringify(this.attachmentsToEdit)
       );
       this.$emit("updateAttachments", attachmentsCopy);
     },
