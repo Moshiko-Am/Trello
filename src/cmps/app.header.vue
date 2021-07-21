@@ -213,7 +213,7 @@ export default {
     },
     closeBoardsMenu() {
       this.isBoardsShow = false;
-      this.$refs.boardsmenu.isCreateOpen = false;
+      this.$nextTick(() => (this.$refs.boardsmenu.isCreateOpen = false));
     },
     closeUserMenu() {
       this.isUserMenu = false;

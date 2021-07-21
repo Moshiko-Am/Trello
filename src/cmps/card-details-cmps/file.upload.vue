@@ -5,6 +5,7 @@
     <el-upload
       v-show="!isUploading"
       action=""
+      drag
       ref="upload"
       submit.prevent="handleFile()"
       :auto-upload="false"

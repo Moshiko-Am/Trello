@@ -7,7 +7,7 @@
     <draggable
       class="group-list"
       handle=".group-wrapper"
-      animation="500"
+      animation="1500"
       v-model="groupsToEdit"
       @start="drag = true"
       @end="
@@ -34,6 +34,7 @@
                 v-model="group.title"
                 @change="saveGroups"
                 @input="textHeight"
+                maxlength="300"
               ></textarea>
               <div class="group-header-extras" @click="toggleExtras(gIdx)">
                 <span class="icon-sm icon-dots-menu"></span>
@@ -380,10 +381,13 @@ export default {
       text.style.font = "Segoe UI";
       text.style.fontSize = 14 + "px";
       text.style.height = "auto";
-      text.style.width = "168px";
+      text.style.width = "228px";
       text.style.position = "absolute";
-      text.style.whiteSpace = "wrap";
+      text.style.whiteSpace = "no-wrap";
       text.style.lineBreak = "anywhere";
+      text.style.paddingBlock = "2px";
+      text.style.paddingInline = "8px";
+      text.style.lineHeight = "20px";
       if (ev) {
         text.innerHTML = ev.target.value;
       } else {
@@ -391,7 +395,7 @@ export default {
       }
       document.body.appendChild(text);
       const height = Math.ceil(text.clientHeight);
-      const formattedHeight = height + 20 + "px";
+      const formattedHeight = height + "px";
       document.body.removeChild(text);
       if (ev) ev.target.style.height = formattedHeight;
       else this.$refs.grouptitle[gIdx].style.height = formattedHeight;
