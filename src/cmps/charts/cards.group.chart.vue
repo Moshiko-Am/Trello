@@ -13,25 +13,32 @@ export default {
           {
             label: "Cards per list",
             backgroundColor: [
-              "#eb5a46",
-              "#ff78cb",
-              "#f2d600",
               "#61bd4f",
-              "#ffac00",
+              "#f2d600",
+              "#ff9f1a",
+              "#eb5a46",
+              "#c377e0",
+              "#0079bf",
+              "#00c2e0",
+              "#51e898",
+              "#ff78cb",
+              "#344563",
             ],
             data: this.cards,
           },
         ],
       },
       {
-        scales:{
-          yAxes:[{
-            ticks:{
-              beginAtZero:true
-            }
-          }]
+        scales: {
+          yAxes: [
+            {
+              ticks: {
+                beginAtZero: true,
+              },
+            },
+          ],
         },
-        responsive:true
+        responsive: true,
       }
     );
   },
