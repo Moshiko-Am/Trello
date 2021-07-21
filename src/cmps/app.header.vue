@@ -98,11 +98,13 @@
             ></path>
           </svg>
         </span>
-        <search-boards
-          :boardsForDisplay="boardsForDisplay"
-          @closeSearch="closeSearch"
-          v-if="isSearchOpen"
-        ></search-boards>
+        <transition name="fade">
+          <search-boards
+            :boardsForDisplay="boardsForDisplay"
+            @closeSearch="closeSearch"
+            v-if="isSearchOpen"
+          ></search-boards>
+        </transition>
       </div>
     </div>
     <div class="header-logo">Trailing</div>
