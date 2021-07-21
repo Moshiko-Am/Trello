@@ -41,6 +41,7 @@
 				class="hideBoardsMenu"
 				:class="boardsShowMenu"
 				@closeBoardsMenu="closeBoardsMenu"
+				ref="boardsmenu"
 			></boards-menu>
 			<div class="header-search">
 				<input
@@ -156,6 +157,7 @@ export default {
 		},
 		closeBoardsMenu() {
 			this.isBoardsShow = false;
+			this.$refs.boardsmenu.isCreateOpen = false;
 		},
 		closeUserMenu() {
 			this.isUserMenu = false;
