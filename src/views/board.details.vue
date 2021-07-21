@@ -56,7 +56,6 @@ export default {
       newActivity.id = this.makeId();
       newActivity.createdAt = Date.now()
       boardActivities.unshift(newActivity);
-      console.log("boardActivities", boardActivities);
       this.boardUpdate({ type: "activities", payload: boardActivities });
     },
     createLabel(newLabel) {
@@ -74,7 +73,6 @@ export default {
       this.boardUpdate({ type: "labels", payload: boardLabels });
     },
     async boardUpdate(update) {
-      console.log("update", update);
       const board = JSON.parse(JSON.stringify(this.board));
       board[update.type] = update.payload;
       try {

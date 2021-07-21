@@ -85,10 +85,8 @@ export const boardStore = {
             }
         },
         async saveBoard({ commit }, { board }) {
-            console.log('sent',board);
             try {
                 const savedBoard = await boardService.save(board);
-                console.log('got',savedBoard);
                 commit({ type: 'saveBoard', savedBoard });
             } catch (err) {
                 console.log(`couldn't save board`, err);
