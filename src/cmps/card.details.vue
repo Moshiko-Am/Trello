@@ -8,7 +8,9 @@
       ></div>
       <button
         class="close-btn"
-        :class="{ dark: cardToEdit.cover && !cardToEdit.cover.isCover.length }"
+        :class="{
+          dark: cardToEdit.cover && !cardToEdit.cover.isCover.length,
+        }"
         @click="exitCard"
       >
         <span class="icon-md icon-x"></span>
