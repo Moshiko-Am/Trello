@@ -50,7 +50,6 @@
         transition-timing-function: ease;
         overflow: hidden;
         overflow-wrap: break-word;
-        height: 28px;
         &.mod-group-name {
             background: transparent;
             border-radius: 3px;
@@ -61,7 +60,6 @@
             min-height: 20px;
             padding: 4px 8px;
             resize: none;
-            max-height: 256px;
             color: #172b4d;
         }
         &.mod-group-name.is-editing,

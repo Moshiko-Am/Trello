@@ -26,12 +26,14 @@
           <div class="group-details">
             <div class="group-header">
               <textarea
+                ref="grouptitle"
                 class="group-header-name mod-group-name"
-                v-bind:aria-label="group.title"
+                :aria-label="group.title"
                 spellcheck="false"
                 dir="auto"
                 v-model="group.title"
                 @change="saveGroups"
+                @input="textHeight"
               ></textarea>
               <div class="group-header-extras" @click="toggleExtras(gIdx)">
                 <span class="icon-sm icon-dots-menu"></span>
@@ -207,6 +209,11 @@ export default {
     cardDetails,
     draggable,
   },
+  computed: {
+    height() {
+      return this.getTextHeight();
+    },
+  },
   methods: {
     createLabel(label) {
       this.$emit("createLabel", label);
@@ -368,12 +375,36 @@ export default {
       }
       return text;
     },
+    textHeight(ev, gIdx) {
+      const text = document.createElement("div");
+      text.style.font = "Segoe UI";
+      text.style.fontSize = 14 + "px";
+      text.style.height = "auto";
+      text.style.width = "168px";
+      text.style.position = "absolute";
+      text.style.whiteSpace = "wrap";
+      text.style.lineBreak = "anywhere";
+      if (ev) {
+        text.innerHTML = ev.target.value;
+      } else {
+        text.innerHTML = this.$refs.grouptitle[gIdx].value;
+      }
+      document.body.appendChild(text);
+      const height = Math.ceil(text.clientHeight);
+      const formattedHeight = height + 20 + "px";
+      document.body.removeChild(text);
+      if (ev) ev.target.style.height = formattedHeight;
+      else this.$refs.grouptitle[gIdx].style.height = formattedHeight;
+    },
   },
   created() {
     this.groupsToEdit = JSON.parse(JSON.stringify(this.groups));
   },
   mounted() {
     this.popupItem = this.$refs.addgroup;
+    this.$refs.grouptitle.forEach((group, idx) => {
+      this.$refs.grouptitle[idx].style.height = this.textHeight(null, idx);
+    });
   },
   watch: {
     groups: {
