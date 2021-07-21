@@ -131,33 +131,27 @@ export default {
       isAddingPhotos: false,
       photos: [
         {
-          url:
-            "https://images.unsplash.com/photo-1495567720989-cebdbdd97913?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80",
+          url: "https://images.unsplash.com/photo-1495567720989-cebdbdd97913?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80",
           colorArray: [202, 181, 174],
         },
         {
-          url:
-            "https://images.unsplash.com/photo-1512641406448-6574e777bec6?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80",
+          url: "https://images.unsplash.com/photo-1512641406448-6574e777bec6?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80",
           colorArray: [43, 38, 52],
         },
         {
-          url:
-            "https://images.unsplash.com/photo-1459745930869-b3d0d72c3cbb?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=967&q=80",
+          url: "https://images.unsplash.com/photo-1459745930869-b3d0d72c3cbb?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=967&q=80",
           colorArray: [188, 183, 178],
         },
         {
-          url:
-            "https://images.unsplash.com/photo-1626711656195-4db07dd46c8f?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80",
+          url: "https://images.unsplash.com/photo-1626711656195-4db07dd46c8f?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80",
           colorArray: [60, 67, 69],
         },
         {
-          url:
-            "https://images.unsplash.com/photo-1422493757035-1e5e03968f95?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80",
+          url: "https://images.unsplash.com/photo-1422493757035-1e5e03968f95?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80",
           colorArray: [4, 12, 17],
         },
         {
-          url:
-            "https://images.unsplash.com/photo-1626800349607-773f9a7b105c?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80",
+          url: "https://images.unsplash.com/photo-1626800349607-773f9a7b105c?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80",
           colorArray: [198, 199, 199],
         },
       ],
