@@ -5,7 +5,7 @@
       <div class="activity-info">
         <div>
           <span>{{ activity.byMember.fullname }}</span>
-          {{activity.txt}} on this card
+          {{activity.txt}}
         </div>
         <p>{{ Date.now() | moment("calendar")}}</p>
       </div>

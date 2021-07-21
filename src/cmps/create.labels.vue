@@ -19,7 +19,10 @@
       </div>
       </div>
     </div>
-    <button class="create-btn" v-if="this.label" @click="saveLabel">save</button>
+    <div class="edit-btns"  v-if="this.label">
+    <button class="create-btn" @click="saveLabel">save</button>
+    <button class="delete-btn" @click="removeLabel">Delete</button>
+    </div>
     <button class="create-btn" v-else @click="createLabel">Create</button>
   </section>
 </template>
@@ -31,7 +34,7 @@ export default {
   },
   data() {
     return {
-      labelToEdit: this.label || {
+      labelToEdit: JSON.parse(JSON.stringify(this.label)) || {
         title: "",
         color: "",
         id: this.makeId(),
@@ -70,6 +73,9 @@ export default {
     },
     saveLabel() {
       this.$emit("createLabel", { ...this.labelToEdit });
+    },
+    removeLabel(){
+      this.$emit("removeLabel",this.label.id)
     },
     close(){
       this.$emit('close')

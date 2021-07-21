@@ -31,8 +31,9 @@
 					Activity
 				</span>
 			</div>
-			<div class="menu-activity-list">
-				<div
+			<div class="menu-activity-list" v-if="board.activities">
+				<activity-preview class="activity-list" v-for="activity in board.activities" :key="activity.id" :activity="activity" />
+				<!-- <div
 					v-for="activity in board.activities"
 					:key="activity.id"
 					class="activity-list"
@@ -43,7 +44,7 @@
 						:inline="true"
 					></avatar>
 					<span class="activity-txt">{{ activity.txt }}</span>
-				</div>
+				</div> -->
 			</div>
 		</div>
 		<background-menu
@@ -59,12 +60,12 @@
 </template>
 
 <script>
-import avatar from 'vue-avatar';
+import activityPreview from './card-details-cmps/activity-preview.vue'
 import backgroundMenu from './background.menu';
 export default {
 	components: {
-		avatar,
 		backgroundMenu,
+		activityPreview
 	},
 	props: {
 		board: Object,

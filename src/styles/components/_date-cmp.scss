@@ -1,15 +1,29 @@
-.date-container {
-    line-height: 18px;
+
+.checkbox-date-container {
     display: flex;
     align-items: center;
-    padding: 7px 12px;
-    border-radius: 3px;
-    transition: background-color .5s;
-
     input {
         margin: 0;
         margin-right: 5px;
         height: 16px;
         width: 16px;
     }
+
+.date-container {
+    line-height: 18px;
+    display: flex;
+    align-items: center;
+    padding: 7px 12px;
+    border-radius: 3px;
+    background-color: rgba(9, 30, 66, 0.04);
+    font-weight: 400;
+
+    .due-date-text {
+        font-size: 12px;
+        line-height: 16px;
+        padding: 0 4px;
+        border-radius: 2px;
+        margin: auto 0 auto 8px;
+    }
+}
 }

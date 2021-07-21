@@ -156,9 +156,11 @@
         :card="currCard"
         :group="groupsToEdit[currGroupIdx]"
         @createLabel="createLabel"
+        @removeLabel="removeLabel"
         @clearCard="clearCard"
         @updateCard="updateCard($event, currGroupIdx)"
         @removeCard="removeCard($event, currGroupIdx)"
+        @emitActivity="emitActivity"
       ></card-details>
     </transition>
   </section>
@@ -204,8 +206,15 @@ export default {
     draggable,
   },
   methods: {
+    emitActivity(activity) {
+      console.log('activity',activity);
+      this.$emit("emitActivity", activity);
+    },
     createLabel(label) {
       this.$emit("createLabel", label);
+    },
+    removeLabel(labelId) {
+      this.$emit("removeLabel", labelId);
     },
     closeCardEdit(gIdx) {
       this.isAddingCard = false;

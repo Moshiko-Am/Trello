@@ -9,7 +9,7 @@
           <span class="icon-lg icon-organization"></span>
         </div>
         <h3 class="boards-page-board-section-header-name">
-          Tom Bechar's Workspaces
+          {{loggedinUser}}'s Workspaces
         </h3>
       </div>
     </div>
@@ -37,6 +37,9 @@ export default {
     boards() {
       return this.$store.getters.boards;
     },
+    loggedinUser(){
+      return this.$store.getters.user.fullname
+    }
   },
 };
 </script>
