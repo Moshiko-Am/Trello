@@ -21,13 +21,16 @@
         :key="board._id"
       />
     </div>
+    <user-dashboard v-if="boards && boards.length" :boards="boards" :user="user" /> 
   </section>
 </template>
 
 <script>
 import boardPreview from "./board.preview.vue";
+import userDashboard from "./user.dashboard.vue"
 export default {
   components: {
+    userDashboard,
     boardPreview,
   },
   created() {
@@ -39,6 +42,9 @@ export default {
     },
     loggedinUser(){
       return this.$store.getters.user.fullname
+    },
+    user(){
+      return this.$store.getters.user
     }
   },
 };
