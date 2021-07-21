@@ -6,22 +6,53 @@
   >
     <section class="card-preview-inner-container">
       <section
-        class="card-preview"
-        v-if="card.id"
-        :style="!isCover"
+        class="card-preview-full-image"
+        v-if="card.id && card.cover && card.cover.layout === 'full'"
+        :style="background"
         @mouseenter="toggleHover"
         @mouseleave="toggleHover"
       >
-        <div v-if="card.attachments && card.attachments.length">
-          <div
-            class="card-cover"
-            v-if="isCover && isCover.length"
-            :style="{
-              'background-image': coverImg,
-              'background-color': coverBgc,
-            }"
-          ></div>
-        </div>
+        <span
+          v-if="cardHover"
+          class="icon-sm icon-edit"
+          @click.stop="toggleQuickEdit"
+        ></span>
+        <span class="card-preview-full-image-title" v-if="!isQuickEdit">{{
+          card.title
+        }}</span>
+        <textarea
+          @click.stop
+          v-model="cardTitle"
+          ref="cardtitle"
+          v-if="isQuickEdit"
+        ></textarea>
+      </section>
+      <section
+        class="card-preview"
+        v-else
+        @mouseenter="toggleHover"
+        @mouseleave="toggleHover"
+      >
+        <template
+          v-if="
+            card.cover &&
+              card.cover.isCover &&
+              (card.cover.type === 'attachment' || card.cover.type === 'url') &&
+              card.cover.layout === 'top'
+          "
+        >
+          <div class="card-cover" :style="background"></div>
+        </template>
+        <template
+          v-else-if="
+            card.cover &&
+              card.cover.isCover &&
+              card.cover.type === 'color' &&
+              card.cover.layout === 'top'
+          "
+        >
+          <div class="card-cover color" :style="background"></div>
+        </template>
         <div
           @click.stop="toggleLabels"
           class="preview-labels-container"
@@ -105,6 +136,7 @@
         @emitCard="emitCard"
         @openCard="openCard"
         @removeCard="removeCard"
+        @toggleAttach="openCard"
       />
     </section>
     <button
@@ -140,6 +172,26 @@ export default {
     card: Object,
   },
   computed: {
+    background() {
+      if (!this.card.cover.isCover) return false;
+      else
+        return this.card.cover.type === "attachment"
+          ? `background-color: rgb(${
+              this.card.attachments[this.card.cover.attachmentIdx].props
+                .colorArray[0]
+            },${
+              this.card.attachments[this.card.cover.attachmentIdx].props
+                .colorArray[1]
+            },${
+              this.card.attachments[this.card.cover.attachmentIdx].props
+                .colorArray[2]
+            }); background-image: url('${
+              this.card.attachments[this.card.cover.attachmentIdx].url
+            }');`
+          : this.card.cover.type === "color"
+          ? `background-color: ${this.card.cover.color};height: 56px`
+          : `background-color: rgb(${this.card.cover.photo.colorArray[0]},${this.card.cover.photo.colorArray[1]},${this.card.cover.photo.colorArray[2]});background-image: url('${this.card.cover.photo.url}');min-height: 245px`;
+    },
     labelsForDisplay() {
       const labels = this.$store.getters.board.labels;
       return labels.filter((label) => {
@@ -169,33 +221,6 @@ export default {
         return { backgroundColor: "#F2D600", color: "black" };
       else
         return { backgroundColor: "rgba(9, 30, 66, 0.08)", color: "#5e6c84" };
-    },
-    attachment() {
-      if (this.card.attachments && this.card.attachments.length) {
-        return this.card.attachments.filter((attachment) => {
-          return attachment.isCover;
-        });
-      } else return false;
-    },
-    isCover() {
-      if (this.card.isCover) return true;
-      if (this.card.attachments)
-        return this.card.attachments.filter((attachment) => {
-          return attachment.isCover;
-        });
-      return false;
-    },
-    coverImg() {
-      return this.card.isCover
-        ? ""
-        : this.attachment.length
-        ? `url('${this.attachment[0].url}')`
-        : "";
-    },
-    coverBgc() {
-      return this.attachment && this.attachment.length
-        ? `rgb(${this.attachment[0].props.colorArray[0]},${this.attachment[0].props.colorArray[1]},${this.attachment[0].props.colorArray[2]})`
-        : "";
     },
   },
   methods: {
