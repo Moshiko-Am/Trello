@@ -257,7 +257,9 @@
 }
 
 .card-preview-wrapper {
-    max-height: calc(100vh - 190px);
+    max-height: calc(100vh - 195px);
+    margin:0 4px;
+    padding:0 4px;
     overflow-y: auto;
     overflow-x: hidden;
     &::-webkit-scrollbar {
