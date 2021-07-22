@@ -191,6 +191,13 @@
         padding: 1px 3px;
         background-color: rgba(9, 30, 66, 0.04);
         font-weight: 500;
+        line-height:19px;
+        display: flex;
+        align-items: center;
+        .icon-sm {
+            color: white;
+            margin-right: 2px;
+        }
     }
     & .icon-sm.icon-edit,
     &-full-image .icon-sm.icon-edit {
