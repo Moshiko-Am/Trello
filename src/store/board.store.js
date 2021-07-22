@@ -77,6 +77,12 @@ export const boardStore = {
 		setFilter(state, { filterBy }) {
 			state.currFilter = filterBy;
 		},
+		removeBoard(state, { boardId }) {
+			const idx = state.boards.findIndex(
+				(board) => board._id === boardId
+			);
+			state.boards.splice(idx, 1);
+		},
 	},
 	actions: {
 		async loadBoards({ commit }) {
