@@ -411,7 +411,7 @@ export default {
         const delta = ev.clientX - this.posX;
         document.querySelector(".group-list").scrollBy({
           top: 0,
-          left: delta,
+          left: delta ? -delta : delta,
         });
         this.posX = ev.clientX;
       }

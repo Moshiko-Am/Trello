@@ -14,6 +14,7 @@
         "colorthief": "^2.3.2",
         "core-js": "^3.6.5",
         "element-ui": "^2.15.3",
+        "fast-average-color": "^6.4.0",
         "konva": "^8.1.1",
         "register-service-worker": "^1.7.1",
         "socket.io-client": "^2.2.0",
