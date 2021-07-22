@@ -10,7 +10,7 @@
     <div v-if="showDetails">
       <activity-preview v-for="activity in activities" render="card" :key="activity.id" :activity="activity" />
     </div>
-    <div v-else>
+    <div v-else-if="activities.length">
       <template v-for="index in 1">
       <activity-preview :activity="activities[index]" :key="activities[index].id"/>
       </template>
