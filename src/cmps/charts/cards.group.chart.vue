@@ -25,6 +25,8 @@ export default {
               "#344563",
             ],
             data: this.cards,
+            barPercentage:0.6,
+            borderWidth:3,
           },
         ],
       },

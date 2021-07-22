@@ -176,6 +176,7 @@ import cardDetails from "./card.details.vue";
 import cardPreview from "./card.preview.vue";
 import draggable from "vuedraggable";
 import { socketService } from "@/services/socket.service.js";
+import { utilService } from "@/services/util.service.js";
 import clickOutside from "vue-click-outside";
 export default {
   props: {
@@ -190,7 +191,7 @@ export default {
       isAddingCard: false,
       groupsToEdit: null,
       groupToEdit: {
-        id: this.makeId(),
+        id: utilService.makeId(),
         title: "",
         createdAt: Date.now(),
         cards: [],
@@ -199,7 +200,7 @@ export default {
       currGroupIdx: null,
       isExtrasShowing: false,
       cardToEdit: {
-        id: this.makeId(),
+        id: utilService.makeId(),
         title: "",
         createdAt: Date.now(),
       },
@@ -235,7 +236,7 @@ export default {
         return;
       }
       const savedCard = { ...this.cardToEdit };
-      savedCard.id = this.makeId();
+      savedCard.id = utilService.makeId();
       this.groupsToEdit[gIdx].cards.push(savedCard);
       const activity = {
         gId: this.groupsToEdit[gIdx].id,
@@ -331,7 +332,7 @@ export default {
     },
     saveGroup() {
       const savedGroup = { ...this.groupToEdit };
-      savedGroup.id = this.makeId();
+      savedGroup.id = utilService.makeId();
       this.groupsToEdit.push(savedGroup);
       const activity = {
         gId: savedGroup.id,
@@ -366,15 +367,6 @@ export default {
     closeGroupEdit() {
       this.isAddingGroup = false;
       this.groupToEdit.title = "";
-    },
-    makeId(length = 5) {
-      var text = "";
-      var possible =
-        "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-      for (var i = 0; i < length; i++) {
-        text += possible.charAt(Math.floor(Math.random() * possible.length));
-      }
-      return text;
     },
     textHeight(ev, gIdx) {
       const text = document.createElement("div");

@@ -31,6 +31,7 @@ export default {
             data: this.cardsPerBoard,
             borderRadius: 100,
             borderWidth: 3,
+            barPercentage: 0.5
           },
         ],
       },

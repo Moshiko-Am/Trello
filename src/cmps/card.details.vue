@@ -236,10 +236,6 @@ export default {
       this.labelToEdit = label;
       this.toggleCreateLabel();
     },
-    makeId() {
-      const num = Math.floor(Math.random() * (900 - 1) + 1);
-      return "c" + num;
-    },
     toggleCl() {
       if (!this.isAddingChecklist) {
         this.closePopups();

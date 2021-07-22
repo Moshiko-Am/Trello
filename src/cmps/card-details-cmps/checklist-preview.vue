@@ -56,6 +56,9 @@
 </template>
 
 <script>
+import { utilService } from "@/services/util.service.js";
+
+
 export default {
   props: {
     checklist: Object,
@@ -67,7 +70,7 @@ export default {
       todoToAdd: {
         title: "",
         isDone: false,
-        id: this.makeId(),
+        id: utilService.makeId(),
       },
     };
   },
@@ -115,17 +118,13 @@ export default {
         this.todoToAdd = {
           title: "",
           isDone: false,
-          id: this.makeId(),
+          id: utilService.makeId(),
         };
         this.updateChecklist();
         return;
       } else {
         this.$nextTick(() => this.$refs.addTodo.focus());
       }
-    },
-    makeId() {
-      const num = Math.floor(Math.random() * (900 - 1) + 1);
-      return "t" + num;
     },
     updateChecklist(activityTxt) {
       this.$emit("updateChecklist", {checklist:this.checklistToEdit,activityTxt});

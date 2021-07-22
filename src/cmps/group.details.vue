@@ -102,6 +102,8 @@ import cardPreview from "./card.preview.vue";
 import cardDetails from "./card.details.vue";
 import ClickOutside from "vue-click-outside";
 import draggable from "vuedraggable";
+import { utilService } from "@/services/util.service.js";
+
 
 export default {
   props: {
@@ -115,7 +117,7 @@ export default {
       groupToEdit: {},
       groupsToEdit: this.groupss,
       cardToEdit: {
-        id: this.makeId(),
+        id: utilService.makeId(),
         title: "",
         createdAt: Date.now(),
       },
@@ -146,7 +148,7 @@ export default {
         return;
       }
       const savedCard = { ...this.cardToEdit };
-      savedCard.id = this.makeId();
+      savedCard.id = utilService.makeId();
       this.groupToEdit.cards.push(savedCard);
       this.updateGroup();
       this.cardToEdit.title = "";
@@ -173,15 +175,6 @@ export default {
       this.isAddingCard = false;
       this.$refs["card-preview-wrapper"].classList.remove("is-editing");
       this.cardToEdit.title = "";
-    },
-    makeId(length = 5) {
-      var text = "";
-      var possible =
-        "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-      for (var i = 0; i < length; i++) {
-        text += possible.charAt(Math.floor(Math.random() * possible.length));
-      }
-      return text;
     },
     updateCard(updatedCard) {
       const idx = this.groupToEdit.cards.findIndex(

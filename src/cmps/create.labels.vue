@@ -28,6 +28,8 @@
 </template>
 
 <script>
+import { utilService } from "@/services/util.service.js";
+
 export default {
   props:{
     label: Object
@@ -37,7 +39,7 @@ export default {
       labelToEdit: JSON.parse(JSON.stringify(this.label)) || {
         title: "",
         color: "",
-        id: this.makeId(),
+        id: utilService.makeId(),
       },
       colors: [
         "#61bd4f",
@@ -54,10 +56,6 @@ export default {
     };
   },
   methods: {
-    makeId() {
-      const num = Math.floor(Math.random() * (900 - 1) + 1);
-      return "l" + num;
-    },
     setColor(color) {
         this.labelToEdit.color = color;
     },
@@ -67,7 +65,7 @@ export default {
       this.labelToEdit = {
         title: "",
         color: "",
-        id: this.makeId(),
+        id: utilService.makeId(),
       };
     },
     saveLabel() {

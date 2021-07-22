@@ -14,6 +14,7 @@ export default {
           label: "Labels Summary",
           backgroundColor: this.labelsColors,
           data: this.labelsCount,
+          
         },
       ],
     },{

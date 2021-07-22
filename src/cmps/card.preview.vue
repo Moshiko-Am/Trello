@@ -111,6 +111,7 @@
                 card.attachments.length
               }}</span>
             </div>
+            <div class="preview-desc-container" v-if="card.description"><span class="icon-sm icon-desc"></span></div>
           </div>
           <div class="preview-members-container" v-if="card.members">
             <transition-group name="list-complete">
