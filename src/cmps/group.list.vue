@@ -40,8 +40,6 @@
                 @change="saveGroups"
                 @input="textHeight"
                 maxlength="300"
-                :unselectable="isScrolling"
-                :readonly="isScrolling"
               ></textarea>
               <div class="group-header-extras" @click.stop="toggleExtras(gIdx)">
                 <span class="icon-sm icon-dots-menu"></span>
@@ -84,7 +82,7 @@
                   :card="card"
                   :group="group"
                   :key="card.id"
-                  @click.native.self.stop="setCard(card, gIdx, cIdx)"
+                  @click.native="setCard(card, gIdx, cIdx)"
                   @openCard="openCard(card, gIdx, cIdx)"
                   @openBg="openBg"
                   @updateCard="updateCard($event, gIdx)"
