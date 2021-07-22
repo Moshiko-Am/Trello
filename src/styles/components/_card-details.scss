@@ -557,6 +557,10 @@
     @include to-icon("\e95c");
 }
 
+.icon-checkbox {
+    @include to-icon("\e919")
+}
+
 .list-complete-item {
     transition: all 0.3s;
     display: inline-block;
