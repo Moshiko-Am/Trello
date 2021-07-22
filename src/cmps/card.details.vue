@@ -79,7 +79,10 @@
                 @updateChecklists="updateCL"
               />
             </transition>
-            <activity-cmp :activities="filteredActivities" />
+            <activity-cmp
+              v-if="cardToEdit.activities"
+              :activities="filteredActivities"
+            />
           </div>
           <div class="card-details-sidebar">
             <div class="sidebar-inner-container">
