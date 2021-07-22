@@ -40,11 +40,6 @@
           :board="board"
           :key="board._id"
         />
-        <user-dashboard
-          v-if="boards && boards.length"
-          :boards="boards"
-          :user="user"
-        />
       </div>
     </div>
     <boards-templates v-if="isTemplates"></boards-templates>

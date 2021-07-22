@@ -24,7 +24,7 @@
             :username="member.fullname"
             :size="28"
             :inline="true"
-            :style="{ margin: '2px' }"
+            :style="{ 'margin-left': '-3px' }"
           ></avatar>
           <span class="remove-member" @click="removeMember(member._id)">X</span>
         </span>

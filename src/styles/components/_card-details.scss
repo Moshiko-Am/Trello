@@ -184,6 +184,10 @@
 .card-details-content {
     display: flex;
     align-items: flex-start;
+
+    @media (max-width : 800px) {
+        flex-direction: column;
+    }
 }
 
 .card-details-header {
@@ -448,6 +452,34 @@
         >span {
             margin-right: 6px;
         }
+    }
+
+    @media (max-width:800px) {
+        flex-wrap: wrap;
+        padding-right: 0px;
+        .sidebar-inner-container {
+            flex-wrap: wrap;
+
+            .sidebar-btns-container {
+                display: flex;
+                flex-wrap: wrap;
+            }
+
+            .el-input__inner {
+                margin-right: 8px;
+            }
+        }
+        .card-sidebar-btn {
+            flex: 48%;
+        }
+        .card-sidebar-btn{
+            margin-right: 8px ;
+        }
+        .el-date-editor {
+            flex: 48%;
+            margin-right: 8px;
+        }
+
     }
 }
 
