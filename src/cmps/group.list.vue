@@ -25,7 +25,6 @@
         v-for="(group, gIdx) in groupsToEdit"
         :key="group.id"
         class="group-wrapper"
-        :class="{ 'disable-text': isScrolling }"
       >
         <div class="group">
           <div class="group-details">
