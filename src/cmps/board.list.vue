@@ -14,6 +14,12 @@
           >Available templates</a
         >
       </div>
+      <div class="btn-user-container" :class="selectedDashboard">
+        <span class="icon-user icon-sm"></span>
+        <a class="btn-user" @click="showDashboard" :class="selectedDashboard"
+          >User Dashboard</a
+        >
+      </div>
     </nav>
     <div class="boards-lists" v-if="isBoards">
       <div class="boards-list-header">
@@ -27,7 +33,7 @@
           </h3>
         </div>
       </div>
-      <div v-if="boards" class="boards-list-lg">
+      <div class="boards-list-lg">
         <board-preview
           v-for="board in boards"
           display="large"
@@ -36,8 +42,9 @@
         />
       </div>
     </div>
+    <boards-templates v-if="isTemplates"></boards-templates>
     <user-dashboard
-      v-if="boards && boards.length"
+      v-if="boards && boards.length && isDashboard"
       :boards="boards"
       :user="user"
     />
@@ -45,17 +52,20 @@
 </template>
 
 <script>
-import boardPreview from "./board.preview.vue";
-import userDashboard from "./user.dashboard.vue";
+import boardPreview from "./board.preview";
+import userDashboard from "./user.dashboard";
+import boardsTemplates from "./boards.templates";
 export default {
   components: {
     userDashboard,
     boardPreview,
+    boardsTemplates,
   },
   data() {
     return {
       isBoards: true,
       isTemplates: false,
+      isDashboard: false,
     };
   },
   created() {
@@ -67,6 +77,9 @@ export default {
     },
     selectedTemplates() {
       return { "btn-selected": this.isTemplates };
+    },
+    selectedDashboard() {
+      return { "btn-selected": this.isDashboard };
     },
     boards() {
       return this.$store.getters.boards;
@@ -81,11 +94,18 @@ export default {
   methods: {
     showBoards() {
       this.isBoards = true;
+      this.isDashboard = false;
       this.isTemplates = false;
     },
     showTemplates() {
       this.isBoards = false;
+      this.isDashboard = false;
       this.isTemplates = true;
+    },
+    showDashboard() {
+      this.isBoards = false;
+      this.isTemplates = false;
+      this.isDashboard = true;
     },
   },
 };
