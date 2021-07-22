@@ -203,7 +203,6 @@ export default {
   methods: {
     removeBoard(boardId) {
       this.$store.dispatch({ type: "removeBoard", boardId });
-      this.$router.push("/boards");
     },
     setFilter() {
       this.$store.commit({ type: "setFilter", filterBy: this.filterBy });

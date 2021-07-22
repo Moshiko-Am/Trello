@@ -44,6 +44,11 @@ export default {
   methods: {
     removeBoard() {
       this.$emit("removeBoard", this.board._id);
+      const openedBoardId = this.$route.params.boardId;
+      if (openedBoardId === this.board._id) {
+        this.$router.push("/boards");
+      }
+      return;
     },
   },
 };
