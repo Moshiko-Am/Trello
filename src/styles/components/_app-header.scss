@@ -1,200 +1,180 @@
 .header-navbar {
-	@include flex();
-	position: relative;
-	background-color: rgba(0, 0, 0, 0.32);
-	min-height: 40px;
-	overflow: hidden;
-	padding: 4px 8px;
-	z-index: 1;
-
-	.header-controls-left {
-		@include flex();
-
-		& .link-home {
-			display: flex;
-			border-radius: 3px;
-			align-items: center;
-			justify-content: center;
-			background-color: rgba(255, 255, 255, 0.3);
-			color: white;
-			display: flex;
-			height: 32px;
-			line-height: 32px;
-			margin: 0 4px 0 0;
-			padding: 0;
-			white-space: nowrap;
-			width: 32px;
-			transition: all 0.3s;
-
-			&:hover {
-				background-color: rgba(255, 255, 255, 0.2);
-			}
-		}
-
-		& .btn-boards {
-			border-radius: 3px;
-			border: 0;
-			text-decoration: none;
-			align-items: center;
-			background-color: rgba(255, 255, 255, 0.3);
-			color: white;
-			display: flex;
-			align-items: center;
-			font-weight: bold;
-			height: 32px;
-			line-height: 32px;
-			margin: 0 4px 0 0;
-			padding: 0;
-			white-space: nowrap;
-			cursor: pointer;
-			transition: all 0.3s;
-
-			&:hover {
-				background-color: rgba(255, 255, 255, 0.2);
-			}
-
-			.btn-boards-txt {
-				overflow: hidden;
-				padding: 0 8px 0 8px;
-				max-width: 150px;
-			}
-			svg {
-				padding: 0 0 0 4px;
-			}
-		}
-
-		.headerSearchClosed {
-			display: flex;
-			justify-content: space-between;
-			align-items: center;
-			position: relative;
-			background-color: rgba(255, 255, 255, 0.3);
-			border-radius: 3px;
-			transition: all 0.3s;
-
-			&:hover {
-				background-color: rgba(255, 255, 255, 0.4);
-			}
-
-			& input {
-				background: none;
-				border-radius: 3px;
-				border: none;
-				color: rgba(255, 255, 255, 0.5);
-				font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-				float: left;
-				font-size: 14px;
-				height: 32px;
-				line-height: 19px;
-				outline: none;
-				padding-left: 8px;
-				padding-right: 30px;
-				transition: 0.3s;
-				width: 184px;
-				color: #172b4d;
-				&::placeholder {
-					color: white;
-				}
-			}
-			span {
-				color: white;
-				width: 25px;
-				height: 20px;
-				cursor: pointer;
-			}
-		}
-
-		.headerSearchClosed.headerSearchOpen {
-			background-color: #fff;
-			& input {
-				width: 276px;
-				background-color: #fff;
-
-				&::placeholder {
-					color: #172b4d;
-				}
-			}
-
-			span {
-				color: #172b4d;
-			}
-		}
-	}
-
-	.header-logo {
-		position: absolute;
-		left: 50%;
-		transform: translateX(-50%);
-		display: flex;
-		align-items: center;
-		div {
-			width: 28px;
-			height: 28px;
-			background-color: rgb(255, 255, 255);
-			border-radius: 3px;
-			opacity: 0.7;
-			margin-right: 10px;
-			img {
-				opacity: 0.8;
-				width: 100%;
-			}
-		}
-		span {
-			font-size: 20px;
-			font-weight: 700;
-			color: rgba(255, 255, 255, 0.8);
-			font-family: Arial, Helvetica, sans-serif;
-			line-height: 40px;
-		}
-	}
-
-	.header-controls-right {
-		@include flex();
-
-		.member-avatar-wrapper {
-			padding: 0;
-		}
-
-		.user-login {
-			background: none;
-			border: none;
-			color: white;
-			transition: 0.3s;
-
-			&:hover {
-				color: rgb(224, 224, 224);
-			}
-		}
-
-		.member-name {
-			cursor: pointer;
-		}
-
-		.btn-notifications {
-			display: flex;
-			justify-content: center;
-			align-items: center;
-			border-radius: 3px;
-			border: 0;
-			cursor: pointer;
-			text-decoration: none;
-			align-items: center;
-			background-color: rgba(255, 255, 255, 0.3);
-			box-shadow: none;
-			color: white;
-			display: flex;
-			font-weight: bold;
-			height: 32px;
-			width: 32px;
-			line-height: 32px;
-			margin: 0 4px 0 0;
-			padding: 0;
-			white-space: nowrap;
-			transition: all 0.3s;
-
-			&:hover {
-				background-color: rgba(255, 255, 255, 0.2);
-			}
-		}
-	}
+    @include flex();
+    position: relative;
+    background-color: rgba(0, 0, 0, 0.32);
+    min-height: 40px;
+    overflow: hidden;
+    padding: 4px 8px;
+    z-index: 1;
+    .header-controls-left {
+        @include flex();
+        & .link-home {
+            display: flex;
+            border-radius: 3px;
+            align-items: center;
+            justify-content: center;
+            background-color: rgba(255, 255, 255, 0.3);
+            color: white;
+            display: flex;
+            height: 32px;
+            line-height: 32px;
+            margin: 0 4px 0 0;
+            padding: 0;
+            white-space: nowrap;
+            width: 32px;
+            transition: all 0.3s;
+            &:hover {
+                background-color: rgba(255, 255, 255, 0.2);
+            }
+        }
+        & .btn-boards {
+            border-radius: 3px;
+            border: 0;
+            text-decoration: none;
+            align-items: center;
+            background-color: rgba(255, 255, 255, 0.3);
+            color: white;
+            display: flex;
+            align-items: center;
+            font-weight: bold;
+            height: 32px;
+            line-height: 32px;
+            margin: 0 4px 0 0;
+            padding: 0;
+            white-space: nowrap;
+            cursor: pointer;
+            transition: all 0.3s;
+            &:hover {
+                background-color: rgba(255, 255, 255, 0.2);
+            }
+            .btn-boards-txt {
+                overflow: hidden;
+                padding: 1px 8px 0 8px;
+                max-width: 150px;
+            }
+            svg {
+                padding: 0 0 0 4px;
+            }
+        }
+        .headerSearchClosed {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            background-color: rgba(255, 255, 255, 0.3);
+            border-radius: 3px;
+            transition: all 0.3s;
+            &:hover {
+                background-color: rgba(255, 255, 255, 0.4);
+            }
+            & input {
+                background: none;
+                border-radius: 3px;
+                border: none;
+                color: rgba(255, 255, 255, 0.5);
+                font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+                float: left;
+                font-size: 14px;
+                height: 32px;
+                line-height: 19px;
+                outline: none;
+                padding-left: 8px;
+                padding-right: 30px;
+                transition: 0.3s;
+                width: 184px;
+                color: #172b4d;
+                &::placeholder {
+                    color: white;
+                }
+            }
+            span {
+                color: white;
+                width: 25px;
+                height: 20px;
+                cursor: pointer;
+            }
+        }
+        .headerSearchClosed.headerSearchOpen {
+            background-color: #fff;
+            & input {
+                width: 276px;
+                background-color: #fff;
+                &::placeholder {
+                    color: #172b4d;
+                }
+            }
+            span {
+                color: #172b4d;
+            }
+        }
+    }
+    .header-logo {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        align-items: center;
+        div {
+            width: 28px;
+            height: 28px;
+            background-color: rgb(255, 255, 255);
+            border-radius: 3px;
+            opacity: 0.7;
+            margin-right: 10px;
+            img {
+                opacity: 0.8;
+                width: 100%;
+            }
+        }
+        span {
+            font-size: 20px;
+            font-weight: 700;
+            color: rgba(255, 255, 255, 0.8);
+            font-family: Arial, Helvetica, sans-serif;
+            line-height: 40px;
+        }
+    }
+    .header-controls-right {
+        @include flex();
+        .member-avatar-wrapper {
+            padding: 0;
+        }
+        .user-login {
+            background: none;
+            border: none;
+            color: white;
+            transition: 0.3s;
+            &:hover {
+                color: rgb(224, 224, 224);
+            }
+        }
+        .member-name {
+            cursor: pointer;
+        }
+        .btn-notifications {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 3px;
+            border: 0;
+            cursor: pointer;
+            text-decoration: none;
+            align-items: center;
+            background-color: rgba(255, 255, 255, 0.3);
+            box-shadow: none;
+            color: white;
+            display: flex;
+            font-weight: bold;
+            height: 32px;
+            width: 32px;
+            line-height: 32px;
+            margin: 0 4px 0 0;
+            padding: 0;
+            white-space: nowrap;
+            transition: all 0.3s;
+            &:hover {
+                background-color: rgba(255, 255, 255, 0.2);
+            }
+        }
+    }
 }
