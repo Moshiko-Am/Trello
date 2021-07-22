@@ -1,185 +1,186 @@
 <template>
   <section class="card-details-bg" @click="exitCard">
-    <section class="card-details" @click.stop="">
-      <div
-        class="card-cover"
-        v-if="cardToEdit.cover && cardToEdit.cover.isCover"
-        :style="background"
-      ></div>
-      <button
-        class="close-btn"
-        :class="{
-          dark: cardToEdit.cover && !cardToEdit.cover.isCover.length,
-        }"
-        @click="exitCard"
-      >
-        <span class="icon-md icon-x"></span>
-      </button>
-      <div class="card-details-header">
-        <div class="inner-container">
-          <span class="icon-lg icon-card details-header-icon"></span>
-          <input
-            type="text"
-            class="card-details-title"
-            @input="updateTitle"
-            v-model="cardToEdit.title"
-          />
+    <section class="border-container">
+      <section class="card-details" @click.stop="">
+        <div
+          class="card-cover"
+          v-if="cardToEdit.cover && cardToEdit.cover.isCover"
+          :style="background"
+        ></div>
+        <button
+          class="close-btn"
+          :class="{
+            dark: cardToEdit.cover && !cardToEdit.cover.isCover.length,
+          }"
+          @click="exitCard"
+        >
+          <span class="icon-md icon-x"></span>
+        </button>
+        <div class="card-details-header">
+          <div class="inner-container">
+            <span class="icon-lg icon-card details-header-icon"></span>
+            <input
+              type="text"
+              class="card-details-title"
+              @input="updateTitle"
+              v-model="cardToEdit.title"
+            />
+          </div>
+          <div class="card-details-list">From list {{ group.title }}</div>
         </div>
-        <div class="card-details-list">From list {{ group.title }}</div>
-      </div>
 
-      <div class="card-details-content">
-        <div class="card-details-main">
-          <div class="labels-members-container">
-            <transition name="fade">
-              <labels-cmp
-                v-if="cardToEdit.labelIds && cardToEdit.labelIds.length"
-                :labels="labelsForDisplay"
-                :card="card"
-                :optionsLabels="board.labels"
-                :cardLabels="card.labelIds"
-                @createLabel="createLabel($event, false)"
-                @removeLabel="removeLabel($event, false)"
-                @updateLabels="updateLabels"
-                @closePopups="closePopups"
-              />
-            </transition>
-            <transition name="fade">
-              <members-cmp
-                v-if="cardToEdit.members"
-                :members="cardToEdit.members"
-                @updateMembers="updateMembers"
-              />
-            </transition>
-            <transition name="fade">
-              <date-cmp
-                v-if="cardToEdit.dueDate"
-                @toggleCompleted="toggleCompleted"
-                :isCompleted="card.isCompleted"
-                :date="cardToEdit.dueDate"
-              />
-            </transition>
-          </div>
-          <description-cmp
-            :description="cardToEdit.description"
-            @updateDesc="updateDesc"
-          />
-          <transition name="fade">
-            <attachment-cmp
-              v-if="cardToEdit.attachments && cardToEdit.attachments.length"
-              :attachments="cardToEdit.attachments"
-              @updateAttachments="updateAttachments"
-            />
-          </transition>
-          <transition name="fade">
-            <checklists-cmp
-              v-if="cardToEdit.checklists"
-              :checklists="cardToEdit.checklists"
-              @updateChecklists="updateCL"
-            />
-          </transition>
-          <activity-cmp :activities="filteredActivities" />
-        </div>
-        <div class="card-details-sidebar">
-          <div class="sidebar-inner-container">
-            <h3>Suggested</h3>
-            <div class="sidebar-btns-container">
-              <div class="card-sidebar-btn">
-                <span class="icon-sm icon-member"></span>
-                <p class="sidebar-btn-title">Join</p>
-              </div>
-            </div>
-          </div>
-          <div class="sidebar-inner-container">
-            <h3>Add To Card</h3>
-            <div class="sidebar-btns-container">
-              <div class="card-sidebar-btn" @click="toggleMember">
-                <span class="icon-sm icon-member"></span>
-                <p class="sidebar-btn-title">Members</p>
-                <members-list
-                  v-if="isAddingMember"
-                  @close="closePopups"
-                  :boardMembers="board.members"
-                  :cardMembers="card.members"
-                  @updateMembers="updateMembers"
-                />
-              </div>
-              <div class="card-sidebar-btn" @click="toggleLabel">
-                <span class="icon-sm icon-label"></span>
-                <p class="sidebar-btn-title">Labels</p>
-                <labels-list
+        <div class="card-details-content">
+          <div class="card-details-main">
+            <div class="labels-members-container">
+              <transition name="fade">
+                <labels-cmp
+                  v-if="cardToEdit.labelIds && cardToEdit.labelIds.length"
+                  :labels="labelsForDisplay"
+                  :card="card"
                   :optionsLabels="board.labels"
                   :cardLabels="card.labelIds"
-                  @toggleCreateLabel="toggleCreateLabel"
+                  @createLabel="createLabel($event, false)"
+                  @removeLabel="removeLabel($event, false)"
                   @updateLabels="updateLabels"
-                  @editLabel="setLabelToEdit"
                   @closePopups="closePopups"
-                  v-if="isAddingLabel"
                 />
-                <create-labels
-                  v-if="isCreateLabel"
-                  @close="closePopups"
-                  :label="labelToEdit"
-                  @createLabel="createLabel($event, true)"
-                  @removeLabel="removeLabel($event, true)"
-                  @back="toggleCreateLabel"
+              </transition>
+              <transition name="fade">
+                <members-cmp
+                  v-if="cardToEdit.members"
+                  :members="cardToEdit.members"
+                  @updateMembers="updateMembers"
                 />
-              </div>
-              <div class="card-sidebar-btn" @click="toggleCl">
-                <span class="icon-sm icon-checklist"></span>
-                <p class="sidebar-btn-title">Checklist</p>
-                <checklist-add
-                  @addCl="addCl"
-                  @closePopups="closePopups"
-                  v-if="isAddingChecklist"
+              </transition>
+              <transition name="fade">
+                <date-cmp
+                  v-if="cardToEdit.dueDate"
+                  @toggleCompleted="toggleCompleted"
+                  :isCompleted="card.isCompleted"
+                  :date="cardToEdit.dueDate"
                 />
-              </div>
-              <el-date-picker
-                v-model="cardDate"
-                @change="updateDate"
-                placeholder="Dates"
-                type="date"
-                format="yyyy/MM/dd"
-                value-format="yyyy-MM-dd"
-              >
-                <span class="icon-sm icon-date"></span>
-              </el-date-picker>
-              <div class="card-sidebar-btn" @click="toggleAttch">
-                <span class="icon-sm icon-attach"></span>
-                <p class="sidebar-btn-title">Attachments</p>
-                <file-upload
-                  @close="closePopups"
-                  @updateAttachments="updateAttachments"
-                  :attachments="cardToEdit.attachments"
-                  v-if="isAddingAttachment"
-                />
-              </div>
-              <div class="card-sidebar-btn cover" @click="toggleCover">
-                <span class="icon-sm icon-cover"></span>
-                <p class="sidebar-btn-title">Cover</p>
-              </div>
-              <cover-cmp
-                :card="cardToEdit"
-                @close="closePopups"
-                @updateCard="updateCard"
-                @toggleAttch="toggleAttch"
-                v-if="isAddingCover"
-              />
+              </transition>
             </div>
+            <description-cmp
+              :description="cardToEdit.description"
+              @updateDesc="updateDesc"
+            />
+            <transition name="fade">
+              <attachment-cmp
+                v-if="cardToEdit.attachments && cardToEdit.attachments.length"
+                :attachments="cardToEdit.attachments"
+                @updateAttachments="updateAttachments"
+              />
+            </transition>
+            <transition name="fade">
+              <checklists-cmp
+                v-if="cardToEdit.checklists"
+                :checklists="cardToEdit.checklists"
+                @updateChecklists="updateCL"
+              />
+            </transition>
+            <activity-cmp :activities="filteredActivities" />
           </div>
-          <div class="sidebar-inner-container">
-            <h3>Delete Card</h3>
-            <div class="sidebar-btns-container">
-              <div class="card-sidebar-btn delete" @click="removeCard">
-                <span class="icon-sm icon-minus"></span>
-                <p class="sidebar-btn-title">Delete</p>
+          <div class="card-details-sidebar">
+            <div class="sidebar-inner-container">
+              <h3>Suggested</h3>
+              <div class="sidebar-btns-container">
+                <div class="card-sidebar-btn">
+                  <span class="icon-sm icon-member"></span>
+                  <p class="sidebar-btn-title">Join</p>
+                </div>
+              </div>
+            </div>
+            <div class="sidebar-inner-container">
+              <h3>Add To Card</h3>
+              <div class="sidebar-btns-container">
+                <div class="card-sidebar-btn" @click="toggleMember">
+                  <span class="icon-sm icon-member"></span>
+                  <p class="sidebar-btn-title">Members</p>
+                  <members-list
+                    v-if="isAddingMember"
+                    @close="closePopups"
+                    :boardMembers="board.members"
+                    :cardMembers="card.members"
+                    @updateMembers="updateMembers"
+                  />
+                </div>
+                <div class="card-sidebar-btn" @click="toggleLabel">
+                  <span class="icon-sm icon-label"></span>
+                  <p class="sidebar-btn-title">Labels</p>
+                  <labels-list
+                    :optionsLabels="board.labels"
+                    :cardLabels="card.labelIds"
+                    @toggleCreateLabel="toggleCreateLabel"
+                    @updateLabels="updateLabels"
+                    @editLabel="setLabelToEdit"
+                    @closePopups="closePopups"
+                    v-if="isAddingLabel"
+                  />
+                  <create-labels
+                    v-if="isCreateLabel"
+                    @close="closePopups"
+                    :label="labelToEdit"
+                    @createLabel="createLabel($event, true)"
+                    @removeLabel="removeLabel($event, true)"
+                    @back="toggleCreateLabel"
+                  />
+                </div>
+                <div class="card-sidebar-btn" @click="toggleCl">
+                  <span class="icon-sm icon-checklist"></span>
+                  <p class="sidebar-btn-title">Checklist</p>
+                  <checklist-add
+                    @addCl="addCl"
+                    @closePopups="closePopups"
+                    v-if="isAddingChecklist"
+                  />
+                </div>
+                <el-date-picker
+                  v-model="cardDate"
+                  @change="updateDate"
+                  placeholder="Dates"
+                  type="date"
+                  format="yyyy/MM/dd"
+                  value-format="yyyy-MM-dd"
+                >
+                  <span class="icon-sm icon-date"></span>
+                </el-date-picker>
+                <div class="card-sidebar-btn" @click="toggleAttch">
+                  <span class="icon-sm icon-attach"></span>
+                  <p class="sidebar-btn-title">Attachments</p>
+                  <file-upload
+                    @close="closePopups"
+                    @updateAttachments="updateAttachments"
+                    :attachments="cardToEdit.attachments"
+                    v-if="isAddingAttachment"
+                  />
+                </div>
+                <div class="card-sidebar-btn cover" @click="toggleCover">
+                  <span class="icon-sm icon-cover"></span>
+                  <p class="sidebar-btn-title">Cover</p>
+                </div>
+                <cover-cmp
+                  :card="cardToEdit"
+                  @close="closePopups"
+                  @updateCard="updateCard"
+                  @toggleAttch="toggleAttch"
+                  v-if="isAddingCover"
+                />
+              </div>
+            </div>
+            <div class="sidebar-inner-container">
+              <h3>Delete Card</h3>
+              <div class="sidebar-btns-container">
+                <div class="card-sidebar-btn delete" @click="removeCard">
+                  <span class="icon-sm icon-minus"></span>
+                  <p class="sidebar-btn-title">Delete</p>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
+      </section>
     </section>
-    <section class="padding-bottom"></section>
   </section>
 </template>
 

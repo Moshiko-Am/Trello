@@ -99,7 +99,13 @@
               class="preview-date-container"
               :style="isSoon"
               v-if="card.dueDate && card.dueDate.length"
+              @mouseover="isHover = true"
+              @mouseout="isHover = false"
+              @click.stop="toggleCompleted"
             >
+              <span v-if="!isHover" class="icon-sm icon-date"></span>
+              <span v-else-if="card.isCompleted" class="icon-sm icon-checklist"></span>
+              <span v-else class="icon-sm icon-checkbox"></span>
               {{ card.dueDate.slice(5) }}
             </div>
             <div
@@ -171,6 +177,7 @@ export default {
       cardHover: false,
       isQuickEdit: false,
       cardTitle: this.card.title,
+      isHover : false
     };
   },
   props: {
@@ -239,6 +246,13 @@ export default {
       this.toggleQuickEdit();
       this.$emit("openCard", this.card);
     },
+    toggleCompleted() {
+      const updatedCard = JSON.parse(JSON.stringify(this.card))
+      console.log('cardCopy',updatedCard);
+      updatedCard.isCompleted = !updatedCard.isCompleted
+      const activityTxt = (updatedCard.isCompleted) ? ' marked completed ' : ' marked incomplete '
+      this.emitCard({updatedCard , activityTxt});
+    },
     toggleHover() {
       this.cardHover = !this.cardHover;
     },
@@ -270,6 +284,7 @@ export default {
       this.toggleQuickEdit();
     },
     emitCard({ updatedCard, activityTxt }) {
+      console.log('updatedCard',updatedCard);
       const cardCopy = JSON.parse(JSON.stringify(updatedCard));
       const activity = {};
       if (activityTxt) {
