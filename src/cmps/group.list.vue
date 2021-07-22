@@ -3,11 +3,14 @@
     v-if="groupsToEdit"
     ref="grouplistwrapper"
     class="group-list-wrapper"
+    @mousedown="setPageScroll"
+    @mouseup="unsetPageScroll"
+    @mousemove="dragList"
   >
     <draggable
       class="group-list"
       handle=".group-wrapper"
-      animation="1500"
+      animation="150"
       v-model="groupsToEdit"
       @start="drag = true"
       @end="
@@ -16,6 +19,7 @@
       "
       dragClass="ghost"
       ghostClass="tilted"
+      ref="grouplist"
     >
       <div
         v-for="(group, gIdx) in groupsToEdit"
@@ -36,7 +40,7 @@
                 @input="textHeight"
                 maxlength="300"
               ></textarea>
-              <div class="group-header-extras" @click="toggleExtras(gIdx)">
+              <div class="group-header-extras" @click.stop="toggleExtras(gIdx)">
                 <span class="icon-sm icon-dots-menu"></span>
                 <div
                   v-if="isExtrasShowing && currGroupIdx === gIdx"
@@ -77,7 +81,7 @@
                   :card="card"
                   :group="group"
                   :key="card.id"
-                  @click.native="setCard(card, gIdx, cIdx)"
+                  @click.native.self.stop="setCard(card, gIdx, cIdx)"
                   @openCard="openCard(card, gIdx, cIdx)"
                   @openBg="openBg"
                   @updateCard="updateCard($event, gIdx)"
@@ -109,11 +113,14 @@
                 <button class="btn-add-card" @click.stop="saveCard(gIdx)">
                   Add card
                 </button>
-                <a class="icon-lg icon-close" @click="closeCardEdit(gIdx)"></a>
+                <a
+                  class="icon-lg icon-close"
+                  @click.stop="closeCardEdit(gIdx)"
+                ></a>
               </div>
             </div>
             <div v-else class="card-composer-container">
-              <a class="open-card-composer" @click="toggleCardEdit(gIdx)">
+              <a class="open-card-composer" @click.stop="toggleCardEdit(gIdx)">
                 <span class="icon-sm icon-add"></span>
                 <span class="add-card">Add a card</span></a
               >
@@ -142,16 +149,20 @@
               class="btn-add-group"
               type="submit"
               value="Add list"
-              @click="toggleGroupEdit"
+              @click.stop="toggleGroupEdit"
             />
             <a
               class="icon-lg icon-close"
               aria-label="Cancel list editing"
-              @click="closeGroupEdit"
+              @click.stop="closeGroupEdit"
             ></a>
           </div>
         </form>
-        <a v-if="!isAddingGroup" class="open-add-list" @click="toggleGroupEdit">
+        <a
+          v-if="!isAddingGroup"
+          class="open-add-list"
+          @click.stop="toggleGroupEdit"
+        >
           <span class="icon-sm icon-add"></span>Add another list
         </a>
       </div>
@@ -203,6 +214,7 @@ export default {
         title: "",
         createdAt: Date.now(),
       },
+      isScrolling: false,
     };
   },
   components: {
@@ -399,6 +411,21 @@ export default {
       document.body.removeChild(text);
       if (ev) ev.target.style.height = formattedHeight;
       else this.$refs.grouptitle[gIdx].style.height = formattedHeight;
+    },
+    dragList(ev) {
+      if (this.isScrolling)
+        document.querySelector(".group-list").scrollTo({
+          top: 0,
+          left: ev.clientX,
+        });
+    },
+    setPageScroll(ev) {
+      if (ev.target.className === "group-list") this.isScrolling = true;
+      console.log("on");
+    },
+    unsetPageScroll() {
+      this.isScrolling = false;
+      console.log("off");
     },
   },
   created() {
