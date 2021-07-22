@@ -1,10 +1,12 @@
 import { boardService } from '../services/board.service.js';
+import { templateService } from '../services/template.service.js';
 
 export const boardStore = {
 	state: {
 		selectedBoard: {},
 		boards: null,
 		currFilter: '',
+		templates: templateService.query(),
 	},
 	getters: {
 		board({ selectedBoard }) {
@@ -24,6 +26,9 @@ export const boardStore = {
 					return board;
 				}
 			});
+		},
+		templates(state) {
+			return state.templates;
 		},
 	},
 	mutations: {
