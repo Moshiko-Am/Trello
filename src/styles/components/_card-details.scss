@@ -67,6 +67,13 @@
             width: calc(100% + 30px);
             margin-inline-start: -15px;
             margin-block-start: -30px;
+            
+            @media (max-width:500px) {
+                width: calc(100% + 20px);
+                margin-inline-start: -10px;
+                margin-block-start: -10px;
+                
+            }
         }
         .card-details-title {
             cursor: pointer;
@@ -125,7 +132,7 @@
         }
         @media (max-width:500px) {
             width: 100%;
-            
+            padding: 10px;
         }
     }
 }
@@ -213,6 +220,10 @@
     }
     .card-details-list {
         margin-left: 32px;
+    }
+
+    @media (max-width:500px) {
+        padding:6px;
     }
 }
 
@@ -489,6 +500,10 @@
     @media (max-width:800px) {
         width: 100%;
         // min-width: 400px;
+    }
+
+    @media (max-width:500px) {
+        padding:0 8px;
     }
 }
 

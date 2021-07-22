@@ -35,4 +35,9 @@
         letter-spacing: 0.04em;
         line-height: 16px;
     }
+
+    @media (max-width:500px) {
+        width: 250px;
+        
+    }
 }
