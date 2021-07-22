@@ -25,6 +25,7 @@
         v-for="(group, gIdx) in groupsToEdit"
         :key="group.id"
         class="group-wrapper"
+        :class="{ 'disable-text': isScrolling }"
       >
         <div class="group">
           <div class="group-details">
@@ -39,6 +40,8 @@
                 @change="saveGroups"
                 @input="textHeight"
                 maxlength="300"
+                :unselectable="isScrolling"
+                :readonly="isScrolling"
               ></textarea>
               <div class="group-header-extras" @click.stop="toggleExtras(gIdx)">
                 <span class="icon-sm icon-dots-menu"></span>
@@ -216,6 +219,7 @@ export default {
         createdAt: Date.now(),
       },
       isScrolling: false,
+      posX: null,
     };
   },
   components: {
@@ -405,19 +409,23 @@ export default {
       else this.$refs.grouptitle[gIdx].style.height = formattedHeight;
     },
     dragList(ev) {
-      if (this.isScrolling)
-        document.querySelector(".group-list").scrollTo({
+      if (this.isScrolling) {
+        const delta = ev.clientX - this.posX;
+        document.querySelector(".group-list").scrollBy({
           top: 0,
-          left: ev.clientX,
+          left: delta,
         });
+        this.posX = ev.clientX;
+      }
     },
     setPageScroll(ev) {
-      if (ev.target.className === "group-list") this.isScrolling = true;
-      console.log("on");
+      if (ev.target.className === "group-list") {
+        this.isScrolling = true;
+        this.posX = ev.clientX;
+      }
     },
     unsetPageScroll() {
       this.isScrolling = false;
-      console.log("off");
     },
   },
   created() {
