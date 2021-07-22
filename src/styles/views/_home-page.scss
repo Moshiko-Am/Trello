@@ -289,7 +289,6 @@
 		flex-direction: column;
 		justify-content: center;
 		align-items: center;
-		// background-color: rgb(248, 248, 248);
 		background-color: rgba(2, 107, 167, 0.075);
 		padding: 10px;
 
@@ -322,6 +321,7 @@
 		.homepage-2 {
 			flex-direction: column;
 			margin-top: 0;
+			height: fit-content;
 
 			.homepage-2-content {
 				width: 100%;
@@ -348,6 +348,7 @@
 		.homepage-3 {
 			flex-direction: column;
 			margin-top: 0;
+			height: fit-content;
 
 			.homepage-3-img-container {
 				margin: 0;
