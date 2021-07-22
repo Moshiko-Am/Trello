@@ -35,6 +35,7 @@
         ><span class="btn-boards-txt">Boards</span>
       </button>
       <boards-menu
+        @removeBoard="removeBoard"
         v-click-outside="closeBoardsMenu"
         @createBoard="createBoard"
         :boards="boards"
@@ -107,7 +108,10 @@
         </transition>
       </div>
     </div>
-    <div class="header-logo"><div><img src="@/assets/img/logo.png" alt=""></div><span>Trailing</span></div>
+    <div class="header-logo">
+      <div><img src="@/assets/img/logo.png" alt="" /></div>
+      <span>Trailing</span>
+    </div>
     <div class="header-controls-right">
       <!-- <router-link to="/login">Login</router-link> -->
       <button @click="login" class="user-login" v-if="!user._id">Login</button>
@@ -197,6 +201,10 @@ export default {
     ClickOutside,
   },
   methods: {
+    removeBoard(boardId) {
+      this.$store.dispatch({ type: "removeBoard", boardId });
+      this.$router.push("/boards");
+    },
     setFilter() {
       this.$store.commit({ type: "setFilter", filterBy: this.filterBy });
     },

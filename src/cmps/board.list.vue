@@ -39,20 +39,12 @@
           display="large"
           :board="board"
           :key="board._id"
-        />
-        <user-dashboard
-          v-if="boards && boards.length"
-          :boards="boards"
-          :user="user"
+          @click.native="showBoard(board._id)"
         />
       </div>
     </div>
     <boards-templates v-if="isTemplates"></boards-templates>
-    <user-dashboard
-      v-if="boards && boards.length && isDashboard"
-      :boards="boards"
-      :user="user"
-    />
+    <user-dashboard v-if="isDashboard" :boards="boards" :user="user" />
   </section>
 </template>
 
@@ -97,6 +89,9 @@ export default {
     },
   },
   methods: {
+    showBoard(boardId) {
+      this.$router.push(`/board/${boardId}`);
+    },
     showBoards() {
       this.isBoards = true;
       this.isDashboard = false;

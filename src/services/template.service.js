@@ -1,3 +1,5 @@
+import { utilService } from './util.service.js';
+
 export const templateService = {
 	query,
 };
@@ -39,7 +41,22 @@ var gTemplates = [
 			},
 		],
 		members: [],
-		groups: [],
+		groups: [
+			{
+				id: utilService.makeId(),
+				title: 'Your Template List',
+				cards: [
+					{
+						id: utilService.makeId(),
+						title: 'Make a business plan',
+					},
+					{
+						id: utilService.makeId(),
+						title: 'Add Samples',
+					},
+				],
+			},
+		],
 		activities: [],
 	},
 	{
@@ -57,7 +74,22 @@ var gTemplates = [
 		},
 		labels: [],
 		members: [],
-		groups: [],
+		groups: [
+			{
+				id: utilService.makeId(),
+				title: 'Your Template List',
+				cards: [
+					{
+						id: utilService.makeId(),
+						title: 'Make your first design',
+					},
+					{
+						id: utilService.makeId(),
+						title: 'Add Samples',
+					},
+				],
+			},
+		],
 		activities: [],
 	},
 	{
@@ -75,7 +107,22 @@ var gTemplates = [
 		},
 		labels: [],
 		members: [],
-		groups: [],
+		groups: [
+			{
+				id: utilService.makeId(),
+				title: 'Your Template List',
+				cards: [
+					{
+						id: utilService.makeId(),
+						title: 'Prepare your first lesson',
+					},
+					{
+						id: utilService.makeId(),
+						title: 'Add Samples',
+					},
+				],
+			},
+		],
 		activities: [],
 	},
 	{
@@ -93,7 +140,22 @@ var gTemplates = [
 		},
 		labels: [],
 		members: [],
-		groups: [],
+		groups: [
+			{
+				id: utilService.makeId(),
+				title: 'Your Template List',
+				cards: [
+					{
+						id: utilService.makeId(),
+						title: 'Make your first marketing plan',
+					},
+					{
+						id: utilService.makeId(),
+						title: 'Add Samples',
+					},
+				],
+			},
+		],
 		activities: [],
 	},
 ];

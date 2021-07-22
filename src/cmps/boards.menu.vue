@@ -19,15 +19,15 @@
           display="small"
           :board="board"
           :key="board._id"
+          @click.native="showBoard(board._id)"
+          @removeBoard="removeBoard"
         />
       </div>
       <div class="board-btns-container">
         <button class="btn-create-board" @click="toggleCreateBoard">
           Create new board
         </button>
-        <button class="btn-boards-page" @click="showBoards">
-          Boards page
-        </button>
+        <button class="btn-boards-page" @click="showBoards">Boards page</button>
       </div>
     </div>
     <create-board
@@ -64,6 +64,12 @@ export default {
     },
   },
   methods: {
+    removeBoard(boardId) {
+      this.$emit("removeBoard", boardId);
+    },
+    showBoard(boardId) {
+      this.$router.push(`/board/${boardId}`);
+    },
     boardsMenuClose() {
       this.$emit("closeBoardsMenu");
       this.isCreateOpen = false;

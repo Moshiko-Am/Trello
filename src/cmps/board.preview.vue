@@ -6,7 +6,6 @@
       'board-item': display === 'small',
     }"
     :style="background"
-    @click="showBoard(board._id)"
   >
     <img
       v-if="board.style.type === 'backgroundImage' && display === 'small'"
@@ -20,6 +19,11 @@
     ></div>
     <div class="board-item-title-container">
       <h4 class="board-item-title">{{ board.title }}</h4>
+      <button
+        class="icon-md btn-remove"
+        v-if="display === 'small'"
+        @click.stop="removeBoard"
+      ></button>
     </div>
   </div>
 </template>
@@ -38,8 +42,8 @@ export default {
     },
   },
   methods: {
-    showBoard(boardId) {
-      this.$router.push(`/board/${boardId}`);
+    removeBoard() {
+      this.$emit("removeBoard", this.board._id);
     },
   },
 };
