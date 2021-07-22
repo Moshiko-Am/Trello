@@ -101,7 +101,7 @@
               v-if="card.dueDate && card.dueDate.length"
               @mouseover="isHover = true"
               @mouseout="isHover = false"
-              @click="toggleCompleted"
+              @click.stop="toggleCompleted"
             >
               <span v-if="!isHover" class="icon-sm icon-date"></span>
               <span v-else-if="card.isCompleted" class="icon-sm icon-checklist"></span>
@@ -247,10 +247,11 @@ export default {
       this.$emit("openCard", this.card);
     },
     toggleCompleted() {
-      const cardCopy = JSON.parse(JSON.stringify(this.card))
-      cardCopy.isCompleted = !cardCopy.isCompleted
-      const activityTxt = (cardCopy.isCompleted) ? ' marked completed ' : ' marked incomplete '
-      this.emitCard(cardCopy , activityTxt);
+      const updatedCard = JSON.parse(JSON.stringify(this.card))
+      console.log('cardCopy',updatedCard);
+      updatedCard.isCompleted = !updatedCard.isCompleted
+      const activityTxt = (updatedCard.isCompleted) ? ' marked completed ' : ' marked incomplete '
+      this.emitCard({updatedCard , activityTxt});
     },
     toggleHover() {
       this.cardHover = !this.cardHover;
@@ -283,6 +284,7 @@ export default {
       this.toggleQuickEdit();
     },
     emitCard({ updatedCard, activityTxt }) {
+      console.log('updatedCard',updatedCard);
       const cardCopy = JSON.parse(JSON.stringify(updatedCard));
       const activity = {};
       if (activityTxt) {
