@@ -1,11 +1,6 @@
 <template>
   <section class="homepage-container">
-    <div
-      class="homepage-1"
-      data-aos-mirror="true"
-      data-aos="fade-right"
-      data-aos-duration="1000"
-    >
+    <div class="homepage-1">
       <h1
         class="homepage-logo"
         data-aos="slide-down"
