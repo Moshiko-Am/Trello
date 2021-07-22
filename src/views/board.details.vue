@@ -33,6 +33,8 @@ import boardHeader from "@/cmps/board.header.vue";
 import groupList from "@/cmps/group.list.vue";
 import boardDashboard from "@/cmps/board.dashboard.vue";
 import { socketService } from "@/services/socket.service.js";
+import { utilService } from "@/services/util.service.js";
+
 export default {
   data() {
     return {
@@ -53,7 +55,7 @@ export default {
   methods: {
     addActivity(newActivity) {
       const boardActivities = JSON.parse(JSON.stringify(this.board)).activities;
-      newActivity.id = this.makeId();
+      newActivity.id = utilService.makeId();
       newActivity.createdAt = Date.now();
       boardActivities.unshift(newActivity);
       this.boardUpdate({ type: "activities", payload: boardActivities });
@@ -75,7 +77,7 @@ export default {
       const board = JSON.parse(JSON.stringify(this.board));
       board[update.type] = update.payload;
       if (update.activities && update.activities.txt) {
-        update.activities.id = this.makeId();
+        update.activities.id = utilService.makeId();
         update.activities.createdAt = Date.now();
         board.activities.unshift(update.activities);
       }
@@ -107,15 +109,6 @@ export default {
     },
     updateMembers(members) {
       this.$store.commit({ type: "membersChanged", members });
-    },
-    makeId(length = 5) {
-      var text = "";
-      var possible =
-        "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-      for (var i = 0; i < length; i++) {
-        text += possible.charAt(Math.floor(Math.random() * possible.length));
-      }
-      return text;
     },
   },
   created() {

@@ -29,10 +29,6 @@
 				background-color: rgba(9, 30, 66, 0.13);
 			}
 
-			&:active {
-				background-color: #e4f0f6;
-			}
-
 			.btn-workspace {
 				background: none;
 				text-align: left;
@@ -47,23 +43,6 @@
 			.icon-board {
 				@include to-icon('\e90b');
 				margin-inline: 8px;
-			}
-		}
-
-		.btn-workspace-container.btn-selected {
-			background-color: #e4f0f6;
-			color: #0079bf;
-
-			.icon-board {
-				color: #0079bf;
-			}
-		}
-		.btn-template-container.btn-selected {
-			background-color: #e4f0f6;
-			color: #0079bf;
-
-			.icon-template {
-				color: #0079bf;
 			}
 		}
 
@@ -93,6 +72,62 @@
 			.icon-template {
 				@include to-icon('\e96d');
 				margin-inline: 8px;
+			}
+		}
+
+		.btn-user-container {
+			width: 100%;
+			display: flex;
+			align-items: center;
+			margin-bottom: 5px;
+			border-radius: 4px;
+			color: #172b4d;
+			transition: 0.3s;
+
+			&:hover {
+				background-color: rgba(9, 30, 66, 0.13);
+			}
+
+			.btn-user {
+				background: none;
+				text-align: left;
+				border: none;
+				width: 100%;
+				font-weight: bold;
+				padding: 6px 8px 6px 0;
+				font-size: 14px;
+				border-radius: 4px;
+			}
+			.icon-user {
+				@include to-icon('\e946');
+				margin-inline: 8px;
+			}
+		}
+
+		.btn-workspace-container.btn-selected {
+			background-color: #e4f0f6;
+			color: #0079bf;
+
+			.icon-board {
+				color: #0079bf;
+			}
+		}
+
+		.btn-template-container.btn-selected {
+			background-color: #e4f0f6;
+			color: #0079bf;
+
+			.icon-template {
+				color: #0079bf;
+			}
+		}
+
+		.btn-user-container.btn-selected {
+			background-color: #e4f0f6;
+			color: #0079bf;
+
+			.icon-user {
+				color: #0079bf;
 			}
 		}
 	}

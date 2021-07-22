@@ -38,6 +38,7 @@
 
 <script>
 import { uploadImg } from "@/services/img.upload.service.js";
+import { utilService } from "@/services/util.service.js";
 import ColorThief from "colorthief";
 export default {
   props: {
@@ -87,7 +88,7 @@ export default {
         img.crossOrigin = "Anonymous";
         img.src = res.url;
       });
-      this.attachment.id = this.makeId();
+      this.attachment.id = utilService.makeId();
       this.attachment.createdAt = Date.now();
       this.attachment.filename = this.uploadedFile.name;
       this.attachment.props.width = res.width;
@@ -112,15 +113,6 @@ export default {
     handlePictureCardPreview(file) {
       this.dialogImageUrl = file.url;
       this.dialogVisible = true;
-    },
-    makeId(length = 5) {
-      var text = "";
-      var possible =
-        "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-      for (var i = 0; i < length; i++) {
-        text += possible.charAt(Math.floor(Math.random() * possible.length));
-      }
-      return text;
     },
   },
 };

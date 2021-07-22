@@ -4,14 +4,16 @@
     <div class="charts-container">
       <section
         class="chart-container"
-        style="position: relative; min-width: 200px; width: 25vw"
+        style="position: relative; min-width: 200px; width: 15vw"
       >
+        <h4>Your cards per board</h4>
         <cards-chart :boards="boards" :user="user" />
       </section>
       <section
         class="chart-container"
-        style="position: relative; min-width: 200px; width: 25vw"
+        style="position: relative; min-width: 200px; width: 15vw"
       >
+      <h4>Your activity in boards</h4>
         <activity-chart :boards="boards" :user="user" />
       </section>
     </div>

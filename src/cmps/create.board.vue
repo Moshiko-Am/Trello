@@ -73,6 +73,8 @@
 
 <script>
 import axios from 'axios';
+import {utilService} from "@/services/util.service.js"
+
 export default {
 	data() {
 		return {
@@ -150,46 +152,46 @@ export default {
 				members: [this.loggedUser],
 				groups: [
 					{
-						id:this.makeId(),
+						id:utilService.makeId(),
 						title:'Need to check',
 						cards:[
 							{
-								id:this.makeId(),
+								id:utilService.makeId(),
 								createdAt:Date.now(),
 								title:'Card details component'
 							},
 							{
-								id:this.makeId(),
+								id:utilService.makeId(),
 								createdAt:Date.now(),
 								title:'Login auth'
 							}
 						],
 					},
 					{
-						id:this.makeId(),
+						id:utilService.makeId(),
 						title:'In progress',
 						cards:[
 							{
-								id:this.makeId(),
+								id:utilService.makeId(),
 								createdAt:Date.now(),
 								title:'Card cover'
 							}
 						],
 					},
 					{
-						id:this.makeId(),
+						id:utilService.makeId(),
 						title:'Done',
 						cards:[],
 					},
 					{
-						id:this.makeId(),
+						id:utilService.makeId(),
 						title:'Need to refactor',
 						cards:[],
 					},
 				],
 				activities: [
 					{
-						id:this.makeId(),
+						id:utilService.makeId(),
 						createdAt:Date.now(),
 						byMember:this.loggedUser,
 						txt:' created this board '
@@ -197,10 +199,6 @@ export default {
 				],
 			};
 			this.$emit('createBoard', boardToSave);
-		},
-		makeId() {
-			const num = Math.floor(Math.random() * (900 - 1) + 1);
-			return 'b' + num;
 		},
 	},
 	async created() {

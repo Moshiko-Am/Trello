@@ -5,9 +5,16 @@
         <span class="icon-lg icon-activity"></span>
         <h3 class="main-item-title">Activity</h3>
       </div>
-      <button class="card-sidebar-btn">Show Details</button>
+      <button class="card-sidebar-btn" @click="toggleDetails"><span v-if="!showDetails">Show Details</span><span v-else>Hide Details</span></button>
     </div>
+    <div v-if="showDetails">
       <activity-preview v-for="activity in activities" render="card" :key="activity.id" :activity="activity" />
+    </div>
+    <div v-else>
+      <template v-for="index in 1">
+      <activity-preview :activity="activities[index]" :key="activities[index].id"/>
+      </template>
+    </div>
   </div>
 </template>
 
@@ -18,8 +25,18 @@ export default {
     props:{
         activities:Array,
     },
+    data(){
+      return {
+        showDetails:false
+      }
+    },
     components:{
       activityPreview
     },
+    methods: {
+      toggleDetails(){
+        this.showDetails = !this.showDetails
+      }
+    }
 };
 </script>
