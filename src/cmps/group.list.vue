@@ -134,7 +134,7 @@
       <div
         ref="addgroup"
         class="group-wrapper mod-add"
-        :class="{ 'disable-text': isScrolling, 'is-edit': isAddingGroup }"
+        :class="{ 'is-edit': isAddingGroup }"
       >
         <form v-if="isAddingGroup" v-click-outside="toggleGroupEdit">
           <input
@@ -409,6 +409,7 @@ export default {
     },
     dragList(ev) {
       if (this.isScrolling && ev.buttons === 1) {
+        document.body.style.userSelect = "none";
         document.querySelector(".group-list").scrollBy({
           top: 0,
           left: ev.movementX ? -ev.movementX : ev.movementX,
@@ -420,6 +421,7 @@ export default {
     },
     unsetPageScroll() {
       this.isScrolling = false;
+      document.body.style.userSelect = "unset";
     },
   },
   created() {
@@ -432,6 +434,13 @@ export default {
     });
     document.addEventListener("mouseleave", () => {
       this.isScrolling = false;
+      document.body.style.userSelect = "unset";
+    });
+  },
+  destroyed() {
+    document.removeEventListener("mouseleave", () => {
+      this.isScrolling = false;
+      document.body.style.userSelect = "unset";
     });
   },
   watch: {
