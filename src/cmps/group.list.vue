@@ -12,7 +12,10 @@
       handle=".group-wrapper"
       animation="150"
       v-model="groupsToEdit"
-      @start="drag = true"
+      @start="
+        isScrolling = false;
+        drag = true;
+      "
       @end="
         drag = false;
         saveGroups();
@@ -131,7 +134,7 @@
       <div
         ref="addgroup"
         class="group-wrapper mod-add"
-        :class="{ 'is-edit': isAddingGroup }"
+        :class="{ 'disable-text': isScrolling, 'is-edit': isAddingGroup }"
       >
         <form v-if="isAddingGroup" v-click-outside="toggleGroupEdit">
           <input
@@ -216,7 +219,6 @@ export default {
         createdAt: Date.now(),
       },
       isScrolling: false,
-      posX: null,
     };
   },
   components: {
@@ -406,20 +408,15 @@ export default {
       else this.$refs.grouptitle[gIdx].style.height = formattedHeight;
     },
     dragList(ev) {
-      if (this.isScrolling) {
-        const delta = ev.clientX - this.posX;
+      if (this.isScrolling && ev.buttons === 1) {
         document.querySelector(".group-list").scrollBy({
           top: 0,
-          left: delta ? -delta : delta,
+          left: ev.movementX ? -ev.movementX : ev.movementX,
         });
-        this.posX = ev.clientX;
       }
     },
     setPageScroll(ev) {
-      if (ev.target.className === "group-list") {
-        this.isScrolling = true;
-        this.posX = ev.clientX;
-      }
+      if (ev.target.className === "group-list") this.isScrolling = true;
     },
     unsetPageScroll() {
       this.isScrolling = false;
@@ -432,6 +429,9 @@ export default {
     this.popupItem = this.$refs.addgroup;
     this.$refs.grouptitle.forEach((group, idx) => {
       this.$refs.grouptitle[idx].style.height = this.textHeight(null, idx);
+    });
+    document.addEventListener("mouseleave", () => {
+      this.isScrolling = false;
     });
   },
   watch: {
