@@ -20,11 +20,12 @@ export const boardStore = {
 		},
 		boardsForDisplay(state) {
 			const searchStr = new RegExp(state.currFilter, 'i');
-			if (state.currFilter === '') return;
+			if (state.currFilter === '') return state.boards;
 			return state.boards.filter((board) => {
 				if (searchStr.test(board.title)) {
 					return board;
 				}
+				state.currFilter = '';
 			});
 		},
 		templates(state) {

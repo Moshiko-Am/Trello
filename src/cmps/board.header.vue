@@ -20,6 +20,7 @@
           class="members-list"
         >
           <avatar
+            :title="member.fullname"
             class="member-name"
             :username="member.fullname"
             :size="28"
@@ -27,6 +28,12 @@
             :style="{ 'margin-left': '-3px' }"
           ></avatar>
           <span class="remove-member" @click="removeMember(member._id)">X</span>
+          <img
+            title="This member is the creator of this board"
+            class="member-admin"
+            v-if="board.createdBy._id === member._id"
+            src="https://a.trellocdn.com/prgb/dist/images/chevron.88a4454280d68a816b89.png"
+          />
         </span>
         <button class="btn-invite" @click="toggleInvite">Invite</button>
         <transition name="slide-fade">
@@ -41,9 +48,7 @@
         </transition>
       </div>
       <span class="board-header-divider">|</span>
-      <button class="btn-dashboard" @click="toggleDashboard">
-        Dashboard
-      </button>
+      <button class="btn-dashboard" @click="toggleDashboard">Dashboard</button>
     </div>
     <button class="btn-show-menu" @click="toggleMenu">
       <span class="icon-sm icon-dots-menu"></span>
