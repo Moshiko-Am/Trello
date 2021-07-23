@@ -1,5 +1,14 @@
 <template>
   <section class="search-boards-container">
+    <div class="search-board-input-container">
+      <input
+        type="text"
+        placeholder="Start typing..."
+        class="search-board-input"
+        @input="setFilter"
+        v-model="filterBy"
+      />
+    </div>
     <div class="search-header-container">
       <h1 class="board-search-header" v-if="boardsForDisplay">
         Search results
@@ -27,7 +36,15 @@ export default {
   components: {
     boardPreview,
   },
+  data() {
+    return {
+      filterBy: "",
+    };
+  },
   methods: {
+    setFilter() {
+      this.$store.commit({ type: "setFilter", filterBy: this.filterBy });
+    },
     closeSearch() {
       this.$emit("closeSearch");
     },

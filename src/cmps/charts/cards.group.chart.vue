@@ -41,6 +41,9 @@ export default {
           ],
         },
         responsive: true,
+        legend: {
+          display: false,
+        },
       }
     );
   },

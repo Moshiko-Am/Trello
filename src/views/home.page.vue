@@ -5,15 +5,15 @@
         class="homepage-logo"
         data-aos="slide-down"
         data-aos-mirror="true"
-        data-aos-duration="1000"
+        data-aos-duration="500"
       >
         Trailing
       </h1>
-      <h1 class="logo-quote" data-aos="slide-down" data-aos-duration="1000">
+      <h1 class="logo-quote" data-aos="slide-down" data-aos-duration="500">
         Work smart, work together.
       </h1>
       <router-link
-        data-aos-duration="1000"
+        data-aos-duration="500"
         to="/boards"
         class="boards-link"
         data-aos="slide-up"
@@ -24,7 +24,7 @@
         class="motivational"
         data-aos="slide-left"
         data-aos-mirror="true"
-        data-aos-duration="1000"
+        data-aos-duration="500"
       >
         “Either you run the day or the day runs you.”
         <span class="motivational-author">— Jim Rohn</span>
@@ -139,7 +139,9 @@
       <h1 class="homepage-5-header">What are you waiting for?</h1>
       <router-link to="/boards" class="boards-link">Get started</router-link>
     </div>
-    <button class="icon-lg icon-top" @click="scroll"></button>
+    <transition name="fade">
+      <button class="icon-lg icon-top" @click="scroll" v-if="isScroll"></button>
+    </transition>
   </section>
 </template>
 
@@ -157,21 +159,26 @@ export default {
   },
   created() {
     this.$store.commit("clearStyle");
+    addEventListener("scroll", this.handleScroll, true);
   },
-  mounted() {
-    console.log(window);
-    this.$el.addEventListener("scroll", () => {
-      if (this.$el.offsetHeight > 40) {
-        this.handleScroll;
-      }
-    });
+  destroyed() {
+    window.pageYOffset = 0;
+    this.isScroll = false;
   },
+  mounted() {},
   methods: {
     scroll() {
       document.querySelector(".homepage-1").scrollIntoView();
+      setTimeout(() => {
+        window.pageYOffset = 0;
+        this.isScroll = false;
+      }, 300);
     },
     handleScroll() {
-      this.isScroll = true;
+      window.pageYOffset++;
+      if (window.pageYOffset > 30) {
+        this.isScroll = true;
+      }
     },
   },
 };

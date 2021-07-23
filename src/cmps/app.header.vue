@@ -109,11 +109,12 @@
       </div>
     </div>
     <div class="header-logo">
-      <div><img src="@/assets/img/logo.png" alt="" /></div>
+      <div>
+        <img src="@/assets/img/logo.png" />
+      </div>
       <span>Trailing</span>
     </div>
     <div class="header-controls-right">
-      <!-- <router-link to="/login">Login</router-link> -->
       <button @click="login" class="user-login" v-if="!user._id">Login</button>
       <button class="btn-notifications">
         <svg

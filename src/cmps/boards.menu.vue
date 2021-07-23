@@ -10,12 +10,14 @@
         type="text"
         placeholder="Find board by name..."
         class="boards-input-search"
+        v-model="filterBy"
+        @input="setFilter"
       />
     </div>
     <div class="boards-menu-content">
       <div class="boards-list-sm">
         <board-preview
-          v-for="board in boards"
+          v-for="board in boardsForDisplay"
           display="small"
           :board="board"
           :key="board._id"
@@ -56,23 +58,32 @@ export default {
     return {
       isCreateOpen: false,
       currBoardId: "",
+      filterBy: "",
     };
   },
   computed: {
+    boardsForDisplay() {
+      return this.$store.getters.boardsForDisplay;
+    },
     createShowMenu() {
       return { showCreateMenu: this.isCreateOpen };
     },
   },
   methods: {
+    setFilter() {
+      this.$store.commit({ type: "setFilter", filterBy: this.filterBy });
+    },
     removeBoard(boardId) {
       this.$emit("removeBoard", boardId);
     },
     showBoard(boardId) {
       this.$router.push(`/board/${boardId}`);
+      this.filterBy = "";
     },
     boardsMenuClose() {
       this.$emit("closeBoardsMenu");
       this.isCreateOpen = false;
+      this.filterBy = "";
     },
     toggleCreateBoard() {
       this.isCreateOpen = !this.isCreateOpen;

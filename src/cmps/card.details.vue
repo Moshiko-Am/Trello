@@ -113,10 +113,10 @@
             />
           </div>
           <div class="card-details-sidebar">
-            <div class="sidebar-inner-container">
+            <div class="sidebar-inner-container" v-if="!userInCard">
               <h3>Suggested</h3>
               <div class="sidebar-btns-container">
-                <div class="card-sidebar-btn">
+                <div class="card-sidebar-btn" @click="joinToCard">
                   <span class="icon-sm icon-member"></span>
                   <p class="sidebar-btn-title">Join</p>
                 </div>
@@ -369,6 +369,13 @@ export default {
       this.cardToEdit.labelIds = labels;
       this.emitCard();
     },
+    joinToCard(){
+      const user = this.$store.getters.user;
+      if(user.username === 'guest') user._id = 'g001'
+      this.cardToEdit.members.push(user)
+      const activityTxt = ' joined '
+      this.emitCard(activityTxt)
+    },
     createLabel(label, isAdding) {
       this.labelToEdit = null;
       this.$emit("createLabel", label);
@@ -440,6 +447,11 @@ export default {
       return labels.filter((label) => {
         if (this.cardToEdit.labelIds.includes(label.id)) return label;
       });
+    },
+    userInCard(){
+      const user = this.$store.getters.user;
+      if(!this.cardToEdit.members) return
+      return this.cardToEdit.members.some(member => member._id === user._id)
     },
     allUsers() {
       return this.$store.getters.users;

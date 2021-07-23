@@ -8,10 +8,9 @@
 	flex-direction: column;
 	font-size: 30px;
 	height: 250px;
-	margin-left: 70px;
-	margin-top: 12px;
 	padding: 0 12px 12px;
 	position: absolute;
+	top: 45px;
 	width: 300px;
 	z-index: 1;
 
@@ -75,5 +74,17 @@
 			letter-spacing: 0.04em;
 			line-height: 16px;
 		}
+	}
+}
+
+@media screen and (max-width: 800px) {
+	.members-list-container {
+		left: 60px;
+	}
+}
+
+@media screen and (max-width: 400px) {
+	.members-list-container {
+		left: 10px;
 	}
 }

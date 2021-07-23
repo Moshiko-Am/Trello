@@ -1,6 +1,6 @@
 .board-dashboard {
     position: absolute;
-    top: 10%;
+    top: 5%;
     left: 50%;
     width: 80%;
     height: fit-content;
@@ -19,5 +19,15 @@
     .charts-container {
         display: flex;
         padding-bottom:60px;
+    }
+    .chart-container {
+        &:nth-of-type(1){
+            margin-right: 50px;
+        }
+        text-align: center;
+        h4 {
+            font-weight: 500;
+            margin-bottom: 10px;
+        }
     }
 }
