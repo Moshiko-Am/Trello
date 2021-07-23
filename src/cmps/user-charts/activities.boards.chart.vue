@@ -49,7 +49,7 @@ export default {
       return this.boards
         .filter((board) => {
           return board.activities.some((activity) => {
-            return (activity.byMember._id = this.user._id);
+            return (activity.byMember._id === this.user._id);
           });
         })
         .map((board) => {

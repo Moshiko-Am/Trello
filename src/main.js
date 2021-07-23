@@ -10,6 +10,8 @@ import '@/styles/styles.scss';
 import 'aos/dist/aos.css';
 import locale from 'element-ui/lib/locale/lang/en';
 import VueKonva from 'vue-konva';
+import Calendar from 'v-calendar/lib/components/calendar.umd'
+Vue.component('calendar', Calendar)
 Vue.use(ElementUI, { locale });
 Vue.use(VueKonva);
 Vue.config.productionTip = false;
