@@ -106,6 +106,7 @@
                     :boardMembers="board.members"
                     :cardMembers="card.members"
                     @updateMembers="updateMembers"
+                    @updateMentions="updateMentions"
                   />
                 </div>
                 <div class="card-sidebar-btn" @click="toggleLabel">
@@ -316,14 +317,15 @@ export default {
       this.cardToEdit.members = members;
       this.emitCard(activityTxt);
     },
-    updateCover() {},
-    addUser(userId) {
-      const member = this.board.members.find((member) => member._id === userId);
-      if (!this.card.members) {
-        this.cardToEdit.members = [];
-      }
-      this.cardToEdit.members.push(member);
-      this.emitCard();
+    updateMentions(mention){
+      mention.byMember = this.$store.getters.user
+      mention.cTitle = this.card.title
+      mention.gTitle = this.group.title
+      mention.dueDate = this.card.dueDate
+      mention.createdAt = Date.now()
+      if(mention.userId === this.$store.getters.user._id) mention.isRead = true
+      else mention.isRead = false
+      this.$emit('updateMentions',mention)
     },
     addCl(checklist) {
       if (!this.cardToEdit.checklists) this.cardToEdit.checklists = [];
@@ -341,12 +343,12 @@ export default {
       this.cardToEdit.labelIds = labels;
       this.emitCard();
     },
-    joinToCard(){
+    joinToCard() {
       const user = this.$store.getters.user;
-      if(user.username === 'guest') user._id = 'g001'
-      this.cardToEdit.members.push(user)
-      const activityTxt = ' joined '
-      this.emitCard(activityTxt)
+      if (user.username === "guest") user._id = "g001";
+      this.cardToEdit.members.push(user);
+      const activityTxt = " joined ";
+      this.emitCard(activityTxt);
     },
     createLabel(label, isAdding) {
       this.labelToEdit = null;
@@ -415,10 +417,10 @@ export default {
         if (this.cardToEdit.labelIds.includes(label.id)) return label;
       });
     },
-    userInCard(){
+    userInCard() {
       const user = this.$store.getters.user;
-      if(!this.cardToEdit.members) return
-      return this.cardToEdit.members.some(member => member._id === user._id)
+      if (!this.cardToEdit.members) return;
+      return this.cardToEdit.members.some((member) => member._id === user._id);
     },
     allUsers() {
       return this.$store.getters.users;

@@ -101,7 +101,7 @@
         user-select: none;
         margin-inline: -8px;
         margin-block-start: -4px;
-        margin-block-end: 6px;
+        margin-block-end: 4px;
         &.color {
             height: 32px;
         }
@@ -116,6 +116,7 @@
             height: 8px;
             min-width: 40px;
             margin-right: 5px;
+            margin-top: 2px;
             padding: 0 10px;
             color: white;
             font-weight: 700;

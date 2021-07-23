@@ -6,47 +6,6 @@ const USERS_DB = 'allUsers';
 const URL = 'user/';
 // var gWatchedUser = null;
 
-// var gUsers = [
-// 	{
-// 		fullname: 'Abi Abambi',
-// 		username: 'abi1',
-// 		password: 'aBambi123',
-// 		imgUrl: 'http://some-img.jpg',
-// 		mentions: [
-// 			{
-// 				id: 'm101',
-// 				boardId: 'm101',
-// 				cardId: 't101',
-// 			},
-// 		],
-// 	},
-// 	{
-// 		fullname: 'Shuki Shakshuka',
-// 		username: 'Suka',
-// 		password: 'aBambi123',
-// 		imgUrl: 'http://some-img.jpg',
-// 		mentions: [
-// 			{
-// 				id: 'm101',
-// 				boardId: 'm101',
-// 				cardId: 't101',
-// 			},
-// 		],
-// 	},
-// 	{
-// 		fullname: 'Muki Amuka',
-// 		username: 'Mukifliz',
-// 		password: 'aBambi123',
-// 		imgUrl: 'http://some-img.jpg',
-// 		mentions: [
-// 			{
-// 				id: 'm101',
-// 				boardId: 'm101',
-// 				cardId: 't101',
-// 			},
-// 		],
-// 	},
-// ];
 export const userService = {
     query,
     login,
@@ -59,10 +18,6 @@ export const userService = {
 };
 
 window.userService = userService;
-// Note: due to async, must run one by one...
-// userService.signup({fullname: 'Puki Norma', username: 'user1', password:'123',score: 100, isAdmin: false})
-// userService.signup({fullname: 'Master Adminov', username: 'admin', password:'123', score: 100, isAdmin: true})
-// userService.signup({fullname: 'Muki G', username: 'muki', password:'123', score: 100})
 
 async function query() {
 	try {
@@ -89,6 +44,7 @@ async function getById(userId) {
     // gWatchedUser = user;
     // return user;
 }
+
 async function remove(userId) {
     // return storageService.remove(USER_KEY, userId);
     try {
@@ -149,15 +105,16 @@ async function logout() {
         console.log('failed to logout', err);
     }
 }
+function getLoggedinUser() {
+    return JSON.parse(sessionStorage.getItem(USER_KEY) || 'null');
+}
+
 
 function _saveLocalUser(user) {
     sessionStorage.setItem(USER_KEY, JSON.stringify(user));
     return user;
 }
 
-function getLoggedinUser() {
-    return JSON.parse(sessionStorage.getItem(USER_KEY) || 'null');
-}
 
 // This is relevant when backend is connected
 // (async () => {

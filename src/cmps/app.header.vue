@@ -116,7 +116,7 @@
     </div>
     <div class="header-controls-right">
       <button @click="login" class="user-login" v-if="!user._id">Login</button>
-      <button class="btn-notifications">
+      <button class="btn-notifications" :style="{backgroundColor: isNotified}">
         <svg
           width="20"
           height="20"
@@ -185,6 +185,10 @@ export default {
     };
   },
   computed: {
+    isNotified(){
+      if(!this.user.mentions) return 'rgba(255, 255, 255, 0.3)'
+      return this.user.mentions.some(mention => !mention.isRead) ?  '#EB5A46' : 'rgba(255, 255, 255, 0.3)'
+    },
     boardsShowMenu() {
       return { showBoardsMenu: this.isBoardsShow };
     },
