@@ -18,7 +18,10 @@ export default {
         },
       ],
     },{
-      responsive:true
+      responsive:true,
+      legend: {
+          display: false,
+        },
     });
   },
   computed: {
