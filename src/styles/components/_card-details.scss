@@ -9,13 +9,6 @@
     height: 100%;
     background-color: rgba(0, 0, 0, 0.64);
     z-index: 1;
-
-    .border-container {
-        // border-top: 30px solid green;
-        // border-bottom: 30px solid transparent;
-        // margin: auto;
-    }
-
     .card-details {
         background-color: #f4f5f7;
         position: absolute;
@@ -59,7 +52,6 @@
                     background-color: rgba(9, 30, 66, 0.08);
                 }
             }
-
         }
         .card-cover {
             background-size: contain;
@@ -70,9 +62,14 @@
             // background-color: rgb(120, 125, 133);
             height: 160px;
             padding: 0px;
-            width: 104.1%;
+            width: calc(100% + 30px);
             margin-inline-start: -15px;
             margin-block-start: -30px;
+            @media (max-width: 500px) {
+                width: calc(100% + 20px);
+                margin-inline-start: -10px;
+                margin-block-start: -10px;
+            }
         }
         .card-details-title {
             cursor: pointer;
@@ -124,6 +121,13 @@
             &:hover {
                 background-color: rgba(9, 30, 66, 0.08);
             }
+        }
+        @media (max-width: 800px) {
+            width: 90%;
+        }
+        @media (max-width: 500px) {
+            width: 100%;
+            padding: 10px;
         }
     }
 }
@@ -192,8 +196,7 @@
 .card-details-content {
     display: flex;
     align-items: flex-start;
-
-    @media (max-width : 800px) {
+    @media (max-width: 800px) {
         flex-direction: column;
     }
 }
@@ -212,6 +215,9 @@
     .card-details-list {
         margin-left: 32px;
     }
+    @media (max-width: 500px) {
+        padding: 6px;
+    }
 }
 
 .labels-container,
@@ -226,9 +232,11 @@
         padding: 0 12px;
         margin-right: 6px;
         border-radius: 3px;
+        margin-bottom: 6px;
     }
     .vue-avatar--wrapper {
         margin-right: 6px;
+        margin-bottom: 6px;
     }
     .add-label-btn {
         cursor: pointer;
@@ -259,6 +267,21 @@
             background-color: #e2e4e9;
         }
     }
+    @media (max-width: 600px) {
+        flex-wrap: wrap;
+        .labelDisplay {
+            height: 28px;
+            line-height: 28px;
+            font-weight: 500;
+            margin-bottom: 6px;
+            padding: 0 8px;
+            font-size: 12px;
+        }
+        .add-label-btn {
+            height: 28px;
+            width: 28px;
+        }
+    }
 }
 
 .labels-members-container {
@@ -270,11 +293,13 @@
             color: #5e6c84;
             font-size: 12px;
             font-weight: 500;
-            letter-spacing: .04em;
+            letter-spacing: 0.04em;
             margin-left: 1px;
         }
+        @media (max-width: 500px) {
+            margin-left: 2px;
+        }
     }
-
 }
 
 .card-main-item {
@@ -282,7 +307,6 @@
         color: #172b4d;
         font-weight: 600;
     }
-
     .todo {
         cursor: pointer;
         display: flex;
@@ -324,6 +348,9 @@
         margin-left: 32px;
         margin-top: 8px;
         height: 28px;
+        @media (max-width: 500px) {
+            margin-left: 0;
+        }
     }
     .checklist-preview {
         .add-todo-container {
@@ -334,7 +361,6 @@
                 align-items: center;
                 margin-top: 8px;
             }
-
             margin-top: 4px;
             .add-todo-input {
                 margin-left: 30px;
@@ -349,6 +375,10 @@
                 &:focus {
                     outline: none;
                 }
+                @media (max-width: 500px) {
+                    margin-left: 0;
+                    width: 100%;
+                }
             }
             .save-todo-btn {
                 background-color: #0079bf;
@@ -359,6 +389,9 @@
                 border-radius: 3px;
                 margin-left: 30px;
                 line-height: 20px;
+                @media (max-width: 500px) {
+                    margin-left: 0;
+                }
             }
         }
     }
@@ -439,10 +472,20 @@
             border-radius: 3px;
             margin: 12px 0 0 32px;
         }
+        @media (max-width: 500px) {
+            margin-left: 0;
+        }
     }
     h3 {
         font-weight: 600;
         margin-bottom: 0;
+    }
+    @media (max-width: 800px) {
+        width: 100%;
+        // min-width: 400px;
+    }
+    @media (max-width: 500px) {
+        padding: 0 8px;
     }
 }
 
@@ -461,18 +504,15 @@
             margin-right: 6px;
         }
     }
-
-    @media (max-width:800px) {
+    @media (max-width: 800px) {
         flex-wrap: wrap;
         padding-right: 0px;
         .sidebar-inner-container {
             flex-wrap: wrap;
-
             .sidebar-btns-container {
                 display: flex;
                 flex-wrap: wrap;
             }
-
             .el-input__inner {
                 margin-right: 8px;
             }
@@ -480,14 +520,13 @@
         .card-sidebar-btn {
             flex: 48%;
         }
-        .card-sidebar-btn{
-            margin-right: 8px ;
+        .card-sidebar-btn {
+            margin-right: 8px;
         }
         .el-date-editor {
             flex: 48%;
             margin-right: 8px;
         }
-
     }
 }
 
@@ -558,7 +597,7 @@
 }
 
 .icon-checkbox {
-    @include to-icon("\e919")
+    @include to-icon("\e919");
 }
 
 .list-complete-item {

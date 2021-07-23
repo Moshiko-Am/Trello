@@ -20,7 +20,6 @@
         left: 40;
         text-align: center;
         text-decoration: none;
-        z-index: 1;
         width: 112px;
     }
     .attachment-thumbnail-details {
@@ -54,6 +53,13 @@
                 }
             }
         }
+        @media (max-width:500px) {
+            line-height: 20px;
+            
+        }
+    }
+    @media (max-width:500px) {
+        margin-left: 0;
     }
 }
 
