@@ -198,3 +198,58 @@
 		}
 	}
 }
+
+@media screen and (max-width: 1060px) {
+	.header-navbar {
+		.header-controls-left {
+			.headerSearchClosed.headerSearchOpen {
+				.header-search-input {
+					width: 182px;
+				}
+			}
+		}
+	}
+}
+
+@media screen and (max-width: 825px) {
+	.header-navbar {
+		.header-controls-left {
+			.header-search-input {
+				display: none;
+			}
+			.headerSearchClosed {
+				padding: 6px;
+
+				.search-input-img {
+					width: fit-content;
+				}
+			}
+		}
+	}
+}
+
+@media screen and (max-width: 480px) {
+	.header-navbar {
+		.header-controls-left {
+			.btn-boards {
+				svg {
+					display: none;
+				}
+
+				.btn-boards-txt {
+					padding: 0;
+				}
+			}
+		}
+
+		.header-logo {
+			span {
+				display: none;
+			}
+			div {
+				width: 32px;
+				height: 32px;
+			}
+		}
+	}
+}

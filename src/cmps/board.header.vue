@@ -13,6 +13,33 @@
         />
       </div>
       <span class="board-header-divider">|</span>
+      <transition name="fade">
+        <div class="board-members-mobile-container" v-if="mobileRemove">
+          <span
+            v-for="member in board.members"
+            :key="member._id"
+            class="members-list-mobile"
+          >
+            <span class="member-name-avatar-mobile">
+              <avatar
+                :title="member.fullname"
+                class="member-name"
+                :username="member.fullname"
+                :size="28"
+                :inline="true"
+                :style="{ 'margin-left': '-3px' }"
+              ></avatar>
+              <span class="member-fullname-mobile">{{ member.fullname }}</span>
+            </span>
+            <span
+              class="remove-member-mobile"
+              @click="removeMember(member._id)"
+              v-if="board.createdBy._id !== member._id"
+              >X</span
+            >
+          </span>
+        </div>
+      </transition>
       <div class="board-header-members">
         <span
           v-for="member in board.members"
@@ -27,7 +54,12 @@
             :inline="true"
             :style="{ 'margin-left': '-3px' }"
           ></avatar>
-          <span class="remove-member" @click="removeMember(member._id)">X</span>
+          <span
+            class="remove-member"
+            @click="removeMember(member._id)"
+            v-if="board.createdBy._id !== member._id"
+            >X</span
+          >
           <img
             title="This member is the creator of this board"
             class="member-admin"
@@ -35,6 +67,16 @@
             src="https://a.trellocdn.com/prgb/dist/images/chevron.88a4454280d68a816b89.png"
           />
         </span>
+        <span
+          @click="toggleRemoveMembersMobile"
+          class="icon-md icon-remove-members"
+          title="Remove members from board"
+        ></span>
+        <span
+          title="Invite members"
+          @click="toggleInvite"
+          class="icon-md icon-members btn-invite"
+        ></span>
         <button class="btn-invite" @click="toggleInvite">Invite</button>
         <transition name="slide-fade">
           <users
@@ -48,8 +90,18 @@
         </transition>
       </div>
       <span class="board-header-divider">|</span>
+      <span
+        title="Dashboard"
+        @click="toggleDashboard"
+        class="icon-md icon-dashboard"
+      ></span>
       <button class="btn-dashboard" @click="toggleDashboard">Dashboard</button>
     </div>
+    <span
+      class="icon-md icon-mobile-menu"
+      @click="toggleMenu"
+      title="Show menu"
+    ></span>
     <button class="btn-show-menu" @click="toggleMenu">
       <span class="icon-sm icon-dots-menu"></span>
       <span class="menu-show-txt">Show menu</span>
@@ -89,6 +141,7 @@ export default {
       boardMembers: null,
       isInviteShow: false,
       txtWidth: null,
+      mobileRemove: false,
     };
   },
   directives: {
@@ -106,6 +159,9 @@ export default {
     },
   },
   methods: {
+    toggleRemoveMembersMobile() {
+      this.mobileRemove = !this.mobileRemove;
+    },
     selectTxt() {
       this.$refs.txt.select();
     },

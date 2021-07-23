@@ -25,7 +25,6 @@ export const boardStore = {
 				if (searchStr.test(board.title)) {
 					return board;
 				}
-				state.currFilter = '';
 			});
 		},
 		templates(state) {

@@ -2,6 +2,7 @@
 	width: 100%;
 	overflow-y: auto;
 	scroll-behavior: smooth;
+	overflow-x: hidden;
 
 	.icon-top {
 		@include to-icon('\e90a');
