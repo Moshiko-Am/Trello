@@ -210,7 +210,6 @@ export default {
     },
     openSearch() {
       this.isSearchOpen = true;
-      console.log(window);
     },
     closeSearch() {
       this.filterBy = "";

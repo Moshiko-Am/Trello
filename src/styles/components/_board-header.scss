@@ -5,9 +5,96 @@
 	padding: 8px 8px 4px 8px;
 	margin-block-end: 5px;
 	position: relative;
+
+	.board-members-mobile-container {
+		position: absolute;
+		display: flex;
+		flex-direction: column;
+		background-color: #fff;
+		top: 45px;
+		left: 120px;
+		border-radius: 3px;
+		padding: 4px;
+		min-width: 200px;
+		z-index: 1;
+		box-shadow: 0 8px 16px -4px rgba(9, 30, 66, 0.25),
+			0 0 0 1px rgba(9, 30, 66, 0.08);
+
+		.members-list-mobile {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			padding: 4px;
+		}
+
+		.remove-member-mobile {
+			margin-inline-start: 10px;
+			cursor: pointer;
+		}
+
+		.member-name {
+			margin-inline-end: 8px;
+		}
+	}
+
+	.icon-remove-members {
+		@include to-icon('\e972');
+		display: none;
+		color: white;
+		cursor: pointer;
+		background-color: #7a7a7a3d;
+		padding: 0.5px 8px;
+		margin-inline-end: 5px;
+		transition: 0.3s;
+
+		&:hover {
+			background-color: #5c5c5c52;
+		}
+	}
+
+	.icon-members {
+		@include to-icon('\e902');
+		color: white;
+		cursor: pointer;
+		display: none;
+	}
+
+	.icon-mobile-menu {
+		@include to-icon('\e922');
+		color: white;
+		cursor: pointer;
+		display: none;
+		transition: 0.3s;
+		background-color: #7a7a7a3d;
+		border: none;
+		border-radius: 3px;
+		padding: 0.5px 12px;
+
+		&:hover {
+			background-color: #5c5c5c52;
+		}
+	}
+
+	.icon-dashboard {
+		@include to-icon('\e938');
+		cursor: pointer;
+		color: white;
+		display: none;
+		background-color: #7a7a7a3d;
+		border: none;
+		border-radius: 3px;
+		padding: 8.5px 12px;
+		transition: 0.3s;
+
+		&:hover {
+			background-color: #5c5c5c52;
+		}
+	}
+
 	button {
 		color: white;
 	}
+
 	h1 {
 		margin: 0;
 		font-size: 18px;
@@ -15,34 +102,39 @@
 		line-height: 32px;
 		padding: 0 12px;
 	}
-	.members-list {
-		position: relative;
-		&:hover .remove-member {
-			display: block;
-		}
 
-		.member-admin {
-			width: 10px;
-			position: absolute;
-			left: 12px;
-			top: 18px;
-		}
+	.board-header-members {
+		display: flex;
+		align-items: center;
+		.members-list {
+			position: relative;
+			&:hover .remove-member {
+				display: block;
+			}
 
-		.remove-member {
-			display: none;
-			font-size: 10px;
-			background-color: #7a7a7ab0;
-			border-radius: 50%;
-			padding-inline: 5px;
-			color: white;
-			position: absolute;
-			cursor: pointer;
-			left: 12px;
-			bottom: 12px;
-			z-index: 1;
-			transition: 0.3s;
-			&:hover {
-				background-color: #949494b0;
+			.member-admin {
+				width: 10px;
+				position: absolute;
+				left: 12px;
+				top: 18px;
+			}
+
+			.remove-member {
+				display: none;
+				font-size: 10px;
+				background-color: #7a7a7ab0;
+				border-radius: 50%;
+				padding-inline: 5px;
+				color: white;
+				position: absolute;
+				cursor: pointer;
+				left: 12px;
+				bottom: 12px;
+				z-index: 1;
+				transition: 0.3s;
+				&:hover {
+					background-color: #949494b0;
+				}
 			}
 		}
 	}
@@ -89,7 +181,7 @@
 	.btn-invite {
 		background-color: #7a7a7a3d;
 		border: none;
-		padding: 8px 12px;
+		padding: 8.5px 12px;
 		border-radius: 3px;
 		transition: all 0.3s;
 		margin-left: 8px;
@@ -101,7 +193,7 @@
 		background-color: #7a7a7a3d;
 		border: none;
 		border-radius: 3px;
-		padding: 8px 12px;
+		padding: 8.5px 12px;
 		transition: all 0.3s;
 		&:hover {
 			background-color: #5c5c5c52;
@@ -139,19 +231,62 @@
 	opacity: 0;
 }
 
-@media screen and (max-width: 575px) {
+@media screen and (max-width: 800px) {
 	.board-header-container {
-		flex-direction: row-reverse;
-		flex-wrap: wrap;
-	}
+		.members-list {
+			display: none;
+		}
 
-	.board-header-controls {
-		.btn-dashboard {
-			margin-inline-end: 10px;
+		.icon-remove-members {
+			display: inline-block;
+		}
+
+		.btn-invite {
+			display: none;
+		}
+		.icon-members {
+			display: inline-block;
+			padding: 0.5px 10px;
+			margin-inline-start: 0;
 		}
 	}
+}
 
-	.btn-show-menu {
-		margin-top: 8px;
+@media screen and (max-width: 550px) {
+	.board-header-container {
+		.btn-show-menu {
+			display: none;
+		}
+
+		.icon-mobile-menu {
+			padding: 0.5px 10px;
+			display: inline-block;
+		}
+	}
+}
+
+@media screen and (max-width: 480px) {
+	.btn-dashboard {
+		display: none;
+	}
+
+	.board-header-container {
+		.icon-dashboard {
+			display: block;
+			padding: 0.5px 10px;
+		}
+
+		.icon-members {
+			margin-inline-end: 8px;
+		}
+
+		.icon-remove-members {
+			margin-inline-start: 8px;
+			margin-inline-end: 8px;
+		}
+
+		.board-header-divider {
+			display: none;
+		}
 	}
 }

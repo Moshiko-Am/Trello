@@ -32,7 +32,6 @@
       </div>
       <hr />
       <div class="user-menu-actions">
-        <button v-if="user.username">User dashboard</button>
         <button @click="logOut" class="user-logout" v-if="user.username">
           Log out
         </button>
