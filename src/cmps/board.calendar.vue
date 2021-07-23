@@ -1,18 +1,12 @@
-<template>
-  
-</template>
+<template></template>
 
 <script>
-import Calendar from 'v-calendar/lib/components/calendar.umd'
 // Vue.component('calendar', Calendar)
 
 export default {
-    components: {
-        Calendar
-    }
-}
+  components: {},
+};
 </script>
 
 <style>
-
 </style>
