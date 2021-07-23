@@ -1,9 +1,9 @@
 import axios from 'axios';
 
-export const uploadImg = async(file) => {
+export const fileUpload = async(file) => {
     const CLOUD_NAME = 'dsnxbqbvl' // Insert yours
     const UPLOAD_PRESET = 'jcxq5ftd' // Insert yours
-    const UPLOAD_URL = `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`
+    const UPLOAD_URL = `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/${file.type}/upload`
     try {
         let res = await axios({ method: 'get', url: file.url, responseType: 'blob' })
         var reader = new FileReader();

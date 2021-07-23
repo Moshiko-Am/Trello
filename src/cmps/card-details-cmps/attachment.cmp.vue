@@ -5,7 +5,7 @@
       <h3 class="main-item-title">Attachments</h3>
     </div>
     <div
-      v-for="attachment in attachmentsToEdit"
+      v-for="attachment in attachments"
       :key="attachment.id"
       class="attachment-thumbnail"
     >
@@ -13,11 +13,18 @@
         class="attachment-thumbnail-preview"
         :href="attachment.url"
         target="_blank"
-        :style="{
-          'background-image': `url('${attachment.url}')`,
-          'background-color': `rgb(${attachment.props.colorArray[0]},${attachment.props.colorArray[1]},${attachment.props.colorArray[2]})`,
-          'background-size': 'contain',
-        }"
+        :style="
+          attachment.props.type === 'image'
+            ? `background-image: url('${attachment.url}'); background-color: rgb(${attachment.props.colorArray[0]},${attachment.props.colorArray[1]},${attachment.props.colorArray[2]}); background-size: 'contain'`
+            : attachment.props.type === 'video'
+            ? `background-image: url('${attachment.props.thumbnail}'); background-color: ${attachment.props.colorArray.rgb}; background-size: 'contain'`
+            : ''
+        "
+        ><span
+          class="icon-lg icon-audio"
+          v-if="attachment.props.type === 'audio'"
+          style="font-size: 50px"
+        ></span
       ></a>
       <p class="attachment-thumbnail-details">
         <span class="attachment-thumbnail-name">{{ attachment.filename }}</span>
@@ -68,7 +75,7 @@
         </span>
         <span class="attachment-thumbnail-details-options">
           <a
-            v-if="!attachment.isCover"
+            v-if="!attachment.isCover && attachment.props.type !== 'audio'"
             class="attachment-thumbnail-details-options-item"
           >
             <span class="icon-sm icon-card-cover"></span>
@@ -78,7 +85,10 @@
               >Make cover
             </span>
           </a>
-          <a v-else class="attachment-thumbnail-details-options-item">
+          <a
+            v-else-if="attachment.isCover && attachment.props.type !== 'audio'"
+            class="attachment-thumbnail-details-options-item"
+          >
             <span class="icon-sm icon-card-cover"></span>
             <span
               class="attachment-thumbnail-details-options-item-text"

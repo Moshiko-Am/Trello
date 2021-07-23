@@ -5,28 +5,114 @@
     :class="{ 'quick-edit-card': isQuickEdit }"
   >
     <section class="card-preview-inner-container">
-      <section
-        class="card-preview-full-image"
-        v-if="card.id && card.cover && card.cover.layout === 'full'"
-        :style="background"
-        @mouseenter="toggleHover"
-        @mouseleave="toggleHover"
-      >
-        <span
-          v-if="cardHover"
-          class="icon-sm icon-edit"
-          @click.stop="toggleQuickEdit"
-        ></span>
-        <span class="card-preview-full-image-title" v-if="!isQuickEdit">{{
-          card.title
-        }}</span>
-        <textarea
-          @click.stop
-          v-model="cardTitle"
-          ref="cardtitle"
-          v-if="isQuickEdit"
-        ></textarea>
-      </section>
+      <template v-if="card.id && card.cover && card.cover.layout === 'full'">
+        <section
+          class="card-preview-full-image"
+          v-if="
+            card.cover.type === 'color' ||
+              card.cover.type === 'url' ||
+              (card.cover.type === 'attachment' &&
+                card.attachments[card.cover.attachmentIdx].props.type ===
+                  'image')
+          "
+          :style="background"
+          @mouseenter="toggleHover"
+          @mouseleave="toggleHover"
+        >
+          <audio
+            v-if="
+              card.attachments &&
+                card.attachments.length &&
+                card.attachments[0].props.type === 'audio'
+            "
+            controls
+          >
+            <source :src="card.attachments[0].props.url" />
+          </audio>
+          <span
+            v-if="cardHover"
+            class="icon-sm icon-edit"
+            @click.stop="toggleQuickEdit"
+          ></span>
+          <span class="card-preview-full-image-title" v-if="!isQuickEdit">{{
+            card.title
+          }}</span>
+          <textarea
+            @click.stop
+            v-model="cardTitle"
+            ref="cardtitle"
+            v-if="isQuickEdit"
+          ></textarea>
+        </section>
+        <section
+          class="card-preview-full-image"
+          v-else-if="
+            card.cover.type === 'attachment' &&
+              card.attachments[card.cover.attachmentIdx].props.type === 'video'
+          "
+          :style="background"
+          @mouseenter="toggleHover"
+          @mouseleave="toggleHover"
+        >
+          <video
+            :poster="card.attachments[card.cover.attachmentIdx].props.thumbnail"
+            autoplay
+            muted
+            loop
+          >
+            <source
+              :src="card.attachments[card.cover.attachmentIdx].props.url"
+              type="video/mp4"
+            />
+          </video>
+          <span
+            v-if="cardHover"
+            class="icon-sm icon-edit"
+            @click.stop="toggleQuickEdit"
+          ></span>
+          <span
+            class="card-preview-full-image-title video-card"
+            v-if="!isQuickEdit"
+            >{{ card.title }}</span
+          >
+          <textarea
+            @click.stop
+            v-model="cardTitle"
+            ref="cardtitle"
+            v-if="isQuickEdit"
+          ></textarea>
+        </section>
+        <section
+          class="card-preview-full-image"
+          v-else-if="
+            card.attachments &&
+              card.attachments.length &&
+              card.attachments[0].props.type === 'audio'
+          "
+          @mouseenter="toggleHover"
+          @mouseleave="toggleHover"
+        >
+          <audio controls>
+            <source :src="card.attachments[0].props.url" />
+          </audio>
+          <span
+            v-if="cardHover"
+            class="icon-sm icon-edit"
+            @click.stop="toggleQuickEdit"
+          ></span>
+          <span
+            class="card-preview-full-image-title audio-card"
+            v-if="!isQuickEdit"
+            >{{ card.title }}</span
+          >
+          <textarea
+            @click.stop
+            v-model="cardTitle"
+            ref="cardtitle"
+            v-if="isQuickEdit"
+          ></textarea>
+        </section>
+      </template>
       <section
         class="card-preview"
         v-else
@@ -36,9 +122,9 @@
         <template
           v-if="
             card.cover &&
-            card.cover.isCover &&
-            (card.cover.type === 'attachment' || card.cover.type === 'url') &&
-            card.cover.layout === 'top'
+              card.cover.isCover &&
+              (card.cover.type === 'attachment' || card.cover.type === 'url') &&
+              card.cover.layout === 'top'
           "
         >
           <div class="card-cover" :style="background"></div>
@@ -46,9 +132,9 @@
         <template
           v-else-if="
             card.cover &&
-            card.cover.isCover &&
-            card.cover.type === 'color' &&
-            card.cover.layout === 'top'
+              card.cover.isCover &&
+              card.cover.type === 'color' &&
+              card.cover.layout === 'top'
           "
         >
           <div class="card-cover color" :style="background"></div>
@@ -104,7 +190,10 @@
               @click.stop="toggleCompleted"
             >
               <span v-if="!isHover" class="icon-sm icon-date"></span>
-              <span v-else-if="card.isCompleted" class="icon-sm icon-checklist"></span>
+              <span
+                v-else-if="card.isCompleted"
+                class="icon-sm icon-checklist"
+              ></span>
               <span v-else class="icon-sm icon-checkbox"></span>
               {{ card.dueDate.slice(5) }}
             </div>
@@ -117,7 +206,9 @@
                 card.attachments.length
               }}</span>
             </div>
-            <div class="preview-desc-container" v-if="card.description"><span class="icon-sm icon-desc"></span></div>
+            <div class="preview-desc-container" v-if="card.description">
+              <span class="icon-sm icon-desc"></span>
+            </div>
           </div>
           <div class="preview-members-container" v-if="card.members">
             <transition-group name="list-complete">
@@ -137,6 +228,16 @@
             </transition-group>
           </div>
         </div>
+        <audio
+          v-if="
+            card.attachments &&
+              card.attachments.length &&
+              card.attachments[0].props.type === 'audio'
+          "
+          controls
+        >
+          <source :src="card.attachments[0].props.url" />
+        </audio>
       </section>
       <quick-edit
         v-if="isQuickEdit"
@@ -177,7 +278,7 @@ export default {
       cardHover: false,
       isQuickEdit: false,
       cardTitle: this.card.title,
-      isHover : false
+      isHover: false,
     };
   },
   props: {
@@ -187,25 +288,37 @@ export default {
   computed: {
     background() {
       if (!this.card.cover.isCover) return false;
+      else if (this.card.cover.type === "attachment")
+        if (
+          this.card.attachments[this.card.cover.attachmentIdx].props.type ===
+          "image"
+        )
+          return `background-color: rgb(${
+            this.card.attachments[this.card.cover.attachmentIdx].props
+              .colorArray[0]
+          },${
+            this.card.attachments[this.card.cover.attachmentIdx].props
+              .colorArray[1]
+          },${
+            this.card.attachments[this.card.cover.attachmentIdx].props
+              .colorArray[2]
+          }); background-image: url('${
+            this.card.attachments[this.card.cover.attachmentIdx].url
+          }'); height: 245px`;
+        else if (this.card.cover.layout === "top")
+          return `background-image: url(${
+            this.card.attachments[this.card.cover.attachmentIdx].props.thumbnail
+          }); background-color: ${
+            this.card.attachments[this.card.cover.attachmentIdx].props
+              .colorArray.rgb
+          }; height: 245px`;
+        else return "height: 245px";
+      else if (this.card.cover.type === "color")
+        return `background-color: ${this.card.cover.color}; height: ${
+          this.card.cover.layout === "full" ? "56px" : "32px"
+        }`;
       else
-        return this.card.cover.type === "attachment"
-          ? `background-color: rgb(${
-              this.card.attachments[this.card.cover.attachmentIdx].props
-                .colorArray[0]
-            },${
-              this.card.attachments[this.card.cover.attachmentIdx].props
-                .colorArray[1]
-            },${
-              this.card.attachments[this.card.cover.attachmentIdx].props
-                .colorArray[2]
-            }); background-image: url('${
-              this.card.attachments[this.card.cover.attachmentIdx].url
-            }'); height: 245px`
-          : this.card.cover.type === "color"
-          ? `background-color: ${this.card.cover.color}; height: ${
-              this.card.cover.layout === "full" ? "56px" : "32px"
-            }`
-          : `background-color: rgb(${this.card.cover.photo.colorArray[0]},${this.card.cover.photo.colorArray[1]},${this.card.cover.photo.colorArray[2]});background-image: url('${this.card.cover.photo.url}');min-height: 245px`;
+        return `background-color: rgb(${this.card.cover.photo.colorArray[0]},${this.card.cover.photo.colorArray[1]},${this.card.cover.photo.colorArray[2]});background-image: url('${this.card.cover.photo.url}');min-height: 245px`;
     },
     labelsForDisplay() {
       const labels = this.$store.getters.board.labels;
@@ -247,11 +360,13 @@ export default {
       this.$emit("openCard", this.card);
     },
     toggleCompleted() {
-      const updatedCard = JSON.parse(JSON.stringify(this.card))
-      console.log('cardCopy',updatedCard);
-      updatedCard.isCompleted = !updatedCard.isCompleted
-      const activityTxt = (updatedCard.isCompleted) ? ' marked completed ' : ' marked incomplete '
-      this.emitCard({updatedCard , activityTxt});
+      const updatedCard = JSON.parse(JSON.stringify(this.card));
+      console.log("cardCopy", updatedCard);
+      updatedCard.isCompleted = !updatedCard.isCompleted;
+      const activityTxt = updatedCard.isCompleted
+        ? " marked completed "
+        : " marked incomplete ";
+      this.emitCard({ updatedCard, activityTxt });
     },
     toggleHover() {
       this.cardHover = !this.cardHover;
@@ -284,7 +399,7 @@ export default {
       this.toggleQuickEdit();
     },
     emitCard({ updatedCard, activityTxt }) {
-      console.log('updatedCard',updatedCard);
+      console.log("updatedCard", updatedCard);
       const cardCopy = JSON.parse(JSON.stringify(updatedCard));
       const activity = {};
       if (activityTxt) {

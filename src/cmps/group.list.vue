@@ -127,6 +127,31 @@
                 <span class="icon-sm icon-add"></span>
                 <span class="add-card">Add a card</span></a
               >
+              <button
+                class="video-button"
+                @click="toggleVideoRecord(gIdx)"
+                type="button"
+              >
+                <span class="video-icon">
+                  <span class="icon-svg" role="img" aria-label="VideoIcon">
+                    <svg></svg>
+                  </span>
+                </span>
+              </button>
+              <button
+                class="video-button"
+                @click="toggleAudioRecord(gIdx)"
+                type="button"
+              >
+                <span class="video-icon">
+                  <span
+                    class="icon-sm icon-audio"
+                    role="img"
+                    aria-label="AudioIcon"
+                  >
+                  </span>
+                </span>
+              </button>
             </div>
           </section>
         </div>
@@ -134,7 +159,7 @@
       <div
         ref="addgroup"
         class="group-wrapper mod-add"
-        :class="{ 'is-edit': isAddingGroup }"
+        :class="{ 'is-edit': isAddingGroup, 'is-dark': bgImage.props.isDark }"
       >
         <form v-if="isAddingGroup" v-click-outside="toggleGroupEdit">
           <input
@@ -166,7 +191,11 @@
           class="open-add-list"
           @click.stop="toggleGroupEdit"
         >
-          <span class="icon-sm icon-add"></span>Add another list
+          <span
+            class="icon-sm icon-add"
+            :style="{ 'is-dark': bgImage.props.isDark }"
+          ></span
+          >Add another list
         </a>
       </div>
     </draggable>
@@ -182,6 +211,14 @@
         @removeCard="removeCard($event, currGroupIdx)"
       ></card-details>
     </transition>
+    <section
+      v-if="isRecordingVideo"
+      class="card-details-bg"
+      @click.self="toggleVideoRecord"
+    >
+      <video-record @videoRecord="addVideoCard" v-if="isRecordingVideo" />
+    </section>
+    <audio-record @audioRecord="addAudioCard" v-if="isRecordingAudio" />
   </section>
 </template>
 
@@ -192,9 +229,12 @@ import draggable from "vuedraggable";
 import { socketService } from "@/services/socket.service.js";
 import { utilService } from "@/services/util.service.js";
 import clickOutside from "vue-click-outside";
+import videoRecord from "@/cmps/card-details-cmps/video.record.vue";
+import audioRecord from "@/cmps/card-details-cmps/audio.record.vue";
 export default {
   props: {
     groups: Array,
+    bgImage: Object,
   },
   directives: {
     clickOutside,
@@ -217,14 +257,27 @@ export default {
         id: utilService.makeId(),
         title: "",
         createdAt: Date.now(),
+        attachments: [],
+        cover: {
+          isCover: false,
+          type: "",
+          color: "",
+          attachmentIdx: null,
+          photo: { url: "", colorArray: [] },
+          layout: "",
+        },
       },
       isScrolling: false,
+      isRecordingVideo: false,
+      isRecordingAudio: false,
     };
   },
   components: {
     cardPreview,
     cardDetails,
     draggable,
+    videoRecord,
+    audioRecord,
   },
   computed: {
     height() {
@@ -245,7 +298,7 @@ export default {
       );
       this.cardToEdit.title = "";
     },
-    saveCard(gIdx) {
+    saveCard(gIdx, type) {
       if (!this.cardToEdit.title) {
         this.$refs[`content-${gIdx}`][0].focus();
         return;
@@ -262,7 +315,8 @@ export default {
       };
       this.saveGroups(activity);
       this.cardToEdit.title = "";
-      this.$refs[`content-${gIdx}`][0].focus();
+      this.cardToEdit.attachments = [];
+      if (!type) this.$refs[`content-${gIdx}`][0].focus();
     },
     toggleCardEdit(gIdx) {
       this.isExtrasShowing = false;
@@ -422,6 +476,90 @@ export default {
     unsetPageScroll() {
       this.isScrolling = false;
       document.body.style.userSelect = "unset";
+    },
+    toggleVideoRecord(gIdx) {
+      this.currGroupIdx = gIdx;
+      this.isRecordingVideo = !this.isRecordingVideo;
+    },
+    toggleAudioRecord(gIdx) {
+      this.currGroupIdx = gIdx;
+      this.isRecordingAudio = !this.isRecordingAudio;
+    },
+    addVideoCard(res) {
+      this.isRecordingVideo = false;
+      const attachment = {
+        id: utilService.makeId(),
+        createdAt: Date.now(),
+        isCover: true,
+        filename: `${res.public_id}.${res.format}`,
+        props: {
+          width: res.width,
+          height: res.height,
+          format: res.format,
+          size: res.bytes,
+          url: res.url,
+          type: "video",
+          colorArray: res.color,
+          thumbnail: res.thumbnail,
+        },
+      };
+      this.cardToEdit.attachments.push(JSON.parse(JSON.stringify(attachment)));
+      this.cardToEdit.title = "Video Card";
+      this.cardToEdit.cover.isCover = true;
+      this.cardToEdit.cover.type = "attachment";
+      this.cardToEdit.cover.layout = "full";
+      this.cardToEdit.cover.attachmentIdx = 0;
+      this.saveCard(this.currGroupIdx, "video");
+      this.cardToEdit = {
+        id: utilService.makeId(),
+        title: "",
+        createdAt: Date.now(),
+        attachments: [],
+        cover: {
+          isCover: false,
+          type: "",
+          color: "",
+          attachmentIdx: null,
+          photo: { url: "", colorArray: [] },
+          layout: "",
+        },
+      };
+    },
+    addAudioCard(res) {
+      this.isRecordingAudio = false;
+      const attachment = {
+        id: utilService.makeId(),
+        createdAt: Date.now(),
+        isCover: false,
+        filename: `Audio file`,
+        props: {
+          format: res.format,
+          size: res.bytes,
+          url: res.url,
+          type: "audio",
+        },
+      };
+      this.cardToEdit.attachments.push(JSON.parse(JSON.stringify(attachment)));
+      this.cardToEdit.title = "Audio Card";
+      this.cardToEdit.cover.isCover = false;
+      this.cardToEdit.cover.type = "attachment";
+      this.cardToEdit.cover.layout = "full";
+      this.cardToEdit.cover.attachmentIdx = 0;
+      this.saveCard(this.currGroupIdx, "audio");
+      this.cardToEdit = {
+        id: utilService.makeId(),
+        title: "",
+        createdAt: Date.now(),
+        attachments: [],
+        cover: {
+          isCover: false,
+          type: "",
+          color: "",
+          attachmentIdx: null,
+          photo: { url: "", colorArray: [] },
+          layout: "",
+        },
+      };
     },
   },
   created() {

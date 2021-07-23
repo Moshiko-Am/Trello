@@ -17,22 +17,42 @@
           @input="debounceFunc"
         />
       </div>
-      <div class="background-photos">
+      <div
+        v-if="
+          (isLoading && chosenPhotoIdx !== -1) ||
+            (!isLoading && chosenPhotoIdx === -1)
+        "
+        class="background-photos"
+      >
         <div
-          @click="chooseBg(photo.urlBig, photo.urlSmall)"
+          @click="chooseBg(photo.urlBig, photo.urlSmall, pIdx)"
           class="photo-example"
-          v-for="photo in photos"
+          v-for="(photo, pIdx) in photos"
           :key="photo.id"
         >
           <img :src="photo.urlSmall" />
+          <template v-if="isLoading && chosenPhotoIdx === pIdx">
+            <div class="uploading">
+              <img
+                class="spinner small"
+                src="~@/assets/img/loader/loader.svg"
+              />
+              <span>Uploading…</span>
+            </div>
+          </template>
         </div>
       </div>
+      <div
+        v-if="isLoading && chosenPhotoIdx === -1"
+        class="logo-loading active"
+      ></div>
     </div>
   </section>
 </template>
 
 <script>
 import { unsplashService } from "../services/unsplash.service.js";
+import FastAverageColor from "fast-average-color";
 import axios from "axios";
 export default {
   data() {
@@ -40,6 +60,8 @@ export default {
       photoSearch: "",
       photos: [],
       debounceFunc: null,
+      isLoading: false,
+      chosenPhotoIdx: -1,
     };
   },
   methods: {
@@ -62,7 +84,9 @@ export default {
       };
     },
     async loadPhotos() {
+      this.isLoading = true;
       this.photos = await unsplashService.loadPhotos(this.photoSearch);
+      this.isLoading = false;
     },
     async getRandomPhotos() {
       const url = `https://api.unsplash.com/photos/random/?client_id=3G3H2YrHWdLEk7zLzjy33Ykx0eACFpe497xZ1BWXAQg&count=20`;
@@ -78,15 +102,23 @@ export default {
       });
       return results;
     },
-    chooseBg(photoUrlBig, photoUrlSmall) {
+    async chooseBg(photoUrlBig, photoUrlSmall, pIdx) {
+      this.chosenPhotoIdx = pIdx;
+      this.isLoading = true;
+      const fac = new FastAverageColor();
+      let color;
+      color = await fac.getColorAsync(photoUrlBig);
       this.$emit("updateBoard", {
         type: "style",
         payload: {
           type: "backgroundImage",
           content: photoUrlBig,
           preview: photoUrlSmall,
+          props: color,
         },
       });
+      this.isLoading = false;
+      this.chosenPhotoIdx = -1;
     },
   },
   async created() {

@@ -37,7 +37,7 @@
 </template>
 
 <script>
-import { uploadImg } from "@/services/img.upload.service.js";
+import { fileUpload } from "@/services/file.upload.service.js";
 import { utilService } from "@/services/util.service.js";
 import ColorThief from "colorthief";
 export default {
@@ -64,7 +64,7 @@ export default {
   },
   methods: {
     handleFile() {
-      this.onUploadImg();
+      this.onfileUpload();
     },
     handleChange(file) {
       if (!file.raw.type.includes("image")) {
@@ -76,9 +76,12 @@ export default {
       this.isChosen = true;
       document.querySelector(".el-upload__input").disabled = true;
     },
-    async onUploadImg() {
+    async onfileUpload() {
       this.isUploading = true;
-      const res = await uploadImg(this.uploadedFile);
+      const res = await fileUpload({
+        url: this.uploadedFile.url,
+        type: "image",
+      });
       this.attachment.props.colorArray = await new Promise((resolve) => {
         const colorThief = new ColorThief();
         const img = new Image();
@@ -93,9 +96,10 @@ export default {
       this.attachment.filename = this.uploadedFile.name;
       this.attachment.props.width = res.width;
       this.attachment.props.height = res.height;
-      this.attachment.props.type = res.format;
+      this.attachment.props.format = res.format;
       this.attachment.props.size = res.bytes;
       this.attachment.url = res.url;
+      this.attachment.props.type = "image";
       document.querySelector(".el-upload__input").disabled = false;
       this.close();
       this.attachmentsToEdit.push(this.attachment);

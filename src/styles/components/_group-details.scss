@@ -99,12 +99,13 @@
     margin-bottom: 6px;
     display: flex;
     justify-content: space-between;
+    align-items: flex-end;
     .add-card-controls {
         display: flex;
         justify-content: left;
         align-items: center;
         padding: 4px 8px;
-        margin-block: 8px;
+        margin-block-end: -4px;
         gap: 4px;
     }
     .btn-add-card {
@@ -135,11 +136,51 @@
             background-color: #026aa7;
         }
     }
+    .video-button {
+        box-sizing: border-box;
+        -webkit-appearance: none;
+        border-radius: 3px;
+        border: none;
+        line-height: 20px;
+        text-decoration: none;
+        position: relative;
+        background: transparent;
+        width: 28px;
+        height: 28px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-right: 8px;
+        .video-icon {
+            display: inline-block;
+            line-height: 1;
+        }
+        .icon-svg {
+            color: rgb(107, 119, 140);
+            display: inline-block;
+            fill: inherit;
+            flex-shrink: 0;
+            line-height: 1;
+            svg {
+                background-image: url("data:image/svg+xml, %3Csvg width='16' height='16' role='presentation' focusable='false' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg' %3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M4.85582 7C3.83048 7 3 7.74683 3 8.66889V15.3311C3 16.2532 3.83048 17 4.85582 17H14.1442C15.1695 17 16 16.2532 16 15.3311V15.0308L19.7575 15.9702C20.0562 16.0448 20.3727 15.9777 20.6154 15.7882C20.8581 15.5987 21 15.3079 21 15V9.00001C21 8.69207 20.8581 8.40131 20.6154 8.2118C20.3727 8.0223 20.0562 7.95518 19.7575 8.02987L16 8.96923V8.66889C16 7.74683 15.1695 7 14.1442 7H4.85582ZM5 15V9H14V15H5ZM16 11.0002V12.9998C16.08 12.9998 16.1614 13.0096 16.2425 13.0299L19 13.7192V10.2808L16.2425 10.9702C16.1614 10.9904 16.08 11.0002 16 11.0002Z' fill='%236b778c' %3E%3C/path%3E%3C/svg%3E");
+                height: 16px;
+                width: 16px;
+                line-height: 16px;
+            }
+        }
+        &:hover {
+            background-color: rgba(9, 30, 66, 0.08);
+            color: #172b4d;
+            border-radius: 3px;
+            text-decoration: none;
+        }
+    }
 }
 
 .add-card {
     margin-top: 4px;
-    width: 93%;
+    width: 94%;
+    margin-left: 8px;
     textarea {
         background: none;
         border: none;
@@ -172,7 +213,6 @@
 .open-card-composer {
     border-radius: 3px;
     color: #5e6c84;
-    display: block;
     margin: 4px 8px 2px 8px;
     padding-left: 9px;
     padding-right: 8px;
@@ -185,6 +225,7 @@
     padding-block: 4px;
     height: 20px;
     box-sizing: content-box;
+    flex-basis: 78%;
     &:hover {
         background-color: rgba(9, 30, 66, 0.08);
         width: 90%;
@@ -258,8 +299,8 @@
 
 .card-preview-wrapper {
     max-height: calc(100vh - 195px);
-    margin:0 4px;
-    padding:0 4px;
+    margin: 0 4px;
+    padding: 0 4px;
     overflow-y: auto;
     overflow-x: hidden;
     &::-webkit-scrollbar {
@@ -301,6 +342,10 @@
     }
 }
 
+.is-dark *.icon-add {
+    color: #fff;
+}
+
 .icon-close {
     @include to-icon("\e91c");
     color: #6b778c;
@@ -332,4 +377,18 @@
 
 .list-complete-leave-active {
     position: absolute;
+}
+
+.video {
+    position: absolute !important;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    button {
+        width: 50%;
+        align-self: center;
+    }
 }
