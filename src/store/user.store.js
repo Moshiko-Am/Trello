@@ -3,7 +3,10 @@ import { userService } from '../services/user.service.js';
 export const userStore = {
 	state: {
 		users: [],
-		loggedInUser: userService.getLoggedinUser() || {username:'guest',fullname:'guest'},
+		loggedInUser: userService.getLoggedinUser() || {
+			username: 'Guest',
+			fullname: 'Guest User',
+		},
 	},
 	getters: {
 		user(state) {
@@ -53,7 +56,10 @@ export const userStore = {
 		async logout({ commit }) {
 			try {
 				await userService.logout();
-				commit({ type: 'setLoggedinUser', user: {username:'guest',fullname:'guest'} });
+				commit({
+					type: 'setLoggedinUser',
+					user: { username: 'guest', fullname: 'guest' },
+				});
 			} catch (err) {
 				console.log('userStore: Error in logout', err);
 				throw err;

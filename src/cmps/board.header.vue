@@ -32,11 +32,10 @@
               <span class="member-fullname-mobile">{{ member.fullname }}</span>
             </span>
             <span
-              class="remove-member-mobile"
+              class="remove-member-mobile icon-sm"
               @click="removeMember(member._id)"
               v-if="board.createdBy._id !== member._id"
-              >X</span
-            >
+            ></span>
           </span>
         </div>
       </transition>

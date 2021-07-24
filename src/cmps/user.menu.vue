@@ -32,9 +32,14 @@
       </div>
       <hr />
       <div class="user-menu-actions">
-        <button @click="logOut" class="user-logout" v-if="user.username">
-          Log out
+        <button
+          @click="login"
+          class="user-logout"
+          v-if="user.username === 'Guest'"
+        >
+          Login
         </button>
+        <button @click="logOut" class="user-logout" v-else>Log out</button>
       </div>
     </div>
   </section>
@@ -52,6 +57,9 @@ export default {
     },
   },
   methods: {
+    login() {
+      this.$router.push("/login");
+    },
     logOut() {
       this.$emit("logOut");
       this.closeUserMenu();
