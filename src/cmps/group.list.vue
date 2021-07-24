@@ -11,6 +11,8 @@
       class="group-list"
       handle=".group-wrapper"
       animation="150"
+      delay="500"
+      delay-on-touch-only="true"
       v-model="groupsToEdit"
       @start="
         isScrolling = false;
@@ -77,6 +79,8 @@
                 @change="saveGroups"
                 dragClass="ghost"
                 ghostClass="tilted"
+                delay="500"
+                delay-on-touch-only="true"
               >
                 <card-preview
                   v-for="(card, cIdx) in group.cards"
@@ -411,8 +415,8 @@ export default {
       socketService.emit("send card", { payload: updatedCard, cIdx, gIdx });
       this.saveGroups(activity);
     },
-    updateMentions(mention){
-      this.$emit('updateMentions', mention)
+    updateMentions(mention) {
+      this.$emit("updateMentions", mention);
     },
     saveGroups(activity) {
       this.$emit("boardUpdate", {
