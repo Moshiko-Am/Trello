@@ -38,6 +38,7 @@
       :class="createShowMenu"
       @closeMenu="boardsMenuClose"
       @menuBack="toggleCreateBoard"
+      v-if="isCreateOpen"
     ></create-board>
   </section>
 </template>

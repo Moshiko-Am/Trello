@@ -103,7 +103,7 @@ export default {
   methods: {
     setLabelToEdit(label) {
       this.labelToEdit = label;
-      this.toggleCreateLabel()
+      this.toggleCreateLabel();
     },
     createLabel(label) {
       this.labelToEdit = null;

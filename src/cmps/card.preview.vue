@@ -244,6 +244,7 @@
         </audio>
       </section>
       <quick-edit
+        ref="quickedit"
         v-if="isQuickEdit"
         :card="card"
         :group="group"
@@ -381,10 +382,25 @@ export default {
     toggleHover() {
       this.cardHover = !this.cardHover;
     },
-    toggleQuickEdit() {
+    toggleQuickEdit(ev) {
       this.$emit("openBg");
       this.isQuickEdit = !this.isQuickEdit;
-      if (this.isQuickEdit) this.$nextTick(() => this.$refs.cardtitle.select());
+      if (this.isQuickEdit)
+        this.$nextTick(() => {
+          this.$refs.cardtitle.select();
+          const coords = ev.target.getBoundingClientRect();
+          if (window.innerHeight - coords.y < 210)
+            coords.y = window.innerHeight - 210;
+          if (window.innerWidth - coords.x < 158) {
+            coords.x =
+              window.innerWidth -
+              (461 + 13 + (window.innerWidth - coords.x) - 38);
+            this.$refs.quickedit.$el.children[0].classList.add("invert");
+            document.querySelector(".el-date-editor").classList.add("invert");
+          }
+          this.$refs.quickedit.$el.style.top = `${coords.y - 6}px`;
+          this.$refs.quickedit.$el.style.left = `${coords.x + 20}px`;
+        });
     },
     closeQuickEdit() {
       this.isQuickEdit = false;
