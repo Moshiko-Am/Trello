@@ -1,11 +1,10 @@
 <template>
-  <div id="app" :style="boardStyle">
+  <div id="app" v-if="boards" :style="boardStyle">
     <app-header
       @logOut="logOut"
       :users="users"
       :user="user"
       :boards="boards"
-      v-if="boards"
       @createBoard="createBoard"
       :style="defaultBackground"
     ></app-header>

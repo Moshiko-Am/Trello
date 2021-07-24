@@ -28,6 +28,7 @@
 		}
 
 		.remove-member-mobile {
+			@include to-icon('\e91c');
 			margin-inline-start: 10px;
 			cursor: pointer;
 		}
@@ -38,7 +39,7 @@
 	}
 
 	.icon-remove-members {
-		@include to-icon('\e972');
+		@include to-icon('\e951');
 		display: none;
 		color: white;
 		cursor: pointer;

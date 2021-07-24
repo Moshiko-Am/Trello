@@ -3,7 +3,10 @@ import { userService } from '../services/user.service.js';
 export const userStore = {
 	state: {
 		users: [],
-		loggedInUser: userService.getLoggedinUser() || { username: 'guest', fullname: 'guest' },
+		loggedInUser: userService.getLoggedinUser() || {
+			username: 'guest',
+			fullname: 'Guest User',
+		},
 	},
 	getters: {
 		user(state) {
@@ -21,18 +24,18 @@ export const userStore = {
 			state.users = users;
 		},
 		updateUser(state, { updatedUser }) {
-			const id = updatedUser._id
-			const userIdx = state.users.findIndex(user => {
-				return user._id === id
-			})
-			state.users.splice(userIdx, 1, updatedUser)
-		}
+			const id = updatedUser._id;
+			const userIdx = state.users.findIndex((user) => {
+				return user._id === id;
+			});
+			state.users.splice(userIdx, 1, updatedUser);
+		},
 	},
 	actions: {
 		async updateUser({ commit }, { userToUpdate }) {
 			console.log(userToUpdate);
-			const updatedUser = await userService.update(userToUpdate)
-			commit({ type: 'updateUser', updatedUser })
+			const updatedUser = await userService.update(userToUpdate);
+			commit({ type: 'updateUser', updatedUser });
 		},
 		async loadUsers({ commit }) {
 			try {
@@ -65,7 +68,10 @@ export const userStore = {
 		async logout({ commit }) {
 			try {
 				await userService.logout();
-				commit({ type: 'setLoggedinUser', user: { username: 'guest', fullname: 'guest' } });
+				commit({
+					type: 'setLoggedinUser',
+					user: { username: 'guest', fullname: 'Guest User' },
+				});
 			} catch (err) {
 				console.log('userStore: Error in logout', err);
 				throw err;
