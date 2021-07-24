@@ -175,6 +175,7 @@ import ClickOutside from "vue-click-outside";
 import userMenu from "./user.menu.vue";
 import searchBoards from "./search.boards";
 import notificationsList from "./notifications.list.vue";
+import { socketService } from "@/services/socket.service.js";
 export default {
   components: {
     notificationsList,
@@ -264,11 +265,19 @@ export default {
       const userToUpdate = JSON.parse(JSON.stringify(this.user));
       userToUpdate.mentions = mentions;
       console.log(userToUpdate);
-      this.$store.dispatch("updateUser", {userToUpdate});
+      socketService.emit("send user", userToUpdate);
+      this.$store.dispatch("updateUser", { userToUpdate });
     },
+    updateUser(updatedUser){
+      console.log('hi', updatedUser);
+      this.$store.commit({type:'setLoggedinUser', user:updatedUser})
+    }
   },
   mounted() {
     this.popupItem = this.$el;
   },
+  created(){
+    socketService.on('user updated', this.updateUser)
+  }
 };
 </script>
