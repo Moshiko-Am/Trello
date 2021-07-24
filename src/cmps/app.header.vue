@@ -116,7 +116,11 @@
     </div>
     <div class="header-controls-right">
       <button @click="login" class="user-login" v-if="!user._id">Login</button>
-      <button class="btn-notifications">
+      <button
+        class="btn-notifications"
+        :style="{ backgroundColor: isNotified }"
+        @click="toggleNotifications"
+      >
         <svg
           width="20"
           height="20"
@@ -155,6 +159,12 @@
       @closeUserMenu="closeUserMenu"
       @logOut="logOut"
     ></user-menu>
+    <notifications-list
+      v-if="showNotifications"
+      @close="toggleNotifications"
+      @updateMentions="updateMentions"
+      :boards="boards"
+    />
   </nav>
 </template>
 
@@ -164,8 +174,10 @@ import avatar from "vue-avatar";
 import ClickOutside from "vue-click-outside";
 import userMenu from "./user.menu.vue";
 import searchBoards from "./search.boards";
+import notificationsList from "./notifications.list.vue";
 export default {
   components: {
+    notificationsList,
     boardsMenu,
     avatar,
     userMenu,
@@ -181,10 +193,17 @@ export default {
       isBoardsShow: false,
       isUserMenu: false,
       isSearchOpen: false,
+      showNotifications: false,
       filterBy: "",
     };
   },
   computed: {
+    isNotified() {
+      if (!this.user.mentions) return "rgba(255, 255, 255, 0.3)";
+      return this.user.mentions.some((mention) => !mention.isRead)
+        ? "#EB5A46"
+        : "rgba(255, 255, 255, 0.3)";
+    },
     boardsShowMenu() {
       return { showBoardsMenu: this.isBoardsShow };
     },
@@ -202,6 +221,9 @@ export default {
     ClickOutside,
   },
   methods: {
+    toggleNotifications() {
+      this.showNotifications = !this.showNotifications;
+    },
     removeBoard(boardId) {
       this.$store.dispatch({ type: "removeBoard", boardId });
     },
@@ -237,6 +259,12 @@ export default {
     },
     logOut() {
       this.$emit("logOut");
+    },
+    updateMentions(mentions) {
+      const userToUpdate = JSON.parse(JSON.stringify(this.user));
+      userToUpdate.mentions = mentions;
+      console.log(userToUpdate);
+      this.$store.dispatch("updateUser", {userToUpdate});
     },
   },
   mounted() {

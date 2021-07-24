@@ -210,6 +210,7 @@
         @clearCard="clearCard"
         @updateCard="updateCard($event, currGroupIdx)"
         @removeCard="removeCard($event, currGroupIdx)"
+        @updateMentions="updateMentions"
       ></card-details>
     </transition>
     <section
@@ -409,6 +410,9 @@ export default {
       this.groupsToEdit[gIdx].cards.splice(cIdx, 1, updatedCard);
       socketService.emit("send card", { payload: updatedCard, cIdx, gIdx });
       this.saveGroups(activity);
+    },
+    updateMentions(mention){
+      this.$emit('updateMentions', mention)
     },
     saveGroups(activity) {
       this.$emit("boardUpdate", {
