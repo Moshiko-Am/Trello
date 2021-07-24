@@ -14,7 +14,7 @@
 
 <script>
 import appHeader from "@/cmps/app.header.vue";
-import {socketService} from "@/services/socket.service.js"
+import { socketService } from "@/services/socket.service.js";
 export default {
   components: {
     appHeader,
@@ -22,6 +22,9 @@ export default {
   async created() {
     await this.$store.dispatch({ type: "loadBoards" });
     await this.$store.dispatch({ type: "loadUsers" });
+    if (this.user) {
+      socketService.emit("user-watch", this.user._id);
+    }
   },
   computed: {
     boardStyle() {
@@ -66,14 +69,5 @@ export default {
       this.$router.push("/");
     },
   },
-  watch: {
-    user : {
-      immediate: true,
-      handler(){
-        if(this.user.username !== 'guest') 
-        socketService.emit('user-watch',this.user._id)
-      }
-    }
-  }
 };
 </script>

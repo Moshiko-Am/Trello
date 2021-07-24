@@ -135,13 +135,9 @@
         }
     }
     .preview-indicators-container {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        flex-wrap: wrap;
         padding-bottom: 2px;
         .preview-inner-container {
-            display: flex;
+            display: inline-flex;
             align-items: center;
             >*:not(:last-child) {
                 margin-right: 5px;
@@ -163,6 +159,7 @@
     }
     .preview-desc-container {
         padding-top: 2px;
+        margin-bottom: -2px;
         .icon-sm {
             color: #5e6c84;
         }
@@ -181,11 +178,12 @@
         }
     }
     .preview-members-container {
-        display: flex;
+        margin-top: 2px;
+        margin-bottom: 4px;
+        display: inline-flex;
+        flex-wrap: wrap;
+        float: right;
         justify-content: flex-end;
-        bottom: 2px;
-        flex: 1;
-        min-width: 140px;
     }
     .preview-date-container {
         font-size: 12px;

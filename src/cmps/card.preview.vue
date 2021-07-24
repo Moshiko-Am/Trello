@@ -11,10 +11,9 @@
           :class="{ color: card.cover.type === 'color' }"
           v-if="
             card.cover.type === 'color' ||
-              card.cover.type === 'url' ||
-              (card.cover.type === 'attachment' &&
-                card.attachments[card.cover.attachmentIdx].props.type ===
-                  'image')
+            card.cover.type === 'url' ||
+            (card.cover.type === 'attachment' &&
+              card.attachments[card.cover.attachmentIdx].props.type === 'image')
           "
           :style="background"
           @mouseenter="toggleHover"
@@ -23,8 +22,8 @@
           <audio
             v-if="
               card.attachments &&
-                card.attachments.length &&
-                card.attachments[0].props.type === 'audio'
+              card.attachments.length &&
+              card.attachments[0].props.type === 'audio'
             "
             controls
           >
@@ -49,7 +48,7 @@
           class="card-preview-full-image"
           v-else-if="
             card.cover.type === 'attachment' &&
-              card.attachments[card.cover.attachmentIdx].props.type === 'video'
+            card.attachments[card.cover.attachmentIdx].props.type === 'video'
           "
           :style="background"
           @mouseenter="toggleHover"
@@ -87,8 +86,8 @@
           class="card-preview-full-image"
           v-else-if="
             card.attachments &&
-              card.attachments.length &&
-              card.attachments[0].props.type === 'audio'
+            card.attachments.length &&
+            card.attachments[0].props.type === 'audio'
           "
           @mouseenter="toggleHover"
           @mouseleave="toggleHover"
@@ -123,9 +122,9 @@
         <template
           v-if="
             card.cover &&
-              card.cover.isCover &&
-              (card.cover.type === 'attachment' || card.cover.type === 'url') &&
-              card.cover.layout === 'top'
+            card.cover.isCover &&
+            (card.cover.type === 'attachment' || card.cover.type === 'url') &&
+            card.cover.layout === 'top'
           "
         >
           <div class="card-cover" :style="background"></div>
@@ -133,9 +132,9 @@
         <template
           v-else-if="
             card.cover &&
-              card.cover.isCover &&
-              card.cover.type === 'color' &&
-              card.cover.layout === 'top'
+            card.cover.isCover &&
+            card.cover.type === 'color' &&
+            card.cover.layout === 'top'
           "
         >
           <div class="card-cover color" :style="background"></div>
@@ -211,32 +210,31 @@
               <span class="icon-sm icon-desc"></span>
             </div>
           </div>
-          <div class="preview-members-container" v-if="card.members">
-            <transition-group
-              class="preview-members-container"
-              name="list-complete"
-            >
-              <avatar
-                v-for="member in card.members"
-                :key="member._id"
-                class="member-name list-complete-item"
-                :username="member.fullname"
-                :size="28"
-                :inline="true"
-                backgroundColor="#dfe1e6"
-                color="#172b4d"
-                :style="{
-                  margin: '2px',
-                }"
-              ></avatar>
-            </transition-group>
-          </div>
+          <transition-group
+            v-if="card.members"
+            class="preview-members-container"
+            name="list-complete"
+          >
+            <avatar
+              v-for="member in card.members"
+              :key="member._id"
+              class="member-name list-complete-item"
+              :username="member.fullname"
+              :size="28"
+              :inline="true"
+              backgroundColor="#dfe1e6"
+              color="#172b4d"
+              :style="{
+                margin: '2px',
+              }"
+            ></avatar>
+          </transition-group>
         </div>
         <audio
           v-if="
             card.attachments &&
-              card.attachments.length &&
-              card.attachments[0].props.type === 'audio'
+            card.attachments.length &&
+            card.attachments[0].props.type === 'audio'
           "
           controls
         >
@@ -429,7 +427,7 @@ export default {
       const cardCopy = JSON.parse(JSON.stringify(updatedCard));
       const activity = {};
       if (activityTxt) {
-        activity.byMember = this.$store.getters.user;
+        activity.byMember = this.$store.getters.loggedInUser;
         activity.cTitle = this.card.title;
         activity.cId = this.card.id;
         activity.gId = this.group.id;

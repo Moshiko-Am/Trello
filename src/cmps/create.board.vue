@@ -74,7 +74,7 @@ export default {
   },
   computed: {
     loggedUser() {
-      return this.$store.getters.user;
+      return this.$store.getters.loggedInUser;
     },
     isReady() {
       return this.selectedBg && this.boardToSaveTitle ? true : false;

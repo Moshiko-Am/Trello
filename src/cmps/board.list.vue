@@ -82,10 +82,10 @@ export default {
       return this.$store.getters.boards;
     },
     loggedinUser() {
-      return this.$store.getters.user.fullname;
+      return this.$store.getters.loggedInUser.fullname;
     },
     user() {
-      return this.$store.getters.user;
+      return this.$store.getters.loggedInUser;
     },
   },
   methods: {

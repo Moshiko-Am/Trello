@@ -5,6 +5,8 @@
     border-radius: 3px;
     background-color: white;
     padding: 0 0 12px;
+    height: calc(100vh - 76px);
+    overflow-y: auto;
     box-shadow: 0 8px 16px -4px rgba(9, 30, 66, 0.25), 0 0 0 1px rgba(9, 30, 66, 0.08);
 
     header {
@@ -21,6 +23,7 @@
         top:8px;
         right: 12px;
         color: #42526e;
+        cursor: pointer;
     }
 
     .filter-options {
@@ -30,6 +33,34 @@
         color: #6B778C;
         padding:0 16px 8px 12px;
         margin: 0;
+        min-width: 420px;
+        span{
+            cursor: pointer;
+        }
+    }
+    h3 {
+        text-align: center;
+    }
+
+    .notifications-container {
+        overflow-y: auto;
+        height: calc(100vh - 170px);
+
+        &::-webkit-scrollbar {
+            height: 8px;
+            width: 8px;
+            background-color: #98a2b1;
+            border-radius: 10px;
+        }
+        &::-webkit-scrollbar-thumb {
+            border-radius: 10px;
+            background-color: #8591a3;
+        }
+        &::-webkit-scrollbar-track-piece {
+            border-radius: 10px;
+            background: #a8b0bd;
+        }
+        
     }
 }
 
