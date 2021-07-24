@@ -22,10 +22,21 @@
     audio {
         width: 245px;
         height: 35px;
+        @media (max-width: 400px) {
+            width: 200px;
+        }
+    }
+    @media (max-width: 400px) {
+        flex-direction: column;
     }
 }
 
 .card-details-bg .audio {
     width: unset;
     min-width: 316.5px;
+    @media (max-width: 400px) {
+        width: 250px;
+        height: 300px;
+        min-width: unset;
+    }
 }
