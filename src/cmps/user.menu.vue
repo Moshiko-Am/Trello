@@ -19,7 +19,7 @@
         <avatar
           v-else
           class="member-name"
-          username="Guest"
+          username="Guest User"
           :size="40"
           :inline="true"
           backgroundColor="#dfe1e6"
@@ -35,7 +35,7 @@
         <button
           @click="login"
           class="user-logout"
-          v-if="user.username === 'Guest'"
+          v-if="user.username === 'guest'"
         >
           Login
         </button>

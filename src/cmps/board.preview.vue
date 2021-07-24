@@ -40,6 +40,9 @@ export default {
         ? `background-image: url('${this.board.style.preview}')`
         : `background-color: ${this.board.style.content}`;
     },
+    user() {
+      return this.$store.getters.user;
+    },
   },
   methods: {
     removeBoard() {
