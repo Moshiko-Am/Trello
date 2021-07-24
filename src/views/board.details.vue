@@ -80,8 +80,8 @@ export default {
       const userToUpdate = JSON.parse(
         JSON.stringify(this.$store.getters.users)
       ).find((user) => user._id === mention.userId);
-      if (userToUpdate.mentions) userToUpdate.mentions.unshift(mention)
-			else userToUpdate.mentions = [mention]
+      if (userToUpdate.mentions) userToUpdate.mentions.unshift(mention);
+      else userToUpdate.mentions = [mention];
       socketService.emit("send user", userToUpdate);
       this.$store.dispatch({ type: "updateUser", userToUpdate });
     },
@@ -96,7 +96,7 @@ export default {
       try {
         await this.$store.dispatch({ type: "saveBoard", board });
       } catch (err) {
-        console.log(`coldn't save board`);
+        console.log(`couldn't save board`);
       }
     },
     toggleDashboard() {
