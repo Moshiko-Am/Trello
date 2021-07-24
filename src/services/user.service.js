@@ -58,6 +58,7 @@ async function update(user) {
     // await storageService.put(USER_KEY, user);
 
     try {
+        console.log(user._id);
         user = await httpService.put(`user/${user._id}`, user);
         if (getLoggedinUser()._id === user._id || getLoggedinUser.isAdmin)
             _saveLocalUser(user);

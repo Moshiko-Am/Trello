@@ -346,9 +346,9 @@ export default {
       this.emitCard(activityTxt);
     },
     updateMentions(mention){
-      mention.byMember = this.$store.getters.user
-      mention.cTitle = this.card.title
-      mention.gTitle = this.group.title
+      mention.byMember = this.$store.getters.user.fullname
+      mention.cId = this.card.id
+      mention.gId = this.group.id
       mention.dueDate = this.card.dueDate
       mention.createdAt = Date.now()
       if(mention.userId === this.$store.getters.user._id) mention.isRead = true

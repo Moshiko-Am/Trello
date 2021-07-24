@@ -30,6 +30,7 @@ export const userStore = {
 	},
 	actions: {
 		async updateUser({ commit }, { userToUpdate }) {
+			console.log(userToUpdate);
 			const updatedUser = await userService.update(userToUpdate)
 			commit({ type: 'updateUser', updatedUser })
 		},

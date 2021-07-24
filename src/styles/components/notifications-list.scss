@@ -1,0 +1,148 @@
+.notifications-list {
+    position: fixed;
+    top: 48px;
+    right: 8px;
+    border-radius: 3px;
+    background-color: white;
+    padding: 0 0 12px;
+    box-shadow: 0 8px 16px -4px rgba(9, 30, 66, 0.25), 0 0 0 1px rgba(9, 30, 66, 0.08);
+
+    header {
+        line-height: 40px;
+        text-align: center;
+        color:#5e6c84;
+        border-bottom: 1px solid rgba(9,30,66,.13);
+        margin-bottom: 10px;
+        margin: 0 12px 10px;
+    }
+    
+    .icon-x {
+        position:absolute;
+        top:8px;
+        right: 12px;
+        color: #42526e;
+    }
+
+    .filter-options {
+        display: flex;
+        justify-content: space-between;
+        text-decoration: underline;
+        color: #6B778C;
+        padding:0 16px 8px 12px;
+        margin: 0;
+    }
+}
+
+.notification-preview {
+    display: flex;
+    padding: 8px 12px;
+    color: #172B4D;
+    &.unread{
+        background-color: #E4F7FA;
+    }
+
+    .read-btn {
+        margin-left: 8px;
+        height: 16px;
+        width: 16px;
+        border-radius: 50%;
+        border: 1px solid #DFE1E6;
+        background-color: transparent;
+
+        &.unread {
+            background-color: #00C2E0;
+            border-color: #00AECC;
+        }
+    }
+
+    .notification-container {
+        width: 360px;
+        border-radius: 3px;
+        box-shadow: 0 1px 1px #092d4240, 0 0 0 1px #092d4214;
+        margin-left: 12px;
+        
+        .notification-card {
+            padding: 8px 8px 0 8px;
+            border-radius: 3px 3px 0 0 ;
+            .mention-card-preview {
+                background-color: white;
+                border-radius: 3px;
+                padding: 6px 8px;
+
+                .mention-due-date{
+                    font-size: 12px;
+                    color: #5e6c84;
+                    margin-top: 3px;
+                    border-radius: 3px;
+                    padding: 1px 3px;
+                    background-color: rgba(9, 30, 66, 0.04);
+                    font-weight: 500;
+                    line-height: 19px;
+                    display: flex;
+                    width: fit-content;
+                    justify-content: flex-start;
+                    align-items: center;
+                    .icon-sm {
+                        color: white;
+                        margin-right: 2px;
+                    }
+                }
+            }
+
+            .board-group {
+                color: white;
+                padding: 4px 8px;
+                font-size: 12px;
+                span {
+                    font-weight: bold;
+                }
+                &.dark {
+                    color: #172B4D;
+                }
+            }
+
+        }
+
+        .notification-info {
+            display: flex;
+            flex-direction: column;
+            padding: 8px;
+            .mention-by-member {
+                display: flex;
+                font-weight: bold;
+                .vue-avatar--wrapper {
+                    font-weight: bold !important;
+                    color: #172B4D !important;
+                    font-size: 12px !important;
+                }
+                >span {
+                    margin-left: 8px;
+                }
+            }
+
+            .mention-txt {
+                display: flex;
+                margin-top: 8px;
+                align-items: center;
+
+                >div {
+                    height: 24px;
+                    width: 24px;
+                    border-radius: 50%;
+                    border: 1px solid #DFE1E6;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    margin-right: 8px;
+                }
+
+                .mention-date {
+                    margin-left: 4px;
+                    font-size: 12px;
+                    line-height: 14px;
+                    color: #6B778C;
+                }
+            }
+        }
+    }
+}

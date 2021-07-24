@@ -76,7 +76,7 @@ export default {
       this.boardUpdate({ type: "labels", payload: boardLabels });
     },
     updateMentions(mention) {
-      mention.bTitle = this.board.title;
+      mention.bId = this.board._id;
       const userToUpdate = JSON.parse(
         JSON.stringify(this.$store.getters.users)
       ).find((user) => user._id === mention.userId);
