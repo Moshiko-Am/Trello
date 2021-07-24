@@ -44,7 +44,11 @@
     margin: 4px 0;
     padding: 4px 8px;
     word-break: break-word;
-    transition: transform .3s;
+    transition: transform 0.3s;
+    audio {
+        width: 95%;
+        height: 35px;
+    }
     &:hover {
         background-color: #f4f5f7;
         border-bottom-color: rgba(9, 30, 66, 0.25);
@@ -99,7 +103,7 @@
         background-position: 50%;
         background-repeat: no-repeat;
         user-select: none;
-        margin-inline: -8px;
+        margin-inline: -8.5px;
         margin-block-start: -4px;
         margin-block-end: 4px;
         &.color {
@@ -157,11 +161,10 @@
             font-size: 12px;
         }
     }
-
     .preview-desc-container {
         padding-top: 2px;
         .icon-sm {
-            color: #5e6c84;;
+            color: #5e6c84;
         }
     }
     .preview-attach-container {
@@ -192,7 +195,7 @@
         padding: 1px 3px;
         background-color: rgba(9, 30, 66, 0.04);
         font-weight: 500;
-        line-height:19px;
+        line-height: 19px;
         display: flex;
         align-items: center;
         .icon-sm {
@@ -219,8 +222,6 @@
     &.add-card:hover {
         background-color: #fff;
     }
-
-
 }
 
 .card-preview-full-image {
@@ -241,6 +242,31 @@
     position: relative;
     text-decoration: none;
     z-index: 0;
+    video {
+        position: absolute;
+        width: auto;
+        height: 245px;
+        z-index: -1;
+    }
+    audio {
+        height: 45px;
+        width: 112%;
+        margin-left: -16px;
+        outline: 2px solid #3a3a3a59;
+        margin-bottom: -1px;
+    }
+    &.color audio {
+        height: 70px;
+        width: 112%;
+        margin-left: -15px;
+        outline: 2px solid #3a3a3a59;
+        margin-bottom: -1px;
+    }
+    audio::-webkit-media-controls-panel {
+        margin-left: 7px;
+        margin-right: 9px;
+        margin-block: 5px;
+    }
 }
 
 .card-preview-full-image-title {
@@ -260,6 +286,9 @@
     text-decoration: none;
     word-wrap: break-word;
     background: linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.072));
+    &.video-card {
+        background: linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.072));
+    }
 }
 
 .fade-enter-active,

@@ -11,6 +11,7 @@
     />
     <group-list
       :groups="board.groups"
+      :bgImage="board.style"
       @boardUpdate="boardUpdate"
       v-if="board && board.groups"
       @openBg="toggleBg"

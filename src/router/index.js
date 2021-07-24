@@ -6,40 +6,45 @@ import boards from '@/cmps/board.list.vue';
 import loginPage from '@/views/login.page.vue';
 import canvasCmp from '@/cmps/card-details-cmps/canvas.cmp';
 import VueKonva from 'vue-konva';
+// import AudioRecord from '@/cmps/card-details-cmps/audio.record.vue'
 
 Vue.use(VueRouter);
 Vue.use(VueKonva);
 
-const routes = [
-	{
-		path: '/',
-		name: 'Home',
-		component: home,
-	},
-	{
-		path: '/boards',
-		name: 'Boards',
-		component: boards,
-	},
-	{
-		path: '/canvas',
-		name: 'Canvas',
-		component: canvasCmp,
-	},
-	{
-		path: '/board/:boardId',
-		name: 'Board',
-		component: board,
-	},
-	{
-		path: '/login',
-		name: 'Login',
-		component: loginPage,
-	},
+const routes = [{
+        path: '/',
+        name: 'Home',
+        component: home,
+    },
+    {
+        path: '/boards',
+        name: 'Boards',
+        component: boards,
+    },
+    {
+        path: '/board/:boardId',
+        name: 'Board',
+        component: board,
+    },
+    {
+        path: '/login',
+        name: 'Login',
+        component: loginPage,
+    },
+    // {
+    //     path: '/audio',
+    //     name: 'Audio',
+    //     component: AudioRecord,
+    // },
+    {
+        path: '/canvas',
+        name: 'Canvas',
+        component: canvasCmp,
+    },
 ];
 
 const router = new VueRouter({
-	routes,
+    routes,
 });
 
 export default router;
