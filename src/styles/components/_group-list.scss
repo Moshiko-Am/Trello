@@ -132,22 +132,6 @@
     }
 }
 
-.audio {
-    inset: 0;
-    position: absolute;
-    top: 20%;
-    left: 50%;
-    width: 245px;
-    height: 138px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 8px;
-    gap: 10px;
-    background-color: rgba(255, 255, 255, 0.4);
-    border-radius: 3px;
-}
-
 .icon-audio {
     @include to-icon("\e948");
     color: #6b778c;

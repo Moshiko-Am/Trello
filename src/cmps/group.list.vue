@@ -161,6 +161,7 @@
         class="group-wrapper mod-add"
         :class="{ 'is-edit': isAddingGroup, 'is-dark': bgImage.props.isDark }"
       >
+        <!-- :class="{ 'is-edit': isAddingGroup, 'is-dark': bgImage.props.isDark }" -->
         <form v-if="isAddingGroup" v-click-outside="toggleGroupEdit">
           <input
             class="group-name-input"
@@ -216,9 +217,24 @@
       class="card-details-bg"
       @click.self="toggleVideoRecord"
     >
-      <video-record @videoRecord="addVideoCard" v-if="isRecordingVideo" />
+      <video-record
+        @videoRecord="addVideoCard"
+        @toggleVideoRecord="toggleVideoRecord"
+        v-if="isRecordingVideo"
+      />
     </section>
-    <audio-record @audioRecord="addAudioCard" v-if="isRecordingAudio" />
+    <section
+      @click.self="toggleAudioRecord"
+      v-if="isRecordingAudio"
+      class="card-details-bg"
+    >
+      <component
+        v-bind:is="audioRecord"
+        @toggleAudioRecord="toggleAudioRecord"
+        @audioRecord="addAudioCard"
+        v-if="isRecordingAudio"
+      />
+    </section>
   </section>
 </template>
 
@@ -230,7 +246,7 @@ import { socketService } from "@/services/socket.service.js";
 import { utilService } from "@/services/util.service.js";
 import clickOutside from "vue-click-outside";
 import videoRecord from "@/cmps/card-details-cmps/video.record.vue";
-import audioRecord from "@/cmps/card-details-cmps/audio.record.vue";
+
 export default {
   props: {
     groups: Array,
@@ -277,11 +293,14 @@ export default {
     cardDetails,
     draggable,
     videoRecord,
-    audioRecord,
+    audioRecord: () => import("@/cmps/card-details-cmps/audio.record.vue"),
   },
   computed: {
     height() {
       return this.getTextHeight();
+    },
+    audioRecord() {
+      return this.isRecordingAudio ? "audioRecord" : "";
     },
   },
   methods: {
@@ -543,7 +562,7 @@ export default {
       this.cardToEdit.title = "Audio Card";
       this.cardToEdit.cover.isCover = false;
       this.cardToEdit.cover.type = "attachment";
-      this.cardToEdit.cover.layout = "full";
+      this.cardToEdit.cover.layout = "top";
       this.cardToEdit.cover.attachmentIdx = 0;
       this.saveCard(this.currGroupIdx, "audio");
       this.cardToEdit = {

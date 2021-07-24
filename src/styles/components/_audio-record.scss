@@ -1,0 +1,31 @@
+.audio {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    header {
+        width: 100%;
+    }
+    .icon-sm {
+        cursor: pointer;
+    }
+}
+
+.recorded-audio {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    audio {
+        width: 245px;
+        height: 35px;
+    }
+}
+
+.card-details-bg .audio {
+    width: unset;
+    min-width: 316.5px;
+}

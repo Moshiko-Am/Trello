@@ -215,6 +215,7 @@
     box-sizing: content-box;
     background: rgba(0, 0, 0, 0.8);
     bottom: 0;
+    left: 0;
     color: #fff;
     cursor: pointer;
     font-size: 14px;
@@ -225,15 +226,15 @@
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    border-radius: 0 0 10px 10px;
+    border-radius: 0 0 6px 6px;
     display: flex;
     &.video-card {
-        margin-left: -25px;
         margin-bottom: -1px;
         height: 26px;
+        border-radius: 0 0 3px 3px;
+        padding-top: 10px;
     }
     &.audio-card {
-        margin-left: -87px;
         margin-bottom: -1px;
         height: 25px;
         padding-block-start: 5px;

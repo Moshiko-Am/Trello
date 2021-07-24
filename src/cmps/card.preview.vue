@@ -8,6 +8,7 @@
       <template v-if="card.id && card.cover && card.cover.layout === 'full'">
         <section
           class="card-preview-full-image"
+          :class="{ color: card.cover.type === 'color' }"
           v-if="
             card.cover.type === 'color' ||
               card.cover.type === 'url' ||
@@ -211,7 +212,10 @@
             </div>
           </div>
           <div class="preview-members-container" v-if="card.members">
-            <transition-group name="list-complete">
+            <transition-group
+              class="preview-members-container"
+              name="list-complete"
+            >
               <avatar
                 v-for="member in card.members"
                 :key="member._id"
@@ -315,7 +319,13 @@ export default {
         else return "height: 245px";
       else if (this.card.cover.type === "color")
         return `background-color: ${this.card.cover.color}; height: ${
-          this.card.cover.layout === "full" ? "56px" : "32px"
+          this.card.cover.layout === "full"
+            ? this.card.attachments &&
+              this.card.attachments.length &&
+              this.card.attachments[0].props.type === "audio"
+              ? "80px"
+              : "56px"
+            : "32px"
         }`;
       else
         return `background-color: rgb(${this.card.cover.photo.colorArray[0]},${this.card.cover.photo.colorArray[1]},${this.card.cover.photo.colorArray[2]});background-image: url('${this.card.cover.photo.url}');min-height: 245px`;

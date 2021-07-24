@@ -1,0 +1,30 @@
+.video-js {
+    background-color: #ebecf0 !important;
+    color: #ebecf0 !important;
+    border-radius: 3px;
+}
+
+.vjs-control-bar {
+    bottom: -1px !important;
+    border-radius: 0 0 3px 3px;
+}
+
+.video {
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    button {
+        width: 50%;
+        align-self: center;
+    }
+    .icon-sm {
+        cursor: pointer;
+    }
+}
+
+.card-details-bg .video {
+    width: unset;
+}

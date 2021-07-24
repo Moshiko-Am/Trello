@@ -1,15 +1,17 @@
 <template>
-  <section class="video">
+  <section class="file-upload-cmp video">
+    <span class="icon-sm icon-x" @click="close"></span>
+    <header>Upload your video...</header>
     <video id="myVideo" playsinline class="video-js vjs-default-skin"></video>
     <el-button type="primary" @click.stop="saveVideo" v-if="isFinished">
       Save Video
-      <template v-if="isUploading">
-        <div class="uploading video-card">
-          <img class="spinner small" src="@/assets/img/loader/loader.svg" />
-          <span>Uploading…</span>
-        </div>
-      </template>
     </el-button>
+    <template v-if="isUploading">
+      <div class="uploading video-card">
+        <img class="spinner small" src="@/assets/img/loader/loader.svg" />
+        <span>Uploading…</span>
+      </div>
+    </template>
   </section>
 </template>
 
@@ -94,6 +96,9 @@ export default {
       const fac = new FastAverageColor();
       res.color = fac.getColor(video.videoElement);
       this.$emit("videoRecord", res);
+    },
+    close() {
+      this.$emit("toggleVideoRecord");
     },
   },
   beforeDestroy() {

@@ -33,10 +33,7 @@
           <img :src="photo.urlSmall" />
           <template v-if="isLoading && chosenPhotoIdx === pIdx">
             <div class="uploading">
-              <img
-                class="spinner small"
-                src="~@/assets/img/loader/loader.svg"
-              />
+              <img class="spinner small" src="@/assets/img/loader/loader.svg" />
               <span>Uploading…</span>
             </div>
           </template>
