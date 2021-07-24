@@ -14,6 +14,7 @@
 
 <script>
 import appHeader from "@/cmps/app.header.vue";
+import {socketService} from "@/services/socket.service.js"
 export default {
   components: {
     appHeader,
@@ -65,5 +66,14 @@ export default {
       this.$router.push("/");
     },
   },
+  watch: {
+    user : {
+      immediate: true,
+      handler(){
+        if(this.user.username !== 'guest') 
+        socketService.emit('user-watch',this.user._id)
+      }
+    }
+  }
 };
 </script>

@@ -265,12 +265,19 @@ export default {
       const userToUpdate = JSON.parse(JSON.stringify(this.user));
       userToUpdate.mentions = mentions;
       console.log(userToUpdate);
-      socketService.emit("send mentions", userToUpdate);
+      socketService.emit("send user", userToUpdate);
       this.$store.dispatch("updateUser", { userToUpdate });
     },
+    updateUser(updatedUser){
+      console.log('hi', updatedUser);
+      this.$store.commit({type:'setLoggedinUser', user:updatedUser})
+    }
   },
   mounted() {
     this.popupItem = this.$el;
   },
+  created(){
+    socketService.on('user updated', this.updateUser)
+  }
 };
 </script>

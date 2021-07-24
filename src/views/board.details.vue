@@ -82,6 +82,7 @@ export default {
       ).find((user) => user._id === mention.userId);
       if (userToUpdate.mentions) userToUpdate.mentions.unshift(mention)
 			else userToUpdate.mentions = [mention]
+      socketService.emit("send user", userToUpdate);
       this.$store.dispatch({ type: "updateUser", userToUpdate });
     },
     async boardUpdate(update) {
