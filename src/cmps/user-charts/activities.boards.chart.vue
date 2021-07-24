@@ -12,7 +12,6 @@ export default {
         labels: this.boardsTitles,
         datasets: [
           {
-            label: "Cards per Board",
             backgroundColor: [
               "#0079bf",
               "#00c2e0",
@@ -31,6 +30,9 @@ export default {
       },
       {
         responsive: true,
+        legend: {
+          display: false,
+        },
       }
     );
   },

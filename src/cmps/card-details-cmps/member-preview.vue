@@ -49,19 +49,32 @@ export default {
       const idx = this.membersToEdit.findIndex(
         (member) => member._id === memberId
       );
-      var currTxt
+      var currTxt;
+      var mention;
       if (idx === -1) {
         this.membersToEdit.push(this.member);
-        currTxt = ` added ${this.member.fullname} `
+        currTxt = ` added ${this.member.fullname} `;
+        mention = {
+          txt : ' added ',
+          userId : memberId
+        };
       } else {
         this.membersToEdit.splice(idx, 1);
-        currTxt = ` removed ${this.member.fullname} `
+        currTxt = ` removed ${this.member.fullname} `;
+        mention = {
+          txt : ' removed ',
+          userId : memberId
+        };
       }
-      const activityTxt = currTxt
-      this.updateMembers(activityTxt);
+      const activityTxt = currTxt;
+      this.updateMembers(activityTxt , mention);
     },
-    updateMembers(activityTxt) {
-      this.$emit("updateMembers", {newMembers:this.membersToEdit,activityTxt});
+    updateMembers(activityTxt , mention) {
+      this.$emit("updateMembers", {
+        newMembers: this.membersToEdit,
+        activityTxt,
+      });
+      this.$emit('updateMentions' , mention)
     },
   },
 };

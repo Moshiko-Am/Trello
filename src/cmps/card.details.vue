@@ -4,7 +4,35 @@
       <section class="card-details" @click.stop="">
         <div
           class="card-cover"
-          v-if="cardToEdit.cover && cardToEdit.cover.isCover"
+          v-if="
+            cardToEdit.cover &&
+              cardToEdit.cover.isCover &&
+              cardToEdit.cover.type === 'attachment' &&
+              cardToEdit.attachments[cardToEdit.cover.attachmentIdx].props
+                .type === 'video'
+          "
+          :style="background"
+        >
+          <video
+            :poster="
+              cardToEdit.attachments[cardToEdit.cover.attachmentIdx].props
+                .thumbnail
+            "
+            muted
+            controls
+            height="160px"
+          >
+            <source
+              :src="
+                cardToEdit.attachments[cardToEdit.cover.attachmentIdx].props.url
+              "
+              type="video/mp4"
+            />
+          </video>
+        </div>
+        <div
+          class="card-cover"
+          v-else-if="cardToEdit.cover && cardToEdit.cover.isCover"
           :style="background"
         ></div>
         <button
@@ -106,6 +134,7 @@
                     :boardMembers="board.members"
                     :cardMembers="card.members"
                     @updateMembers="updateMembers"
+                    @updateMentions="updateMentions"
                   />
                 </div>
                 <div class="card-sidebar-btn" @click="toggleLabel">
@@ -316,14 +345,15 @@ export default {
       this.cardToEdit.members = members;
       this.emitCard(activityTxt);
     },
-    updateCover() {},
-    addUser(userId) {
-      const member = this.board.members.find((member) => member._id === userId);
-      if (!this.card.members) {
-        this.cardToEdit.members = [];
-      }
-      this.cardToEdit.members.push(member);
-      this.emitCard();
+    updateMentions(mention){
+      mention.byMember = this.$store.getters.user.fullname
+      mention.cId = this.card.id
+      mention.gId = this.group.id
+      mention.dueDate = this.card.dueDate
+      mention.createdAt = Date.now()
+      if(mention.userId === this.$store.getters.user._id) mention.isRead = true
+      else mention.isRead = false
+      this.$emit('updateMentions',mention)
     },
     addCl(checklist) {
       if (!this.cardToEdit.checklists) this.cardToEdit.checklists = [];
@@ -341,12 +371,12 @@ export default {
       this.cardToEdit.labelIds = labels;
       this.emitCard();
     },
-    joinToCard(){
+    joinToCard() {
       const user = this.$store.getters.user;
-      if(user.username === 'guest') user._id = 'g001'
-      this.cardToEdit.members.push(user)
-      const activityTxt = ' joined '
-      this.emitCard(activityTxt)
+      if (user.username === "guest") user._id = "g001";
+      this.cardToEdit.members.push(user);
+      const activityTxt = " joined ";
+      this.emitCard(activityTxt);
     },
     createLabel(label, isAdding) {
       this.labelToEdit = null;
@@ -388,15 +418,20 @@ export default {
         this.cardToEdit.cover.type === "attachment" &&
         this.cardToEdit.attachments.every((attachment) => !attachment.isCover)
       ) {
-        this.$set(this.cardToEdit.cover, "isCover", false);
-        this.$set(this.cardToEdit.cover, "type", "");
+        this.$set(this.cardToEdit, "cover", {
+          isCover: false,
+          type: "",
+          color: "",
+          attachmentIdx: null,
+          photo: { url: "", colorArray: [] },
+          layout: "top",
+        });
       } else
         this.cardToEdit.attachments.forEach((attachment, idx) => {
           if (attachment.isCover) {
             this.$set(this.cardToEdit.cover, "isCover", true);
             this.$set(this.cardToEdit.cover, "type", "attachment");
             this.$set(this.cardToEdit.cover, "attachmentIdx", idx);
-            this.$set(this.cardToEdit.cover, "layout", "top");
           }
         });
       this.emitCard();
@@ -415,10 +450,10 @@ export default {
         if (this.cardToEdit.labelIds.includes(label.id)) return label;
       });
     },
-    userInCard(){
+    userInCard() {
       const user = this.$store.getters.user;
-      if(!this.cardToEdit.members) return
-      return this.cardToEdit.members.some(member => member._id === user._id)
+      if (!this.cardToEdit.members) return;
+      return this.cardToEdit.members.some((member) => member._id === user._id);
     },
     allUsers() {
       return this.$store.getters.users;
@@ -430,19 +465,28 @@ export default {
       if (!this.cardToEdit.cover.isCover) return false;
       else
         return this.cardToEdit.cover.type === "attachment"
-          ? `background-color: rgb(${
-              this.cardToEdit.attachments[this.cardToEdit.cover.attachmentIdx]
-                .props.colorArray[0]
-            },${
-              this.cardToEdit.attachments[this.cardToEdit.cover.attachmentIdx]
-                .props.colorArray[1]
-            },${
-              this.cardToEdit.attachments[this.cardToEdit.cover.attachmentIdx]
-                .props.colorArray[2]
-            }); background-image: url('${
-              this.cardToEdit.attachments[this.cardToEdit.cover.attachmentIdx]
-                .url
-            }');`
+          ? this.cardToEdit.attachments[this.cardToEdit.cover.attachmentIdx]
+              .props.type === "image"
+            ? `background-color: rgb(${
+                this.cardToEdit.attachments[this.cardToEdit.cover.attachmentIdx]
+                  .props.colorArray[0]
+              },${
+                this.cardToEdit.attachments[this.cardToEdit.cover.attachmentIdx]
+                  .props.colorArray[1]
+              },${
+                this.cardToEdit.attachments[this.cardToEdit.cover.attachmentIdx]
+                  .props.colorArray[2]
+              }); background-image: url('${
+                this.cardToEdit.attachments[this.cardToEdit.cover.attachmentIdx]
+                  .url
+              }');`
+            : `background-color: ${
+                this.cardToEdit.attachments[this.cardToEdit.cover.attachmentIdx]
+                  .props.colorArray.rgb
+              }; background-image: url('${
+                this.cardToEdit.attachments[this.cardToEdit.cover.attachmentIdx]
+                  .url
+              }');`
           : this.cardToEdit.cover.type === "color"
           ? `background-color: ${this.cardToEdit.cover.color}; height: 116px`
           : `background-color: rgb(${this.cardToEdit.cover.photo.colorArray[0]},${this.cardToEdit.cover.photo.colorArray[1]},${this.cardToEdit.cover.photo.colorArray[2]}); background-image: url('${this.cardToEdit.cover.photo.url}')`;

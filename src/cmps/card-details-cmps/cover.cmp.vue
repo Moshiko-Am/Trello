@@ -73,21 +73,23 @@
           class="attachments"
           v-if="cardToEdit.attachments && cardToEdit.attachments.length"
         >
-          <button
-            v-for="(attachment, idx) in cardToEdit.attachments"
-            :key="attachment.id"
-            @click.stop="setAttachment(idx)"
-            class="btn-attach"
-            :class="{
-              'is-selected':
-                cardToEdit.cover.type === 'attachment' && attachment.isCover,
-            }"
-            :style="{
-              'background-color': `rgb(${attachment.props.colorArray[0]}, ${attachment.props.colorArray[1]}, ${attachment.props.colorArray[2]})`,
-              'background-image': `url('${attachment.url}')`,
-              'background-size': 'contain',
-            }"
-          ></button>
+          <template v-for="(attachment, idx) in cardToEdit.attachments">
+            <button
+              v-if="attachment.props.type !== 'audio'"
+              :key="attachment.id"
+              @click.stop="setAttachment(idx)"
+              class="btn-attach"
+              :class="{
+                'is-selected':
+                  cardToEdit.cover.type === 'attachment' && attachment.isCover,
+              }"
+              :style="
+                attachment.props.type === 'image'
+                  ? `background-image: url('${attachment.url}'); background-color: rgb(${attachment.props.colorArray[0]},${attachment.props.colorArray[1]},${attachment.props.colorArray[2]}); background-size: 'contain'`
+                  : `background-image: url('${attachment.props.thumbnail}'); background-color: ${attachment.props.colorArray.rgb}; background-size: 'contain'`
+              "
+            ></button>
+          </template>
         </div>
         <button class="btn" @click="openFileUpload">
           Upload a cover image
@@ -177,13 +179,22 @@ export default {
   },
   computed: {
     background() {
-      return this.cardToEdit.cover.type === "attachment"
-        ? `background-image: url('${
-            this.cardToEdit.attachments[this.cardToEdit.cover.attachmentIdx].url
-          }')`
-        : this.cardToEdit.cover.type === "color"
-        ? `background-color: ${this.cardToEdit.cover.color}`
-        : `background-image: url('${this.cardToEdit.cover.photo.url}')`;
+      if (this.card.cover && this.card.cover.isCover)
+        return this.cardToEdit.cover.type === "attachment"
+          ? this.cardToEdit.attachments[this.cardToEdit.cover.attachmentIdx]
+              .props.type === "image"
+            ? `background-image: url('${
+                this.cardToEdit.attachments[this.cardToEdit.cover.attachmentIdx]
+                  .url
+              }')`
+            : `background-image: url('${
+                this.cardToEdit.attachments[this.cardToEdit.cover.attachmentIdx]
+                  .props.thumbnail
+              }')`
+          : this.cardToEdit.cover.type === "color"
+          ? `background-color: ${this.cardToEdit.cover.color}`
+          : `background-image: url('${this.cardToEdit.cover.photo.url}')`;
+      else return false;
     },
   },
   methods: {
@@ -212,7 +223,7 @@ export default {
       this.$emit("updateCard", this.cardToEdit);
     },
     setAttachment(attachmentIdx) {
-      if (attachmentIdx) this.$set(this.cardToEdit.cover, "isCover", true);
+      this.$set(this.cardToEdit.cover, "isCover", true);
       this.$set(this.cardToEdit.cover, "type", "attachment");
       this.$set(this.cardToEdit.cover, "attachmentIdx", attachmentIdx);
       this.$set(this.cardToEdit.cover, "photo", null);
@@ -234,7 +245,6 @@ export default {
         img.crossOrigin = "Anonymous";
         img.src = photo.url;
       });
-
       this.$set(this.cardToEdit.cover, "isCover", true);
       this.$set(this.cardToEdit.cover, "type", "url");
       this.$set(this.cardToEdit.cover, "photo", photo);
@@ -249,7 +259,7 @@ export default {
       this.$emit("updateCard", this.cardToEdit);
     },
     removeCover() {
-      if (this.cardToEdit.attachments)
+      if (this.cardToEdit.cover.type === "attachment")
         this.$set(
           this.cardToEdit.attachments[this.cardToEdit.cover.attachmentIdx],
           "isCover",
@@ -261,7 +271,7 @@ export default {
         color: "",
         attachmentIdx: null,
         photo: { url: "", colorArray: [] },
-        layout: "",
+        layout: "top",
       });
       this.$emit("updateCard", this.cardToEdit);
     },

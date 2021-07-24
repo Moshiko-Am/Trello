@@ -1,9 +1,7 @@
 .quick-edit {
-    position: relative;
-    left: 254px;
+    position: fixed;
     display: flex;
     justify-content: flex-start;
-    position: absolute;
     z-index: 1;
     margin: 4px 10px;
     width: fit-content;
@@ -15,6 +13,10 @@
         display: flex;
         flex-direction: column;
         align-items: flex-start;
+        &.invert {
+            align-items: flex-end;
+            width: 172px;
+        }
         .icon-sm {
             color: white;
         }
@@ -50,10 +52,30 @@
         p {
             margin-left: 6px;
         }
+        &.invert .quick-sidebar-btn {
+            transition: unset;
+            transition: margin-right 85ms ease-in;
+            &:hover {
+                background: rgba(0, 0, 0, 0.8);
+                color: #fff;
+                margin-right: 13px;
+                margin-left: 0;
+            }
+        }
     }
     .el-date-editor {
         margin: 0 0 4px 8px;
         transition: margin-left 85ms ease-in;
+        &.invert {
+            width: 103px !important;
+            input {
+                padding-right: 0;
+            }
+            &:hover {
+                margin-left: 0;
+                margin-right: 13px;
+            }
+        }
         &:hover {
             margin-left: 13px;
         }

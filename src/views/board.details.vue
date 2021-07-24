@@ -11,12 +11,14 @@
     />
     <group-list
       :groups="board.groups"
+      :bgImage="board.style"
       @boardUpdate="boardUpdate"
       v-if="board && board.groups"
       @openBg="toggleBg"
       @createLabel="createLabel"
       @removeLabel="removeLabel"
       @emitActivity="addActivity"
+      @updateMentions="updateMentions"
     />
     <transition name="fade">
       <board-dashboard
@@ -72,6 +74,15 @@ export default {
       const idx = boardLabels.findIndex((label) => label.id === labelId);
       boardLabels.splice(idx, 1);
       this.boardUpdate({ type: "labels", payload: boardLabels });
+    },
+    updateMentions(mention) {
+      mention.bId = this.board._id;
+      const userToUpdate = JSON.parse(
+        JSON.stringify(this.$store.getters.users)
+      ).find((user) => user._id === mention.userId);
+      if (userToUpdate.mentions) userToUpdate.mentions.unshift(mention)
+			else userToUpdate.mentions = [mention]
+      this.$store.dispatch({ type: "updateUser", userToUpdate });
     },
     async boardUpdate(update) {
       const board = JSON.parse(JSON.stringify(this.board));

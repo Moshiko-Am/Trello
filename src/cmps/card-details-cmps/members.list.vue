@@ -9,6 +9,7 @@
           :member="member"
           :cardMembers="membersToEdit"
           @updateMembers="updateMembers"
+          @updateMentions ="updateMentions"
         />
       </div>
     </div>
@@ -35,6 +36,9 @@ export default {
     updateMembers({newMembers,activityTxt}) {
       this.membersToEdit = newMembers;
       this.emitMembers(activityTxt);
+    },
+    updateMentions(mention){
+      this.$emit('updateMentions' , mention)
     },
     emitMembers(activityTxt) {
       this.$emit("updateMembers", {members:this.membersToEdit,activityTxt});

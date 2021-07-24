@@ -34,6 +34,13 @@
         &.is-edit {
             background-color: #ebecf0;
         }
+        &.is-dark {
+            color: #fff;
+            background-color: hsla(0, 0%, 100%, 0.24);
+            &:hover {
+                background-color: hsla(0, 0%, 100%, 0.32);
+            }
+        }
     }
 }
 
@@ -123,4 +130,9 @@
     * {
         opacity: 0.8;
     }
+}
+
+.icon-audio {
+    @include to-icon("\e948");
+    color: #6b778c;
 }

@@ -4,7 +4,7 @@ export const userStore = {
 	state: {
 		users: [],
 		loggedInUser: userService.getLoggedinUser() || {
-			username: 'Guest',
+			username: 'guest',
 			fullname: 'Guest User',
 		},
 	},
@@ -18,13 +18,25 @@ export const userStore = {
 	},
 	mutations: {
 		setLoggedinUser(state, { user }) {
-			state.loggedInUser = { ...user };
+			state.loggedInUser = JSON.parse(JSON.stringify(user));
 		},
 		setUsers(state, { users }) {
 			state.users = users;
 		},
+		updateUser(state, { updatedUser }) {
+			const id = updatedUser._id;
+			const userIdx = state.users.findIndex((user) => {
+				return user._id === id;
+			});
+			state.users.splice(userIdx, 1, updatedUser);
+		},
 	},
 	actions: {
+		async updateUser({ commit }, { userToUpdate }) {
+			console.log(userToUpdate);
+			const updatedUser = await userService.update(userToUpdate);
+			commit({ type: 'updateUser', updatedUser });
+		},
 		async loadUsers({ commit }) {
 			try {
 				const users = await userService.query();
@@ -58,7 +70,7 @@ export const userStore = {
 				await userService.logout();
 				commit({
 					type: 'setLoggedinUser',
-					user: { username: 'guest', fullname: 'guest' },
+					user: { username: 'guest', fullname: 'Guest User' },
 				});
 			} catch (err) {
 				console.log('userStore: Error in logout', err);

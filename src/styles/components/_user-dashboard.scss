@@ -2,5 +2,14 @@
 	width: 650px;
 	.charts-container {
 		display: flex;
+
+		.chart-container {
+			text-align: center;
+			margin-right: 20px;
+			h4 {
+				font-weight: 500;
+				margin-bottom: 10px;
+			}
+		}
 	}
 }

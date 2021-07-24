@@ -6,9 +6,8 @@
     position: relative;
     transition: margin 0.1s ease-in;
     .bg {
-        position: absolute;
-        top: -40px;
-        left: 0;
+        position: fixed;
+        inset: 0;
         width: 100vw;
         height: 100vh;
         background-color: rgba(0, 0, 0, 0.6);
