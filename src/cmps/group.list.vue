@@ -95,6 +95,7 @@
                   @removeCard="removeCard($event, gIdx)"
                   @createLabel="createLabel"
                   @removeLabel="removeLabel"
+                  @updateMentions="updateMentions"
                 />
               </draggable>
             </section>

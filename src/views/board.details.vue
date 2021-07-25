@@ -77,7 +77,7 @@ export default {
     },
     updateMentions(mention) {
       mention.bId = this.board._id;
-      mention.id = utilService.makeId()
+      mention.id = utilService.makeId();
       const userToUpdate = JSON.parse(
         JSON.stringify(this.$store.getters.users)
       ).find((user) => user._id === mention.userId);
@@ -93,6 +93,7 @@ export default {
         update.activities.id = utilService.makeId();
         update.activities.createdAt = Date.now();
         board.activities.unshift(update.activities);
+        socketService.emit("send activities", board.activities);
       }
       try {
         await this.$store.dispatch({ type: "saveBoard", board });
@@ -123,6 +124,9 @@ export default {
     updateMembers(members) {
       this.$store.commit({ type: "membersChanged", members });
     },
+    updateActivities(activities){
+      this.$store.commit({type: "activitiesChanged", activities})
+    }
   },
   created() {
     socketService.on("card updated", this.updateCard);
@@ -130,6 +134,7 @@ export default {
     socketService.on("title updated", this.updateTitle);
     socketService.on("style updated", this.updateStyle);
     socketService.on("members updated", this.updateMembers);
+    socketService.on("activities updated", this.updateActivities);
   },
   destroyed() {
     socketService.off("card updated", this.updateCard);
@@ -137,6 +142,7 @@ export default {
     socketService.off("title updated", this.updateTitle);
     socketService.off("style updated", this.updateStyle);
     socketService.off("members updated", this.updateMembers);
+    socketService.off("activities updated", this.updateActivities);
   },
   watch: {
     "$route.params.boardId": {

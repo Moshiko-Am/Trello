@@ -249,6 +249,7 @@
         @emitCard="emitCard"
         @openCard="openCard"
         @removeCard="removeCard"
+        @updateMentions="updateMentions"
         @toggleAttach="openCard"
         @createLabel="createLabel"
         @removeLabel="removeLabel"
@@ -442,6 +443,17 @@ export default {
     },
     removeLabel(labelId) {
       this.$emit("removeLabel", labelId);
+    },
+    updateMentions(mention) {
+      mention.byMember = this.$store.getters.loggedInUser.fullname;
+      mention.cId = this.card.id;
+      mention.gId = this.group.id;
+      mention.dueDate = this.card.dueDate;
+      mention.createdAt = Date.now();
+      if (mention.userId === this.$store.getters.loggedInUser._id)
+        mention.isRead = true;
+      else mention.isRead = false;
+      this.$emit("updateMentions", mention);
     },
   },
   directives: {

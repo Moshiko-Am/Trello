@@ -14,6 +14,7 @@
           :boardMembers="board.members"
           :cardMembers="card.members"
           @updateMembers="updateMembers"
+          @updateMentions="updateMentions"
         />
       </div>
       <div class="quick-sidebar-btn" @click="toggleLabel">
@@ -166,6 +167,9 @@ export default {
     updateLabels(labels) {
       this.cardToEdit.labelIds = labels;
       this.emitCard();
+    },
+    updateMentions(mention) {
+      this.$emit("updateMentions", mention);
     },
     openCard() {
       this.$emit("openCard");

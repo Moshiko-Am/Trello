@@ -74,6 +74,9 @@ export const boardStore = {
 		membersChanged(state, { members }) {
 			state.selectedBoard.members = members;
 		},
+		activitiesChanged(state, { activities }) {
+			state.selectedBoard.activities = activities;
+		},
 		setFilter(state, { filterBy }) {
 			state.currFilter = filterBy;
 		},

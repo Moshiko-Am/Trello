@@ -42,7 +42,6 @@ export default {
   },
   computed: {
     mentionsForDisplay() {
-      console.log("hi");
       var newMentions;
       if (this.filtered) {
         newMentions = this.mentions.filter((mention) => !mention.isRead);

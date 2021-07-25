@@ -277,7 +277,6 @@ export default {
     this.popupItem = this.$el;
   },
   created(){
-    console.log(this.user);
     socketService.on('user updated', this.updateUser)
   }
 };
