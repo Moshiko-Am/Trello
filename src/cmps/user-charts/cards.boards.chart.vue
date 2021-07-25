@@ -6,9 +6,6 @@ export default {
     boards: Array,
     user: Object,
   },
-  created() {
-    console.log(this.boards);
-  },
   mounted() {
     this.renderChart(
       {

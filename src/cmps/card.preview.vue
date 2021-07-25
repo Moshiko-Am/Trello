@@ -371,7 +371,6 @@ export default {
     },
     toggleCompleted() {
       const updatedCard = JSON.parse(JSON.stringify(this.card));
-      console.log("cardCopy", updatedCard);
       updatedCard.isCompleted = !updatedCard.isCompleted;
       const activityTxt = updatedCard.isCompleted
         ? " marked completed "
@@ -424,7 +423,6 @@ export default {
       this.toggleQuickEdit();
     },
     emitCard({ updatedCard, activityTxt }) {
-      console.log("updatedCard", updatedCard);
       const cardCopy = JSON.parse(JSON.stringify(updatedCard));
       const activity = {};
       if (activityTxt) {
@@ -435,7 +433,6 @@ export default {
         activity.txt = activityTxt;
         activity.isSpecific = true;
       }
-      console.log(activity, "4");
       this.$emit("updateCard", { updatedCard: cardCopy, activity });
     },
     createLabel(label) {

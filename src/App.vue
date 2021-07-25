@@ -20,10 +20,14 @@ export default {
     appHeader,
   },
   async created() {
-    await this.$store.dispatch({ type: "loadBoards" });
-    await this.$store.dispatch({ type: "loadUsers" });
-    if (this.user) {
-      socketService.emit("user-watch", this.user._id);
+    try {
+      await this.$store.dispatch({ type: "loadBoards" });
+      await this.$store.dispatch({ type: "loadUsers" });
+      if (this.user) {
+        socketService.emit("user-watch", this.user._id);
+      }
+    } catch (err) {
+      console.log(err);
     }
   },
   computed: {

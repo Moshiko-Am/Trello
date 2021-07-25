@@ -55,7 +55,6 @@ export default {
           });
         })
         .map((board) => {
-          console.log(board);
           var counter = 0;
           board.activities.forEach((activity) => {
             if (activity.byMember._id === this.user._id) counter++;

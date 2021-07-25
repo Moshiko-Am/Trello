@@ -98,7 +98,6 @@ export default {
       this.$emit("removeCl", this.checklistToEdit);
     },
     toggleTodo(tIdx) {
-      console.log("hi");
       var currTxt = this.checklistToEdit.todos[tIdx].isDone
         ? ` marked ${this.checklistToEdit.todos[tIdx].title} incomplete `
         : ` completed ${this.checklistToEdit.todos[tIdx].title} `;
@@ -130,7 +129,6 @@ export default {
       this.$emit("updateChecklist", {checklist:this.checklistToEdit,activityTxt});
     },
     emitActivity(activity) {
-      console.log("activity", activity);
       this.$emit("emitActivity", activity);
     },
   },

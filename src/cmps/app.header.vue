@@ -269,15 +269,18 @@ export default {
       socketService.emit("send user", userToUpdate);
       this.$store.dispatch("updateUser", { userToUpdate });
     },
-    updateUser(updatedUser){
-      this.$store.commit({type:'updateUser', updatedUser})
+    updateMention(mention){
+      this.$store.commit({type:'updateMention', mention})
     }
   },
   mounted() {
     this.popupItem = this.$el;
   },
   created(){
-    socketService.on('user updated', this.updateUser)
+    socketService.on('mention updated', this.updateMention)
+  },
+  destroyed(){
+    socketService.off('user updated')
   }
 };
 </script>

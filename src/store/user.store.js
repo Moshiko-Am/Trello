@@ -38,11 +38,38 @@ export const userStore = {
 			});
 			state.users.splice(userIdx, 1, updatedUser);
 		},
+		updateMention(state , {mention}){
+			const id = mention.userId;
+			const userIdx = state.users.findIndex((user) => {
+				return user._id === id;
+			});
+			state.users[userIdx].mentions.unshift(mention)
+		}
 	},
 	actions: {
+		async getById(context,{userId}){
+			try{
+				const user = await userService.getById(userId)
+				return user
+			}catch(err){
+				console.log(err);
+			}
+		},
+		async addMention({commit}, {mention}){
+			try {
+				const updatedUser = await userService.addMention(mention)
+				commit({type:'updateUser', updatedUser})
+			} catch(err){
+				console.log(err);
+			}
+		},
 		async updateUser({ commit }, { userToUpdate }) {
-			const updatedUser = await userService.update(userToUpdate);
-			commit({ type: 'updateUser', updatedUser });
+			try{
+				const updatedUser = await userService.update(userToUpdate);
+				commit({ type: 'updateUser', updatedUser });
+			} catch(err) {
+				console.log(err);
+			}
 		},
 		async loadUsers({ commit }) {
 			try {

@@ -15,9 +15,19 @@ export const userService = {
     remove,
     update,
     getLoggedinUser,
+    addMention,
 };
 
 window.userService = userService;
+
+async function addMention(mention){
+    try {
+        const updatedUser = await httpService.put(`user/${mention.userId}/mention`, mention)
+        return updatedUser
+    } catch(err){
+        console.log(err);
+    }
+}
 
 async function query() {
 	try {

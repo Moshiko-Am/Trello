@@ -75,16 +75,23 @@ export default {
       boardLabels.splice(idx, 1);
       this.boardUpdate({ type: "labels", payload: boardLabels });
     },
-    updateMentions(mention) {
+    async updateMentions(mention) {
       mention.bId = this.board._id;
       mention.id = utilService.makeId();
-      const userToUpdate = JSON.parse(
-        JSON.stringify(this.$store.getters.users)
-      ).find((user) => user._id === mention.userId);
-      if (userToUpdate.mentions) userToUpdate.mentions.unshift(mention);
-      else userToUpdate.mentions = [mention];
-      socketService.emit("send user", userToUpdate);
-      this.$store.dispatch({ type: "updateUser", userToUpdate });
+      try {
+        const userToUpdate = await this.$store.dispatch({
+          type: "getById",
+          userId: mention.userId,
+        });
+        if (userToUpdate.mentions) userToUpdate.mentions.unshift(mention);
+        else userToUpdate.mentions = [mention];
+
+        socketService.emit("send mention", mention);
+        this.$store.dispatch({ type: "updateUser", userToUpdate });
+      } catch (err) {
+        console.log(err);
+      }
+      // await this.$store.dispatch({ type: "addMention", mention });
     },
     async boardUpdate(update) {
       const board = JSON.parse(JSON.stringify(this.board));
@@ -124,9 +131,9 @@ export default {
     updateMembers(members) {
       this.$store.commit({ type: "membersChanged", members });
     },
-    updateActivities(activities){
-      this.$store.commit({type: "activitiesChanged", activities})
-    }
+    updateActivities(activities) {
+      this.$store.commit({ type: "activitiesChanged", activities });
+    },
   },
   created() {
     socketService.on("card updated", this.updateCard);

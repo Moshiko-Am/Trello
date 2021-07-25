@@ -33,7 +33,7 @@ export default {
   },
   data() {
     return {
-      mentionsToEdit: JSON.parse(JSON.stringify(this.mentions)),
+      // mentionsToEdit: JSON.parse(JSON.stringify(this.mentions)),
       filtered: false,
     };
   },
@@ -69,19 +69,17 @@ export default {
       this.$emit("close");
     },
     toggleRead(mentionId) {
-      const idx = this.mentions.findIndex(
-        (mention) => mention.id === mentionId
-      );
-      this.mentions[idx].isRead = !this.mentions[idx].isRead;
       const mentionsCopy = JSON.parse(JSON.stringify(this.mentions));
+      const idx = mentionsCopy.findIndex((mention) => mention.id === mentionId);
+      mentionsCopy[idx].isRead = !mentionsCopy[idx].isRead;
       this.$emit("updateMentions", mentionsCopy);
     },
     toggleFilter() {
       this.filtered = !this.filtered;
     },
     readAll() {
-      this.mentions.forEach((mention) => (mention.isRead = true));
       const mentionsCopy = JSON.parse(JSON.stringify(this.mentions));
+      mentionsCopy.forEach((mention) => (mention.isRead = true));
       this.$emit("updateMentions", mentionsCopy);
     },
   },
