@@ -2,6 +2,16 @@
     background-color: #ebecf0 !important;
     color: #ebecf0 !important;
     border-radius: 3px;
+    width: 500px;
+    height: 375;
+    @media (max-width: 600px) {
+        width: 350px;
+        height: 500px;
+    }
+    @media (max-width: 400px) {
+        width: 250px;
+        height: 300px;
+    }
 }
 
 .vjs-control-bar {

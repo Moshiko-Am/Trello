@@ -11,6 +11,8 @@
       class="group-list"
       handle=".group-wrapper"
       animation="150"
+      delay="500"
+      delay-on-touch-only="true"
       v-model="groupsToEdit"
       @start="
         isScrolling = false;
@@ -77,6 +79,8 @@
                 @change="saveGroups"
                 dragClass="ghost"
                 ghostClass="tilted"
+                delay="500"
+                delay-on-touch-only="true"
               >
                 <card-preview
                   v-for="(card, cIdx) in group.cards"
@@ -330,7 +334,7 @@ export default {
         gId: this.groupsToEdit[gIdx].id,
         cTitle: savedCard.title,
         txt: ` added card "${savedCard.title}" to list "${this.groupsToEdit[gIdx].title}" `,
-        byMember: this.$store.getters.user,
+        byMember: this.$store.getters.loggedInUser,
         isSpecific: false,
       };
       this.saveGroups(activity);
@@ -396,7 +400,7 @@ export default {
         gId: this.groupsToEdit[gIdx].id,
         cTitle: this.groupsToEdit[gIdx].cards[idx].title,
         txt: ` removed card "${this.groupsToEdit[gIdx].cards[idx].title}" from list "${this.groupsToEdit[gIdx].title}" `,
-        byMember: this.$store.getters.user,
+        byMember: this.$store.getters.loggedInUser,
         isSpecific: false,
       };
       this.groupsToEdit[gIdx].cards.splice(idx, 1);
@@ -411,8 +415,8 @@ export default {
       socketService.emit("send card", { payload: updatedCard, cIdx, gIdx });
       this.saveGroups(activity);
     },
-    updateMentions(mention){
-      this.$emit('updateMentions', mention)
+    updateMentions(mention) {
+      this.$emit("updateMentions", mention);
     },
     saveGroups(activity) {
       this.$emit("boardUpdate", {
@@ -430,7 +434,7 @@ export default {
         gId: savedGroup.id,
         gTitle: savedGroup.title,
         txt: ` added list "${savedGroup.title}" to this board `,
-        byMember: this.$store.getters.user,
+        byMember: this.$store.getters.loggedInUser,
         isSpecific: false,
       };
       this.saveGroups(activity);
@@ -440,7 +444,7 @@ export default {
       const activity = {
         gTitle: this.groupsToEdit[gIdx].title,
         txt: ` removed list "${this.groupsToEdit[gIdx].title}" from this board `,
-        byMember: this.$store.getters.user,
+        byMember: this.$store.getters.loggedInUser,
         isSpecific: false,
       };
       this.groupsToEdit.splice(gIdx, 1);

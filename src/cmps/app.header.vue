@@ -115,7 +115,7 @@
       <span>Trailing</span>
     </div>
     <div class="header-controls-right">
-      <button @click="login" class="user-login" v-if="!user._id">Login</button>
+      <button @click="login" class="user-login" v-if="user && !user._id">Login</button>
       <button
         class="btn-notifications"
         :style="{ backgroundColor: isNotified }"
@@ -160,10 +160,11 @@
       @logOut="logOut"
     ></user-menu>
     <notifications-list
-      v-if="showNotifications"
+      v-if="user && user._id && showNotifications"
       @close="toggleNotifications"
       @updateMentions="updateMentions"
       :boards="boards"
+      :mentions="user.mentions"
     />
   </nav>
 </template>
@@ -200,6 +201,7 @@ export default {
   },
   computed: {
     isNotified() {
+      if(!this.user || !this.user._id) return 
       if (!this.user.mentions) return "rgba(255, 255, 255, 0.3)";
       return this.user.mentions.some((mention) => !mention.isRead)
         ? "#EB5A46"
@@ -264,19 +266,18 @@ export default {
     updateMentions(mentions) {
       const userToUpdate = JSON.parse(JSON.stringify(this.user));
       userToUpdate.mentions = mentions;
-      console.log(userToUpdate);
       socketService.emit("send user", userToUpdate);
       this.$store.dispatch("updateUser", { userToUpdate });
     },
     updateUser(updatedUser){
-      console.log('hi', updatedUser);
-      this.$store.commit({type:'setLoggedinUser', user:updatedUser})
+      this.$store.commit({type:'updateUser', updatedUser})
     }
   },
   mounted() {
     this.popupItem = this.$el;
   },
   created(){
+    console.log(this.user);
     socketService.on('user updated', this.updateUser)
   }
 };

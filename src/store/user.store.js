@@ -1,20 +1,28 @@
 import { userService } from '../services/user.service.js';
-
+import { socketService } from "../services/socket.service.js"
 export const userStore = {
 	state: {
 		users: [],
 		loggedInUser: userService.getLoggedinUser() || {
 			username: 'guest',
 			fullname: 'Guest User',
+			_id:''
 		},
 	},
 	getters: {
-		user(state) {
+		loggedInUser(state) {
 			return state.loggedInUser;
 		},
 		users(state) {
 			return state.users;
 		},
+		user(state) {
+			return state.users.find(user => user._id === state.loggedInUser._id) || {
+				username: 'guest',
+				fullname: 'Guest User',
+				_id:''
+			}
+		}
 	},
 	mutations: {
 		setLoggedinUser(state, { user }) {
@@ -33,7 +41,6 @@ export const userStore = {
 	},
 	actions: {
 		async updateUser({ commit }, { userToUpdate }) {
-			console.log(userToUpdate);
 			const updatedUser = await userService.update(userToUpdate);
 			commit({ type: 'updateUser', updatedUser });
 		},
@@ -48,6 +55,7 @@ export const userStore = {
 		async login({ commit }, { userCred }) {
 			try {
 				const user = await userService.login(userCred);
+				socketService.emit("user-watch", user._id);
 				commit({ type: 'setLoggedinUser', user });
 				return user;
 			} catch (err) {

@@ -113,7 +113,7 @@
             />
           </div>
           <div class="card-details-sidebar">
-            <div class="sidebar-inner-container" v-if="!userInCard">
+            <div class="sidebar-inner-container" v-if="!userInCard && loggedUser.username !== 'guest' ">
               <h3>Suggested</h3>
               <div class="sidebar-btns-container">
                 <div class="card-sidebar-btn" @click="joinToCard">
@@ -346,12 +346,12 @@ export default {
       this.emitCard(activityTxt);
     },
     updateMentions(mention){
-      mention.byMember = this.$store.getters.user.fullname
+      mention.byMember = this.$store.getters.loggedInUser.fullname
       mention.cId = this.card.id
       mention.gId = this.group.id
       mention.dueDate = this.card.dueDate
       mention.createdAt = Date.now()
-      if(mention.userId === this.$store.getters.user._id) mention.isRead = true
+      if(mention.userId === this.$store.getters.loggedInUser._id) mention.isRead = true
       else mention.isRead = false
       this.$emit('updateMentions',mention)
     },
@@ -372,7 +372,7 @@ export default {
       this.emitCard();
     },
     joinToCard() {
-      const user = this.$store.getters.user;
+      const user = this.$store.getters.loggedInUser;
       if (user.username === "guest") user._id = "g001";
       this.cardToEdit.members.push(user);
       const activityTxt = " joined ";
@@ -402,7 +402,7 @@ export default {
       const cardCopy = JSON.parse(JSON.stringify(this.cardToEdit));
       const activity = {};
       if (activityTxt) {
-        activity.byMember = this.$store.getters.user;
+        activity.byMember = this.$store.getters.loggedInUser;
         activity.cTitle = this.card.title;
         activity.cId = this.card.id;
         activity.gId = this.group.id;
@@ -450,8 +450,11 @@ export default {
         if (this.cardToEdit.labelIds.includes(label.id)) return label;
       });
     },
+    loggedUser(){
+      return this.$store.getters.loggedInUser
+    },
     userInCard() {
-      const user = this.$store.getters.user;
+      const user = this.loggedUser;
       if (!this.cardToEdit.members) return;
       return this.cardToEdit.members.some((member) => member._id === user._id);
     },
