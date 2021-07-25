@@ -77,7 +77,7 @@ export default {
     },
     updateMentions(mention) {
       mention.bId = this.board._id;
-      mention.id = utilService.makeId()
+      mention.id = utilService.makeId();
       const userToUpdate = JSON.parse(
         JSON.stringify(this.$store.getters.users)
       ).find((user) => user._id === mention.userId);
@@ -97,7 +97,7 @@ export default {
       try {
         await this.$store.dispatch({ type: "saveBoard", board });
       } catch (err) {
-        console.log(`couldn't save board`);
+        console.log(`couldn't save board`, err);
       }
     },
     toggleDashboard() {
