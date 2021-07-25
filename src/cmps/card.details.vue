@@ -108,12 +108,15 @@
               />
             </transition>
             <activity-cmp
-              v-if="cardToEdit.activities"
+              v-if="filteredActivities"
               :activities="filteredActivities"
             />
           </div>
           <div class="card-details-sidebar">
-            <div class="sidebar-inner-container" v-if="!userInCard && loggedUser.username !== 'guest' ">
+            <div
+              class="sidebar-inner-container"
+              v-if="!userInCard && loggedUser.username !== 'guest'"
+            >
               <h3>Suggested</h3>
               <div class="sidebar-btns-container">
                 <div class="card-sidebar-btn" @click="joinToCard">
@@ -345,15 +348,16 @@ export default {
       this.cardToEdit.members = members;
       this.emitCard(activityTxt);
     },
-    updateMentions(mention){
-      mention.byMember = this.$store.getters.loggedInUser.fullname
-      mention.cId = this.card.id
-      mention.gId = this.group.id
-      mention.dueDate = this.card.dueDate
-      mention.createdAt = Date.now()
-      if(mention.userId === this.$store.getters.loggedInUser._id) mention.isRead = true
-      else mention.isRead = false
-      this.$emit('updateMentions',mention)
+    updateMentions(mention) {
+      mention.byMember = this.$store.getters.loggedInUser.fullname;
+      mention.cId = this.card.id;
+      mention.gId = this.group.id;
+      mention.dueDate = this.card.dueDate;
+      mention.createdAt = Date.now();
+      if (mention.userId === this.$store.getters.loggedInUser._id)
+        mention.isRead = true;
+      else mention.isRead = false;
+      this.$emit("updateMentions", mention);
     },
     addCl(checklist) {
       if (!this.cardToEdit.checklists) this.cardToEdit.checklists = [];
@@ -450,8 +454,8 @@ export default {
         if (this.cardToEdit.labelIds.includes(label.id)) return label;
       });
     },
-    loggedUser(){
-      return this.$store.getters.loggedInUser
+    loggedUser() {
+      return this.$store.getters.loggedInUser;
     },
     userInCard() {
       const user = this.loggedUser;

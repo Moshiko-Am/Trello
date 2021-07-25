@@ -110,6 +110,7 @@ export default {
           id: result.id,
           urlBig: result.urls.full,
           urlSmall: result.urls.small,
+          props: { isDark: "" },
         };
       });
       return results;
