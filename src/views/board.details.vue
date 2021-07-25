@@ -98,7 +98,7 @@ export default {
       try {
         await this.$store.dispatch({ type: "saveBoard", board });
       } catch (err) {
-        console.log(`couldn't save board`);
+        console.log(`couldn't save board`, err);
       }
     },
     toggleDashboard() {
