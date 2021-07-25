@@ -138,8 +138,7 @@
                 type="button"
               >
                 <span class="video-icon">
-                  <span class="icon-svg" role="img" aria-label="VideoIcon">
-                    <svg></svg>
+                  <span class="icon-md icon-video" role="img" aria-label="VideoIcon">
                   </span>
                 </span>
               </button>
@@ -150,7 +149,7 @@
               >
                 <span class="video-icon">
                   <span
-                    class="icon-sm icon-audio"
+                    class="icon-md icon-audio"
                     role="img"
                     aria-label="AudioIcon"
                   >

@@ -122,17 +122,23 @@
 
 .ghost {
     >* {
-        opacity: 0.8;
+      opacity:1;
     }
 }
 
 .tilted {
     * {
-        opacity: 0.8;
+        opacity: 0.1;
+        transform: rotateX(5deg);
     }
 }
 
 .icon-audio {
     @include to-icon("\e948");
+    color: #6b778c;
+}
+
+.icon-video {
+    @include to-icon("\e977")
     color: #6b778c;
 }
