@@ -184,7 +184,7 @@
           <div class="group-add-controls">
             <input
               class="btn-add-group"
-              type="submit"
+              type="button"
               value="Add list"
               @click.stop="toggleGroupEdit"
             />

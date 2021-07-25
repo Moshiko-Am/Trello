@@ -138,6 +138,7 @@
                     :cardMembers="card.members"
                     @updateMembers="updateMembers"
                     @updateMentions="updateMentions"
+                    ref="membermodal"
                   />
                 </div>
                 <div class="card-sidebar-btn" @click="toggleLabel">
@@ -151,6 +152,7 @@
                     @editLabel="setLabelToEdit"
                     @closePopups="closePopups"
                     v-if="isAddingLabel"
+                    ref="labelmodal"
                   />
                   <create-labels
                     v-if="isCreateLabel"
@@ -168,6 +170,7 @@
                     @addCl="addCl"
                     @closePopups="closePopups"
                     v-if="isAddingChecklist"
+                    ref="checklistmodal"
                   />
                 </div>
                 <el-date-picker
@@ -188,6 +191,7 @@
                     @updateAttachments="updateAttachments"
                     :attachments="cardToEdit.attachments"
                     v-if="isAddingAttachment"
+                    ref="attachmentmodal"
                   />
                 </div>
                 <div class="card-sidebar-btn cover" @click="toggleCover">
@@ -200,6 +204,7 @@
                   @updateCard="updateCard"
                   @toggleAttch="toggleAttch"
                   v-if="isAddingCover"
+                  ref="covermodal"
                 />
               </div>
             </div>
@@ -289,6 +294,18 @@ export default {
         this.closePopups();
       }
       this.isAddingChecklist = !this.isAddingChecklist;
+      if (this.isAddingChecklist) {
+        this.$nextTick(() => {
+          const coords = this.$refs.checklistmodal.$el.getBoundingClientRect();
+          if (window.innerWidth - coords.left < 305) {
+            this.$refs.checklistmodal.$el.style.right = 0;
+            this.$refs.checklistmodal.$el.style.left = `unset`;
+          }
+          if (window.innerHeight - coords.top < coords.height) {
+            this.$refs.checklistmodal.$el.style.top = -coords.height + "px";
+          }
+        });
+      }
     },
     toggleCreateLabel() {
       this.isAddingLabel = this.isCreateLabel;
@@ -299,18 +316,54 @@ export default {
         this.closePopups();
       }
       this.isAddingLabel = !this.isAddingLabel;
+      if (this.isAddingLabel) {
+        this.$nextTick(() => {
+          const coords = this.$refs.labelmodal.$el.getBoundingClientRect();
+          if (window.innerWidth - coords.left < 305) {
+            this.$refs.labelmodal.$el.style.right = 0;
+            this.$refs.labelmodal.$el.style.left = `unset`;
+          }
+          if (window.innerHeight - coords.top < coords.height) {
+            this.$refs.labelmodal.$el.style.top = -coords.height + "px";
+          }
+        });
+      }
     },
     toggleMember() {
       if (!this.isAddingMember) {
         this.closePopups();
       }
       this.isAddingMember = !this.isAddingMember;
+      if (this.isAddingMember) {
+        this.$nextTick(() => {
+          const coords = this.$refs.membermodal.$el.getBoundingClientRect();
+          if (window.innerWidth - coords.left < 305) {
+            this.$refs.membermodal.$el.style.right = 0;
+            this.$refs.membermodal.$el.style.left = `unset`;
+          }
+          if (window.innerHeight - coords.top < coords.height) {
+            this.$refs.membermodal.$el.style.top = -coords.height + "px";
+          }
+        });
+      }
     },
     toggleAttch() {
       if (!this.isAddingAttachment) {
         this.closePopups();
       }
       this.isAddingAttachment = !this.isAddingAttachment;
+      if (this.isAddingAttachment) {
+        this.$nextTick(() => {
+          const coords = this.$refs.attachmentmodal.$el.getBoundingClientRect();
+          if (window.innerWidth - coords.left < 305) {
+            this.$refs.attachmentmodal.$el.style.right = 0;
+            this.$refs.attachmentmodal.$el.style.left = `unset`;
+          }
+          if (window.innerHeight - coords.top < coords.height) {
+            this.$refs.attachmentmodal.$el.style.top = -coords.height + "px";
+          }
+        });
+      }
     },
     toggleCover() {
       if (!this.isAddingCover) {
