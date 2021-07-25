@@ -22,8 +22,6 @@
         drag = false;
         saveGroups();
       "
-      dragClass="ghost"
-      ghostClass="tilted"
       ref="grouplist"
     >
       <div
@@ -74,14 +72,16 @@
             >
               <draggable
                 group="cards"
-                animation="500"
+                animation="250"
                 v-model="group.cards"
                 @change="saveGroups"
-                dragClass="ghost"
-                ghostClass="tilted"
+                dragClass="drag"
+                ghostClass="ghost"
+                chosenClass="chosen"
                 delay="500"
                 delay-on-touch-only="true"
               >
+                <!-- :setData="modifyDragItem" -->
                 <card-preview
                   v-for="(card, cIdx) in group.cards"
                   :ref="'cardpreview-' + gIdx + '-' + cIdx"
@@ -313,6 +313,10 @@ export default {
     },
   },
   methods: {
+    // modifyDragItem(dataTransfer) {
+    //   console.log(dataTransfer);
+    //   dataTransfer.setDragImage(document.createElement("img"), -99999, -99999);
+    // },
     createLabel(label) {
       this.$emit("createLabel", label);
     },

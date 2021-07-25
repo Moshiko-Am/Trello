@@ -120,16 +120,16 @@
     }
 }
 
-.ghost {
-    >* {
-      opacity:1;
+.drag {
+    * {
+        transform: rotate(2deg);
     }
 }
 
-.tilted {
+.ghost {
     * {
         opacity: 0.1;
-        transform: rotateX(5deg);
+        background-color: navy;
     }
 }
 
@@ -139,6 +139,6 @@
 }
 
 .icon-video {
-    @include to-icon("\e977")
+    @include to-icon("\e977");
     color: #6b778c;
 }
