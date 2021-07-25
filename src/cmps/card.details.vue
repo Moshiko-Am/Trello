@@ -436,6 +436,7 @@ export default {
             this.$set(this.cardToEdit.cover, "isCover", true);
             this.$set(this.cardToEdit.cover, "type", "attachment");
             this.$set(this.cardToEdit.cover, "attachmentIdx", idx);
+            this.$set(this.cardToEdit.cover, "layout", "full");
           }
         });
       this.emitCard();

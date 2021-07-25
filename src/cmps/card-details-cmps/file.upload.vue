@@ -98,7 +98,7 @@ export default {
       this.attachment.props.height = res.height;
       this.attachment.props.format = res.format;
       this.attachment.props.size = res.bytes;
-      this.attachment.url = res.url;
+      this.attachment.url = res.secure_url;
       this.attachment.props.type = "image";
       document.querySelector(".el-upload__input").disabled = false;
       this.close();

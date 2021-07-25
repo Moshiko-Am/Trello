@@ -138,7 +138,11 @@
                 type="button"
               >
                 <span class="video-icon">
-                  <span class="icon-md icon-video" role="img" aria-label="VideoIcon">
+                  <span
+                    class="icon-md icon-video"
+                    role="img"
+                    aria-label="VideoIcon"
+                  >
                   </span>
                 </span>
               </button>
@@ -524,7 +528,7 @@ export default {
           height: res.height,
           format: res.format,
           size: res.bytes,
-          url: res.url,
+          url: res.secure_url,
           type: "video",
           colorArray: res.color,
           thumbnail: res.thumbnail,
@@ -553,6 +557,7 @@ export default {
       };
     },
     addAudioCard(res) {
+      console.log(res);
       this.isRecordingAudio = false;
       const attachment = {
         id: utilService.makeId(),
@@ -562,7 +567,7 @@ export default {
         props: {
           format: res.format,
           size: res.bytes,
-          url: res.url,
+          url: res.secure_url,
           type: "audio",
         },
       };
