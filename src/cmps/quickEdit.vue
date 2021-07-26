@@ -193,10 +193,6 @@ export default {
       const activityTxt = ` changed the due date to ${this.cardDate} `;
       this.emitCard(activityTxt);
     },
-    updateCard() {
-      const cardCopy = JSON.parse(JSON.stringify(this.cardToEdit));
-      this.$emit("updateCard", cardCopy);
-    },
     updateTitle() {
       this.emitCard();
     },
