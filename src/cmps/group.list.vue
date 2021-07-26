@@ -81,7 +81,6 @@
                 delay="500"
                 delay-on-touch-only="true"
               >
-                <!-- :setData="modifyDragItem" -->
                 <card-preview
                   v-for="(card, cIdx) in group.cards"
                   :ref="'cardpreview-' + gIdx + '-' + cIdx"
@@ -313,10 +312,6 @@ export default {
     },
   },
   methods: {
-    // modifyDragItem(dataTransfer) {
-    //   console.log(dataTransfer);
-    //   dataTransfer.setDragImage(document.createElement("img"), -99999, -99999);
-    // },
     createLabel(label) {
       this.$emit("createLabel", label);
     },
