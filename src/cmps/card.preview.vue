@@ -439,6 +439,11 @@ export default {
         activity.isSpecific = true;
       }
       this.$emit("updateCard", { updatedCard: cardCopy, activity });
+      this.$nextTick(() => {
+        const coords = this.$refs.cardpreview.getBoundingClientRect();
+        this.$refs.quickeditsave.style.top = `${coords.bottom}px`;
+        this.$refs.quickeditsave.style.left = `${coords.left}px`;
+      });
     },
     createLabel(label) {
       this.$emit("createLabel", label);

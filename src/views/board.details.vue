@@ -19,6 +19,7 @@
       @removeLabel="removeLabel"
       @emitActivity="addActivity"
       @updateMentions="updateMentions"
+      ref="grouplist"
     />
     <transition name="fade">
       <board-dashboard
@@ -115,6 +116,9 @@ export default {
     toggleBg() {
       if (this.bgOpen) this.showDashboard = false;
       this.bgOpen = !this.bgOpen;
+      if (this.bgOpen) this.$refs.grouplist.$el.classList.add("bg-open");
+      else this.$refs.grouplist.$el.classList.remove("bg-open");
+      // if(this.bgOpen) this.$refs.grouplist.$el.classList.toggle('bg-open');
     },
     updateCard(card) {
       this.$store.commit({ type: "cardChanged", card });
