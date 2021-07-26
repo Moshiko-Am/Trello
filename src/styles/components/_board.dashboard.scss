@@ -2,32 +2,103 @@
     position: absolute;
     top: 5%;
     left: 50%;
-    width: 80%;
+    // width: 80%;
     height: fit-content;
     transform: translateX(-50%);
-    background-color: rgba(226, 223, 223, 0.95);
-    padding: 30px 30px;
-    border-radius: 3px;
-    justify-content: space-evenly;
+    // background-color: rgba(226, 223, 223, 0.95);
+    // padding: 30px 30px;
+    // border-radius: 3px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     align-items: center;
     z-index: 2;
     h2{
         font-size: 2.5rem;
         text-align: center;
+        color: white;
+        font-weight: 600;
         margin-bottom: 1rem;
     }
     .charts-container {
         display: flex;
-        padding-bottom:60px;
+        justify-content: space-evenly;
+        padding-block: 20px;
+        padding-right: 30px;
     }
     .chart-container {
         &:nth-of-type(1){
-            margin-right: 50px;
+            margin-right: 20px;
         }
         text-align: center;
         h4 {
             font-weight: 500;
             margin-bottom: 10px;
+        }
+    }
+
+    .dashboard-container {
+        background-color: white;
+        width: 770px;
+        border-radius: 3px;
+    }
+
+    .board-indicators {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 30px;
+        width: fit-content;
+        .indicator{
+            display: flex;
+            width: 170px;
+            background-color: white;
+            height: 50px;
+            &:not(:first-of-type){
+                margin-left: 30px;
+            }
+            border-radius: 3px;
+        }
+
+        .indic-icon-container {
+            height: 50px;
+            width: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 3px 0 0 3px;
+
+            &.members{
+                background-color: #0079bfbf;
+            }
+            &.tasks{
+                background-color: #f2d600a8;
+            }
+            &.completed-icon{
+                background-color: #70b500a3;
+            }
+            &.incomplete{
+                background-color: #eb5a46c7;
+            }
+            .icon-lg {
+                font-size: 40px;
+                color: white;
+            }
+        }
+        .indicator-info {
+            flex: 1;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            h4 {
+                margin: 0;
+                font-size: 12px;
+                font-weight: 500;
+            }
+            h3 {
+                margin: 0;
+                font-weight: bold;
+            }
         }
     }
 }

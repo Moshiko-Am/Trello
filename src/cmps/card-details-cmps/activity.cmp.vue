@@ -18,7 +18,7 @@
         :activity="activity"
       />
     </div>
-    <div v-else-if="activities.length">
+    <div v-else-if="activities && activities.length">
       <template v-for="index in 1">
         <activity-preview
           :activity="activities[index]"
