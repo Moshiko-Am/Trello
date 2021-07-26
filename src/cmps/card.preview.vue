@@ -4,16 +4,17 @@
     v-click-outside="closeQuickEdit"
     :class="{ 'quick-edit-card': isQuickEdit }"
   >
-    <section class="card-preview-inner-container">
+    <section class="card-preview-inner-container" ref="cardpreview">
       <template v-if="card.id && card.cover && card.cover.layout === 'full'">
         <section
           class="card-preview-full-image"
           :class="{ color: card.cover.type === 'color' }"
           v-if="
             card.cover.type === 'color' ||
-            card.cover.type === 'url' ||
-            (card.cover.type === 'attachment' &&
-              card.attachments[card.cover.attachmentIdx].props.type === 'image')
+              card.cover.type === 'url' ||
+              (card.cover.type === 'attachment' &&
+                card.attachments[card.cover.attachmentIdx].props.type ===
+                  'image')
           "
           :style="background"
           @mouseenter="toggleHover"
@@ -22,8 +23,8 @@
           <audio
             v-if="
               card.attachments &&
-              card.attachments.length &&
-              card.attachments[0].props.type === 'audio'
+                card.attachments.length &&
+                card.attachments[0].props.type === 'audio'
             "
             controls
           >
@@ -48,7 +49,7 @@
           class="card-preview-full-image"
           v-else-if="
             card.cover.type === 'attachment' &&
-            card.attachments[card.cover.attachmentIdx].props.type === 'video'
+              card.attachments[card.cover.attachmentIdx].props.type === 'video'
           "
           :style="background"
           @mouseenter="toggleHover"
@@ -86,8 +87,8 @@
           class="card-preview-full-image"
           v-else-if="
             card.attachments &&
-            card.attachments.length &&
-            card.attachments[0].props.type === 'audio'
+              card.attachments.length &&
+              card.attachments[0].props.type === 'audio'
           "
           @mouseenter="toggleHover"
           @mouseleave="toggleHover"
@@ -122,9 +123,9 @@
         <template
           v-if="
             card.cover &&
-            card.cover.isCover &&
-            (card.cover.type === 'attachment' || card.cover.type === 'url') &&
-            card.cover.layout === 'top'
+              card.cover.isCover &&
+              (card.cover.type === 'attachment' || card.cover.type === 'url') &&
+              card.cover.layout === 'top'
           "
         >
           <div class="card-cover" :style="background"></div>
@@ -132,9 +133,9 @@
         <template
           v-else-if="
             card.cover &&
-            card.cover.isCover &&
-            card.cover.type === 'color' &&
-            card.cover.layout === 'top'
+              card.cover.isCover &&
+              card.cover.type === 'color' &&
+              card.cover.layout === 'top'
           "
         >
           <div class="card-cover color" :style="background"></div>
@@ -233,8 +234,8 @@
         <audio
           v-if="
             card.attachments &&
-            card.attachments.length &&
-            card.attachments[0].props.type === 'audio'
+              card.attachments.length &&
+              card.attachments[0].props.type === 'audio'
           "
           controls
         >
@@ -259,6 +260,7 @@
       v-if="isQuickEdit"
       @click.stop="onEndQuickEdit"
       class="quick-edit-btn"
+      ref="quickeditsave"
     >
       Save
     </button>
@@ -386,10 +388,10 @@ export default {
       if (this.isQuickEdit)
         this.$nextTick(() => {
           this.$refs.cardtitle.select();
-          const coords = ev.target.getBoundingClientRect();
+          let coords = ev.target.getBoundingClientRect();
           if (window.innerHeight - coords.y < 210)
             coords.y = window.innerHeight - 210;
-          if (window.innerWidth - coords.x < 158) {
+          if (window.innerWidth - coords.x < 200) {
             coords.x =
               window.innerWidth -
               (461 + 13 + (window.innerWidth - coords.x) - 38);
@@ -398,6 +400,9 @@ export default {
           }
           this.$refs.quickedit.$el.style.top = `${coords.y - 6}px`;
           this.$refs.quickedit.$el.style.left = `${coords.x + 20}px`;
+          coords = this.$refs.cardpreview.getBoundingClientRect();
+          this.$refs.quickeditsave.style.top = `${coords.bottom}px`;
+          this.$refs.quickeditsave.style.left = `${coords.left}px`;
         });
     },
     closeQuickEdit() {

@@ -7,7 +7,7 @@
         data-aos-mirror="true"
         data-aos-duration="500"
       >
-        Trailing
+        TRAiLiNG
       </h1>
       <h1 class="logo-quote" data-aos="slide-down" data-aos-duration="500">
         Work smart, work together.

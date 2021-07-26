@@ -15,6 +15,7 @@
           :cardMembers="card.members"
           @updateMembers="updateMembers"
           @updateMentions="updateMentions"
+          ref="membermodal"
         />
       </div>
       <div class="quick-sidebar-btn" @click="toggleLabel">
@@ -28,6 +29,7 @@
           @toggleCreateLabel="toggleCreateLabel"
           @editLabel="setLabelToEdit"
           v-if="isAddingLabel"
+          ref="labelmodal"
         />
         <create-labels
           v-if="isCreateLabel"
@@ -58,6 +60,7 @@
         @updateCard="emitCard"
         @toggleAttch="toggleAttch"
         v-if="isAddingCover"
+        ref="covermodal"
       />
       <div class="quick-sidebar-btn delete" @click="removeCard">
         <span class="icon-sm icon-minus"></span>
@@ -132,21 +135,58 @@ export default {
         this.closePopups();
       }
       this.isAddingLabel = !this.isAddingLabel;
+      if (this.isAddingLabel) {
+        this.$nextTick(() => {
+          const coords = this.$refs.labelmodal.$el.getBoundingClientRect();
+          if (window.innerWidth - coords.left < 305) {
+            this.$refs.labelmodal.$el.style.right = 0;
+            this.$refs.labelmodal.$el.style.left = `unset`;
+          }
+          if (window.innerHeight - coords.top < coords.height) {
+            this.$refs.labelmodal.$el.style.top = -coords.height + "px";
+          }
+        });
+      }
     },
     toggleMember() {
       if (!this.isAddingMember) {
         this.closePopups();
       }
       this.isAddingMember = !this.isAddingMember;
+      if (this.isAddingMember) {
+        this.$nextTick(() => {
+          const coords = this.$refs.membermodal.$el.getBoundingClientRect();
+          if (window.innerWidth - coords.left < 305) {
+            this.$refs.membermodal.$el.style.right = 0;
+            this.$refs.membermodal.$el.style.left = `unset`;
+          }
+          if (window.innerHeight - coords.top < coords.height) {
+            this.$refs.membermodal.$el.style.top = -coords.height + "px";
+          }
+        });
+      }
     },
     toggleAttch() {
       this.$emit("toggleAttach");
     },
-    toggleCover() {
+    toggleCover(ev) {
       if (!this.isAddingCover) {
         this.closePopups();
       }
       this.isAddingCover = !this.isAddingCover;
+      if (this.isAddingCover) {
+        this.$nextTick(() => {
+          const coords = this.$refs.covermodal.$el.getBoundingClientRect();
+          if (window.innerWidth - coords.left < 305) {
+            this.$refs.covermodal.$el.style.right = 0;
+            this.$refs.covermodal.$el.style.left = `unset`;
+          }
+          if (window.innerHeight - coords.top < 585) {
+            this.$refs.covermodal.$el.style.top =
+              -(ev.target.getBoundingClientRect().top - 565 + 38) + "px";
+          }
+        });
+      }
     },
     updateDate() {
       this.cardToEdit.dueDate = this.cardDate;

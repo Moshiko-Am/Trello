@@ -22,8 +22,6 @@
         drag = false;
         saveGroups();
       "
-      dragClass="ghost"
-      ghostClass="tilted"
       ref="grouplist"
     >
       <div
@@ -74,14 +72,16 @@
             >
               <draggable
                 group="cards"
-                animation="500"
+                animation="250"
                 v-model="group.cards"
                 @change="saveGroups"
-                dragClass="ghost"
-                ghostClass="tilted"
+                dragClass="drag"
+                ghostClass="ghost"
+                chosenClass="chosen"
                 delay="500"
                 delay-on-touch-only="true"
               >
+                <!-- :setData="modifyDragItem" -->
                 <card-preview
                   v-for="(card, cIdx) in group.cards"
                   :ref="'cardpreview-' + gIdx + '-' + cIdx"
@@ -138,7 +138,11 @@
                 type="button"
               >
                 <span class="video-icon">
-                  <span class="icon-md icon-video" role="img" aria-label="VideoIcon">
+                  <span
+                    class="icon-md icon-video"
+                    role="img"
+                    aria-label="VideoIcon"
+                  >
                   </span>
                 </span>
               </button>
@@ -180,7 +184,7 @@
           <div class="group-add-controls">
             <input
               class="btn-add-group"
-              type="submit"
+              type="button"
               value="Add list"
               @click.stop="toggleGroupEdit"
             />
@@ -309,6 +313,10 @@ export default {
     },
   },
   methods: {
+    // modifyDragItem(dataTransfer) {
+    //   console.log(dataTransfer);
+    //   dataTransfer.setDragImage(document.createElement("img"), -99999, -99999);
+    // },
     createLabel(label) {
       this.$emit("createLabel", label);
     },
@@ -524,7 +532,7 @@ export default {
           height: res.height,
           format: res.format,
           size: res.bytes,
-          url: res.url,
+          url: res.secure_url,
           type: "video",
           colorArray: res.color,
           thumbnail: res.thumbnail,
@@ -553,6 +561,7 @@ export default {
       };
     },
     addAudioCard(res) {
+      console.log(res);
       this.isRecordingAudio = false;
       const attachment = {
         id: utilService.makeId(),
@@ -562,7 +571,7 @@ export default {
         props: {
           format: res.format,
           size: res.bytes,
-          url: res.url,
+          url: res.secure_url,
           type: "audio",
         },
       };
