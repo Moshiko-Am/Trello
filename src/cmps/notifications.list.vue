@@ -33,7 +33,6 @@ export default {
   },
   data() {
     return {
-      // mentionsToEdit: JSON.parse(JSON.stringify(this.mentions)),
       filtered: false,
     };
   },
