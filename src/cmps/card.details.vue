@@ -50,7 +50,7 @@
             <input
               type="text"
               class="card-details-title"
-              @input="updateTitle"
+              @change="updateTitle"
               v-model="cardToEdit.title"
             />
           </div>
