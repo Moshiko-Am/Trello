@@ -3,8 +3,8 @@
 	src: url(~@/assets/font/BebasNeue-Regular.ttf);
 }
 @font-face {
-	font-family: alto;
-	src: url(~@/assets/font/AaltoSansEssentialAlt-Bold.ttf);
+	font-family: big;
+	src: url(~@/assets/font/BigShouldersInlineDisplay-Medium.ttf);
 }
 
 .homepage-container {
@@ -60,21 +60,19 @@
 		text-align: center;
 		.homepage-logo {
 			font-family: bebas;
-			letter-spacing: 1.5px;
-			font-size: 70px;
+			font-size: 100px;
 			margin: 0;
 		}
 		.logo-quote {
-			font-family: bebas;
+			font-family: big;
 			color: white;
-			font-size: 40px;
-			letter-spacing: 1px;
-			padding: 40px 0;
+			font-size: 45px;
+			padding: 0 0 40px;
 			margin: 0;
 		}
 		.boards-link {
-			background-color: rgba(2, 107, 167, 0.75);
 			font-family: bebas;
+			background-color: rgba(2, 107, 167, 0.75);
 			color: whitesmoke;
 			padding: 10px 15px;
 			border-radius: 10px;
@@ -218,8 +216,6 @@
 		align-self: center;
 		margin-bottom: 80px;
 		.homepage-4-header {
-			font-family: bebas;
-			letter-spacing: 1px;
 			display: flex;
 			justify-content: center;
 			align-self: center;
@@ -269,7 +265,6 @@
 		background-color: rgba(2, 107, 167, 0.075);
 		padding: 10px;
 		.homepage-5-header {
-			font-family: bebas;
 			font-size: 36px;
 			font-weight: 500;
 			margin-block: 30px;
