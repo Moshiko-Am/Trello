@@ -120,19 +120,6 @@
     }
 }
 
-.drag {
-    * {
-        transform: rotate(2deg);
-    }
-}
-
-.ghost {
-    * {
-        opacity: 0.1;
-        background-color: navy;
-    }
-}
-
 .icon-audio {
     @include to-icon("\e948");
     color: #6b778c;

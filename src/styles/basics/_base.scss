@@ -61,3 +61,24 @@ button {
     width: 40px;
     height: 40px;
 }
+
+.ghost-card {
+    * {
+        opacity: 0.1;
+        background-color: navy;
+    }
+}
+
+.ghost-group {
+    opacity: 0.5;
+    filter: invert(0.5);
+}
+
+.cloned {
+    transform: translate3d(0, 0, 0) rotate(4deg);
+    transform-origin: 0% 0%;
+    position: fixed;
+    opacity: 1;
+    width: unset;
+    pointer-events: none;
+}
