@@ -49,14 +49,16 @@ export default {
 
       return newMentions.map((mention) => {
         const board = this.boards.find((board) => board._id === mention.bId);
+        if (!board) return mention;
         const group = board.groups.find((group) => group.id === mention.gId);
+        if (!group) return mention;
         const card = group.cards.find((card) => card.id === mention.cId);
         var style =
           board.style.type === "backgroundColor"
             ? `background-color: ${board.style.content}`
             : `background-image: url(${board.style.preview})`;
-        mention.bTitle = board.title;
-        mention.gTitle = group.title;
+        if (board) mention.bTitle = board.title;
+        if (group) mention.gTitle = group.title;
         if (card) mention.cTitle = card.title;
         mention.style = style;
         mention.isDark = board.style.props.isDark;

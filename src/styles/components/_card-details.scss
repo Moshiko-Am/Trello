@@ -600,6 +600,10 @@
     @include to-icon("\e919");
 }
 
+.icon-remove-members {
+    @include to-icon('\e951');
+}
+
 .list-complete-item {
     transition: all 0.3s;
     display: inline-block;
