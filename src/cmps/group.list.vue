@@ -10,9 +10,12 @@
     <draggable
       class="group-list"
       handle=".group-wrapper"
-      animation="150"
+      animation="100"
       delay="500"
       delay-on-touch-only="true"
+      dragClass="drag"
+      ghostClass="ghost-group"
+      chosenClass="chosen"
       v-model="groupsToEdit"
       @start="
         isScrolling = false;
@@ -21,7 +24,9 @@
       @end="
         drag = false;
         saveGroups();
+        endDrag();
       "
+      :setData="startDragGroup"
       ref="grouplist"
     >
       <div
@@ -76,10 +81,12 @@
                 v-model="group.cards"
                 @change="saveGroups"
                 dragClass="drag"
-                ghostClass="ghost"
+                ghostClass="ghost-card"
                 chosenClass="chosen"
                 delay="500"
                 delay-on-touch-only="true"
+                :setData="startDragCard"
+                @end="endDrag"
               >
                 <card-preview
                   v-for="(card, cIdx) in group.cards"
@@ -168,7 +175,6 @@
         class="group-wrapper mod-add"
         :class="{ 'is-edit': isAddingGroup, 'is-dark': bgImage.props.isDark }"
       >
-        <!-- :class="{ 'is-edit': isAddingGroup, 'is-dark': bgImage.props.isDark }" -->
         <form v-if="isAddingGroup" v-click-outside="toggleGroupEdit">
           <input
             class="group-name-input"
@@ -254,7 +260,7 @@ import { socketService } from "@/services/socket.service.js";
 import { utilService } from "@/services/util.service.js";
 import clickOutside from "vue-click-outside";
 import videoRecord from "@/cmps/card-details-cmps/video.record.vue";
-
+import { toSvg } from "html-to-image";
 export default {
   props: {
     groups: Array,
@@ -312,6 +318,55 @@ export default {
     },
   },
   methods: {
+    async startDragCard(dataTransfer) {
+      const item = document.querySelector(".card-preview-container.chosen");
+      item.classList.remove("drag");
+      item.classList.remove("chosen");
+      dataTransfer.setDragImage(document.createElement("div"), 0, 0);
+      try {
+        const dataUrl = await toSvg(item);
+        const img = new Image();
+        img.src = dataUrl;
+        document.body.appendChild(img);
+        img.classList.add("cloned");
+        document.body.addEventListener("drag", function moveImg(ev) {
+          img.style.left = `${ev.x - 30}px`;
+          img.style.top = `${ev.y - 30}px`;
+        });
+      } catch (err) {
+        console.error(
+          "oops, something went wrong with rendering the element.",
+          err
+        );
+      }
+    },
+    async startDragGroup(dataTransfer) {
+      const item = document.querySelector(".group-wrapper.chosen");
+      item.classList.remove("drag");
+      item.classList.remove("chosen");
+      dataTransfer.setDragImage(document.createElement("div"), 0, 0);
+      try {
+        const dataUrl = await toSvg(item);
+        const img = new Image();
+        img.src = dataUrl;
+        document.body.appendChild(img);
+        img.classList.add("cloned");
+        document.body.addEventListener("drag", function moveImg(ev) {
+          img.style.left = `${ev.x - 30}px`;
+          img.style.top = `${ev.y - 30}px`;
+        });
+      } catch (err) {
+        console.error(
+          "oops, something went wrong with rendering the element.",
+          err
+        );
+      }
+    },
+    endDrag() {
+      const draggedEl = document.querySelector(".cloned");
+      document.body.removeChild(draggedEl);
+      document.body.removeEventListener("drag", function moveImg() {});
+    },
     createLabel(label) {
       this.$emit("createLabel", label);
     },
