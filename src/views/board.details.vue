@@ -92,7 +92,6 @@ export default {
       } catch (err) {
         console.log(err);
       }
-      // await this.$store.dispatch({ type: "addMention", mention });
     },
     async boardUpdate(update) {
       const board = JSON.parse(JSON.stringify(this.board));
@@ -118,7 +117,6 @@ export default {
       this.bgOpen = !this.bgOpen;
       if (this.bgOpen) this.$refs.grouplist.$el.classList.add("bg-open");
       else this.$refs.grouplist.$el.classList.remove("bg-open");
-      // if(this.bgOpen) this.$refs.grouplist.$el.classList.toggle('bg-open');
     },
     updateCard(card) {
       this.$store.commit({ type: "cardChanged", card });
@@ -167,7 +165,6 @@ export default {
             this.$store.commit("getBoardById", boardId);
           } catch (err) {
             console.log("didnt find board", err);
-            // this.$router.push(`/`);
           }
         }
       },
