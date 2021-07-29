@@ -10,6 +10,7 @@
     ></app-header>
     <router-view />
   </div>
+  <div v-else class="load"></div>
 </template>
 
 <script>
@@ -75,3 +76,40 @@ export default {
   },
 };
 </script>
+<style scoped>
+.load {
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 3px;
+  box-sizing: border-box;
+  font-size: 0;
+  height: 62px;
+  text-align: left;
+  vertical-align: middle;
+  width: 62px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.load::before,
+.load::after {
+  animation-name: loadingAnim;
+  animation-direction: alternate;
+  animation-duration: 0.25s;
+  animation-iteration-count: infinite;
+  background-color: #f4f5f7;
+  border-radius: 2px;
+  content: "";
+  display: inline-block;
+  height: 50px;
+  margin: 4px 0 0 4px;
+  vertical-align: top;
+  width: 24px;
+}
+.load::after {
+  animation-direction: alternate-reverse;
+  animation-duration: 0.24s;
+  height: 50px;
+  margin-left: 4px;
+}
+</style>
