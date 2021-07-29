@@ -9,6 +9,22 @@
       :style="defaultBackground"
     ></app-header>
     <router-view />
+    <v-offline @detected-condition="onConnectivityChange">
+      <transition name="slide-fade">
+        <template v-if="isOnline && isShown">
+          <div class="online">
+            Back online, syncing...
+          </div>
+        </template>
+      </transition>
+      <transition name="slide-fade">
+        <template v-if="!isOnline && isShown">
+          <div class="offline">
+            No connection, working offline...
+          </div>
+        </template>
+      </transition>
+    </v-offline>
   </div>
   <div v-else class="load"></div>
 </template>
@@ -16,9 +32,18 @@
 <script>
 import appHeader from "@/cmps/app.header.vue";
 import { socketService } from "@/services/socket.service.js";
+import { VOffline } from "v-offline";
+
 export default {
   components: {
     appHeader,
+    VOffline,
+  },
+  data() {
+    return {
+      isOnline: true,
+      isShown: false,
+    };
   },
   async created() {
     try {
@@ -72,6 +97,13 @@ export default {
     logOut() {
       this.$store.dispatch({ type: "logout" });
       this.$router.push("/");
+    },
+    onConnectivityChange(ev) {
+      this.isOnline = ev;
+      this.isShown = true;
+      setTimeout(() => {
+        this.isShown = false;
+      }, 3500);
     },
   },
 };
