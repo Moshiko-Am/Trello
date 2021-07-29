@@ -1,4 +1,5 @@
 import Vue from 'vue';
+import VueCompositionApi from "@vue/composition-api";
 import App from './App.vue';
 import './registerServiceWorker';
 import ElementUI from 'element-ui';
@@ -15,6 +16,7 @@ Vue.use(ElementUI, { locale });
 Vue.use(VueKonva);
 Vue.config.productionTip = false;
 Vue.use(require('vue-moment'));
+Vue.use(VueCompositionApi);
 
 new Vue({
     created() {

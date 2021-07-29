@@ -6,10 +6,10 @@
           class="card-cover"
           v-if="
             cardToEdit.cover &&
-              cardToEdit.cover.isCover &&
-              cardToEdit.cover.type === 'attachment' &&
-              cardToEdit.attachments[cardToEdit.cover.attachmentIdx].props
-                .type === 'video'
+            cardToEdit.cover.isCover &&
+            cardToEdit.cover.type === 'attachment' &&
+            cardToEdit.attachments[cardToEdit.cover.attachmentIdx].props
+              .type === 'video'
           "
           :style="background"
         >
@@ -438,7 +438,6 @@ export default {
     createLabel(label, isAdding) {
       this.labelToEdit = null;
       this.$emit("createLabel", label);
-      // this.toggleCreateLabel();
       this.isAddingLabel = isAdding;
       this.isCreateLabel = false;
     },

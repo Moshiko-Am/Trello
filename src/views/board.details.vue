@@ -21,6 +21,7 @@
       @emitActivity="addActivity"
       @updateMentions="updateMentions"
       :filterBy="filterBy"
+      ref="grouplist"
     />
     <transition name="fade">
       <board-dashboard
@@ -100,7 +101,6 @@ export default {
       } catch (err) {
         console.log(err);
       }
-      // await this.$store.dispatch({ type: "addMention", mention });
     },
     async boardUpdate(update) {
       const board = JSON.parse(JSON.stringify(this.board));
@@ -124,6 +124,8 @@ export default {
     toggleBg() {
       if (this.bgOpen) this.showDashboard = false;
       this.bgOpen = !this.bgOpen;
+      if (this.bgOpen) this.$refs.grouplist.$el.classList.add("bg-open");
+      else this.$refs.grouplist.$el.classList.remove("bg-open");
     },
     updateCard(card) {
       this.$store.commit({ type: "cardChanged", card });
@@ -175,7 +177,6 @@ export default {
             this.$store.commit("getBoardById", boardId);
           } catch (err) {
             console.log("didnt find board", err);
-            // this.$router.push(`/`);
           }
         }
       },

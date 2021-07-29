@@ -2,7 +2,7 @@
   <section class="login-page">
     <h3 v-if="!isSignup">Log in to Trailing</h3>
     <h3 v-else>Sign Up</h3>
-    <form>
+    <form @submit.prevent="">
       <el-input
         v-if="isSignup"
         placeholder="Username"
@@ -45,16 +45,9 @@
 </template>
 
 <script>
-// import { extend } from 'vee-validate';
-// import { ValidationProvider } from 'vee-validate';
-// extend('positive', (value) => {
-// 	return value >= 0;
-// });
 export default {
   name: "Login",
-  components: {
-    // ValidationProvider,
-  },
+  components: {},
   data() {
     return {
       loginCr: {
