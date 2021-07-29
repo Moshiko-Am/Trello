@@ -110,7 +110,7 @@ export default {
 </script>
 <style scoped>
 .load {
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: #0079bf;
   border-radius: 3px;
   box-sizing: border-box;
   font-size: 0;
@@ -125,7 +125,7 @@ export default {
 }
 .load::before,
 .load::after {
-  animation-name: loadingAnim;
+  animation-name: loadingAnimHome;
   animation-direction: alternate;
   animation-duration: 0.25s;
   animation-iteration-count: infinite;
@@ -143,5 +143,14 @@ export default {
   animation-duration: 0.24s;
   height: 50px;
   margin-left: 4px;
+}
+
+@keyframes loadingAnimHome {
+  0% {
+    height: 40px;
+  }
+  to {
+    height: 22px;
+  }
 }
 </style>
