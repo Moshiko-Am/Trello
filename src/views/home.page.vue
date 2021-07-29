@@ -32,7 +32,7 @@
     </div>
     <div class="homepage-2">
       <div class="homepage-2-img-container">
-        <img src="@/assets/img/homepage-2-img.jpg" />
+        <img src="@/assets/img/homepage-2-img.svg" />
       </div>
       <div class="homepage-2-content">
         <h1 class="homepage-2-header">
@@ -71,7 +71,7 @@
     </div>
     <div class="homepage-3">
       <div class="homepage-3-img-container">
-        <img src="@/assets/img/homepage-3-simple.jpg" />
+        <img src="@/assets/img/homepage-3-simple.svg" />
       </div>
       <div class="homepage-3-content">
         <h1 class="homepage-3-header">Quick and easy to use.</h1>

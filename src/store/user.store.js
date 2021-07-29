@@ -1,12 +1,12 @@
 import { userService } from '../services/user.service.js';
-import { socketService } from "../services/socket.service.js"
+import { socketService } from '../services/socket.service.js';
 export const userStore = {
 	state: {
 		users: [],
 		loggedInUser: userService.getLoggedinUser() || {
 			username: 'guest',
 			fullname: 'Guest User',
-			_id:''
+			_id: '',
 		},
 	},
 	getters: {
@@ -17,12 +17,16 @@ export const userStore = {
 			return state.users;
 		},
 		user(state) {
-			return state.users.find(user => user._id === state.loggedInUser._id) || {
-				username: 'guest',
-				fullname: 'Guest User',
-				_id:''
-			}
-		}
+			return (
+				state.users.find(
+					(user) => user._id === state.loggedInUser._id
+				) || {
+					username: 'guest',
+					fullname: 'Guest User',
+					_id: '',
+				}
+			);
+		},
 	},
 	mutations: {
 		setLoggedinUser(state, { user }) {
@@ -38,36 +42,36 @@ export const userStore = {
 			});
 			state.users.splice(userIdx, 1, updatedUser);
 		},
-		updateMention(state , {mention}){
+		updateMention(state, { mention }) {
 			const id = mention.userId;
 			const userIdx = state.users.findIndex((user) => {
 				return user._id === id;
 			});
-			state.users[userIdx].mentions.unshift(mention)
-		}
+			state.users[userIdx].mentions.unshift(mention);
+		},
 	},
 	actions: {
-		async getById(context,{userId}){
-			try{
-				const user = await userService.getById(userId)
-				return user
-			}catch(err){
+		async getById(context, { userId }) {
+			try {
+				const user = await userService.getById(userId);
+				return user;
+			} catch (err) {
 				console.log(err);
 			}
 		},
-		async addMention({commit}, {mention}){
+		async addMention({ commit }, { mention }) {
 			try {
-				const updatedUser = await userService.addMention(mention)
-				commit({type:'updateUser', updatedUser})
-			} catch(err){
+				const updatedUser = await userService.addMention(mention);
+				commit({ type: 'updateUser', updatedUser });
+			} catch (err) {
 				console.log(err);
 			}
 		},
 		async updateUser({ commit }, { userToUpdate }) {
-			try{
+			try {
 				const updatedUser = await userService.update(userToUpdate);
 				commit({ type: 'updateUser', updatedUser });
-			} catch(err) {
+			} catch (err) {
 				console.log(err);
 			}
 		},
@@ -82,7 +86,7 @@ export const userStore = {
 		async login({ commit }, { userCred }) {
 			try {
 				const user = await userService.login(userCred);
-				socketService.emit("user-watch", user._id);
+				socketService.emit('user-watch', user._id);
 				commit({ type: 'setLoggedinUser', user });
 				return user;
 			} catch (err) {

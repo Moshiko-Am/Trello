@@ -2,7 +2,7 @@
   <section class="login-page">
     <h3 v-if="!isSignup">Log in to Trailing</h3>
     <h3 v-else>Sign Up</h3>
-    <form>
+    <form @submit.prevent="">
       <el-input
         v-if="isSignup"
         placeholder="Username"
