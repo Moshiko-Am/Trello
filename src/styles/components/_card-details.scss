@@ -592,6 +592,10 @@
     background-color: #f4f5f7;
 }
 
+.icon-search {
+    @include to-icon("\e960")
+}
+
 .icon-minus {
     @include to-icon("\e95c");
 }

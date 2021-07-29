@@ -265,6 +265,7 @@ export default {
   props: {
     groups: Array,
     bgImage: Object,
+    filterBy: Object,
   },
   directives: {
     clickOutside,
@@ -316,6 +317,10 @@ export default {
     audioRecord() {
       return this.isRecordingAudio ? "audioRecord" : "";
     },
+    groupsForDisplay(){
+      // _________________ filter cards ________________________________ //
+      return true;
+    }
   },
   methods: {
     async startDragCard(dataTransfer) {

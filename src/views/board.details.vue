@@ -6,6 +6,7 @@
       @updateBoard="boardUpdate"
       @boardUpdate="boardUpdate"
       @toggleDashboard="toggleDashboard"
+      @emitFilter="setFilter"
       v-if="board && board.title"
       :board="board"
     />
@@ -19,6 +20,7 @@
       @removeLabel="removeLabel"
       @emitActivity="addActivity"
       @updateMentions="updateMentions"
+      :filterBy="filterBy"
     />
     <transition name="fade">
       <board-dashboard
@@ -42,6 +44,13 @@ export default {
     return {
       bgOpen: false,
       showDashboard: false,
+      filterBy: {
+        txt: "",
+        labels: [],
+        members: [],
+        dueDate: null,
+        type: 0,
+      },
     };
   },
   computed: {
@@ -134,6 +143,9 @@ export default {
     updateActivities(activities) {
       this.$store.commit({ type: "activitiesChanged", activities });
     },
+    setFilter(filterBy){
+			this.filterBy = filterBy
+		}
   },
   created() {
     socketService.on("card updated", this.updateCard);

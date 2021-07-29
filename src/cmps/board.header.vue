@@ -110,6 +110,7 @@
       @bgColor="bgColor"
       @chooseBg="chooseBg"
       @closeMenu="toggleMenu"
+      @emitFilter="emitFilter"
       class="hideMenu"
       :class="menuShow"
       :board="board"
@@ -234,6 +235,9 @@ export default {
       this.boardMembers.push(user);
       this.saveMembers();
     },
+    emitFilter(filterBy){
+			this.$emit('emitFilter', filterBy)
+		}
   },
   watch: {
     board: {

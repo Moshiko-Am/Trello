@@ -25,6 +25,12 @@
 					Change background
 				</button>
 			</div>
+			<div class="side-menu-item search-btn" @click="toggleFilterMenu">
+				<span class="icon-md icon-search"></span>
+				<span class="menu-search">
+					Search Cards
+				</span>
+			</div>
 			<div class="side-menu-item" v-if="board.style">
 				<span class="icon-sm icon-activity"></span>
 				<span class="menu-activity">
@@ -44,14 +50,25 @@
 			class="hideBgMenu"
 			:class="bgShowMenu"
 		></background-menu>
+		<filter-menu
+		@closeMenu="closeMenu"
+		@menuBack="toggleFilterMenu"
+		:board="board"
+		:class="{'show':isFilterShow}"
+		@emitFilter="emitFilter"
+		>
+		</filter-menu>
 	</section>
 </template>
 
 <script>
 import activityPreview from './card-details-cmps/activity-preview.vue'
 import backgroundMenu from './background.menu';
+import filterMenu from './filter.menu';
+
 export default {
 	components: {
+		filterMenu,
 		backgroundMenu,
 		activityPreview
 	},
@@ -61,6 +78,7 @@ export default {
 	data() {
 		return {
 			isBgShow: false,
+			isFilterShow : false,
 		};
 	},
 	computed: {
@@ -83,6 +101,12 @@ export default {
 		toggleBgMenu() {
 			this.isBgShow = !this.isBgShow;
 		},
+		toggleFilterMenu() {
+			this.isFilterShow = !this.isFilterShow;
+		},
+		emitFilter(filterBy){
+			this.$emit('emitFilter', filterBy)
+		}
 	},
 };
 </script>
