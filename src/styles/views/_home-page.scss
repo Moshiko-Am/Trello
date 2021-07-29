@@ -12,6 +12,8 @@
 	overflow-y: auto;
 	scroll-behavior: smooth;
 	overflow-x: hidden;
+	background-image: linear-gradient(to bottom, #e9ddfd, #ffffff);
+
 	.icon-top {
 		@include to-icon('\e90a');
 		position: fixed;
@@ -98,7 +100,8 @@
 		}
 	}
 	.homepage-2 {
-		width: 100%;
+		max-width: 80%;
+		margin-inline: auto;
 		display: flex;
 		justify-content: space-between;
 		margin-block: 40px;
@@ -108,7 +111,7 @@
 			flex-direction: column;
 			justify-content: space-between;
 			width: 50%;
-			margin-inline: 20px;
+			margin-inline: 50px;
 		}
 		.motivational {
 			margin: 20px 0 0 0;
@@ -148,18 +151,17 @@
 			img {
 				width: 100%;
 				border-radius: 5px;
-				object-fit: cover;
 			}
 		}
 	}
 	.homepage-3 {
-		width: 100%;
+		max-width: 80%;
 		display: flex;
 		justify-content: space-between;
 		margin-top: 40px;
 		margin-bottom: 20px;
+		margin-inline: auto;
 		height: 400px;
-		background-color: rgba(2, 107, 167, 0.075);
 		.homepage-3-content {
 			display: flex;
 			flex-direction: column;
@@ -201,11 +203,10 @@
 			width: 50%;
 			display: flex;
 			margin-inline-start: 20px;
-			margin-inline-end: 5px;
+			margin-inline-end: 50px;
 			img {
 				width: 100%;
 				border-radius: 5px;
-				object-fit: cover;
 			}
 		}
 	}
