@@ -30,7 +30,7 @@
       ref="grouplist"
     >
       <div
-        v-for="(group, gIdx) in groupsToEdit"
+        v-for="(group, gIdx) in groupsForDisplay"
         :key="group.id"
         class="group-wrapper"
       >
@@ -318,8 +318,27 @@ export default {
       return this.isRecordingAudio ? "audioRecord" : "";
     },
     groupsForDisplay(){
-      // _________________ filter cards ________________________________ //
-      return true;
+      // _____________________________________ filter cards ________________________________________ //
+      const newGroups = JSON.parse(JSON.stringify(this.groupsToEdit))
+      newGroups.forEach(group => {
+        group.cards = group.cards.filter(card => {
+          return card.title.toLowerCase().includes(this.filterBy.txt.toLowerCase())
+        })
+        .filter(card => {
+          if(!card.members || !card.members.length || !this.filterBy.members.length) return card
+          return card.members.some(member => {
+            return this.filterBy.members.includes(member._id)
+          })
+        })
+        .filter(card => {
+          if(!card.labelIds || !card.labelIds.length || !this.filterBy.labels.length) return card
+          return card.labelIds.some(label => {
+            return this.filterBy.labels.includes(label)
+          })
+        })
+      })
+      console.log(newGroups);
+      return newGroups;
     }
   },
   methods: {
