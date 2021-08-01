@@ -325,7 +325,8 @@ export default {
           return card.title.toLowerCase().includes(this.filterBy.txt.toLowerCase())
         })
         .filter(card => {
-          if(!card.members || !card.members.length || !this.filterBy.members.length) return card
+          if(!card.members || !card.members.length) return
+          else if(!this.filterBy.members.length) return card
           return card.members.some(member => {
             return this.filterBy.members.includes(member._id)
           })
